@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" height="1024" width="1024" version="1.2">
+  <title>Log-AI Logo</title>
+  
+  
+  <rect fill="transparent" height="1024" width="1024"></rect>
+
+  
+  <text letter-spacing="-25" fill="#E5E7EB" font-weight="900" font-size="420" font-family="Arial Black, sans-serif" y="650" x="180">LOG</text>
+  
+  
+  <text letter-spacing="-25" fill="#E5E7EB" font-weight="900" font-size="420" font-family="Arial Black, sans-serif" y="650" x="580">AI</text>
+
+  
+  <rect fill="#E5E7EB" rx="20" height="95" width="95" y="460" x="465"></rect>
+  
+  <circle fill="#1F2937" r="12" cy="495" cx="495"></circle>
+  <circle fill="#1F2937" r="12" cy="495" cx="535"></circle>
+  
+  <line stroke-linecap="round" stroke-width="22" stroke="#60A5FA" y2="380" x2="512" y1="435" x1="512"></line>
+  <circle fill="#60A5FA" r="14" cy="370" cx="512"></circle>
+</svg>

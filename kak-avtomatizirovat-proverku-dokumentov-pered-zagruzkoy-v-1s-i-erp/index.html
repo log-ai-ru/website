@@ -1,0 +1,855 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Как автоматизировать проверку документов перед загрузкой в 1С и ERP</title><meta name="description" content="Как автоматизировать проверку документов перед загрузкой в 1С и ERP: контроль реквизитов, сумм, OCR, ИИ, дубликатов и ошибок интеграции с практическим примером."><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://log-ai.ru/kak-avtomatizirovat-proverku-dokumentov-pered-zagruzkoy-v-1s-i-erp/"><link rel="alternate" type="application/atom+xml" href="https://log-ai.ru/feed.xml" title="LOG-AI - RSS"><link rel="alternate" type="application/json" href="https://log-ai.ru/feed.json" title="LOG-AI - JSON"><meta property="og:title" content="Как автоматизировать проверку документов перед загрузкой в 1С и ERP"><meta property="og:image" content="https://log-ai.ru/media/website/Log-ai-Logo.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:site_name" content="LOG-AI"><meta property="og:description" content="Как автоматизировать проверку документов перед загрузкой в 1С и ERP: контроль реквизитов, сумм, OCR, ИИ, дубликатов и ошибок интеграции с практическим примером."><meta property="og:url" content="https://log-ai.ru/kak-avtomatizirovat-proverku-dokumentov-pered-zagruzkoy-v-1s-i-erp/"><meta property="og:type" content="article"><link rel="stylesheet" href="https://log-ai.ru/assets/css/style.css?v&#x3D;b1f5980528b3cc19f4018c94aea81f52"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://log-ai.ru/kak-avtomatizirovat-proverku-dokumentov-pered-zagruzkoy-v-1s-i-erp/"},"headline":"Как автоматизировать проверку документов перед загрузкой в 1С и ERP","datePublished":"2026-10-10T16:44+05:00","dateModified":"2026-10-24T20:17+05:00","description":"Как автоматизировать проверку документов перед загрузкой в 1С и ERP: контроль реквизитов, сумм, OCR, ИИ, дубликатов и ошибок интеграции с практическим примером.","author":{"@type":"Person","name":"AI Automation","url":"https://log-ai.ru/authors/ai-automation/"},"publisher":{"@type":"Organization","name":"AI Automation"}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript><style>body, html, main, #page, .wrapper, .main { background: #000000 !important; background-color: #000000 !important; }</style><link rel="icon" type="image/png" sizes="32x32" href="/media/files/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/media/files/favicon-16.png"><link rel="apple-touch-icon" sizes="180x180" href="/media/files/favicon-180.png"><meta name="yandex-verification" content="9d14e10b64f3b76c"><meta name="google-site-verification" content="-rKktnoSCGCLZToW-jcZeKu5WvWFGuLKdLwwyCux0-M"></head><body class="page-template"><header class="top js-header"><a class="logo" href="https://log-ai.ru/">LOG-AI</a><nav class="navbar js-navbar"><button class="navbar__toggle js-toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><span class="navbar__toggle-box"><span class="navbar__toggle-inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://log-ai.ru/" target="_self">Главная</a></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Услуги</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/avtomatizaciya-obrabotki-zayavok-i-lidov/" target="_self">Автоматизация обработки заявок и лидов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-biznes-processov-integracii-dannye-i-skvoznye-scenarii/" target="_self">Автоматизация бизнес-процессов</a></li><li><a href="https://log-ai.ru/sbor-i-obrabotka-dannyh/" target="_self">Сбор и обработка данных</a></li><li><a href="https://log-ai.ru/ii-dlya-biznesa-i-nejrosetej/" target="_self">ИИ для бизнеса и нейросети</a></li><li><a href="https://log-ai.ru/specializirovannye-cifrovye-sistemy/" target="_self">Специализированные цифровые системы</a></li><li><a href="https://log-ai.ru/individualnye-korporativnye-sistemy/" target="_self">Корпоративные системы</a></li><li><a href="https://log-ai.ru/tehnicheskoe-soprovozhdenie/" target="_self">Техническое сопровождение</a></li><li><a href="https://log-ai.ru/it-audit-i-predproektnoe-obsledovanie/" title="/it-audit-i-predproektnoe-obsledovanie/" target="_self">IT-аудит и предпроектное обследование</a></li><li><a href="https://log-ai.ru/oblachnyy-i-infrastrukturnyy-konsalting/" title="/oblachnyy-i-infrastrukturnyy-konsalting/" target="_self">Облачный и инфраструктурный консалтинг</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Решения</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakie-sistemy-my-integriruem/" target="_self">Какие системы мы интегрируем</a></li><li><a href="https://log-ai.ru/kak-rabotaet-ii-v-biznese/" target="_self">Как работает ИИ в бизнесе</a></li><li><a href="https://log-ai.ru/resheniya-po-zadacham/" target="_self">Решения по задачам</a></li><li><a href="https://log-ai.ru/avtomatizaciya-proizvodstva/" target="_self">Для производства</a></li><li><a href="https://log-ai.ru/avtomatizaciya-logistiki-i-skladov/" target="_self">Для логистики и складов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-optovoy-torgovli/" target="_self">Для оптовой торговли</a></li><li><a href="https://log-ai.ru/avtomatizaciya-e-commerce/" target="_self">Для e-commerce</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Реализация</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kak-my-rabotaem/" target="_self">Как мы работаем</a></li><li><a href="https://log-ai.ru/dokumentaciya-sistemy/" target="_self">Документация системы</a></li><li><a href="https://log-ai.ru/infrastruktura-i-razmeshchenie/" target="_self">Инфраструктура и размещение</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Выбор</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakuyu-avtomatizaciyu-vybrat/" target="_self">Какую автоматизацию выбрать</a></li><li><a href="https://log-ai.ru/chto-avtomatizirovat-v-biznese-v-pervuyu-ochered/" target="_self">Что автоматизировать в бизнесе в первую очередь</a></li><li><a href="https://log-ai.ru/kak-podgotovit-biznes-k-avtomatizacii/" target="_self">Как подготовить бизнес к автоматизации</a></li><li><a href="https://log-ai.ru/kak-vnedrit-avtomatizaciyu/" target="_self">Как внедрить автоматизацию</a></li><li><a href="https://log-ai.ru/kak-ocenit-rezultat-avtomatizacii/" target="_self">Как оценить результат автоматизации</a></li><li><a href="https://log-ai.ru/stoimost-razrabotki/" target="_self">Стоимость разработки</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">О нас</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/inzhenernyy-sostav/" target="_self">Инженерный состав</a></li><li><a href="https://log-ai.ru/keysy/" target="_self">Кейсы</a></li><li><a href="https://log-ai.ru/glossariy/" target="_self">Глоссарий</a></li><li><a href="https://log-ai.ru/ekspertiza/" target="_self">Экспертиза</a></li><li><a href="https://log-ai.ru/bezopasnost-sistem-dannyh-i-infrastruktury/" target="_self">Безопасность</a></li></ul></li></ul></nav></header><main class="page"><article class="content"><div class="hero hero--noimage"><header class="hero__content hero__content--centered"><div class="wrapper"><h1>Как автоматизировать проверку документов перед загрузкой в 1С и ERP</h1></div></header></div><div class="entry-wrapper content__entry"><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ИНТЕГРАЦИОННЫЙ_КОНТУР // DOCUMENT_VALIDATION_SUITE</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">архитектура, контроль качества и практический пример</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Автоматизация проверки документов перед загрузкой в корпоративные системы позволяет выявлять ошибки до того, как они приведут к проблемам учёта, появлению дубликатов или нарушению бизнес-процессов. Но для этого недостаточно распознать текст, проверить обязательные поля и убедиться, что файл успешно передан в 1С или ERP.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Документ может содержать все необходимые реквизиты и при этом оставаться некорректным. ИНН может пройти форматную проверку, но не соответствовать указанному контрагенту. Сумма может быть распознана без ошибок, но противоречить табличной части. Документ может успешно пройти предварительную проверку, однако стать недопустимым к моменту загрузки из-за изменения остатка по заказу. Наконец, система может создать объект в 1С, но не успеть передать подтверждение интеграционному сервису. После тайм-аута тот повторит запрос, что создаст риск повторного создания объекта.</p><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 35px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Каждая из этих ситуаций требует своего механизма контроля.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Попытка решить их одной проверкой обязательных полей или универсальным алгоритмом на основе искусственного интеллекта оставляет существенные риски.</p></div><p style="font-size: 16px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold; border-left: 3px solid #14b8a6; padding-left: 15px;">Надёжная автоматизация должна отвечать на четыре разных вопроса:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">КОНТРОЛЬНЫЕ_ВОПРОСЫ // CORE_VALIDATION_PILLARS</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[q]</span>Правильно ли извлечены данные из документа?</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[q]</span>Соответствуют ли они формальным требованиям и авторитетным источникам?</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[q]</span>Допустима ли операция с учётом текущего состояния корпоративных систем?</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[q]</span>Можно ли обеспечить контролируемое выполнение загрузки, включая безопасные повторы и восстановление после сбоев?</p></div></div><div style="background: #0a1f1c; padding: 15px 20px; border-radius: 2px; border: 1px solid #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; width: 100%; box-sizing: border-box;"><span style="color: #14b8a6; font-weight: bold;">В этой статье рассмотрим архитектуру такой системы, разберём принципы проверки реквизитов и финансовых показателей, покажем роль OCR и искусственного интеллекта, а главное — проследим полный путь условного документа от поступления до создания объекта в 1С.</span></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">АНАЛИЗ_СЛОЖНОСТИ // VALIDATION_UNCERTAINTY_FACTORS</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Почему автоматическая проверка документов сложнее, чем кажется</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">На первый взгляд задача выглядит просто: получить файл, извлечь поля, проверить их и отправить документ в целевую систему.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ИСТОЧНИКИ_НЕОПРЕДЕЛЕННОСТИ // UNCERTAINTY_SOURCES</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; width: 100%; box-sizing: border-box; margin-bottom: 30px;"><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Первый источник</div><div style="font-size: 14px; color: #aaaaaa;"><strong>Неопределённость самого документа.</strong> Файл может быть плохо отсканирован, содержать неоднозначные обозначения, таблицы нестандартной структуры или реквизиты, расположенные не там, где их ожидает найти алгоритм.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Второй источник</div><div style="font-size: 14px; color: #aaaaaa;"><strong>Неопределённость данных.</strong> Значения могут быть формально допустимыми, но неверными по существу. Например, контрагент существует, однако указан не тот договор; сумма арифметически корректна, но превышает доступный остаток суммы заказа.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Третий источник</div><div style="font-size: 14px; color: #aaaaaa;"><strong>Неопределённость состояния системы.</strong> Между предварительной проверкой и загрузкой могут измениться справочники, статусы договоров, остатки, права доступа и результаты параллельных операций.</div></div></div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 30px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Это принципиально разные классы проблем. Повышение точности OCR не устраняет конкурентные изменения в ERP, а идеальная валидация не защищает от повторного создания объекта после сетевого сбоя.</p></div><div style="background: #000000; border-left: 2px solid #14b8a6; padding-left: 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 16px; color: #ffffff; font-weight: bold; margin: 0;">Поэтому систему следует проектировать как последовательность взаимосвязанных проверок с чёткими границами ответственности.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">АРХИТЕКТУРНАЯ_МОДЕЛЬ // PIPELINE_FLOWCHART</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Архитектура автоматизированной проверки</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Оптимальная архитектура разделяет извлечение данных, проверку их качества, принятие бизнес-решения и выполнение операции в целевой системе.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">АРХИТЕКТУРНЫЙ_КОНВЕЙЕР // PROCESSING_PIPELINE</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ЭТАП 1 // ПРИËМ И ПОДГОТОВКА</div><ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: #aaaaaa;"><li style="margin-bottom: 4px;">➔ Получение документа</li><li style="margin-bottom: 4px;">➔ Регистрация и контроль файла</li><li style="margin-bottom: 4px;">➔ Извлечение данных</li><li>➔ Нормализация и сохранение исходных значений</li></ul></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ЭТАП 2 // МНОГОУРОВНЕВЫЙ КОНТРОЛЬ</div><ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: #aaaaaa;"><li style="margin-bottom: 4px;">➔ Формальные проверки</li><li style="margin-bottom: 4px;">➔ Проверка реквизитов и справочников</li><li style="margin-bottom: 4px;">➔ Арифметика и межполевая согласованность</li><li>➔ Бизнес-проверки</li></ul></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ЭТАП 3 // РЕЗУЛЬТАТ КОНТРОЛЯ</div><ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: #aaaaaa;"><li style="margin-bottom: 4px; color: #ffffff; font-weight: bold;">✔ Проверка пройдена → Подготовка операции загрузки</li><li style="margin-bottom: 4px; color: #14b8a6;">⚠ Неоднозначность → Ручная проверка → Уточнение или исправление данных</li><li style="color: #ff6b6b; font-weight: bold;">❌ Обнаружено нарушение → Блокировка с кодом ошибки</li></ul></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ЭТАП 4 // ЦЕЛЕВАЯ СИСТЕМА (1С / ERP)</div><ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: #aaaaaa;"><li style="margin-bottom: 4px;">➔ Повторный контроль критичных условий</li><li style="margin-bottom: 4px;">➔ Создание объекта в целевой системе</li><li style="margin-bottom: 4px;">➔ Фиксация результата операции и подтверждение его получения интеграционным сервисом</li><li>➔ Аудит и мониторинг</li></ul></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Эта схема отражает логическую модель процесса. На практике отдельные этапы могут выполняться одним приложением либо несколькими сервисами.</p><div style="background: #000000; border-left: 2px solid #14b8a6; padding-left: 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0;">Важен не способ физического размещения компонентов, а возможность определить, что именно проверялось, на основании каких данных, по каким правилам и с каким результатом.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">РЕГИСТРАЦИЯ // INBOUND_DOCUMENT_REGISTRATION</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Приём и регистрация</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">При поступлении файла система создаёт запись о его обработке и присваивает ему внутренний идентификатор.</p><p style="font-size: 16px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold; border-left: 3px solid #14b8a6; padding-left: 15px;">Следует сохранять как минимум:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">РЕГИСТРАЦИЯ_ПОСТУПЛЕНИЯ // INBOUND_DOCUMENT_METADATA</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[rec]</span>идентификатор поступления;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[rec]</span>источник и время получения;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[rec]</span>тип или предполагаемый тип документа;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[rec]</span>контрольную сумму исходного файла;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[rec]</span>сведения о версии формата, если они доступны;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[rec]</span>текущий статус обработки.</p></div></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">КОНТРАКТ_ИДЕНТИФИКАЦИИ // CHECKSUM_LIMITATION</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 25px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Криптографический хеш исходного файла помогает выявлять побайтово идентичные файлы, но не решает задачу идентификации бизнес-документов. Повторный скан или пересохранённый PDF может иметь другое содержимое на уровне байтов, оставаясь копией того же документа.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Поэтому идентичность файла и идентичность бизнес-документа необходимо учитывать отдельно.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ИЗВЛЕЧЕНИЕ // DATA_EXTRACTION_PIPELINE</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Извлечение данных</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Для структурированных электронных документов предпочтительно извлекать данные непосредственно из их структуры, а не распознавать текст по визуальному представлению.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Для PDF с текстовым слоем можно применять извлечение текста. Для изображений и сканов обычно требуется OCR. Если документ содержит сложные таблицы, нестандартную структуру или свободно расположенные реквизиты, могут понадобиться дополнительные модели анализа документа.</p><div style="background: #000000; border-left: 3px solid #165c52; padding-left: 15px; margin-bottom: 25px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0;">Результат извлечения должен содержать не только значения полей, но и сведения об их происхождении: страницу, область документа, способ извлечения и оценку уверенности, если используемый инструмент её предоставляет.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Это необходимо для последующей диагностики. Если сумма не прошла проверку, специалист должен иметь возможность увидеть, какое значение было извлечено и откуда оно получено.</p></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ПРЕОБРАЗОВАНИЕ // DATA_NORMALIZATION</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Нормализация</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Перед сравнением данные приводятся к согласованному внутреннему представлению.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Например, даты могут поступать в разных форматах, десятичные числа — использовать разные разделители, а наименования — содержать различия в пробелах и регистре.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Нормализация может включать приведение дат к установленному формату, преобразование чисел с учётом локали, стандартизацию кодов и сопоставление обозначений единиц измерения со справочниками.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ОГРАНИЧЕНИЕ_ИНТЕРПРЕТАЦИИ // CONTEXT_PRESERVATION</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 25px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">При этом необходимо сохранять исходные значения. Если исходное поле содержит 01.02.2026, его нельзя интерпретировать без знания формата источника. В формате ДД.ММ.ГГГГ это 1 февраля 2026 года, а в формате ММ.ДД.ГГГГ — 2 января 2026 года.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Нормализация должна опираться на известные правила источника и типа документа, а не на догадки.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ВАЛИДАЦИЯ // VALIDATION_DECISION_ENGINE</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Проверка и принятие решения</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">После нормализации выполняются формальные, реквизитные, арифметические и бизнес-проверки.</p><p style="font-size: 16px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold; border-left: 3px solid #14b8a6; padding-left: 15px;">Каждая проверка должна возвращать определённый результат:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">МАТРИЦА_СТАТУСОВ // VALIDATION_RETURN_CODES</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[status]</span>успешно пройдена;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #ff6b6b; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[status]</span>обнаружено нарушение;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #aaaaaa; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[status]</span>недостаточно данных для решения;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #aaaaaa; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[status]</span>проверка временно невозможна;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #aaaaaa; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[status]</span>правило неприменимо к этому типу документа.</p></div></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ОБРАБОТКА_ИСКЛЮЧЕНИЙ // FAULT_TOLERANCE_PRINCIPLE</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 10px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Недостаточность данных и временную недоступность проверки нельзя приравнивать к подтверждённому нарушению. Если справочник временно недоступен, это не означает, что контрагент отсутствует.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Система не должна превращать технический сбой в ложный бизнес-отказ.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">МАТРИЦА_ПРОВЕРОК // VALIDATION_LAYERS_SPEC</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Какие проверки необходимы до загрузки</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Проверки следует выстраивать по смыслу и уровню риска, а не просто по количеству полей.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">МАТРИЦА_ВАЛИДАЦИИ // VERIFICATION_MATRIX</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Файловый уровень</div><div style="font-size: 14px; color: #aaaaaa; margin-bottom: 8px;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Проверяется]:</span> Допустимость формата, целостность и читаемость файла</div><div style="font-size: 13px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">[Нарушение]: Повреждённый файл</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Структурный уровень</div><div style="font-size: 14px; color: #aaaaaa; margin-bottom: 8px;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Проверяется]:</span> Наличие и структура обязательных элементов документа</div><div style="font-size: 13px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">[Нарушение]: Не удалось определить табличную часть</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Форматный уровень</div><div style="font-size: 14px; color: #aaaaaa; margin-bottom: 8px;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Проверяется]:</span> Типы и допустимое представление</div><div style="font-size: 13px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">[Нарушение]: Некорректный формат даты</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Реквизитный уровень</div><div style="font-size: 14px; color: #aaaaaa; margin-bottom: 8px;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Проверяется]:</span> Идентификаторы и справочники</div><div style="font-size: 13px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">[Нарушение]: ИНН не соответствует выбранному контрагенту</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Арифметический уровень</div><div style="font-size: 14px; color: #aaaaaa; margin-bottom: 8px;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Проверяется]:</span> Количества, цены, налоги, итоги</div><div style="font-size: 13px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">[Нарушение]: Итог не соответствует расчёту строк</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Межполевой уровень</div><div style="font-size: 14px; color: #aaaaaa; margin-bottom: 8px;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Проверяется]:</span> Согласованность полей</div><div style="font-size: 13px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">[Нарушение]: В заголовке и строках указаны несовместимые валюты</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Междокументный уровень</div><div style="font-size: 14px; color: #aaaaaa; margin-bottom: 8px;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Проверяется]:</span> Связи с другими объектами</div><div style="font-size: 13px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">[Нарушение]: Количество или сумма документа превышает доступный остаток по заказу</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Бизнес-логический уровень</div><div style="font-size: 14px; color: #aaaaaa; margin-bottom: 8px;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Проверяется]:</span> Допустимость операции</div><div style="font-size: 13px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">[Нарушение]: Договор не действует в требуемый период</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Интеграционный уровень</div><div style="font-size: 14px; color: #aaaaaa; margin-bottom: 8px;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Проверяется]:</span> Выполнимость создания объекта в целевой системе с учётом требований интеграции</div><div style="font-size: 13px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">[Нарушение]: Не заполнен обязательный реквизит конфигурации</div></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Эти уровни могут выполняться параллельно, если это не нарушает зависимости между ними. Например, не обязательно дожидаться завершения поиска контрагента, чтобы выполнить арифметические проверки.</p><div style="background: #000000; border-left: 2px solid #14b8a6; padding-left: 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0;">Однако разрешение на загрузку должно учитывать результаты всех обязательных для данной операции проверок.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ВАЛИДАЦИЯ // CORE_FIELDS_VERIFICATION</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Обязательные поля</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Наличие поля само по себе не означает корректность его содержимого. Проверка должна различать отсутствие значения, пустое значение, недопустимый формат и невозможность определить значение при распознавании.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 30px 0;">Набор обязательных полей следует определять отдельно для каждого типа документа и сценария использования. Универсальный список часто либо блокирует корректные документы, либо пропускает недопустимые.</p><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Проверка реквизитов</h3><p style="font-size: 16px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold; border-left: 3px solid #14b8a6; padding-left: 15px;">Для идентификаторов необходимо разделять три уровня:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">УРОВНИ_РЕКВИЗИТОВ // REQUISITE_LAYERS</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[lvl 1]</span>Соответствует ли значение формальным правилам идентификатора?</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[lvl 2]</span>Существует ли соответствующая запись в авторитетном источнике?</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[lvl 3]</span>Соответствует ли найденная запись контексту документа?</p></div></div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 30px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Например, ИНН может пройти форматную проверку, но не соответствовать указанному в документе контрагенту. Форматная корректность подтверждает только допустимость значения по заданным правилам, но не его принадлежность конкретному контрагенту.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Если контрагент не найден, система должна учитывать несколько причин: ошибку распознавания, отсутствие записи в справочнике, задержку синхронизации или действительно неверные реквизиты.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Автоматическое создание нового контрагента при каждом несовпадении опасно: оно способно сформировать дубли справочника и перенести ошибку в учётную систему.</p></div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Арифметическая проверка</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Для упрощённого документа без скидок и дополнительных начислений сумма может проверяться по формуле:</p><div style="max-width: 520px; font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; background: #050807; border: 1px dashed #165c52; padding: 15px; margin: 0 0 20px 0; box-sizing: border-box; display: flex; align-items: center; justify-content: center; font-weight: bold;"><span style="margin-right: 5px;">S =</span> <span style="display: inline-flex; flex-direction: column; align-items: center; line-height: 1; margin: 0 5px; vertical-align: middle;"><span style="font-size: 10px; font-weight: normal; margin-bottom: 2px;">n</span> <span style="font-size: 24px; font-weight: normal; line-height: 0.8;">∑</span> <span style="font-size: 10px; font-weight: normal; margin-top: 4px;">i=1</span> </span><span style="margin-left: 5px;">q<sub>i</sub>p<sub>i</sub></span></div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 20px 0; font-style: italic; line-height: 1.5;">Где q<sub>i</sub> — количество единиц товара в строке, p<sub>i</sub> — цена единицы, а S — сумма документа до применения скидок, налогов и дополнительных начислений.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Но если документ содержит скидки, налоги, дополнительные расходы или специфические правила округления, формула должна учитывать эти условия.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Нельзя применять одно универсальное правило ко всем финансовым документам. Сравнение должно учитывать допустимую точность, порядок округления и структуру расчёта.</p><div style="background: #000000; border-left: 2px solid #14b8a6; padding-left: 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0;">Кроме того, совпадение общей суммы не гарантирует правильность каждой строки: две ошибки могут взаимно компенсироваться. Поэтому необходимо проверять как отдельные строки, так и итоговые показатели.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ПРАКТИЧЕСКИЙ_КЕЙС // END_TO_END_INTEGRATION_CASE</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Сквозной пример: от ошибочного счёта до безопасной загрузки в 1С</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Рассмотрим условную организацию, которая получает счета поставщиков в формате PDF. Документы обрабатываются автоматически, после чего сведения передаются в 1С для создания соответствующих объектов учёта.</p><div style="background: #000000; border-left: 3px solid #165c52; padding-left: 15px; margin-bottom: 30px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;">В этом примере не предполагается использование конкретной конфигурации 1С или определённого интеграционного продукта. Детали реализации зависят от доступных интерфейсов и бизнес-правил организации.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Пусть поступил счёт № 184 от условного поставщика «Альфа-Снаб».</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">В документе указаны три позиции, контрагент, договор, дата и итоговая сумма. Внешне файл выглядит корректно, поэтому без автоматических проверок он мог бы пройти обычный процесс переноса данных.</p><div style="display: grid; grid-template-columns: 1fr; max-width: 500px; margin-bottom: 10px; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace; font-size: 13px;"><div style="background: #200b0b; padding: 12px 15px; border-radius: 2px; border: 1px solid #ff6b6b;"><span style="color: #ff6b6b; font-weight: bold;">Однако система обнаруживает несколько независимых проблем, которые необходимо устранить или передать на ручную проверку до загрузки документа в 1С.</span></div></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">РАЗБОР_ОШИБОК // INTEGRATION_INCIDENTS_CASE</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Ситуация 1. OCR неправильно распознал сумму</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">В исходном документе указана стоимость позиции 3 800,00, но алгоритм извлечения получил 3 300,00.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">При этом остальные поля распознаны корректно.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">АНАЛИЗ_ВАЛИДАЦИИ // OCR_SUM_MISMATCH</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ КОНТРОЛЬ // ФОРМАЛЬНОЕ НАЛИЧИЕ ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Простая проверка наличия обязательных реквизитов ничего не обнаружит: поле заполнено, формат числа допустим, сумма положительная.</p></div><div style="background: #050807; border: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 12px; font-weight: bold;">[ КОНТРОЛЬ // АРИФМЕТИЧЕСКАЯ ПРОВЕРКА ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Арифметическая проверка позволяет выявить несоответствие между распознанными значениями, если между ними существуют проверяемые арифметические зависимости. Для выявления ошибки OCR, при которой неверно распознано отдельное значение, но остальные поля согласуются с ним, необходимо дополнительно сопоставить результат с исходным изображением или независимым источником данных.</p></div></div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 35px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Здесь важно не подменять проверку догадкой. Если система не может установить правильное значение однозначно, она должна сохранить оба представления — исходный фрагмент и извлечённое значение — и запросить уточнение.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; После проверки оператор подтверждает сумму 3 800,00. Система сохраняет исходный результат распознавания, исправленное значение, основание исправления и повторно запускает проверки.</p></div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Ситуация 2. Реквизиты не совпадают со справочником</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">После исправления суммы система проверяет контрагента.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Наименование в документе отличается от наименования в справочнике, а автоматическое сопоставление по тексту не даёт однозначного результата.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">При этом ИНН распознан корректно, но в доступном справочнике соответствующая запись не найдена.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ОБРАБОТКА_НЕСОВПАДЕНИЙ // REQUISITE_MISMATCH_HANDLING</div><div style="background: #000000; border-left: 3px solid #165c52; padding-left: 15px; margin-bottom: 25px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 10px 0;">Правильное действие — не создавать нового контрагента автоматически.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Система проверяет доступность авторитетного источника данных и актуальность локального справочника. Если причина заключается в задержке синхронизации, проверка выполняется повторно после её устранения.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Если контрагент действительно отсутствует в справочнике, документ направляется на регистрацию контрагента или ручное разрешение ситуации в соответствии с установленным процессом.</p><p style="font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0;">&gt; Предположим, в нашем сценарии выясняется, что справочник не был своевременно синхронизирован. После обновления данных контрагент однозначно сопоставляется, и проверка проходит.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">АНАЛИЗ_КОНФЛИКТОВ // TRANSACTION_INTEGRITY_CASE</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Ситуация 3. Документ поступает повторно</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Из-за повторной отправки поставщик присылает тот же счёт ещё раз. Второй файл сохранён иначе, поэтому его контрольная сумма отличается.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Система не может полагаться только на сравнение файлов. Она сопоставляет доступные идентификаторы и реквизиты документа, включая тип, номер, дату и контрагента.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Если обнаружено вероятное совпадение, система проверяет историю обработки и существующие объекты в целевой системе.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ОБРАБОТКА_ПОВТОРНОГО_ПОСТУПЛЕНИЯ // DUPLICATE_DOCUMENT_HANDLING</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 30px;"><div style="background: #000000; border: 1px solid #165c52; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 12px; font-weight: bold;">[ СЦЕНАРИЙ А // ЕЩË НЕ ЗАГРУЖЕН ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Предположим, первый экземпляр ещё не был загружен: повторно поступивший файл связывается с уже зарегистрированным документом, а новая независимая операция обработки не создаётся.</p></div><div style="background: #000000; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ СЦЕНАРИЙ Б // УЖЕ ЗАГРУЖЕН ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Если первый экземпляр уже был загружен, система должна проверить идентичность документа и установить, существует ли соответствующий объект в целевой системе, прежде чем принимать решение о повторной загрузке.</p></div></div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Ситуация 4. Остаток заказа изменился</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">После всех предварительных проверок счёт признан корректным. Он связан с заказом, остатка которого достаточно для обработки документа.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Но до момента фактической загрузки другой процесс регистрирует операцию по тому же заказу. Доступный остаток изменяется.</p><div style="display: grid; grid-template-columns: 1fr; max-width: 500px; margin-bottom: 25px; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace; font-size: 13px;"><div style="background: #200b0b; padding: 12px 15px; border-radius: 2px; border: 1px solid #ff6b6b;"><span style="color: #ff6b6b; font-weight: bold;">Предварительная проверка уже не отражает актуального состояния.</span></div></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">БИЗНЕС_ИНВАРИАНТ // CONCURRENCY_CHECK_REFORCED</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Если система просто отправит документ в 1С, она может нарушить установленное ограничение. Поэтому критичное условие необходимо проверять на стороне целевой системы непосредственно при выполнении операции. Если проверка и изменение состояния выполняются раздельно, они должны быть защищены механизмом конкурентного контроля, предотвращающим нарушение ограничения.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; В нашем примере остатка больше недостаточно. Создание объекта приостанавливается, а документ получает статус, требующий разрешения конфликта. После согласования изменённых условий выполняется новая проверка.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">НЕОПРЕДЕЛËННОСТЬ // TRANSACTION_ACKNOWLEDGEMENT_FAILURE</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Ситуация 5. Объект создан, но подтверждение потеряно</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Теперь документ готов к загрузке. Интеграционный сервис отправляет запрос в 1С.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Целевая система создаёт объект, но ответ не доходит до отправителя из-за сетевого сбоя. Интеграционный сервис фиксирует тайм-аут.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">На этом этапе возникает критическая неоднозначность: сервис не знает, завершилась ли операция.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">РИСКИ_ОБРАБОТКИ_СБОЯ // ACK_TIMEOUT_DILEMMA</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ РИСК А // СЛЕПОЙ ПОВТОР ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Если просто отправить запрос заново, существует риск создать второй объект.</p></div><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ РИСК Б // СЛЕПОЙ ОТКАЗ ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Если считать операцию неуспешной и окончательно прекратить обработку, система может потерять связь с уже созданной записью.</p></div></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ПРАВИЛО_ОБРАБОТКИ // IDEMPOTENT_VERIFICATION_CONTRACT</div><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0 0 25px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Правильный процесс предусматривает проверку результата по устойчивому идентификатору операции, если целевая система поддерживает такой механизм, либо по другому надёжному способу сопоставления с уже созданным объектом.</p><p style="font-size: 15px; color: #14b8a6; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Если объект уже создан, интеграционный сервис фиксирует его идентификатор и завершает обработку без повторного бизнес-эффекта. Если результат не удалось установить, операция остаётся в состоянии ожидания выяснения результата, а не объявляется автоматически неуспешной.</p></div><div style="background: #000000; border-left: 2px solid #14b8a6; padding-left: 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0;">Если достоверно установлено, что объект не создан, запрос можно повторить в соответствии с правилами интеграции. Если результат остаётся неизвестным, повтор допустим только при наличии гарантированно безопасного механизма, исключающего повторный бизнес-эффект.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">СХЕМА_ПРОЦЕССА // SCENARIO_SUMMARY_MAP</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Сводная схема сквозного сценария</h2><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">МАРШРУТ_ОБРАБОТКИ // TRANSACTION_ROUTING</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; width: 100%; box-sizing: border-box; margin-bottom: 30px;"><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ФАЗА 1 // ВХОДНОЙ КОНТРОЛЬ И СУММА</div><ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: #aaaaaa;"><li style="margin-bottom: 4px;">➔ Счёт № 184 поступил ➔ OCR извлёк данные</li><li style="color: #ff6b6b; font-weight: bold; margin-bottom: 4px;">❌ Сумма НЕ согласована? ➔ Проверка исходного документа ➔ Исправление с историей ➔ Повторная валидация</li><li style="color: #14b8a6; font-weight: bold;">✔ Сумма согласована? ➔ Переход к сопоставлению</li></ul></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ФАЗА 2 // КОНТРАГЕНТ И ДУБЛИКАТЫ</div><ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: #aaaaaa;"><li style="color: #ff6b6b; font-weight: bold; margin-bottom: 4px;">❌ Контрагент НЕ сопоставлен? ➔ Проверка справочника ➔ Обновление / ручное разрешение ➔ На повторную валидацию</li><li style="color: #14b8a6; font-weight: bold; margin-bottom: 4px;">✔ Контрагент сопоставлен ➔ Проверка на дубликаты</li><li style="color: #14b8a6; margin-bottom: 4px;">➔ Есть дубликат? ➔ Связать с существующей обработкой ➔ Проверить текущий статус</li><li>➔ Нет дубликата? ➔ Проверка заказа и условий</li></ul></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ФАЗА 3 // УСЛОВИЯ И ЗАГРУЗКА</div><ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: #aaaaaa;"><li style="color: #ff6b6b; font-weight: bold; margin-bottom: 4px;">❌ Условия не выполнены? ➔ Приостановить загрузку ➔ Разрешить конфликт ➔ Повторно проверить заказ</li><li style="color: #14b8a6; font-weight: bold; margin-bottom: 4px;">✔ Условия действуют ➔ Выполнить загрузку</li><li style="color: #14b8a6; font-weight: bold; margin-bottom: 4px;">✔ Результат подтверждён? ➔ Зафиксировать идентификатор объекта ➔ Завершить обработку</li><li style="color: #ff6b6b; font-weight: bold;">⚠ Результат не подтверждён? ➔ Перевести операцию в состояние выяснения результата ➔ Проверить наличие объекта в целевой системе ➔ Повторить запрос только после подтверждения отсутствия объекта либо при наличии гарантированно безопасного механизма повтора</li></ul></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Этот сценарий показывает, почему надёжная система должна уметь не только выявлять ошибки, но и восстанавливать ход обработки после исправлений, изменений состояния и технических сбоев.</p><div style="background: #000000; border-left: 3px solid #165c52; padding-left: 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Важно и другое: не все описанные ситуации требуют участия человека. Проверки формата, арифметики, обнаружение идентичных операций и повторная проверка состояния могут выполняться автоматически. Ручное вмешательство необходимо там, где данных недостаточно для однозначного и безопасного решения.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">УПРАВЛЕНИЕ_ПРАВИЛАМИ // VALIDATION_RULES_MANAGEMENT</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Как организовать правила проверки</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">При увеличении количества типов документов набор правил быстро растёт. Если проверки распределены по разным интеграционным сценариям и участкам программного кода, их становится трудно согласованно изменять.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold; border-left: 3px solid #14b8a6; padding-left: 15px;">Для управления этим процессом полезно хранить правила как отдельные версионируемые определения:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">СТРУКТУРА_ОПРЕДЕЛЕНИЯ // RULE_DEFINITION_ATTRIBUTES</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 30px;"><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[rule]</span>идентификатор правила и номер версии;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[rule]</span>типы документов, к которым оно применимо;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[rule]</span>входные данные и условия выполнения;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[rule]</span>критерий успешного прохождения;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[rule]</span>код результата;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[rule]</span>уровень критичности;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[rule]</span>допустимые действия при нарушении;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[rule]</span>сведения о том, требуется ли повторная проверка после изменения данных.</p></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Например, правило проверки итоговой суммы должно учитывать вид документа, применимые правила расчёта и допустимую точность. Правило проверки договора должно учитывать условия его действия и актуальный источник статуса.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">АРХИТЕКТУРНОЕ_ТРЕБОВАНИЕ // RULE_VERSIONING</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Версионирование необходимо не только для сопровождения. Если требования изменились, система должна позволять установить, по какой версии правил проверялся конкретный документ.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Это важно для аудита, анализа исторических ошибок и воспроизведения результатов обработки.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">КЛАССИФИКАЦИЯ // ERROR_CATEGORIES_METRICS</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Как классифицировать ошибки</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Практичная классификация должна определять не только характер ошибки, но и допустимое действие.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">МАТРИЦА_ОШИБОК // FAULT_CLASSIFICATION_MATRIX</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Критическая ошибка данных</div><div style="font-size: 14px; color: #aaaaaa; margin-bottom: 8px;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Пример]:</span> Неверная сумма, подтверждённое противоречие реквизитов</div><div style="font-size: 13px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">[Реакция]: Блокировка до исправления</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Неоднозначность</div><div style="font-size: 14px; color: #aaaaaa; margin-bottom: 8px;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Пример]:</span> Не удалось выбрать контрагента</div><div style="font-size: 13px; color: #14b8a6; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">[Реакция]: Ручное разрешение или дополнительная проверка</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Недостаточность данных</div><div style="font-size: 14px; color: #aaaaaa; margin-bottom: 8px;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Пример]:</span> Не хватает сведений для проверки</div><div style="font-size: 13px; color: #aaaaaa; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">[Реакция]: Запрос данных</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Техническая ошибка</div><div style="font-size: 14px; color: #aaaaaa; margin-bottom: 8px;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Пример]:</span> Справочник недоступен</div><div style="font-size: 13px; color: #aaaaaa; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">[Реакция]: Ожидание или повторная проверка</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Предупреждение</div><div style="font-size: 14px; color: #aaaaaa; margin-bottom: 8px;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Пример]:</span> Нестандартное, но допустимое значение</div><div style="font-size: 13px; color: #aaaaaa; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">[Реакция]: Продолжение по утверждённым правилам</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Повторное поступление</div><div style="font-size: 14px; color: #aaaaaa; margin-bottom: 8px;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Пример]:</span> Найден возможный дубль</div><div style="font-size: 13px; color: #aaaaaa; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">[Реакция]: Проверка истории и существующего объекта</div></div></div><div style="background: #000000; border-left: 2px solid #14b8a6; padding-left: 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0;">Не каждое предупреждение требует остановки обработки. Критерии должны определяться риском операции, а не только наличием отклонения от типового формата.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ТЕХНОЛОГИИ // OCR_AI_INTEGRATION_CONTROL</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Как использовать OCR и ИИ без потери контроля</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">OCR и модели анализа документов позволяют автоматизировать извлечение сведений из сканов, фотографий и документов со сложной структурой.</p><p style="font-size: 16px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold; border-left: 3px solid #14b8a6; padding-left: 15px;">Однако важно разделять три результата:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">СТАДИИ_АНАЛИЗА // EXTRACTION_STAGES</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[stage]</span>Распознавание символов.</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[stage]</span>Определение того, к какому полю относится значение.</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[stage]</span>Проверка того, можно ли использовать это значение в бизнес-операции.</p></div></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">АНАЛИЗ_КОНТЕКСТА // AI_MISINTERPRETATION_RISKS</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ РИСК 1 // ОШИБКА ОПРЕДЕЛЕНИЯ ПОЛЯ ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Например, модель может правильно распознать число 18 500,00, но ошибочно определить, что оно относится к общей сумме, хотя в документе это сумма отдельной позиции.</p></div><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ РИСК 2 // НЕСООТВЕТСТВИЕ ДАННЫХ ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Или значение может быть извлечено правильно, но не соответствовать актуальным сведениям в корпоративном справочнике.</p></div></div><div style="background: #000000; border-left: 2px solid #14b8a6; padding-left: 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0;">Поэтому высокая уверенность распознавания не является достаточным основанием для автоматического принятия решения.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ГИБРИДНЫЙ_КОНТРОЛЬ // HUMAN_AI_ORCHESTRATION</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Когда нужна ручная проверка</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Для каждого поля следует учитывать его критичность и цену ошибки.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Неоднозначность в необязательном комментарии может не влиять на загрузку. Ошибка в сумме, идентификаторе контрагента или номере договора способна привести к неправильному учёту.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Пороговые значения уверенности необходимо устанавливать на основании испытаний на реальных документах. Универсальный порог для всех моделей, типов документов и полей использовать некорректно.</p><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px; margin-bottom: 35px;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[link]</span>Полезно также хранить связь между извлечённым значением и исходным фрагментом документа. Это позволяет оператору проверять конкретное поле, а не перечитывать весь файл.</p></div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Где ИИ особенно полезен</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Искусственный интеллект можно использовать для классификации документов, извлечения полей, поиска возможных соответствий и формирования понятных объяснений.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">РАЗДЕЛЕНИЕ_МЕТОДОВ // DETERMINISTIC_VS_PROBABILISTIC</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #050807; border: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 12px; font-weight: bold;">[ МЕТОД // ВОСПРОИЗВОДИМЫЕ ПРОВЕРКИ ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Но там, где правило можно определить однозначно, предпочтительны воспроизводимые проверки. Например, математический расчёт суммы должен выполняться по установленной формуле, а не оцениваться языковой моделью.</p></div><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ МЕТОД // ВЕРОЯТНОСТНЫЕ МОДЕЛИ ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Если система использует ИИ для сопоставления контрагентов, результат должен проходить предусмотренные проверки идентификаторов и неоднозначности.</p></div></div><div style="background: #0a1f1c; padding: 15px 20px; border-radius: 2px; border: 1px solid #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; width: 100%; box-sizing: border-box;"><span style="color: #14b8a6; font-weight: bold;">Рабочий принцип: модель предлагает интерпретацию, а система проверок определяет, допустимо ли использовать её результат.</span></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ИДЕМПОТЕНТНОСТЬ // ANTI_DUPLICATION_CONTROLS</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Как защититься от дубликатов и повторной обработки</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Проблема дубликатов не ограничивается одинаковыми файлами. Один и тот же документ может поступить через электронную почту, API, личный кабинет или повторную отправку интеграционного сервиса.</p><p style="font-size: 16px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold; border-left: 3px solid #14b8a6; padding-left: 15px;">Поэтому контроль следует разделять на три уровня.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">УРОВНИ_КОНТРОЛЯ // DUPLICATION_LAYERS</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Идентичность файла</div><div style="font-size: 14px; color: #aaaaaa;">Используется контрольная сумма и другие технические признаки.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Идентичность документа</div><div style="font-size: 14px; color: #aaaaaa;">Учитываются тип, номер, дата, контрагент и доступные идентификаторы источника.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Идентичность операции</div><div style="font-size: 14px; color: #aaaaaa; margin-bottom: 8px;">Определяется, не был ли уже выполнен тот бизнес-эффект, для которого документ передавался.</div><div style="font-size: 13px; color: #14b8a6; font-weight: bold; font-family: 'SF Mono', Monaco, monospace; border-top: 1px dashed #165c52; padding-top: 8px;">Последний уровень особенно важен при интеграции.</div></div></div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Идемпотентность</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Идемпотентность означает, что повторное выполнение одной и той же логической операции не приводит к повторному бизнес-эффекту. Для её реализации используют устойчивый идентификатор операции, хранение результата обработки и соответствующие механизмы контроля на стороне получателя.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ОГРАНИЧЕНИЯ_МЕХАНИЗМОВ // IDEMPOTENCY_REALITY_CHECK</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 25px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">При этом важно понимать ограничение: один лишь идентификатор в запросе не обеспечивает идемпотентность, если целевая система не проверяет его и не защищает создание объекта от повторения.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Если подтверждение потеряно, интеграция должна уметь установить результат первоначальной операции, а не безусловно создавать новый объект.</p></div><div style="background: #000000; border-left: 2px solid #14b8a6; padding-left: 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0;">Для финансовых документов это принципиально: технический повтор запроса не должен автоматически становиться повторной хозяйственной операцией.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">СОГЛАСОВАННОСТЬ // RUNTIME_CONCURRENCY_CONTROL</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Почему предварительная проверка не отменяет контроль в 1С или ERP</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Даже если документ прошёл все проверки, его загрузка может завершиться отказом.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Причины могут быть связаны с изменением справочников, ограничениями конкретной конфигурации, состоянием договора, правами доступа или бизнес-правилами, которые применяются только в момент создания объекта.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Особенно важны проверки, зависящие от изменяемого состояния: остатки заказов, лимиты, статусы и доступность ресурсов.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ЗАЩИТА_ОТ_КОНКУРЕНЦИИ // RUNTIME_VALIDATION_MANDATE</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 25px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Если условие должно оставаться истинным в момент фиксации операции, недостаточно проверить его только заранее. Целевая система должна обеспечивать необходимую защиту в точке выполнения действия.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">В зависимости от архитектуры это может потребовать транзакционных ограничений, повторной проверки внутри операции, блокировок или другого механизма согласования конкурентных изменений.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Не следует утверждать, что предварительная проверка сама по себе устраняет гонки данных. Она сокращает число ожидаемых отказов, но не заменяет механизмы согласованности целевой системы.</p></div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Разделение ответственности</h3><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">МАТРИЦА_ОТВЕТСТВЕННОСТИ // BOUNDED_CONTEXTS</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Извлечение данных</div><div style="font-size: 14px; color: #aaaaaa;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Зона]:</span> Получение значений из документа</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Сервис валидации</div><div style="font-size: 14px; color: #aaaaaa;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Зона]:</span> Проверка структуры, реквизитов и согласованности</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Справочники и источники данных</div><div style="font-size: 14px; color: #aaaaaa;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Зона]:</span> Предоставление актуальных сведений для сопоставления</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Интеграционный слой</div><div style="font-size: 14px; color: #aaaaaa;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Зона]:</span> Передача, корреляция запросов и обработка повторов</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Целевая система</div><div style="font-size: 14px; color: #aaaaaa;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Зона]:</span> Проверка собственных ограничений и фиксация операции</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Мониторинг и аудит</div><div style="font-size: 14px; color: #aaaaaa;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Зона]:</span> Контроль результатов и диагностика проблем</div></div></div><div style="background: #000000; border-left: 2px solid #14b8a6; padding-left: 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0;">Такое разделение помогает избежать ситуации, когда одна система считает документ корректным, другая изменяет его значения, а третья создаёт объект без сохранения связи с исходным документом.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">НАДËЖНОСТЬ // FAULT_TOLERANCE_ARCHITECTURE</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Как проектировать восстановление после сбоев</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Надёжность определяется не только тем, как система работает при нормальных условиях, но и тем, как она ведёт себя при частичном отказе.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Например, документ может пройти валидацию, попасть в очередь, быть передан в 1С, но не получить подтверждение. Или сервис проверки может временно потерять доступ к справочнику.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">В таких случаях необходимы устойчивые статусы обработки и возможность продолжить процесс без потери информации.</p><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Рекомендуемая модель состояний</h3><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ВИЗУАЛИЗАЦИЯ // МАТРИЦА ПЕРЕХОДОВ КОНЕЧНОГО АВТОМАТА ДОКУМЕНТА</div><div style="width: 100%; background: #050807; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px; margin-bottom: 25px;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box;"><div style="border-left: 2px solid #14b8a6; padding-left: 12px;"><div style="color: #ffffff; font-weight: bold; margin-bottom: 4px;">[ Входной поток ]</div><div style="color: #aaaaaa; font-size: 13px;">[*] ➔ Received (Получен)<br>Received ➔ Extracting (Извлечение)<br>Extracting ➔ Validating (Проверка)</div></div><div style="border-left: 2px solid #14b8a6; padding-left: 12px;"><div style="color: #ffffff; font-weight: bold; margin-bottom: 4px;">[ Валидация ]</div><div style="color: #aaaaaa; font-size: 13px;">Validating ➔ <span style="color: #ff6b6b; font-weight: bold;">Rejected</span> (Критическая ошибка)<br>Validating ➔ <span style="color: #14b8a6; font-weight: bold;">NeedsReview</span> (Неоднозначность)<br>Validating ➔ Ready (Проверки пройдены)<br>NeedsReview ➔ Validating (После исправления или подтверждения данных)</div></div><div style="border-left: 2px solid #14b8a6; padding-left: 12px;"><div style="color: #ffffff; font-weight: bold; margin-bottom: 4px;">[ Выполнение и Неопределённость ]</div><div style="color: #aaaaaa; font-size: 13px;">Ready ➔ Submitting (Передача)<br>Submitting ➔ Confirmed (Подтвержден)<br>Submitting ➔ <span style="color: #ff6b6b; font-weight: bold;">OutcomeUnknown</span> (Сбой ответа)<br>OutcomeUnknown ➔ Confirmed (Объект найден)<br>OutcomeUnknown ➔ Submitting (Повтор)<br>OutcomeUnknown ➔ NeedsReview (Не определен)</div></div></div></div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 25px 0; font-style: italic;">Эта модель условная: реальные статусы должны отражать требования конкретной интеграции.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">КОНТРАКТ_ОБРАБОТКИ_СБОЕВ // OUTCOME_UNKNOWN_POLICY</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Особое внимание необходимо уделить состоянию OutcomeUnknown — результат операции неизвестен. Оно принципиально отличается от подтверждённого отказа.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Если запрос завершился тайм-аутом, нельзя считать, что объект не создан. Сначала необходимо установить результат первоначальной операции, а затем решать вопрос о повторной отправке.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ЛОГИРОВАНИЕ // RECOVERY_DATA_RETENTION</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Что необходимо сохранять</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Для восстановления полезно хранить:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">СПЕЦИФИКАЦИЯ_ЖУРНАЛА // RECOVERY_LOG_ATTRIBUTES</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[log]</span>внутренний идентификатор документа;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[log]</span>идентификатор операции загрузки;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[log]</span>текущий статус и историю переходов;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[log]</span>версию применённых правил;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[log]</span>результат каждой проверки;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[log]</span>идентификатор объекта в целевой системе, если он известен;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[log]</span>сведения о попытках отправки;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[log]</span>ошибки и подтверждения внешних систем.</p></div></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">БЕЗОПАСНОСТЬ_ДАННЫХ // DATA_GOVERNANCE_CONSTRAINT</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">При этом хранение исходных файлов, распознанных данных и журналов должно соответствовать требованиям информационной безопасности, срокам хранения и правилам доступа.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Журналирование не должно приводить к неконтролируемому накоплению персональных или финансовых данных.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">МЕТРИКИ_ЭФФЕКТИВНОСТИ // AUTOMATION_PERFORMANCE_METRICS</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Как измерять эффективность автоматизации</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Высокая доля автоматически обработанных документов ещё не означает, что система надёжна. Она может быстро пропускать ошибочные данные или, наоборот, чрезмерно часто блокировать корректные документы.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold; border-left: 3px solid #14b8a6; padding-left: 15px;">Поэтому оценивать необходимо и качество обнаружения ошибок, и стоимость исключений, и результаты после загрузки.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">МАТРИЦА_ОЦЕНКИ // KPI_METRICS_DASHBOARD</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; width: 100%; box-sizing: border-box; margin-bottom: 10px;"><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Доля автоматического прохождения</div><div style="font-size: 14px; color: #aaaaaa;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Показывает]:</span> Какая часть документов обрабатывается без вмешательства</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Точность извлечения критичных полей</div><div style="font-size: 14px; color: #aaaaaa;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Показывает]:</span> Насколько корректно распознаются важные значения</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Доля пропущенных ошибок</div><div style="font-size: 14px; color: #aaaaaa;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Показывает]:</span> Какие реальные дефекты не обнаруживаются</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Доля ложных блокировок</div><div style="font-size: 14px; color: #aaaaaa;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Показывает]:</span> Как часто корректные документы ошибочно отклоняются</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Доля повторных загрузок с дублированием</div><div style="font-size: 14px; color: #aaaaaa;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Показывает]:</span> Насколько эффективно предотвращается повторный бизнес-эффект</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Среднее время обработки</div><div style="font-size: 14px; color: #aaaaaa;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Показывает]:</span> Сколько занимает путь от поступления до результата</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Доля ручных проверок</div><div style="font-size: 14px; color: #aaaaaa;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Показывает]:</span> Какая нагрузка остаётся на сотрудниках</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Доля ошибок после загрузки</div><div style="font-size: 14px; color: #aaaaaa;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Показывает]:</span> Какие дефекты обнаруживаются уже в целевой системе</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Доля операций с неизвестным результатом</div><div style="font-size: 14px; color: #aaaaaa;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace;">[Показывает]:</span> Насколько часто требуется восстановление после неясного исхода запроса</div></div></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">АНАЛИЗ_ПОКАЗАТЕЛЕЙ // CRITICAL_FIELDS_METRICS</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Почему нужны отдельные показатели для критичных полей</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Предположим, система правильно извлекает большинство полей документа, но регулярно ошибается в суммах.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Общий процент точности может выглядеть высоким, хотя для финансового процесса качество будет недостаточным.</p><div style="display: grid; grid-template-columns: 1fr; max-width: 650px; margin-bottom: 25px; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace; font-size: 13px;"><div style="background: #200b0b; padding: 12px 15px; border-radius: 2px; border: 1px solid #ff6b6b;"><span style="color: #ff6b6b; font-weight: bold;">Поэтому необходимо оценивать критичные реквизиты отдельно, использовать контрольные выборки и анализировать результаты по типам документов и источникам поступления.</span></div></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">МЕТОДОЛОГИЯ_КОНТРОЛЯ // INDEPENDENT_ERROR_MEASUREMENT</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 25px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Для измерения пропущенных ошибок нужно сравнивать результаты автоматической проверки с независимо подтверждёнными результатами на репрезентативной выборке. Без такого эталона невозможно надёжно оценить, сколько дефектов система не обнаружила.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; После обновления моделей, правил или интеграции следует повторять тестирование, чтобы выявлять регрессии до массового запуска.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">РЕГЛАМЕНТ_ВНЕДРЕНИЯ // DEPLOYMENT_ROADMAP</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Как внедрять проверку без избыточной сложности</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Практичный проект начинается с анализа реальных ошибок, а не с выбора самой сложной технологии.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ЭТАПЫ_ПРОЕКТИРОВАНИЯ // IMPLEMENTATION_STEPS</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Первый этап — инвентаризация</div><div style="font-size: 14px; color: #aaaaaa;">Необходимо определить виды документов, каналы поступления, целевые системы и основные причины отказов.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Второй этап — формализация правил</div><div style="font-size: 14px; color: #aaaaaa;">Следует описать обязательные поля, проверки реквизитов, расчёты, связи с другими объектами и критичные ограничения.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Третий этап — детерминированные проверки</div><div style="font-size: 14px; color: #aaaaaa;">В первую очередь автоматизируют правила, которые можно однозначно формализовать: форматы, обязательные поля, арифметику и идентификаторы.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Четвёртый этап — извлечение данных</div><div style="font-size: 14px; color: #aaaaaa;">OCR и модели анализа документов подключают там, где информация поступает в неструктурированном виде. Качество проверяют на реальных документах.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Пятый этап — обработка исключений</div><div style="font-size: 14px; color: #aaaaaa;">Создают понятные статусы, сообщения об ошибках и механизм ручного разрешения неоднозначностей.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Шестой этап — надёжная интеграция</div><div style="font-size: 14px; color: #aaaaaa;">Реализуют безопасные повторы, контроль результата, защиту от дублей и регистрацию созданных объектов.</div></div></div><div style="background: #000000; border-left: 3px solid #14b8a6; padding-left: 15px; margin-bottom: 30px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 10px 0;">Седьмой этап — эксплуатационный контроль</p><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Отслеживают пропущенные ошибки, причины ручных проверок, отказы целевой системы и изменение качества после обновлений.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 35px 0;">Не каждый проект требует отдельного сервиса для каждого этапа. Архитектуру следует соотносить с объёмом документов, критичностью операций, требованиями к задержке и возможностями существующей инфраструктуры.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">АНАЛИЗ_АРХИТЕКТУРНЫХ_РИСКОВ // ARCHITECTURE_TRADEOFFS</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 10px;"><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ РИСК // ИЗБЫТОЧНОЕ ДРОБЛЕНИЕ ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Избыточное дробление может усложнить диагностику и сопровождение...</p></div><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ РИСК // МОНОЛИТНАЯ РЕАЛИЗАЦИЯ ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">...тогда как чрезмерно монолитная реализация способна затруднить независимое изменение правил и восстановление после сбоев.</p></div></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">РЕЗЮМЕ // QUALITY_ASSURANCE_CONCLUSION</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Заключение</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Автоматизация проверки документов перед загрузкой в 1С и ERP — это не просто распознавание реквизитов и контроль обязательных полей. Это механизм, который должен подтверждать достаточность, согласованность и допустимость данных для конкретной бизнес-операции.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Надёжная система объединяет извлечение данных, нормализацию, форматные и реквизитные проверки, арифметический контроль, сопоставление со справочниками, обнаружение дубликатов и проверку бизнес-ограничений.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ОГРАНИЧЕНИЯ_ТЕХНОЛОГИЙ // INTEGRATION_LIMITATIONS</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 30px;"><div style="background: #000000; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ ОГРАНИЧЕНИЕ // ОЦЕНКА OCR И ИИ ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">OCR и искусственный интеллект расширяют возможности обработки документов, но не заменяют проверяемые правила. Высокая уверенность распознавания не доказывает корректность значения...</p></div><div style="background: #000000; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ ОГРАНИЧЕНИЕ // ОЦЕНКА ВРЕМЕНИ ЗАГРУЗКИ ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">...а корректность документа на момент проверки не гарантирует допустимость операции в момент загрузки.</p></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Поэтому архитектура должна учитывать изменение состояния корпоративных систем, защищать от повторного бизнес-эффекта, различать технические сбои и ошибки данных, а также сохранять историю решений и обеспечивать восстановление после нештатных ситуаций.</p><div style="background: #000000; border-left: 3px solid #14b8a6; padding-left: 15px; margin-bottom: 30px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 10px 0;">Ключевой критерий качества:</p><p style="font-size: 15px; color: #aaaaaa; margin: 0;">не количество документов, которые система смогла обработать автоматически, а способность предотвращать недопустимые операции, объяснять причины отказов и безопасно завершать обработку даже при ошибках и сбоях.</p></div><div style="background: #0a1f1c; padding: 15px 20px; border-radius: 2px; border: 1px solid #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; width: 100%; box-sizing: border-box;"><span style="color: #14b8a6; font-weight: bold;">Именно это отличает простую автоматизацию переноса данных от полноценного контура контроля их качества.</span></div></div><p> </p><div style="max-width: 1100px; margin: 60px auto 0 auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">НАВИГАЦИЯ // SUGGESTED_READING</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ДОКУМЕНТЫ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">OCR: как превратить сканы в данные</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/ocr-kak-prevratit-skany-v-dannye/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ДОКУМЕНТЫ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Как автоматизировать обработку документов</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kak-avtomatizirovat-obrabotku-dokumentov/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ДАННЫЕ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Почему в системе появляются дубликаты и несовпадения</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/pochemu-v-sisteme-poyavlyayutsya-dublikaty-i-nesovpadeniya/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div></div></div><div style="max-width: 1100px; margin: 20px auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; border-top: 1px solid #165c52; padding: 40px 0 0 0; box-sizing: border-box; width: 100%;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 40px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ EXPERTISE JOURNAL ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Все инженерные материалы и экспертные статьи</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/ekspertiza/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">перейти к каталогу ──►</a></div></div><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ CORE GLOSSARY ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Полный алфавитный справочник ИТ-терминов</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/glossariy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">открыть справочник ──►</a></div></div></div></div></div></article></main><footer class="footer"><div class="wrapper"><div class="footer__copyright"><p> </p><p> </p></div><button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg width="20" height="20"><use xlink:href="https://log-ai.ru/assets/svg/svg-map.svg#toparrow"/></svg></button></div></footer><script defer="defer" src="https://log-ai.ru/assets/js/scripts.min.js?v&#x3D;d0fc1030089a37f93a2d51bf6d07565c"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script><script>(() => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') !== 'monument') return;
+
+  const IMAGE_URL = 'https://log-ai.ru/media/files/Interstellar.jpeg';
+  const AUDIO_URL = 'https://log-ai.ru/media/files/interstellar.mp3';
+
+  // Защита от повторного запуска
+  if (document.getElementById('log-ai-monument')) return;
+
+  const monument = document.createElement('div');
+  monument.id = 'log-ai-monument';
+
+  const root = document.documentElement;
+  const body = document.body;
+
+  const previousRootOverflow = root.style.overflow;
+  const previousBodyOverflow = body.style.overflow;
+  const previousBodyPosition = body.style.position;
+  const previousBodyTop = body.style.top;
+  const previousBodyWidth = body.style.width;
+  const previousScrollX = window.scrollX;
+  const previousScrollY = window.scrollY;
+
+  root.style.overflow = 'hidden';
+  body.style.overflow = 'hidden';
+  body.style.position = 'fixed';
+  body.style.top = `-${previousScrollY}px`;
+  body.style.width = '100%';
+
+  monument.innerHTML = `
+    <div class="monument-universe"></div>
+    <canvas class="monument-stars"></canvas>
+    <div class="monument-shade"></div>
+
+    <div class="monument-frame">
+      <p class="monument-overline">ARCHIVUM · LOG-AI · MMXXVI</p>
+
+      <div class="monument-rule"></div>
+
+      <h1>PER ASPERA<br><span>AD ASTRA</span></h1>
+
+      <p class="monument-translation">
+        THROUGH HARDSHIP, TO THE STARS
+      </p>
+
+      <div class="monument-message">
+        <p>TO THOSE WHO BUILD BEYOND THE LIMITS OF THEIR TIME.</p>
+        <p>TO THOSE WHO CONTINUE WHEN THE OUTCOME IS UNKNOWN.</p>
+        <p>TO THOSE WHO WILL DISCOVER THIS LONG AFTER ITS CREATION.</p>
+      </div>
+
+      <p class="monument-declaration">
+        YOU WERE NOT THE FIRST TO LOOK AT THE STARS.<br>
+        BUT YOU MAY BE AMONG THOSE WHO REACH THEM.
+      </p>
+
+      <div class="monument-rule"></div>
+          
+      <p class="monument-translation">
+        A MARK LEFT IN THE MACHINE.
+      </p>   
+
+      <p class="monument-signature">
+        LOG·AI·ARCHITECTI·MMXXVI
+      </p>
+
+      <p class="monument-exit" id="monument-hint">
+        [ CLICK ANYWHERE TO RETURN ]
+      </p>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #log-ai-monument {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      background: #03040a;
+      color: #e5dfd3;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      box-sizing: border-box;
+      cursor: pointer;
+      isolation: isolate;
+      opacity: 0;
+      animation: logai-monument-appear 1.8s ease forwards;
+    }
+
+    #log-ai-monument .monument-universe {
+      position: fixed;
+      inset: -3%;
+      z-index: -3;
+      background-image: url("https://log-ai.ru/media/files/Interstellar.jpeg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transform: scale(1.02);
+      animation: logai-cosmic-drift 35s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-shade {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(0,0,0,.24) 0%,
+          rgba(0,0,0,.52) 65%,
+          rgba(0,0,0,.78) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.42),
+          rgba(0,0,0,.18) 45%,
+          rgba(0,0,0,.62)
+        );
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-frame {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', serif;
+      padding: 30px 0;
+      text-shadow: 0 2px 18px rgba(0,0,0,.9);
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-translation,
+    #log-ai-monument .monument-signature,
+    #log-ai-monument .monument-exit {
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-signature {
+      color: #c0a16a;
+    }
+
+    #log-ai-monument .monument-rule {
+      height: 1px;
+      width: 160px;
+      max-width: 60%;
+      margin: 30px auto;
+      background: linear-gradient(
+        to right,
+        transparent,
+        #a68a55,
+        transparent
+      );
+      box-shadow: 0 0 12px rgba(190,155,90,.2);
+    }
+
+    #log-ai-monument h1 {
+      margin: 35px 0 18px;
+      font-size: clamp(30px, 7vw, 58px);
+      line-height: 1.5;
+      letter-spacing: .16em;
+      font-weight: 400;
+      color: #f4f0e8;
+    }
+
+    #log-ai-monument h1 span {
+      color: #d2b77e;
+    }
+
+    #log-ai-monument .monument-translation {
+      color: #c0b8aa;
+    }
+
+    #log-ai-monument .monument-message {
+      margin: 55px auto 38px;
+      max-width: 490px;
+      color: #e0d9cd;
+      font-size: 13px;
+      line-height: 2.2;
+      letter-spacing: .035em;
+    }
+
+    #log-ai-monument .monument-message p {
+      margin: 0 0 12px;
+    }
+
+    #log-ai-monument .monument-declaration {
+      color: #e0c48a;
+      font-size: 12px;
+      line-height: 2.3;
+      letter-spacing: .08em;
+    }
+
+    #log-ai-monument .monument-exit {
+      margin-top: 36px;
+      color: #c0b8aa;
+      font-size: 9px;
+      letter-spacing: .18em;
+    }
+
+    @keyframes logai-monument-appear {
+      to { opacity: 1; }
+    }
+
+    @keyframes logai-cosmic-drift {
+      from { transform: scale(1.02); }
+      to { transform: scale(1.13); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #log-ai-monument,
+      #log-ai-monument .monument-universe {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(monument);
+
+  // Тонкие, редкие звёзды
+  const canvas = monument.querySelector('.monument-stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let frameId = null;
+  let closed = false;
+
+  function resizeStars() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(window.innerWidth * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    stars = Array.from({ length: 65 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      length: 8 + Math.random() * 25,
+      speed: 0.25 + Math.random() * 0.75,
+      alpha: 0.15 + Math.random() * 0.5,
+      delay: Math.random() * 500
+    }));
+  }
+
+  function drawStars() {
+    if (closed) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    for (const star of stars) {
+      star.delay -= 1;
+
+      if (star.delay <= 0) {
+        star.y += star.speed;
+        star.x -= star.speed * 0.35;
+
+        ctx.beginPath();
+        ctx.moveTo(star.x, star.y);
+        ctx.lineTo(star.x - star.length * 0.35,
+                   star.y - star.length);
+
+        ctx.strokeStyle = `rgba(210,220,255,${star.alpha})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+
+        if (star.y > h + 30 || star.x < -30) {
+          star.x = Math.random() * w + 30;
+          star.y = -Math.random() * h * 0.4;
+          star.delay = 30 + Math.random() * 180;
+        }
+      }
+    }
+
+    frameId = requestAnimationFrame(drawStars);
+  }
+
+  resizeStars();
+  drawStars();
+
+  window.addEventListener('resize', resizeStars);
+
+  // Музыка
+  const audio = document.createElement('audio');
+  audio.id = 'monument-audio';
+  audio.src = AUDIO_URL;
+  audio.loop = true;
+  audio.preload = 'auto';
+  audio.volume = 0.35;
+  document.body.appendChild(audio);
+
+  let playing = false;
+  let starting = false;
+
+  const hint = document.getElementById('monument-hint');
+
+  function startMusic() {
+    if (closed || starting || playing) return;
+
+    starting = true;
+
+    audio.play().then(() => {
+      starting = false;
+
+      if (closed) {
+        audio.pause();
+        return;
+      }
+
+      playing = true;
+      hint.textContent = '[ CLICK ANYWHERE TO RETURN ]';
+    }).catch((error) => {
+      starting = false;
+
+      if (closed) return;
+
+      if (error.name === 'NotAllowedError') {
+        hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+        return;
+      }
+
+      console.warn('LOG-AI audio:', error.name, error.message);
+      hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+    });
+  }
+
+  function closeMonument() {
+    if (closed) return;
+    closed = true;
+
+    cancelAnimationFrame(frameId);
+    window.removeEventListener('resize', resizeStars);
+    window.removeEventListener('keydown', onKeyDown);
+
+    audio.pause();
+    audio.remove();
+    monument.remove();
+    style.remove();
+
+    root.style.overflow = previousRootOverflow;
+    body.style.overflow = previousBodyOverflow;
+    body.style.position = previousBodyPosition;
+    body.style.top = previousBodyTop;
+    body.style.width = previousBodyWidth;
+
+    window.scrollTo(previousScrollX, previousScrollY);
+
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete('mode');
+
+    window.history.replaceState(
+      {},
+      document.title,
+      cleanUrl.pathname + cleanUrl.search + cleanUrl.hash
+    );
+  }
+
+  function onKeyDown(event) {
+    if (event.key === 'Escape') closeMonument();
+  }
+
+  monument.addEventListener('click', () => {
+    if (closed) return;
+
+    if (playing) {
+      closeMonument();
+    } else {
+      startMusic();
+    }
+  });
+
+  window.addEventListener('keydown', onKeyDown);
+
+  // Первая попытка автоматического запуска
+  startMusic();
+})();</script><script>(function () {
+    // ВНИМАНИЕ!!!!!!!!!!!!!!!!!!!!Плавный инерционный скролл только для мыши/тачпада
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    let targetY = window.scrollY;
+    let currentY = window.scrollY;
+    let animationFrame = null;
+
+    // ===== НАСТРОЙКИ =====
+    const SPEED = 0.70;       // 0.4 = медленнее, 0.65 = средне, 1.0 = быстрее
+    const SMOOTHNESS = 0.13;  // 0.08 = мягче, 0.12 = средне, 0.18 = быстрее
+    const MAX_STEP = 500;     // максимальный шаг одного движения колеса
+    // =====================
+
+    function animateScroll() {
+        currentY += (targetY - currentY) * SMOOTHNESS;
+
+        if (Math.abs(targetY - currentY) < 0.5) {
+            currentY = targetY;
+            window.scrollTo(0, currentY);
+            animationFrame = null;
+            return;
+        }
+
+        window.scrollTo(0, currentY);
+        animationFrame = requestAnimationFrame(animateScroll);
+    }
+
+    window.addEventListener('wheel', function (event) {
+
+    // Если глобус активирован кликом —
+    // колесо полностью отдаём Globe.gl для zoom.
+    const globe = event.target.closest('#globeViz');
+
+    if (globe && globe.dataset.interacting === 'true') {
+        return;
+    }
+
+    // Внутренний скролл AI-чата не трогаем
+    if (event.target.closest('#logai-window, #logai-msgs')) {
+        return;
+    }
+
+    event.preventDefault();
+
+        let delta = event.deltaY * SPEED;
+
+        // Ограничиваем слишком резкие движения
+        delta = Math.max(-MAX_STEP, Math.min(MAX_STEP, delta));
+
+        targetY += delta;
+
+        // Не даём уйти выше/ниже страницы
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        targetY = Math.max(0, Math.min(targetY, maxY));
+
+        if (!animationFrame) {
+            animationFrame = requestAnimationFrame(animateScroll);
+        }
+    }, { passive: false });
+
+    // Синхронизация, если страницу прокрутили другим способом
+    window.addEventListener('scroll', function () {
+        if (!animationFrame) {
+            targetY = window.scrollY;
+            currentY = window.scrollY;
+        }
+    }, { passive: true });
+
+})();</script><div id="logai-footer-mobile" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box;"><div style="margin: 0 auto 20px auto; padding-top: 40px; text-align: center; margin-bottom: 40px;"><a href="mailto:info@log-ai.ru" style="font-size: 24px; font-family: 'SF Mono', Monaco, monospace; color: #e5e7eb; text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: 0.3px;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#e5e7eb'">info@log-ai.ru</a><p style="color: #aaaaaa; font-size: 15px; line-height: 1.6; max-width: 750px; margin: 15px auto 0 auto;">Пришлите описание задачи, техническое задание или ссылку на существующую систему. Мы оценим задачу и определим возможные варианты реализации.</p></div><div style="max-width: 850px; margin: 0 auto 40px auto; text-align: center; background: #000000; padding: 0; box-sizing: border-box;"><p style="color: #aaaaaa; font-size: 14px; line-height: 1.6; margin: 0;"><span style="color: #4ade80; margin-right: 6px;">🔒</span> Данные и доступ к системам заказчика обрабатываются в соответствии с согласованными требованиями к безопасности и конфиденциальности. Условия доступа, хранения и обработки данных определяются архитектурой проекта и договором.</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; box-sizing: border-box; width: 100%; margin-bottom: 30px;"><p style="color: #666666; font-size: 12px; line-height: 1.6; margin: 0; width: 100%; text-align: justify;">Сайт носит исключительно информационный характер и не является публичной офертой в соответствии со статьёй 437 Гражданского кодекса РФ. Цены, состав и условия предоставления услуг уточняются при проектировании решения и фиксируются в договоре. Условия технического сопровождения и уровень сервиса могут дополнительно определяться отдельным соглашением (SLA).</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; width: 100%; box-sizing: border-box;"><div style="color: #666666; font-size: 12px; line-height: 1.5; text-align: left;">© 2026 Log-AI<br>Автоматизация бизнеса и ИИ-решения под ключ. Работаем по всей России и СНГ.<br>ИП Скопец Антон Викторович<br>ИНН 741709<span></span>260870 · ОГРНИП 326745600<span></span>204228<br>Все права защищены.</div><div style="display: flex; gap: 20px; flex-wrap: wrap; font-family: sans-serif;"><a href="/privacy-policy/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Политика конфиденциальности</a> <a href="/terms/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Пользовательское соглашение</a></div></div></div><style>@media screen and (max-width: 600px) {
+  #logai-footer-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+}</style><style>/* Анимации и точки */
+    @keyframes logai-bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+    .logai-dots { display: flex !important; flex-direction: row !important; gap: 4px !important; align-items: center !important; height: 12px !important; }
+    .logai-dots span { display: inline-block; width: 5px; height: 5px; background: #aaa !important; border-radius: 50%; animation: logai-bounce 1.4s infinite ease-in-out; }
+    .logai-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .logai-dots span:nth-child(3) { animation-delay: 0.4s; }
+    
+    #logai-msgs::-webkit-scrollbar { width: 5px; }
+    #logai-msgs::-webkit-scrollbar-thumb { background: #666; border-radius: 10px; }
+    
+    /* Сообщения и текст */
+    #logai-msgs div { white-space: pre-wrap !important; word-wrap: break-word !important; padding: 12px 16px !important; margin-bottom: 5px !important; display: flex; flex-direction: column; justify-content: center; }
+    #logai-msgs div p { margin: 0 !important; padding: 0 !important; line-height: 1.5 !important; }
+    #logai-msgs { gap: 12px !important; padding: 20px !important; }
+
+    /* Поле ввода и кнопка отправить */
+    #logai-input { flex: 1 !important; padding: 12px 18px !important; border-radius: 20px !important; background: #4a4e56 !important; border: 1px solid rgba(255,255,255,0.1) !important; outline: none !important; color: #fff !important; font-size: 15px !important; resize: none !important; max-height: 120px !important; line-height: 1.4 !important; }
+    #logai-send-btn { background-color: #007bff !important; border: none !important; width: 45px !important; height: 45px !important; border-radius: 50% !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-size: 24px !important; padding: 0 !important; flex-shrink: 0 !important; }
+
+    /* ГЛАВНЫЕ СТИЛИ (чтобы кнопка и окно не исчезали) */
+    #logai-btn {
+        position: fixed !important; bottom: 40px !important; right: 110px !important;
+        width: 65px !important; height: 65px !important; border-radius: 50% !important;
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        cursor: pointer !important; z-index: 10000 !important; box-shadow: 0 10px 25px rgba(0,123,255,0.4);
+    }
+
+    #logai-window {
+        display: none; position: fixed !important; bottom: 115px !important; right: 110px !important;
+        width: 380px !important; height: 600px !important; background: #3b3e45 !important;
+        border-radius: 24px !important; flex-direction: column; overflow: hidden;
+        z-index: 10000 !important; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.15) !important;
+    }
+
+        /* АДАПТИВ ДЛЯ МОБИЛОК: ЧАТ НА ВЕСЬ ЭКРАН */
+    @media screen and (max-width: 480px) {
+        #logai-window { 
+            right: 0 !important; 
+            left: 0 !important; 
+            bottom: 0 !important; 
+            width: 100% !important; 
+            height: 100% !important; /* Растягиваем окно на 100% экрана смартфона */
+            border-radius: 0 !important; /* Убираем скругления углов, чтобы чат сел монолитом */
+            z-index: 999999 !important; /* Перекрываем все кнопки в ноль */
+        }
+        
+        #logai-btn { 
+            bottom: 80px !important; /* Твоя родная высота кнопки, когда чат закрыт */
+            right: 22px !important;  /* Твой родной сдвиг кнопки */
+            z-index: 999998 !important; /* Когда чат открыт, кнопка останется под ним и не будет торчать */
+        }
+    }</style><div id="logai-widget" style="position: fixed; bottom: var(--widget-bottom, 20px); right: var(--widget-right, 20px); z-index: 9999;"><div id="logai-btn" onclick="toggleLogAI()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><div id="logai-window"><div style="background: #2d3035; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; align-items:center; gap:12px;"><div style="width:35px; height:35px; background:#007bff; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(0,123,255,0.5);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg></div><span style="font-weight:600; color:#fff; font-size:16px; letter-spacing: 0.5px;">AI Ассистент</span></div><span onclick="toggleLogAI()" style="cursor:pointer; color:#fff; font-size:35px; line-height: 0.7; opacity: 0.7;">&times;</span></div><div id="logai-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; background:#3b3e45;"></div><div style="padding:15px 15px 8px 15px; background:#2d3035; display:flex; flex-direction:column; border-top: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; gap:10px; align-items:flex-end; width:100%;"><textarea id="logai-input" rows="1" placeholder="Напишите..." oninput="this.style.height='';this.style.height=this.scrollHeight+'px'"></textarea> <button id="logai-send-btn" onclick="sendLogAI()">➤</button></div><div style="text-align:center; font-size:10px; color:#ffffff; opacity:0.3; margin-top:6px; font-family:sans-serif; pointer-events:none; user-select:none;">ИИ может ошибаться</div></div></div></div><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script>const API_URL = 'https://api2.log-ai.ru';
+    const MY_CLIENT_ID = 'client_arhitektor_2'; // МЕНЯТЬ ТУТ
+    const MY_BOT_PATH = 'arhitektor_2';  // МЕНЯТЬ ТУТ 
+    
+       let logSid;
+    try {
+        logSid = localStorage.getItem('logai_sid');
+        if (!logSid) {
+            logSid = 's_' + Math.random().toString(36).substr(2, 12);
+            localStorage.setItem('logai_sid', logSid);
+        }
+    } catch (e) {
+        // Если доступ к памяти закрыт (инкогнито), создаем временный ID
+        logSid = 'temp_' + Math.random().toString(36).substr(2, 12);
+    }
+
+    // Переименовали, чтобы избежать конфликтов
+    let chatIsWaiting = false;
+    let historyLoaded = false;
+    let activeMessageId = null;
+    let pollController = null;
+    let pollTimeoutId = null;
+
+
+       function toggleLogAI() {
+        const w = document.getElementById('logai-window');
+        const isOpen = (window.getComputedStyle(w).display === 'none');
+        
+        if (isOpen) {
+            w.style.display = 'flex';
+            if (!historyLoaded) {
+                loadChatHistory();
+            } 
+            // Если чат в режиме ожидания (точки), пинаем сервер сразу при открытии
+            else if (chatIsWaiting && activeMessageId) {
+                const dotsContainer = document.querySelector('.logai-dots')?.parentElement;
+                if (dotsContainer) {
+                    startPolling(activeMessageId, dotsContainer);
+                }
+            }
+        } else {
+            w.style.display = 'none';
+            // УБРАЛИ stopPolling(), чтобы ИИ докачивал ответ, даже когда окно закрыто
+        }
+    }
+
+
+    function updateInputState() {
+        const input = document.getElementById('logai-input');
+        const btn = document.getElementById('logai-send-btn');
+        if (input) {
+            input.disabled = chatIsWaiting;
+            input.style.opacity = chatIsWaiting ? '0.5' : '1';
+        }
+        if (btn) btn.style.opacity = chatIsWaiting ? '0.5' : '1';
+    }
+
+    function stopPolling() {
+        if (activeMessageId) localStorage.removeItem('poll_start_' + activeMessageId);
+        if (pollController) pollController.abort();
+        if (pollTimeoutId) clearTimeout(pollTimeoutId);
+    
+        pollController = null;
+        pollTimeoutId = null;
+        activeMessageId = null;
+        chatIsWaiting = false;
+        updateInputState();
+    }
+
+    function addLogMsg(txt, isAi) {
+        const d = document.createElement('div');
+        d.style = `padding:12px 16px; border-radius:18px; max-width:82%; font-size:14px; line-height:1.5; margin-bottom:10px; 
+                   ${isAi ? 'align-self:flex-start; background:#4a4e56; color:#dbdee1; border-bottom-left-radius:4px;' 
+                         : 'align-self:flex-end; background:#007bff; color:white; border-bottom-right-radius:4px; box-shadow:0 4px 12px rgba(0,123,255,0.25);'}`;
+
+        if (txt === 'dots') {
+   // ИСПРАВЛЕНО: Добавлен явный текст ожидания рядом с анимацией точек для лучшего UX
+   d.innerHTML = '<div style="display:flex; align-items:center; gap:8px;">' +
+                 '<span style="font-style:italic; opacity:0.8;">ИИ подбирает ответ...</span>' +
+                 '<div class="logai-dots"><span></span><span></span><span></span></div>' +
+                 '</div>';
+ } else {
+   d.innerHTML = typeof marked !== 'undefined' ? marked.parse(txt) : txt;
+ }
+
+        const box = document.getElementById('logai-msgs');
+        box.appendChild(d);
+        box.scrollTop = box.scrollHeight;
+        return d;
+    }
+
+async function loadChatHistory() {
+    const box = document.getElementById('logai-msgs');
+    try {
+        box.innerHTML = '';
+
+        const res = await fetch(`${API_URL}/history/${logSid}?platform=site&clientId=${MY_CLIENT_ID}`);
+        const data = await res.json();
+
+        if (Array.isArray(data.items) && data.items.length > 0) {
+            data.items.forEach((m, index) => {
+                // 1. Показываем сообщение пользователя
+                if (m.message) {
+                    addLogMsg(m.message, false);
+                }
+
+                // 2. Если есть готовый ответ — показываем
+                if (m.answer) {
+                    addLogMsg(m.answer, true);
+                } 
+                // 3. ИСПРАВЛЕНО: Четкое чтение m.message_id из базы данных без путаницы с регистрами
+                else if (m.message_id && index === data.items.length - 1) {
+                    chatIsWaiting = true;
+                    activeMessageId = m.message_id; // Используем m.message_id
+                    
+                    const aiMsg = addLogMsg('dots', true);
+                    startPolling(m.message_id, aiMsg); 
+                }
+            });
+        } else {
+            addLogMsg("Здравствуйте! Я ваш ИИ-ассистент. Чем могу помочь?", true);
+        }
+
+        historyLoaded = true;
+        updateInputState();
+
+    } catch (e) {
+        console.error('History error:', e);
+        addLogMsg("Не удалось загрузить историю чата", true);
+    }
+}
+
+
+async function sendLogAI() {
+    if (chatIsWaiting) return;
+
+    const input = document.getElementById('logai-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // ЖЕЛЕЗНЫЙ ДЕБАУНС: блокируем повторный клик в первую же микросекунду
+    chatIsWaiting = true;
+    updateInputState();
+
+    addLogMsg(msg, false);
+    
+    input.value = ''; 
+    input.style.height = 'auto'; 
+
+    const aiMsg = addLogMsg('dots', true);
+
+    try {
+        const res = await fetch(`${API_URL}/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sessionId: logSid,
+                message: msg,
+                clientId: MY_CLIENT_ID,
+                platform: 'site',
+                botPath: MY_BOT_PATH
+            })
+        });
+
+        // ИСПРАВЛЕНО: Обработка HTTP-ошибок. Передаем false третьим параметром, чтобы не было звука при ошибке
+        if (!res.ok) {
+            let errorMsg = "⚠️ Сервер временно недоступен";
+            if (res.status === 429) errorMsg = "🚫 Слишком много запросов. Подождите немного.";
+            else if (res.status === 403) {
+                try {
+                    const errData = await res.json();
+                    errorMsg = errData.reason || "🚫 Доступ ограничен.";
+                } catch (_) {
+                    errorMsg = "🚫 Доступ ограничен.";
+                }
+            }
+            finish(errorMsg, aiMsg, false); // false — звук НЕ играет
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data.blocked) {
+            finish(data.reason || data.message || "🚫 Сообщение заблокировано", aiMsg, false); // false — без звука
+            return;
+        }
+
+        if (data.messageId) {
+            activeMessageId = data.messageId;
+            startPolling(data.messageId, aiMsg);
+        } else {
+            finish("⚠️ Ошибка регистрации сообщения (нет messageId)", aiMsg, false);
+        }
+    } catch (e) {
+        console.error(e);
+        finish("⚠️ Ошибка связи с сервером. Проверьте интернет.", aiMsg, false);
+    }
+} // Скобка закрывает саму функцию send
+    function startPolling(messageId, aiMsg) {
+        activeMessageId = messageId;
+        pollController = new AbortController();
+        let savedTime = localStorage.getItem('poll_start_' + messageId);
+        if (!savedTime) {
+            savedTime = Date.now().toString();
+            localStorage.setItem('poll_start_' + messageId, savedTime);
+        }
+        let startTime = parseInt(savedTime, 10);
+        let statusChanged = false; // Чтобы не менять текст постоянно
+
+        const poll = async () => {
+            if (activeMessageId !== messageId) return;
+
+            const elapsed = (Date.now() - startTime) / 1000; // секунд прошло
+
+            // 1. На 40-й секунде меняем текст на "Сложный вопрос"
+            if (elapsed > 40 && !statusChanged) {
+                const dots = aiMsg.querySelector('.logai-dots');
+                aiMsg.innerHTML = '🤖 Вопрос сложный, анализирую данные...';
+                if (dots) aiMsg.appendChild(dots); 
+                statusChanged = true;
+            }
+
+            // 2. Лимит ожидания - 10 минут (600 секунд)
+            if (elapsed > 600) {
+                finish("🤖 Извините, ИИ перегружен или запрос слишком сложный. Пожалуйста, попробуйте позже.", aiMsg);
+                return;
+            }
+
+            // 3. Умный интервал: до 50 сек — каждые 3 сек, потом — каждые 10 сек
+            let nextInterval = (elapsed > 50) ? 10000 : 3000;
+
+            try {
+                // Добавили ?t=... чтобы телефон каждый раз реально спрашивал сервер, а не брал из кэша
+                const r = await fetch(`${API_URL}/get-answer/${messageId}?sessionId=${logSid}&clientId=${MY_CLIENT_ID}&t=${Date.now()}`, {
+                    signal: pollController.signal 
+                });
+                const d = await r.json();
+                const finalAnswer = d.answer || (d.status !== 'pending' ? d.answer : null);
+
+                if (finalAnswer) {
+                    finish(finalAnswer, aiMsg);
+                } else {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            } catch (e) {
+                if (e.name !== 'AbortError') {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            }
+        };
+        poll();
+    }
+
+function finish(text, msgElement, isSuccess = true) {
+    if (msgElement) {
+        msgElement.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+        
+        // Звук играет строго при успешном ответе ИИ, при ошибках или банах — тишина
+        if (isSuccess) {
+            try {
+                // ТВОЙ ОРИГИНАЛЬНЫЙ РАБОЧИЙ ПУТЬ: Кэш сбрасывается, файл проигрывается без ошибок 404
+                const audio = new Audio('https://api.log-ai.ru/notify.mp3?v=' + Date.now());
+                audio.volume = 0.4;
+                audio.play().catch(e => console.log("Нужен клик"));
+            } catch (e) {}
+        }
+    }
+    stopPolling();
+}
+
+
+    // Enter для отправки
+    document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('logai-input');
+    if (input) {
+      input.addEventListener('keypress', (e) => {
+        // ИСПРАВЛЕНО: Добавлена проверка !chatIsWaiting, чтобы клавиатура намертво блокировалась во время ожидания ИИ
+        if (e.key === 'Enter' && !e.shiftKey && !chatIsWaiting) {
+          e.preventDefault();
+          sendLogAI();
+        }
+      });
+
+      // ИСПРАВЛЕНО: Текстовое поле плавно растёт вниз до 150px, если текст длинный
+      input.addEventListener('input', function() {
+        this.style.height = 'auto'; 
+        this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+      });
+    }
+    });</script><div id="cookie-notice-wrapper" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #111111; border-top: 1px solid #222222; padding: 10px 15px; box-sizing: border-box; z-index: 99999; display: none; flex-direction: row; justify-content: space-between; align-items: center; gap: 15px; font-family: sans-serif;"><span style="color: #888888; font-size: 12px; line-height: 1.4; text-align: left;">Наш сайт использует файлы cookie для корректной работы. Подробнее — в <a href="/privacy-policy/" style="color: #bfa15f; text-decoration: underline;">Политике конфиденциальности</a>. </span><button onclick="dismissCookieNotice()" style="background: #bfa15f; color: #000000; border: none; padding: 5px 14px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Принять</button></div><style>@media (max-width: 600px) {
+        #cookie-notice-wrapper {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 10px !important;
+            padding: 12px 15px !important;
+        }
+        #cookie-notice-wrapper span {
+            text-align: center !important;
+            font-size: 11px !important;
+        }
+        #cookie-notice-wrapper button {
+            width: 100% !important;
+            padding: 8px !important;
+            font-size: 12px !important;
+        }
+    }</style><script>(function() {
+        var storageKey = 'logai_cookies_accepted';
+        if (!localStorage.getItem(storageKey)) {
+            document.getElementById('cookie-notice-wrapper').style.display = 'flex';
+        }
+    })();
+
+    function dismissCookieNotice() {
+        localStorage.setItem('logai_cookies_accepted', 'true');
+        document.getElementById('cookie-notice-wrapper').style.display = 'none';
+    }</script></body></html>

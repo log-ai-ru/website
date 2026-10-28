@@ -1,0 +1,892 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Deadlock в 1С и PostgreSQL: поиск и устранение блокировок | LOG-AI</title><meta name="description" content="Как найти причину deadlock в 1С и PostgreSQL: разбор журнала, диагностика блокировок, поиск конфликтующих транзакций и устранение причин взаимоблокировок."><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://log-ai.ru/deadlock-v-1s-i-postgresql-kak-nayti-i-ustranit-vzaimoblokirovki-v-bolshoy-baze/"><link rel="alternate" type="application/atom+xml" href="https://log-ai.ru/feed.xml" title="LOG-AI - RSS"><link rel="alternate" type="application/json" href="https://log-ai.ru/feed.json" title="LOG-AI - JSON"><meta property="og:title" content="Deadlock в 1С и PostgreSQL: поиск и устранение блокировок | LOG-AI"><meta property="og:image" content="https://log-ai.ru/media/website/Log-ai-Logo.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:site_name" content="LOG-AI"><meta property="og:description" content="Как найти причину deadlock в 1С и PostgreSQL: разбор журнала, диагностика блокировок, поиск конфликтующих транзакций и устранение причин взаимоблокировок."><meta property="og:url" content="https://log-ai.ru/deadlock-v-1s-i-postgresql-kak-nayti-i-ustranit-vzaimoblokirovki-v-bolshoy-baze/"><meta property="og:type" content="article"><link rel="stylesheet" href="https://log-ai.ru/assets/css/style.css?v&#x3D;b1f5980528b3cc19f4018c94aea81f52"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://log-ai.ru/deadlock-v-1s-i-postgresql-kak-nayti-i-ustranit-vzaimoblokirovki-v-bolshoy-baze/"},"headline":"DEADLOCK в 1С и POSTGRESQL: как найти и устранить взаимоблокировки в большой базе","datePublished":"2026-10-12T09:36+05:00","dateModified":"2026-10-22T09:54+05:00","description":"Как найти причину deadlock в 1С и PostgreSQL: разбор журнала, диагностика блокировок, поиск конфликтующих транзакций и устранение причин взаимоблокировок.","author":{"@type":"Person","name":"AI Automation","url":"https://log-ai.ru/authors/ai-automation/"},"publisher":{"@type":"Organization","name":"AI Automation"}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript><style>body, html, main, #page, .wrapper, .main { background: #000000 !important; background-color: #000000 !important; }</style><link rel="icon" type="image/png" sizes="32x32" href="/media/files/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/media/files/favicon-16.png"><link rel="apple-touch-icon" sizes="180x180" href="/media/files/favicon-180.png"><meta name="yandex-verification" content="9d14e10b64f3b76c"><meta name="google-site-verification" content="-rKktnoSCGCLZToW-jcZeKu5WvWFGuLKdLwwyCux0-M"></head><body class="page-template"><header class="top js-header"><a class="logo" href="https://log-ai.ru/">LOG-AI</a><nav class="navbar js-navbar"><button class="navbar__toggle js-toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><span class="navbar__toggle-box"><span class="navbar__toggle-inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://log-ai.ru/" target="_self">Главная</a></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Услуги</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/avtomatizaciya-obrabotki-zayavok-i-lidov/" target="_self">Автоматизация обработки заявок и лидов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-biznes-processov-integracii-dannye-i-skvoznye-scenarii/" target="_self">Автоматизация бизнес-процессов</a></li><li><a href="https://log-ai.ru/sbor-i-obrabotka-dannyh/" target="_self">Сбор и обработка данных</a></li><li><a href="https://log-ai.ru/ii-dlya-biznesa-i-nejrosetej/" target="_self">ИИ для бизнеса и нейросети</a></li><li><a href="https://log-ai.ru/specializirovannye-cifrovye-sistemy/" target="_self">Специализированные цифровые системы</a></li><li><a href="https://log-ai.ru/individualnye-korporativnye-sistemy/" target="_self">Корпоративные системы</a></li><li><a href="https://log-ai.ru/tehnicheskoe-soprovozhdenie/" target="_self">Техническое сопровождение</a></li><li><a href="https://log-ai.ru/it-audit-i-predproektnoe-obsledovanie/" title="/it-audit-i-predproektnoe-obsledovanie/" target="_self">IT-аудит и предпроектное обследование</a></li><li><a href="https://log-ai.ru/oblachnyy-i-infrastrukturnyy-konsalting/" title="/oblachnyy-i-infrastrukturnyy-konsalting/" target="_self">Облачный и инфраструктурный консалтинг</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Решения</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakie-sistemy-my-integriruem/" target="_self">Какие системы мы интегрируем</a></li><li><a href="https://log-ai.ru/kak-rabotaet-ii-v-biznese/" target="_self">Как работает ИИ в бизнесе</a></li><li><a href="https://log-ai.ru/resheniya-po-zadacham/" target="_self">Решения по задачам</a></li><li><a href="https://log-ai.ru/avtomatizaciya-proizvodstva/" target="_self">Для производства</a></li><li><a href="https://log-ai.ru/avtomatizaciya-logistiki-i-skladov/" target="_self">Для логистики и складов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-optovoy-torgovli/" target="_self">Для оптовой торговли</a></li><li><a href="https://log-ai.ru/avtomatizaciya-e-commerce/" target="_self">Для e-commerce</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Реализация</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kak-my-rabotaem/" target="_self">Как мы работаем</a></li><li><a href="https://log-ai.ru/dokumentaciya-sistemy/" target="_self">Документация системы</a></li><li><a href="https://log-ai.ru/infrastruktura-i-razmeshchenie/" target="_self">Инфраструктура и размещение</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Выбор</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakuyu-avtomatizaciyu-vybrat/" target="_self">Какую автоматизацию выбрать</a></li><li><a href="https://log-ai.ru/chto-avtomatizirovat-v-biznese-v-pervuyu-ochered/" target="_self">Что автоматизировать в бизнесе в первую очередь</a></li><li><a href="https://log-ai.ru/kak-podgotovit-biznes-k-avtomatizacii/" target="_self">Как подготовить бизнес к автоматизации</a></li><li><a href="https://log-ai.ru/kak-vnedrit-avtomatizaciyu/" target="_self">Как внедрить автоматизацию</a></li><li><a href="https://log-ai.ru/kak-ocenit-rezultat-avtomatizacii/" target="_self">Как оценить результат автоматизации</a></li><li><a href="https://log-ai.ru/stoimost-razrabotki/" target="_self">Стоимость разработки</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">О нас</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/inzhenernyy-sostav/" target="_self">Инженерный состав</a></li><li><a href="https://log-ai.ru/keysy/" target="_self">Кейсы</a></li><li><a href="https://log-ai.ru/glossariy/" target="_self">Глоссарий</a></li><li><a href="https://log-ai.ru/ekspertiza/" target="_self">Экспертиза</a></li><li><a href="https://log-ai.ru/bezopasnost-sistem-dannyh-i-infrastruktury/" target="_self">Безопасность</a></li></ul></li></ul></nav></header><main class="page"><article class="content"><div class="hero hero--noimage"><header class="hero__content hero__content--centered"><div class="wrapper"><h1>DEADLOCK в 1С и POSTGRESQL: как найти и устранить взаимоблокировки в большой базе</h1></div></header></div><div class="entry-wrapper content__entry"><p> </p><p> </p><p> </p><p> </p><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 01. СИМПТОМЫ</div><h1 style="font-family: 'SF Mono', Monaco, monospace; font-size: 24px; font-weight: bold; margin: 0 0 10px 0; color: #ffffff; line-height: 1.3;">Когда проведение документов превращается в лотерею</h1><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #aaaaaa; margin-bottom: 35px; border-left: 2px solid #14b8a6; padding-left: 15px;">Инженерный разбор взаимоблокировок в высоконагруженных информационных системах: от технологического журнала 1С и графа ожиданий PostgreSQL до первопричины в прикладной логике.</div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">10:17. В производственной системе 1С:ERP начинают появляться ошибки при проведении документов. Одни операции завершаются нормально, другие — после продолжительного ожидания. Некоторые пользователи повторяют проведение и получают тот же результат. Вскоре сообщения о проблеме поступают из нескольких подразделений.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Администратор проверяет сервер PostgreSQL. Процессор не загружен до предела, свободной оперативной памяти достаточно, дисковое пространство не заканчивается. База данных принимает подключения, обычные запросы выполняются, приложение доступно.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; font-style: italic;">Тем не менее проводить документы становится сложнее.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">В такой ситуации есть соблазн увеличить тайм-ауты, перезапустить службу или временно ограничить количество пользователей. Эти меры могут изменить проявление проблемы, но не обязательно устранят её причину.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 25px 0;">Для начала нужно ответить на вопрос: что именно происходит с транзакциями?</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Возможны разные сценарии:</p><div style="margin: 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%; max-width: 850px;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7;"><li style="margin-bottom: 10px;">запрос действительно долго выполняется;</li><li style="margin-bottom: 10px;">транзакция ждёт освобождения блокировки, удерживаемой другой транзакцией;</li><li style="margin-bottom: 10px;">несколько транзакций образовали цикл взаимных ожиданий;</li><li style="margin-bottom: 10px;">операция задерживается на уровне механизмов блокировок 1С;</li><li style="margin-bottom: 10px;">приложение ожидает соединение или ответ зависимого компонента, а блокировка возникает уже как следствие продолжительного выполнения;</li><li style="margin-bottom: 0;">после ошибки система повторяет операции, увеличивая конкуренцию за одни и те же данные.</li></ul></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Внешне эти ситуации похожи. Пользователь видит сообщение об ошибке или долго ждёт завершения операции. Но инженерные действия в каждом случае будут разными.</p><div style="padding: 20px; margin: 30px 0; background: #111111; border: 1px solid #222222; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ef4444; letter-spacing: 1px; margin-bottom: 10px; text-transform: uppercase;">[ TRANSACTION_DIAGNOSIS // DEADLOCK_DEFINITION ]</div><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: 500;"><strong style="color: #ef4444;">Deadlock</strong> — это цикл ожиданий, при котором каждая из участвующих транзакций удерживает ресурс, необходимый другой. Продолжить работу в таком состоянии без отмены одной из конфликтующих транзакций невозможно.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">PostgreSQL обнаруживает взаимоблокировку и прерывает одну из транзакций. Это штатное поведение СУБД: сервер не позволяет взаимному ожиданию продолжаться бесконечно.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Но штатная реакция PostgreSQL не означает, что проблема штатна для предприятия. Если взаимоблокировки возникают при обычном проведении документов, приложение может регулярно сталкиваться с отменами операций, повторными попытками и задержками бизнес-процессов.</p><div style="margin: 30px 0; padding-left: 20px; border-left: 2px solid #14b8a6;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 15px 0;">Здесь важно сразу разделить две задачи:</p><ol style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7;"><li style="margin-bottom: 8px;">Обнаружить и правильно классифицировать инцидент.</li><li style="margin-bottom: 0;">Устранить условия, при которых конфликтующие операции снова и снова образуют цикл.</li></ol></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Первая задача решается средствами диагностики. Вторая требует понимания транзакционной логики приложения.</p><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0 0 35px 0;">И именно на втором этапе становится понятно, почему простого администрирования сервера часто недостаточно.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // DEADLOCK_CYCLE_GRAPH ]</div><svg viewbox="0 0 620 260" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block; background: #000000;"><rect x="20" y="100" width="160" height="60" rx="4" fill="#111111" stroke="#333333" stroke-width="1.5"></rect><text x="100" y="127" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold" text-anchor="middle">ТРАНЗАКЦИЯ А</text><text x="100" y="145" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10" text-anchor="middle">(Проведение док. №1)</text><rect x="235" y="25" width="150" height="50" rx="4" fill="#111111" stroke="#14b8a6" stroke-width="1"></rect><text x="310" y="47" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">РЕСУРС 1</text><text x="310" y="63" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="9" text-anchor="middle">Заблокирован ТХ А</text><rect x="235" y="185" width="150" height="50" rx="4" fill="#111111" stroke="#14b8a6" stroke-width="1"></rect><text x="310" y="207" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">РЕСУРС 2</text><text x="310" y="223" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="9" text-anchor="middle">Заблокирован ТХ Б</text><rect x="440" y="100" width="160" height="60" rx="4" fill="#111111" stroke="#333333" stroke-width="1.5"></rect><text x="520" y="127" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold" text-anchor="middle">ТРАНЗАКЦИЯ Б</text><text x="520" y="145" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10" text-anchor="middle">(Проведение док. №2)</text><path d="M 180 115 L 235 55" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="3 3" fill="none"></path><path d="M 440 145 L 385 205" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="3 3" fill="none"></path><path d="M 180 145 L 235 205" stroke="#ef4444" stroke-width="1.5" fill="none"></path><polygon points="235,205 226,203 232,197" fill="#ef4444"></polygon><rect x="176" y="167" width="36" height="15" fill="#000000"></rect><text x="194" y="178" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="9" font-weight="bold" text-anchor="middle">ЖДЕТ</text><path d="M 440 115 L 385 55" stroke="#ef4444" stroke-width="1.5" fill="none"></path><polygon points="385,55 394,57 388,63" fill="#ef4444"></polygon><rect x="408" y="77" width="36" height="15" fill="#000000"></rect><text x="426" y="88" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="9" font-weight="bold" text-anchor="middle">ЖДЕТ</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 02. АРХИТЕКТУРА КООРДИНАЦИИ</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px;">Почему нельзя считать блокировки 1С и PostgreSQL одним и тем же</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">В информационной системе на платформе 1С, использующей PostgreSQL, действуют несколько механизмов обеспечения согласованности данных. Их взаимодействие необходимо учитывать при расследовании.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Если не разделить эти уровни, можно потратить много времени на анализ PostgreSQL, хотя проблема возникает в прикладной логике блокировок 1С. Возможна и обратная ситуация: прикладные блокировки выглядят нормально, но две транзакции образуют цикл уже внутри СУБД.</p><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px;">Блокировки платформы 1С</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Платформа 1С предоставляет собственные механизмы блокировок, в том числе управляемые блокировки, предназначенные для координации параллельной работы с прикладными данными.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Например, при проведении документов нескольким пользователям может потребоваться изменить данные, связанные с одним складом, номенклатурой или производственным заказом. Прикладная логика должна обеспечить, чтобы конкурентные операции не нарушили правила учёта.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Управляемая блокировка может относиться к логической области данных, определяемой объектом метаданных и значениями ключевых полей. Это не обязательно одна физическая строка PostgreSQL.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0;">Важны не только сами блокировки, но и то, когда они устанавливаются, на какой срок удерживаются и какие другие действия выполняются внутри транзакции.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Если прикладной алгоритм блокирует слишком широкую область данных, операции, которые могли бы выполняться параллельно, начинают мешать друг другу. Если последовательность захвата блокировок различается в разных сценариях, появляется риск конфликтов.</p><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0 0 25px 0;">Однако даже корректно организованные управляемые блокировки не исключают всех возможных взаимоблокировок внутри СУБД.</p></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px;">Блокировки PostgreSQL</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">PostgreSQL обеспечивает согласованность операций на уровне базы данных. При изменении строк, работе с таблицами и выполнении других операций СУБД использует собственные механизмы блокировок.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0;">Рассмотрим два изменения:</p><div style="margin: 20px 0; padding: 15px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%; max-width: 800px;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7;"><li style="margin-bottom: 8px;">транзакция A обновляет запись X, затем пытается изменить Y;</li><li style="margin-bottom: 0;">транзакция B обновляет Y, затем пытается изменить X.</li></ul></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Если каждая транзакция уже удерживает блокировку на своей записи, вторая операция каждой из них может оказаться заблокированной.</p><p style="font-size: 15px; color: #ef4444; font-weight: bold; margin: 0 0 20px 0;">Возникает цикл взаимного ожидания. PostgreSQL обнаруживает его и отменяет одну из транзакций.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">При этом физические таблицы и запросы в реальной базе 1С могут быть гораздо сложнее условной модели. Одна операция проведения способна затрагивать несколько наборов данных, а конфликт может возникнуть не там, где разработчик ожидает его увидеть.</p><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px;">Почему одного журнала недостаточно</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Технологический журнал 1С помогает восстановить контекст выполнения прикладной операции. Журнал PostgreSQL позволяет исследовать события на уровне СУБД, включая обнаруженные взаимоблокировки.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0;">Эти источники дополняют друг друга.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Если PostgreSQL зарегистрировал deadlock detected, это прямое свидетельство обнаружения взаимоблокировки внутри СУБД. Но оно само по себе не объясняет, почему прикладные операции пришли к конфликтующим ресурсам в таком порядке.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Если технологический журнал показывает ожидание блокировки 1С, это ещё не означает, что PostgreSQL обнаружил deadlock. Причина может находиться в другом механизме.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Поэтому нельзя автоматически приравнивать любое сообщение о блокировке в 1С к взаимоблокировке PostgreSQL. И нельзя считать отсутствие deadlock detected доказательством того, что проблема блокировок отсутствует: продолжительные ожидания могут возникать без циклов.</p><p style="font-size: 15px; color: #14b8a6; font-weight: 500; margin: 25px 0 0 0;">Первый этап расследования — установить, какой именно механизм проявился в конкретном инциденте.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // TWO_LEVELS_LOCKING_ARCHITECTURE ]</div><svg viewbox="0 0 620 260" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><rect x="20" y="30" width="580" height="85" rx="4" fill="#111111" stroke="#333333" stroke-width="1.5"></rect><text x="40" y="55" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold">УРОВЕНЬ 1. ПЛАТФОРМА 1С (УПРАВЛЯЕМЫЕ БЛОКИРОВКИ)</text><text x="40" y="75" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="11">Координирует логические области данных (Регистры, Метаданные, Склады, Спецификации)</text><text x="40" y="93" fill="#555555" font-family="SF Mono, Monaco, monospace" font-size="10">Диагностика: Технологический журнал 1С</text><path d="M 310 115 L 310 145" stroke="#222222" stroke-width="2"></path><polygon points="310,145 306,139 314,139" fill="#14b8a6"></polygon><rect x="20" y="145" width="580" height="85" rx="4" fill="#111111" stroke="#333333" stroke-width="1.5"></rect><text x="40" y="170" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold">УРОВЕНЬ 2. СУБД POSTGRESQL (ФИЗИЧЕСКИЕ БЛОКИРОВКИ)</text><text x="40" y="190" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="11">Координирует физические строки таблиц базы данных и индексы (RowExclusiveLock)</text><text x="40" y="208" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="10">Диагностика: Журнал PostgreSQL (deadlock detected)</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 03. ДИНАМИКА ТРАНЗАКЦИЙ</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px;">Как две нормальные операции создают ненормальную ситуацию</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Разберём модельный сценарий, характерный для систем, в которых одновременно выполняются операции над связанными данными.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Предположим, в 1С:ERP одновременно обрабатываются два документа. Первый обновляет данные складского учёта, а затем обращается к связанным данным производственного заказа. Второй начинает с изменения производственного заказа, а затем обращается к данным складского учёта.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Это упрощённая модель. Она иллюстрирует механизм взаимоблокировки, но не утверждает, что в каждой конфигурации 1С документы выполняют именно такие действия или что физические таблицы базы имеют подобную структуру.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Обозначим две конфликтующие записи X и Y.</p><div style="padding: 20px; margin: 25px 0; background: #111111; border: 1px solid #222222; box-sizing: border-box; width: 100%; max-width: 650px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px;">Как образуется цикл ожиданий</div><div style="background: #161616; padding: 15px; border: 1px solid #2a2a2a; box-sizing: border-box; margin-bottom: 12px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">Транзакция A</div><div style="font-size: 14px; color: #aaaaaa; margin-bottom: 4px; display: flex; align-items: center;"><span style="color: #14b8a6; margin-right: 8px;">✔</span> Удерживает блокировку X</div><div style="font-size: 14px; color: #aaaaaa; display: flex; align-items: center;"><span style="color: #eab308; margin-right: 8px;">⏳</span> Запрашивает блокировку Y</div></div><div style="text-align: center; margin: 10px 0; font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #888888;">▼ <span style="color: #aaaaaa; font-family: -apple-system, sans-serif;">Y занят транзакцией B</span></div><div style="background: #161616; padding: 15px; border: 1px solid #2a2a2a; box-sizing: border-box; margin-bottom: 12px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">Транзакция B</div><div style="font-size: 14px; color: #aaaaaa; margin-bottom: 4px; display: flex; align-items: center;"><span style="color: #14b8a6; margin-right: 8px;">✔</span> Удерживает блокировку Y</div><div style="font-size: 14px; color: #aaaaaa; display: flex; align-items: center;"><span style="color: #eab308; margin-right: 8px;">⏳</span> Запрашивает блокировку X</div></div><div style="text-align: center; margin: 10px 0; font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #888888;">▼ <span style="color: #aaaaaa; font-family: -apple-system, sans-serif;">X занят транзакцией A</span></div><div style="margin-top: 15px; font-family: -apple-system, sans-serif; font-size: 14px; color: #ef4444; font-weight: 500;">Возникает цикл: A ждёт B, а B ждёт A.</div></div></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">До момента конфликта обе операции могли выполняться совершенно штатно. Каждая получила необходимую ей блокировку и продолжила работу. Проблема возникла из-за сочетания времени выполнения и порядка обращения к ресурсам.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0;">Важное следствие: deadlock не обязательно означает, что один запрос написан неправильно или что сервер не справляется с нагрузкой.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Он может быть следствием взаимодействия нескольких корректных по отдельности операций.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">При этом чем выше конкуренция за одни и те же данные, тем больше вероятность столкновения. Но рост нагрузки лишь увеличивает вероятность конфликта — он не объясняет, почему транзакции вообще способны образовать цикл.</p><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px;">Почему виноват не обязательно тот запрос, который завершился ошибкой</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Предположим, PostgreSQL отменил транзакцию A.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Пользователь видит ошибку проведения документа A. Естественная реакция — искать дефект в этом документе.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; font-style: italic;">Но транзакция B тоже участвовала в цикле. Если изменить только операцию A, не понимая поведения B, конфликт может сохраниться или появиться в другой комбинации операций.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Кроме того, PostgreSQL прерывает одну из транзакций, чтобы разорвать цикл. Выбор участника для отмены не означает, что именно эта транзакция является первопричиной с точки зрения бизнес-логики.</p><div style="margin: 30px 0; padding-left: 20px; border-left: 2px solid #14b8a6; max-width: 800px;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 15px 0;">Нужно исследовать обе стороны взаимоблокировки:</p><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7;"><li style="margin-bottom: 8px;">какие ресурсы каждая транзакция успела захватить;</li><li style="margin-bottom: 8px;">какие ресурсы она пыталась получить далее;</li><li style="margin-bottom: 8px;">какие прикладные действия соответствуют этим запросам;</li><li style="margin-bottom: 8px;">почему последовательности доступа различаются;</li><li style="margin-bottom: 0;">можно ли устранить конфликт изменением порядка операций или структуры транзакций.</li></ul></div><p style="font-size: 15px; color: #14b8a6; font-weight: 500; margin: 25px 0 0 0;">Только после этого можно выбирать исправление.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // DEADLOCK_TIMELINE_DEVELOPMENT ]</div><svg viewbox="0 0 620 280" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><line x1="160" y1="40" x2="560" y2="40" stroke="#222222" stroke-width="1"></line><text x="160" y="30" fill="#555555" font-family="SF Mono, Monaco, monospace" font-size="10">Шаг 1</text><text x="360" y="30" fill="#555555" font-family="SF Mono, Monaco, monospace" font-size="10">Шаг 2</text><text x="560" y="30" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold" text-anchor="end">Шаг 3: DEADLOCK</text><text x="15" y="95" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold">ТРАНЗАКЦИЯ А</text><line x1="160" y1="90" x2="560" y2="90" stroke="#333333" stroke-width="2"></line><rect x="160" y="78" width="140" height="24" rx="2" fill="#165c52" fill-opacity="0.2" stroke="#14b8a6" stroke-width="1"></rect><text x="170" y="93" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">Блокирует запись X</text><rect x="360" y="78" width="200" height="24" rx="2" fill="#3a1c1c" fill-opacity="0.4" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"></rect><text x="370" y="93" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="9" font-weight="bold">ЖДЕТ ОСВОБОЖДЕНИЯ Y</text><text x="15" y="195" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold">ТРАНЗАКЦИЯ Б</text><line x1="160" y1="190" x2="560" y2="190" stroke="#333333" stroke-width="2"></line><rect x="220" y="178" width="140" height="24" rx="2" fill="#165c52" fill-opacity="0.2" stroke="#14b8a6" stroke-width="1"></rect><text x="230" y="193" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">Блокирует запись Y</text><rect x="420" y="178" width="140" height="24" rx="2" fill="#3a1c1c" fill-opacity="0.4" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"></rect><text x="430" y="193" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="9" font-weight="bold">ЖДЕТ ЗАПИСЬ X</text><line x1="560" y1="40" x2="560" y2="230" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4 4"></line></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 04. СИСТЕМНЫЙ ЖУРНАЛ</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px;">Как прочитать сообщение о deadlock и не сделать преждевременный вывод</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Журнал PostgreSQL — один из главных источников информации о взаимоблокировках. При обнаружении цикла сервер обычно записывает ошибку:</p><div style="margin: 15px 0; padding: 10px 15px; background: #1a0f0f; border-left: 3px solid #ef4444; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ef4444; font-weight: bold;">ERROR: deadlock detected</div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">В диагностическом сообщении могут присутствовать сведения о процессах, ожидающих блокировки друг друга, типах ресурсов, участвующих транзакциях и SQL-операторах.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 15px 0;">Рассмотрим условный фрагмент, построенный по типичной структуре сообщения PostgreSQL:</p><div style="max-width: 1100px; margin: 0 auto; width: 100%; box-sizing: border-box;"><div style="margin: 20px 0 25px 0; padding: 15px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%;"><pre style="margin: 0; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #e0e0e0; line-height: 1.5; white-space: pre-wrap; word-wrap: break-word; word-break: break-all;"><span style="color: #ef4444; font-weight: bold;">ERROR:</span>  deadlock detected
+<span style="color: #14b8a6; font-weight: bold;">DETAIL:</span> Process 18421 waits for ShareLock on transaction 92014;
+        blocked by process 18436.
+        Process 18436 waits for ShareLock on transaction 92015;
+        blocked by process 18421.
+<span style="color: #eab308; font-weight: bold;">HINT:</span>   See server log for query details.</pre></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; font-style: italic;">Идентификаторы и номера транзакций здесь вымышлены. Это пример формата сообщения, а не журнал реального инцидента.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Разберём, что из него можно установить.</p><div style="margin: 25px 0; padding-left: 20px; border-left: 2px solid #14b8a6;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 12px 0;"><strong style="color: #ffffff;">Первое:</strong> PostgreSQL действительно обнаружил deadlock. Это уже не предположение, основанное на жалобах пользователей или длительном времени ответа.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 12px 0;"><strong style="color: #ffffff;">Второе:</strong> в цикле участвуют два процесса. Процесс 18421 ждёт завершения транзакции, связанной с процессом 18436. Второй процесс, в свою очередь, ждёт завершения транзакции первого.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 12px 0;"><strong style="color: #ffffff;">Третье:</strong> указанный ShareLock относится к ожиданию блокировки идентификатора транзакции. В типичном сценарии конкурентного изменения строк PostgreSQL может ждать завершения другой транзакции, которая удерживает конфликтующую блокировку на данных.</p></div><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border: 1px solid #222222; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: 500;">Здесь есть важный нюанс. <strong style="color: #14b8a6;">ShareLock on transaction ...</strong> не означает, что приложение явно выполнило SQL-команду блокировки таблицы в режиме SHARE. Это внутренний механизм ожидания, который нужно интерпретировать вместе с контекстом конфликта.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;"><strong style="color: #ffffff;">Четвёртое:</strong> сообщение не раскрывает бизнес-причину. Оно показывает механизм взаимного ожидания, но не объясняет, почему два документа в 1С изменяли данные в таком порядке.</p><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 20px 0 0 0;">Чтобы перейти к первопричине, необходимо получить сведения о запросах, участвовавших в цикле, и связать их с операциями приложения.</p></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px;">Что ещё необходимо извлечь из журнала</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">При расследовании нужно сохранить полное сообщение об ошибке, включая все доступные поля DETAIL, CONTEXT, STATEMENT и связанные записи журнала.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0;">Не следует ограничиваться одной строкой deadlock detected: именно дополнительные сведения часто позволяют определить конфликтующие ресурсы.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Для идентификации процессов полезно иметь информативный префикс журнала PostgreSQL. Например, конфигурация может включать время, PID, имя приложения и идентификатор сессии:</p><div style="margin: 20px 0; padding: 12px 15px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%; max-width: 600px; overflow-x: auto;"><pre style="margin: 0; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #14b8a6; white-space: pre;">log_line_prefix = <span style="color: #ffffff;">'%m [%p] %a %c '</span></pre></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Здесь %m — временная метка, %p — PID процесса, %a — имя приложения, %c — идентификатор сессии.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Такой префикс облегчает сопоставление записей одного процесса. Но он не создаёт автоматической связи между PID PostgreSQL и конкретным документом 1С. Эту связь необходимо восстанавливать по времени, контексту выполнения и данным технологического журнала.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 35px 0;">Также следует учитывать, что диагностические сведения зависят от версии PostgreSQL, настроек журналирования и характера конфликта. Если текст запросов отсутствует, нельзя просто предположить, что оба процесса выполняли именно те операции, которые ожидаются по прикладной логике.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // POSTGRESQL_PREFIX_STRUCTURE ]</div><svg viewbox="0 0 620 250" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block; background: #000000;"><rect x="15" y="25" width="590" height="50" rx="4" fill="#0b0b0b" stroke="#222222" stroke-width="1"></rect><text x="35" y="56" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="16" font-weight="bold">log_line_prefix = '<tspan id="tok_m" fill="#ffffff">%m</tspan><tspan id="tok_p" fill="#ffffff">[%p]</tspan><tspan id="tok_a" fill="#ffffff">%a</tspan><tspan id="tok_c" fill="#ffffff">%c</tspan>'</text><path d="M 227 67 L 227 100 L 80 100 L 80 145" stroke="#333333" stroke-width="1.2" fill="none"></path><circle cx="227" cy="67" r="2" fill="#14b8a6"></circle><path d="M 265 67 L 265 106 L 225 106 L 225 145" stroke="#333333" stroke-width="1.2" fill="none"></path><circle cx="265" cy="67" r="2" fill="#14b8a6"></circle><path d="M 302 67 L 302 110 L 375 110 L 375 145" stroke="#333333" stroke-width="1.2" fill="none"></path><circle cx="302" cy="67" r="2" fill="#14b8a6"></circle><path d="M 331 67 L 331 90 L 535 90 L 535 145" stroke="#333333" stroke-width="1.2" fill="none"></path><circle cx="331" cy="67" r="2" fill="#14b8a6"></circle><rect x="15" y="145" width="130" height="65" rx="3" fill="#111111" stroke="#222222" stroke-width="1"></rect><text x="25" y="168" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold">%m</text><text x="25" y="186" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Точная временная</text><text x="25" y="198" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">метка события</text><rect x="160" y="145" width="130" height="65" rx="3" fill="#111111" stroke="#222222" stroke-width="1"></rect><text x="170" y="168" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold">%p</text><text x="170" y="186" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">PID процесса в ОС</text><text x="170" y="198" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">(Идентификатор)</text><rect x="305" y="145" width="145" height="65" rx="3" fill="#111111" stroke="#222222" stroke-width="1"></rect><text x="315" y="168" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold">%a</text><text x="315" y="186" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Имя приложения</text><text x="315" y="198" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="9">(например, 1C:Enterprise)</text><rect x="465" y="145" width="140" height="65" rx="3" fill="#111111" stroke="#222222" stroke-width="1"></rect><text x="475" y="168" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold">%c</text><text x="475" y="186" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Идентификатор</text><text x="475" y="198" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">текущей сессии СУБД</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 06. КОРРЕЛЯЦИЯ КОНТЕКСТА</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px;">Как перейти от PID PostgreSQL к конкретной операции 1С</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">PostgreSQL способен показать, какие процессы участвовали во взаимоблокировке. Но сам по себе он не знает, что пользователь проводил поступление материалов, выполнял закрытие месяца или запускал регламентную обработку.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 25px 0;">Чтобы установить бизнес-контекст, необходимо обратиться к технологическому журналу 1С.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Для этого сначала определяют временной интервал, в котором PostgreSQL зарегистрировал deadlock. Затем ищут события технологического журнала, относящиеся к соответствующим процессам, соединениям и операциям.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Важны не только конечные ошибки, но и последовательность событий до них:</p><div style="margin: 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%; max-width: 850px;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7;"><li style="margin-bottom: 10px;">начало и продолжительность прикладной операции;</li><li style="margin-bottom: 10px;">обращения к СУБД;</li><li style="margin-bottom: 10px;">ожидания блокировок, если они фиксируются используемой конфигурацией журналирования;</li><li style="margin-bottom: 10px;">исключения и завершение операции;</li><li style="margin-bottom: 0;">доступные идентификаторы процессов и соединений.</li></ul></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Конкретные имена событий и набор полей зависят от версии платформы, используемых механизмов и настроек технологического журнала. Поэтому диагностическую конфигурацию необходимо проверять на той версии 1С, которая используется в системе, а не копировать универсальный список параметров без проверки.</p><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px;">Как связать два журнала</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Предположим, PostgreSQL сообщает о deadlock в 10:17:42 и указывает процессы 18421 и 18436.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">В технологическом журнале обнаруживаются две операции, выполнявшиеся в тот же временной интервал. Их связь с процессами PostgreSQL необходимо подтвердить по доступным идентификаторам и контексту выполнения. Одна связана с проведением складского документа, другая — с обработкой производственного заказа.</p><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 20px 0 0 0;">Это уже полезная информация, но временного совпадения недостаточно.</p></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 20px 0 15px 0;">Нужно проверить:</p><div style="margin: 15px 0 25px 0; padding-left: 20px; border-left: 2px solid #14b8a6; max-width: 800px;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7;"><li style="margin-bottom: 8px;">Действительно ли найденные операции выполнялись в указанный момент.</li><li style="margin-bottom: 8px;">Соответствуют ли они соединениям или процессам, участвовавшим в конфликте.</li><li style="margin-bottom: 8px;">Какие SQL-операторы выполнялись в рамках этих операций.</li><li style="margin-bottom: 8px;">Можно ли восстановить порядок обращений к данным.</li><li style="margin-bottom: 0;">Повторяется ли такая последовательность в других инцидентах.</li></ul></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Если идентификаторов для прямого сопоставления недостаточно, связь восстанавливают по совокупности признаков. При этом вывод следует обозначать как подтверждённый или предварительный в зависимости от качества данных.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; font-style: italic;">Например, два события в одну секунду ещё не доказывают, что одно относится к процессу 18421, а другое — к 18436. В нагруженной системе одновременно могут работать десятки похожих операций.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border: 1px solid #222222; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: 500;">Для будущих расследований полезно заранее организовать журналирование так, чтобы сохранялись необходимые идентификаторы и контекст. <strong style="color: #ef4444;">Исправить недостаток наблюдаемости после возникновения инцидента гораздо сложнее</strong>, чем подготовить систему заранее.</p></div><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px;">Почему важно исследовать успешные выполнения</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Допустим, удалось найти документ, проведение которого завершилось deadlock.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0;">Следующий шаг — сравнить его с успешным выполнением того же сценария.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Возможно, при обычной нагрузке операция обращается к данным в определённом порядке, но дополнительная ветвь логики меняет последовательность в редком случае. Или конфликт возникает только тогда, когда одновременно выполняется конкретное регламентное задание.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Сравнение успешного и неуспешного выполнения позволяет сформировать более точную гипотезу, чем изучение одной ошибки.</p><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 25px 0 0 0;">В этом и состоит разница между поиском сообщения об инциденте и расследованием его причины.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // LOG_CORRELATION_BRIDGE ]</div><svg viewbox="0 0 620 250" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><rect x="15" y="30" width="220" height="90" rx="4" fill="#111111" stroke="#ef4444" stroke-width="1.5"></rect><text x="30" y="55" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold">ЖУРНАЛ POSTGRESQL</text><text x="30" y="80" fill="#aaaaaa" font-family="SF Mono, Monaco, monospace" font-size="10">⏰ 10:17:42</text><text x="30" y="96" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold">PID: 18421 (Deadlock)</text><path d="M 235 75 L 385 75" stroke="#333333" stroke-width="2"></path><path d="M 235 75 L 385 75" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="4 4"></path><rect x="250" y="55" width="120" height="40" rx="2" fill="#000000" stroke="#222222" stroke-width="1"></rect><text x="310" y="72" fill="#14b8a6" font-family="-apple-system, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">КРИТЕРИИ СВЯЗИ</text><text x="310" y="86" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Время + Метаданные</text><rect x="385" y="30" width="220" height="90" rx="4" fill="#111111" stroke="#14b8a6" stroke-width="1.5"></rect><text x="400" y="55" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold">ТЕХ ЖУРНАЛ 1С (ТЖ)</text><text x="400" y="80" fill="#aaaaaa" font-family="SF Mono, Monaco, monospace" font-size="10">⏰ 10:17:42</text><text x="400" y="96" fill="#14b8a6" font-family="-apple-system, sans-serif" font-size="10" font-weight="bold">Документ: Проведение ERP</text><rect x="15" y="155" width="590" height="60" rx="4" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="35" y="180" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="12" font-weight="bold">ИТОГ СОПОСТАВЛЕНИЯ:</text><text x="35" y="200" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="12">Физический тупик СУБД сопоставлен с конкретной бизнес-логикой проведения документа.</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 07. МОНИТОРИНГ СЕССИЙ</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px;">Как исследовать блокировки, пока проблема происходит</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Журнал PostgreSQL помогает восстановить уже произошедшую взаимоблокировку. Если проблема повторяется, полезно одновременно наблюдать состояние базы во время инцидента.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 15px 0;">Начать можно с представления pg_stat_activity:</p><div style="max-width: 1100px; margin: 0 auto; width: 100%; box-sizing: border-box;"><div style="margin: 20px 0 25px 0; padding: 15px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%;"><pre style="margin: 0; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #e0e0e0; line-height: 1.5; white-space: pre-wrap; word-wrap: break-word; word-break: break-all;"><span style="color: #ef4444; font-weight: bold;">SELECT</span>
+    pid,
+    application_name,
+    state,
+    wait_event_type,
+    wait_event,
+    xact_start,
+    query_start,
+    now() - query_start <span style="color: #14b8a6; font-weight: bold;">AS</span> query_age,
+    left(query, <span style="color: #ffffff;">200</span>) <span style="color: #14b8a6; font-weight: bold;">AS</span> query_sample
+<span style="color: #ef4444; font-weight: bold;">FROM</span> pg_stat_activity
+<span style="color: #ef4444; font-weight: bold;">WHERE</span> datname = current_database()
+  <span style="color: #ef4444; font-weight: bold;">AND</span> state <span style="color: #14b8a6; font-weight: bold;">IS DISTINCT FROM</span> <span style="color: #ffffff;">'idle'</span>
+<span style="color: #ef4444; font-weight: bold;">ORDER BY</span> query_start <span style="color: #14b8a6; font-weight: bold;">NULLS LAST</span>;</pre></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Этот запрос позволяет увидеть активные сессии, типы ожиданий, время начала транзакции и текущего запроса.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #ef4444; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold;">Но есть важное ограничение: длительность запроса не равна времени ожидания блокировки.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Запрос может выполняться долго по множеству причин, а транзакция может удерживать ресурсы даже после завершения отдельного SQL-оператора.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Особенно внимательно следует смотреть на состояние <strong style="color: #ffffff;">idle in transaction</strong>. Оно означает, что сессия находится внутри открытой транзакции, но в данный момент не выполняет запрос. Такая транзакция всё ещё может удерживать блокировки.</p></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 20px 0 15px 0;">Следующий шаг — определить, кто кого блокирует. Для этого используется pg_blocking_pids().</p><div style="max-width: 1100px; margin: 0 auto; width: 100%; box-sizing: border-box;"><div style="margin: 20px 0 25px 0; padding: 15px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%;"><pre style="margin: 0; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #e0e0e0; line-height: 1.5; white-space: pre-wrap; word-wrap: break-word; word-break: break-all;"><span style="color: #ef4444; font-weight: bold;">SELECT</span>
+    waiting.pid <span style="color: #14b8a6; font-weight: bold;">AS</span> waiting_pid,
+    waiting.application_name <span style="color: #14b8a6; font-weight: bold;">AS</span> waiting_app,
+    waiting.wait_event_type,
+    waiting.wait_event,
+    now() - waiting.query_start <span style="color: #14b8a6; font-weight: bold;">AS</span> query_age,
+    blocking.pid <span style="color: #14b8a6; font-weight: bold;">AS</span> blocking_pid,
+    blocking.application_name <span style="color: #14b8a6; font-weight: bold;">AS</span> blocking_app,
+    blocking.state <span style="color: #14b8a6; font-weight: bold;">AS</span> blocking_state,
+    blocking.xact_start <span style="color: #14b8a6; font-weight: bold;">AS</span> blocking_xact_start,
+    now() - blocking.xact_start <span style="color: #14b8a6; font-weight: bold;">AS</span> blocking_xact_age,
+    left(waiting.query, <span style="color: #ffffff;">160</span>) <span style="color: #14b8a6; font-weight: bold;">AS</span> waiting_query,
+    left(blocking.query, <span style="color: #ffffff;">160</span>) <span style="color: #14b8a6; font-weight: bold;">AS</span> blocking_query
+<span style="color: #ef4444; font-weight: bold;">FROM</span> pg_stat_activity <span style="color: #14b8a6; font-weight: bold;">AS</span> waiting
+<span style="color: #ef4444; font-weight: bold;">CROSS JOIN LATERAL</span>
+    unnest(pg_blocking_pids(waiting.pid)) <span style="color: #14b8a6; font-weight: bold;">AS</span> blocker(pid)
+<span style="color: #ef4444; font-weight: bold;">JOIN pg_stat_activity <span style="color: #14b8a6; font-weight: bold;">AS</span> blocking
+    <span style="color: #14b8a6; font-weight: bold;">ON</span> blocking.pid = blocker.pid
+<span style="color: #ef4444; font-weight: bold;">WHERE</span> waiting.datname = current_database()
+<span style="color: #ef4444; font-weight: bold;">ORDER BY</span> waiting.query_start <span style="color: #14b8a6; font-weight: bold;">NULLS LAST</span>;</span></pre></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Запрос показывает текущие отношения блокирования. Он помогает найти процесс, который непосредственно мешает другой сессии получить блокировку.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; font-style: italic;">Но это не готовый детектор всех deadlock за выбранный период. После того как PostgreSQL обнаружил цикл и отменил одну из транзакций, исходная структура ожиданий может исчезнуть. Поэтому уже завершившийся инцидент следует исследовать по журналу, а текущие представления использовать для наблюдения за активными ожиданиями.</p><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px;">Как интерпретировать результат</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Предположим, запрос показывает:</p><div style="margin: 15px 0 20px 0; padding-left: 20px; border-left: 2px solid #14b8a6;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7;"><li>сессия A ожидает блокировку;</li><li>сессия B непосредственно блокирует A;</li><li>транзакция B открыта значительно дольше, чем длится её текущий запрос.</li></ul></div><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0;">Это указывает на необходимость изучить транзакцию B.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Возможно, она выполняет продолжительную операцию. Возможно, она находится в idle in transaction и удерживает ресурсы после завершения SQL-команды.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Но делать вывод, что B является первопричиной всех проблем, пока рано. Она может быть блокирующей стороной одного ожидания, а в другом сценарии сама ждать другую транзакцию.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Нужно восстановить всю цепочку ожиданий и проверить, образуется ли цикл.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Для этого исследуют блокирующие связи, связанные запросы и журналы. Представление pg_locks помогает дополнительно изучить типы ресурсов и режимы блокировок.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Не следует пытаться определить конфликт только по совпадению идентификаторов строк или таблиц в pg_locks: модель блокировок PostgreSQL сложнее, а ожидания могут относиться к идентификаторам транзакций и другим ресурсам.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0;">И ещё один важный момент: блокирующий процесс не обязательно выполняет тот запрос, который первоначально получил блокировку. Он мог получить её раньше и перейти к другому действию, сохраняя открытую транзакцию.</p><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 25px 0 0 0;">Поэтому исследовать нужно не только текущий SQL, но и жизненный цикл транзакции.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // POSTGRESQL_IDLE_IN_TRANSACTION_ANATOMY ]</div><svg viewbox="0 0 640 250" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><line x1="140" y1="50" x2="600" y2="50" stroke="#333333" stroke-width="2"></line><text x="140" y="38" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold">BEGIN (xact_start)</text><text x="600" y="38" fill="#aaaaaa" font-family="SF Mono, Monaco, monospace" font-size="10" text-anchor="end">COMMIT / ROLLBACK</text><rect x="140" y="75" width="160" height="30" rx="2" fill="#165c52" fill-opacity="0.2" stroke="#14b8a6" stroke-width="1"></rect><text x="220" y="94" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold" text-anchor="middle">1. SQL EXECUTION (UPDATE)</text><path d="M 220 105 L 220 160 Q 220 180 250 180 L 340 180" stroke="#14b8a6" stroke-width="1" stroke-dasharray="2 2" fill="none"></path><rect x="320" y="75" width="280" height="30" rx="2" fill="#3a1c1c" fill-opacity="0.5" stroke="#ef4444" stroke-width="1"></rect><text x="460" y="94" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">2. STATE: 'idle in transaction'</text><text x="460" y="123" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10" text-anchor="middle">Запрос завершен, но транзакция не закрыта</text><rect x="340" y="160" width="260" height="40" rx="3" fill="#111111" stroke="#ef4444" stroke-width="1"></rect><text x="355" y="184" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="11" font-weight="bold">❌ БЛОКИРОВКА ВСЕ ЕЩЕ УДЕРЖИВАЕТСЯ</text><path d="M 470 200 L 470 225" stroke="#ef4444" stroke-width="1.2"></path><polygon points="470,225 466,219 474,219" fill="#ef4444"></polygon><text x="480" y="222" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="9" font-weight="bold">Блокирует сессию А</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 08. ФАКТОРЫ КОНКУРЕНЦИИ</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px;">Почему взаимоблокировка возникает именно в этой системе</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Когда известны процессы, участвовавшие в deadlock, начинается основная инженерная работа.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 25px 0;">Необходимо объяснить не просто факт конфликта, а условия, при которых он стал возможен.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Рассмотрим несколько типичных механизмов.</p><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px;">Разный порядок доступа к одним и тем же данным</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Это классический сценарий взаимоблокировки.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Одна операция получает блокировку A, затем B. Другая получает B, затем A. При совпадении по времени возникает цикл.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0;">Исправление может заключаться в приведении порядка доступа к единому правилу. Но в 1С это не всегда означает переставить местами два оператора.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Последовательность работы с данными может складываться из нескольких процедур, движений документов, проверок, вызовов общих модулей и обращений к зависимым объектам.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; font-style: italic;">Поэтому анализировать нужно полный путь выполнения операции, а не только последний SQL-запрос из журнала.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Если одна ветвь прикладной логики получает блокировки в порядке A → B, а другая — B → A, локальное исправление одной процедуры может не решить проблему, если аналогичная последовательность сохраняется в другом месте.</p><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px;">Слишком широкая область блокировки</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Иногда приложение блокирует больше данных, чем действительно необходимо для выполнения операции.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Это может происходить из-за выбранной области управляемой блокировки, состава ключевых полей или особенностей алгоритма проведения.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">В результате две операции, которые могли бы работать параллельно с независимыми данными, начинают конкурировать за одну область блокировки.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold;">Уменьшение области блокировки способно повысить параллелизм. Но такое изменение требует особенно внимательной проверки: если блокировка обеспечивала целостность бизнес-операции, её чрезмерное сужение может привести к некорректным данным.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Поэтому задача не в том, чтобы блокировать как можно меньше. Нужно блокировать ровно ту область, которая необходима для соблюдения правил учёта.</p></div><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px;">Продолжительные транзакции</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Чем дольше транзакция удерживает конфликтующие ресурсы, тем больше времени другие операции могут ожидать их освобождения.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Причиной могут быть массовые изменения, избыточные запросы внутри транзакции, ожидание внешнего компонента или выполнение действий, которые не требуют удержания блокировок.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0;">Но простое сокращение транзакции не всегда безопасно.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Если разбить атомарную операцию на несколько независимых фиксаций, при сбое часть данных может остаться изменённой, а другая — нет. Для прикладной системы это может оказаться хуже исходного deadlock.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; font-style: italic;">Поэтому сначала необходимо определить границы бизнес-операции и понять, какие действия должны выполняться атомарно.</p><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0 0 25px 0;">Затем можно искать возможность сократить критическую секцию, подготовить часть данных заранее или изменить последовательность действий, сохранив требования к согласованности.</p><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px;">Фоновые задания и пользовательские операции</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Регламентные задания, обмены и массовые обработки могут обращаться к тем же данным, что и пользовательские документы.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Если фоновый процесс одновременно обновляет большое количество записей, он способен увеличить конкуренцию в период пиковой нагрузки.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold;">Здесь полезно сопоставить время возникновения deadlock с расписанием заданий и составом операций.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Если конфликты повторяются только при одновременном выполнении определённого задания и конкретного типа документов, это сильная диагностическая подсказка.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Но перенос задания на ночь не всегда является окончательным решением. Он может снизить вероятность столкновения, однако не устраняет саму несовместимость последовательностей доступа. Кроме того, при росте объёма данных проблема может вернуться.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Более устойчивое решение может потребовать ограничения параллелизма, обработки данных порциями или изменения алгоритма фоновой обработки.</p></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px;">Повторные попытки, усиливающие конфликт</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">После ошибки пользователь может повторить проведение. Автоматизированный механизм тоже может запускать операцию повторно.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0;">Если повтор происходит немедленно, несколько операций могут снова столкнуться за те же ресурсы.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">В результате система начинает расходовать дополнительные ресурсы на действия, которые не приближают её к завершению работы.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Повторные попытки должны быть ограничены, учитывать тип ошибки и выполняться только после корректного завершения неуспешной транзакции.</p><div style="margin: 20px 0; padding: 12px 15px; background: #1a0f0f; border-left: 3px solid #ef4444; box-sizing: border-box; width: 100%; max-width: 450px;"><pre style="margin: 0; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ef4444; font-weight: bold; white-space: pre;">SQLSTATE: 40P01 (deadlock_detected)</pre></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Для PostgreSQL код ошибки взаимоблокировки — SQLSTATE 40P01. Его можно использовать для классификации ошибки на соответствующем уровне приложения, если код доступен через используемый драйвер и слой обработки.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #ef4444; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold;">Однако автоматический повтор не должен заменять исправление устойчивого дефекта конкурентной логики.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 35px 0;">Если deadlock возникает постоянно, система будет регулярно отменять и запускать заново операции, увеличивая нагрузку и ухудшая предсказуемость работы.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // IMMEDIATE_RETRY_CASCADE_FAILURE ]</div><svg viewbox="0 0 620 260" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><rect x="15" y="40" width="200" height="170" rx="4" fill="#111111" stroke="#ef4444" stroke-width="1.2"></rect><text x="30" y="65" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold">ОШИБКА: SQLSTATE 40P01</text><rect x="30" y="90" width="170" height="32" rx="2" fill="#3a1c1c" fill-opacity="0.4" stroke="#ef4444" stroke-width="1"></rect><text x="40" y="110" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="11" font-weight="bold">Немедленный повтор</text><path d="M 215 106 L 330 107" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3 3"></path><path d="M 215 106 L 330 136" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3 3"></path><path d="M 215 106 L 340 180" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3 3"></path><rect x="330" y="40" width="275" height="170" rx="4" fill="#111111" stroke="#333333" stroke-width="1.5"></rect><text x="345" y="65" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold">БАЗА ДАННЫХ (ПОТОК ОТМЕН)</text><rect x="345" y="85" width="245" height="30" rx="2" fill="#161616" stroke="#222222" stroke-width="1"></rect><text x="355" y="104" fill="#aaaaaa" font-family="SF Mono, Monaco, monospace" font-size="10">Retry TX_A_1 -&gt; Опять блок</text><rect x="345" y="125" width="245" height="30" rx="2" fill="#161616" stroke="#222222" stroke-width="1"></rect><text x="355" y="144" fill="#aaaaaa" font-family="SF Mono, Monaco, monospace" font-size="10">Retry TX_A_2 -&gt; Рост удержания ресурсов</text><rect x="345" y="165" width="245" height="30" rx="2" fill="#3a1c1c" fill-opacity="0.3" stroke="#ef4444" stroke-width="1"></rect><text x="355" y="184" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold">ЛАВИННЫЙ РОСТ НАГРУЗКИ</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 09. СТРАТЕГИИ ОПТИМИЗАЦИИ</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px;">Как устранить причину и не нарушить целостность данных</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">После восстановления последовательности событий необходимо сформулировать конкретную гипотезу.</p><div style="padding: 15px 20px; margin: 20px 0; background: #111111; border: 1px solid #222222; box-sizing: border-box; width: 100%; max-width: 850px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ HYPOTHESIS_EXAMPLE ]</div><p style="font-size: 15px; color: #ffffff; margin: 0; font-style: italic; line-height: 1.7;">«Два вида документов обновляют связанные данные в разном порядке. При одновременном выполнении каждая транзакция удерживает блокировку, необходимую другой. PostgreSQL обнаруживает цикл и отменяет одну из операций».</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Это уже проверяемое объяснение. Оно предсказывает, при каком сочетании операций проблема должна повторяться и какое изменение способно повлиять на результат.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 25px 0;">Дальше нужно рассмотреть возможные исправления.</p><div style="margin: 25px 0; max-width: 850px; width: 100%;"><div style="margin-bottom: 25px; padding: 15px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 8px;">Вариант 1. Унифицировать порядок изменения данных</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Если конфликт действительно вызван разным порядком доступа, можно привести последовательность операций к единому правилу. Но исправление должно охватывать все значимые ветви прикладной логики. Если порядок изменён только в одном месте, другая процедура может продолжить создавать тот же цикл. После изменения нужно проверить не только исходную пару документов, но и другие операции, которые обращаются к тем же данным.</p></div><div style="margin-bottom: 25px; padding: 15px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 8px;">Вариант 2. Сократить время удержания блокировок</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Если транзакция выполняет лишнюю работу, следует выяснить, какие действия можно вынести за её пределы. Это могут быть подготовительные вычисления, получение данных, не требующих транзакционной защиты, или другие операции, которые допустимо выполнять до начала критического участка. Однако перенос действий за границы транзакции безопасен только при сохранении необходимых гарантий. В противном случае между подготовкой данных и их фиксацией может измениться состояние системы.</p></div><div style="margin-bottom: 25px; padding: 15px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 8px;">Вариант 3. Пересмотреть область управляемой блокировки 1С</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Если конфликт связан с чрезмерно широкой областью блокировки, следует исследовать её ключи, режим и момент установки. Иногда корректировка области позволяет независимым операциям выполнять параллельно. Но изменение управляемых блокировок требует проверки бизнес-инвариантов: условий, которые должны оставаться истинными при любой последовательности конкурентных операций. Если блокировка защищает остатки, доступность ресурсов или уникальность бизнес-действия, её нельзя сужать только ради уменьшения ожиданий.</p></div><div style="padding: 15px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 8px;">Вариант 4. Изменить алгоритм фоновой обработки</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Если конкуренцию создаёт регламентное задание, можно ограничить число одновременно выполняемых обработок, изменить размер порций или пересмотреть расписание. Выбор зависит от того, насколько быстро должны обрабатываться данные, каков их объём и какие гарантии нужны при частичном завершении задания. Иногда уменьшение параллелизма снижает количество конфликтов, но одновременно увеличивает длительность обработки. Поэтому нужно оценивать не только deadlock, но и пропускную способность всей системы.</p></div></div></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px;">Почему не стоит просто увеличивать тайм-аут</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">При длительном ожидании блокировки изменение тайм-аута может повлиять на поведение операции. Но при реальном deadlock увеличение времени ожидания не устраняет цикл: PostgreSQL всё равно должен обнаружить взаимоблокировку и отменить одну из транзакций.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0;">Кроме того, большие тайм-ауты могут привести к тому, что пользователи будут дольше ждать завершения операций, не получая никакого улучшения.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Тайм-ауты нужно настраивать в соответствии с требованиями системы, но рассматривать их как средство устранения первопричины неправильно.</p><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px;">Почему увеличение ресурсов тоже может не помочь</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Взаимоблокировка связана с порядком доступа к ресурсам, а не обязательно с нехваткой CPU или оперативной памяти.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold;">Если две транзакции образовали цикл, дополнительные вычислительные ресурсы сами по себе не освободят блокировки.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">При этом нагрузка влияет на вероятность столкновения: увеличение количества одновременно выполняемых операций способно сделать уже существующий дефект более заметным.</p><p style="font-size: 15px; color: #14b8a6; font-weight: 500; margin: 20px 0 0 0;">Поэтому масштабирование может изменить частоту проявления проблемы, но не гарантирует её устранения.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // RESOURCE_SCALING_VERSUS_LOGIC_DEFECT ]</div><svg viewbox="0 0 620 250" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><rect x="15" y="40" width="220" height="170" rx="4" fill="#111111" stroke="#333333" stroke-width="1.5"></rect><text x="30" y="65" fill="#aaaaaa" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold">СЕРВЕР (МАСШТАБИРОВАНИЕ)</text><rect x="30" y="90" width="190" height="30" rx="2" fill="#165c52" fill-opacity="0.15" stroke="#14b8a6" stroke-width="1"></rect><text x="40" y="109" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="10">➕ СPU: 64 Cores (Свободен)</text><rect x="30" y="130" width="190" height="30" rx="2" fill="#165c52" fill-opacity="0.15" stroke="#14b8a6" stroke-width="1"></rect><text x="40" y="149" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="10">➕ RAM: 256 GB (Свободно)</text><text x="30" y="190" fill="#555555" font-family="-apple-system, sans-serif" font-size="10">Ресурсы простаивают в ожидании</text><path d="M 235 125 L 320 125" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="3 3"></path><polygon points="320,125 312,121 312,129" fill="#ef4444"></polygon><rect x="340" y="40" width="265" height="170" rx="4" fill="#111111" stroke="#ef4444" stroke-width="1"></rect><text x="355" y="65" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold">ЛОГИЧЕСКИЙ ТУПИК В СУБД</text><circle cx="472" cy="135" r="35" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4 4"></circle><rect x="355" y="115" width="235" height="40" rx="2" fill="#3a1c1c" fill-opacity="0.6" stroke="#ef4444" stroke-width="1"></rect><text x="472" y="133" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">DEADLOCK DETECTED</text><text x="472" y="148" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10" text-anchor="middle">Цикл ожидания не зависит от CPU</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 10. КОНТРОЛЬНЫЕ ТЕСТЫ</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px;">Как проверить, что deadlock действительно устранён</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Предположим, команда изменила последовательность доступа к данным и сократила продолжительность фоновой транзакции.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Количество жалоб уменьшилось. Можно ли считать инцидент закрытым?</p><p style="font-size: 15px; color: #ef4444; font-weight: bold; margin: 0 0 20px 0; font-style: italic;">Пока нет.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Для подтверждения результата нужно повторить сценарий, который приводил к проблеме, при сопоставимом уровне конкуренции. Если раньше конфликт возникал при одновременном проведении определённых документов, проверять нужно именно эту комбинацию, а не произвольный набор запросов.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 15px 0;">При этом необходимо контролировать несколько показателей:</p><div style="margin: 20px 0 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%; max-width: 850px;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7;"><li style="margin-bottom: 10px;">количество зарегистрированных deadlock за сопоставимый период;</li><li style="margin-bottom: 10px;">продолжительность ожиданий блокировок;</li><li style="margin-bottom: 10px;">время выполнения критических операций;</li><li style="margin-bottom: 10px;">количество ошибок проведения и повторных попыток;</li><li style="margin-bottom: 10px;">длительность фоновых заданий;</li><li style="margin-bottom: 0;">корректность данных после успешного выполнения и отмены операции.</li></ul></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Важно убедиться, что исправление не просто переместило проблему. Например, снижение конфликтов может сопровождаться увеличением времени фоновой обработки или появлением другого узкого места.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Если deadlock возникает редко, одного успешного теста недостаточно. Необходимо наблюдать систему в характерных рабочих условиях и учитывать, что вероятность конфликта зависит от состава операций и времени их выполнения.</p></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px;">Что считать доказательством</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Убедительным результатом будет не просто отсутствие ошибок после изменения, а совокупность подтверждений:</p><div style="margin: 20px 0 25px 0; padding-left: 20px; border-left: 2px solid #14b8a6; max-width: 800px;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7;"><li style="margin-bottom: 8px;">Установлен конкретный механизм исходной взаимоблокировки.</li><li style="margin-bottom: 8px;">Изменён участок логики, который создавал конфликтующие последовательности доступа.</li><li style="margin-bottom: 8px;">Воспроизведён исходный сценарий при сопоставимой нагрузке.</li><li style="margin-bottom: 8px;">Проверено отсутствие исходного цикла в повторных испытаниях и последующем наблюдении.</li><li style="margin-bottom: 8px;">Подтверждена корректность бизнес-данных.</li><li style="margin-bottom: 0;">Не ухудшились критические показатели работы системы.</li></ul></div><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border: 1px solid #222222; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold;">Если после исправления deadlock больше не возникает, но длительность операций существенно выросла, решение нельзя считать однозначно успешным.</p></div><p style="font-size: 15px; color: #14b8a6; font-weight: 500; margin: 20px 0 35px 0;">Результат должен оцениваться на уровне всей системы, а не одного сообщения об ошибке.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // TRANSACT_REVERIFICATION_PIPELINE ]</div><svg viewbox="0 0 620 240" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><line x1="110" y1="95" x2="510" y2="95" stroke="#222222" stroke-width="2"></line><line x1="110" y1="95" x2="510" y2="95" stroke="#14b8a6" stroke-width="1.2" stroke-dasharray="4 4"></line><circle cx="110" cy="95" r="5" fill="#14b8a6"></circle><rect x="25" y="115" width="170" height="60" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="35" y="136" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">01. ПОВТОР ТЕСТА</text><text x="35" y="154" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Сопоставимый уровень</text><text x="35" y="166" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">конкуренции данных</text><circle cx="310" cy="95" r="5" fill="#14b8a6"></circle><rect x="225" y="115" width="170" height="60" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="235" y="136" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">02. СЧЕТЧИК МЕТРИК</text><text x="235" y="154" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Количество 40P01 за</text><text x="235" y="166" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">период наблюдения -&gt; 0</text><circle cx="510" cy="95" r="5" fill="#14b8a6"></circle><rect x="425" y="115" width="170" height="60" rx="3" fill="#111111" stroke="#14b8a6" stroke-width="1"></rect><text x="435" y="136" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">03. БИЗНЕС-ДАННЫЕ</text><text x="435" y="154" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">Целостность и правила</text><text x="435" y="166" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">учета сохранены</text><polygon points="210,95 204,91 204,99" fill="#14b8a6"></polygon><polygon points="410,95 404,91 404,99" fill="#14b8a6"></polygon></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 11. НАБЛЮДАЕМОСТЬ</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px;">Как сделать так, чтобы следующий инцидент не пришлось расследовать вслепую</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Устойчивость к взаимоблокировкам начинается задолго до появления первой жалобы.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">В большой информационной системе полезно заранее обеспечить связь между пользовательскими операциями, событиями технологического журнала 1С и журналами PostgreSQL.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 15px 0;">Это означает, что при возникновении проблемы инженер должен иметь возможность установить:</p><div style="margin: 20px 0 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%; max-width: 850px;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7;"><li style="margin-bottom: 10px;">какая операция завершилась ошибкой;</li><li style="margin-bottom: 10px;">какие транзакции участвовали в конфликте;</li><li style="margin-bottom: 10px;">какие ресурсы оказались взаимно заблокированы;</li><li style="margin-bottom: 10px;">какие прикладные действия соответствуют этим транзакциям;</li><li style="margin-bottom: 0;">при каких условиях сценарий повторяется.</li></ul></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Не менее важно контролировать продолжительность транзакций, число ожиданий и характер конкуренции между пользовательскими и фоновыми операциями.</p></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 20px 0 20px 0;">Однако собирать все возможные данные без определённой цели не нужно. Наблюдаемость должна помогать отвечать на конкретные диагностические вопросы, а не создавать бесконечный поток журналов.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Для регулярно повторяющихся операций полезно заранее анализировать потенциально конфликтующие пути выполнения. Если две процедуры изменяют одни и те же наборы данных, стоит проверить, существует ли единый порядок доступа и какие дополнительные операции выполняются внутри транзакций.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; font-style: italic;">Это не гарантирует полного отсутствия deadlock, но позволяет обнаруживать риск до того, как он превратится в регулярный производственный инцидент.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">При этом необходимо предусматривать корректную обработку ошибок. Даже хорошо спроектированная система не всегда может полностью исключить взаимоблокировки, поэтому приложение должно безопасно отменять неуспешные транзакции и, где это допустимо, повторять операции с ограничением по количеству попыток.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold;">Задача профилактики — не обещать невозможное отсутствие конфликтов, а сделать их редкими, обнаруживаемыми и безопасными для бизнес-процессов.</p></div><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // INTRINSIC_DEADLOCK_PREVENTION_SYSTEM ]</div><svg viewbox="0 0 620 250" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><rect x="15" y="145" width="590" height="50" rx="4" fill="#0b0b0b" stroke="#222222" stroke-width="1"></rect><text x="310" y="174" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold" text-anchor="middle">УСТОЙЧИВОСТЬ ИНФОРМАЦИОННОЙ СИСТЕМЫ К DEADLOCKS</text><path d="M 115 95 L 115 145" stroke="#333333" stroke-width="1.2"></path><path d="M 310 95 L 310 145" stroke="#333333" stroke-width="1.2"></path><path d="M 505 95 L 505 145" stroke="#333333" stroke-width="1.2"></path><rect x="15" y="30" width="180" height="65" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="25" y="52" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">1. АРХИТЕКТУРА</text><text x="25" y="70" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Единый порядок доступа</text><text x="25" y="82" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">и сужение секций</text><rect x="210" y="30" width="200" height="65" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="220" y="52" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">2. НАБЛЮДАЕМОСТЬ</text><text x="220" y="70" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Связь ТЖ 1С и логов СУБД</text><text x="220" y="82" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">по временным меткам</text><rect x="425" y="30" width="180" height="65" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="435" y="52" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">3. ОБРАБОТКА 40P01</text><text x="435" y="70" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Безопасная отмена TX</text><text x="435" y="82" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">и умный лимит повторов</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 12. РЕЗЮМЕ</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px;">Взаимоблокировка — это следствие взаимодействия операций, а не диагноз сервера</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Когда пользователи получают ошибки при проведении документов, недостаточно увидеть сообщение о блокировке и изменить несколько настроек PostgreSQL.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0;">Нужно установить, какой механизм проявился: управляемые блокировки 1С, ожидание ресурса в СУБД или настоящий deadlock.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Затем восстановить последовательность событий и определить, какие транзакции удерживали конфликтующие ресурсы.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Журнал PostgreSQL показывает обнаруженный цикл и помогает определить участвующие процессы. Технологический журнал 1С позволяет связать этот цикл с прикладными операциями. Представления pg_stat_activity, pg_blocking_pids() и pg_locks помогают исследовать текущие ожидания и блокирующие связи, когда проблема ещё проявляется.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #ef4444; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold;">Но диагностические инструменты не принимают инженерного решения за человека.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">После обнаружения конфликта необходимо понять, почему операции обратились к данным в таком порядке, какие требования к целостности ограничивают возможные исправления и как проверить результат при реальной конкуренции.</p></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 20px 0 20px 0;">Иногда решение заключается в унификации порядка доступа к данным. Иногда — в сокращении транзакции, корректировке управляемых блокировок или изменении фоновой обработки. Универсального исправления нет, поскольку одинаковые сообщения об ошибке могут возникать по разным причинам.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold;">Хорошее расследование заканчивается не тогда, когда PostgreSQL перестаёт сообщать о deadlock. Оно заканчивается тогда, когда установлен механизм конфликта, устранена его первопричина, а корректность и производительность системы подтверждены измерениями.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Для большой базы 1С это принципиальная разница между временным снижением количества ошибок и инженерным решением, рассчитанным на дальнейший рост данных, пользователей и нагрузки.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 35px 0;">Именно такой подход позволяет поддерживать предсказуемую работу информационной системы: не маскировать симптомы, а понимать, как транзакции взаимодействуют внутри и почему система ведёт себя именно так.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // MITIGATION_STRATEGY_DIVERGENCE ]</div><svg viewbox="0 0 620 240" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><rect x="15" y="30" width="265" height="160" rx="4" fill="#111111" stroke="#ef4444" stroke-width="1.2"></rect><text x="35" y="55" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold">МАСКИРОВКА СИМПТОМОВ</text><rect x="35" y="80" width="225" height="40" rx="2" fill="#3a1c1c" fill-opacity="0.3" stroke="#ef4444" stroke-width="1"></rect><text x="45" y="96" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="11">Увеличение тайм-аутов</text><text x="45" y="110" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Рост времени ожидания пользователей</text><rect x="35" y="135" width="225" height="40" rx="2" fill="#3a1c1c" fill-opacity="0.3" stroke="#ef4444" stroke-width="1"></rect><text x="45" y="151" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="11">Наращивание CPU/RAM сервера</text><text x="45" y="165" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Логический тупик в СУБД сохраняется</text><rect x="340" y="30" width="265" height="160" rx="4" fill="#111111" stroke="#14b8a6" stroke-width="1.2"></rect><text x="360" y="55" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold">ИНЖЕНЕРНОЕ РЕШЕНИЕ</text><rect x="360" y="80" width="225" height="40" rx="2" fill="#165c52" fill-opacity="0.15" stroke="#14b8a6" stroke-width="1"></rect><text x="370" y="96" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="11">Унификация порядка доступа</text><text x="370" y="110" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Исключение циклов взаимных ожиданий</text><rect x="360" y="135" width="225" height="40" rx="2" fill="#165c52" fill-opacity="0.15" stroke="#14b8a6" stroke-width="1"></rect><text x="370" y="151" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="11">Контроль транзакционных границ</text><text x="370" y="165" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Проверка устойчивости при росте данных</text><text x="310" y="225" fill="#555555" font-family="-apple-system, sans-serif" font-size="11" font-style="italic" text-anchor="middle">Результат должен оцениваться на уровне всей системы.</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 60px auto 0 auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">НАВИГАЦИЯ // SUGGESTED_READING</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // 1С / CRM ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Когда 1С начинает тормозить из-за роста нагрузки</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kogda-1s-nachinaet-tormozit-iz-za-rosta-nagruzki/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // 1С / CRM ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Как подготовить 1С к большому количеству пользователей</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kak-podgotovit-1s-k-bolshomu-kolichestvu-polzovateley/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ИНФРАСТРУКТУРА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Как понять, что серверу не хватает ресурсов</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kak-ponyat-chto-serveru-ne-hvataet-resursov/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div></div></div><div style="max-width: 1100px; margin: 20px auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; border-top: 1px solid #165c52; padding: 40px 0 0 0; box-sizing: border-box; width: 100%;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 40px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ EXPERTISE JOURNAL ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Все инженерные материалы и экспертные статьи</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/ekspertiza/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">перейти к каталогу ──►</a></div></div><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ CORE GLOSSARY ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Полный алфавитный справочник ИТ-терминов</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/glossariy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">открыть справочник ──►</a></div></div></div></div></div></article></main><footer class="footer"><div class="wrapper"><div class="footer__copyright"><p> </p><p> </p></div><button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg width="20" height="20"><use xlink:href="https://log-ai.ru/assets/svg/svg-map.svg#toparrow"/></svg></button></div></footer><script defer="defer" src="https://log-ai.ru/assets/js/scripts.min.js?v&#x3D;d0fc1030089a37f93a2d51bf6d07565c"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script><script>(() => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') !== 'monument') return;
+
+  const IMAGE_URL = 'https://log-ai.ru/media/files/Interstellar.jpeg';
+  const AUDIO_URL = 'https://log-ai.ru/media/files/interstellar.mp3';
+
+  // Защита от повторного запуска
+  if (document.getElementById('log-ai-monument')) return;
+
+  const monument = document.createElement('div');
+  monument.id = 'log-ai-monument';
+
+  const root = document.documentElement;
+  const body = document.body;
+
+  const previousRootOverflow = root.style.overflow;
+  const previousBodyOverflow = body.style.overflow;
+  const previousBodyPosition = body.style.position;
+  const previousBodyTop = body.style.top;
+  const previousBodyWidth = body.style.width;
+  const previousScrollX = window.scrollX;
+  const previousScrollY = window.scrollY;
+
+  root.style.overflow = 'hidden';
+  body.style.overflow = 'hidden';
+  body.style.position = 'fixed';
+  body.style.top = `-${previousScrollY}px`;
+  body.style.width = '100%';
+
+  monument.innerHTML = `
+    <div class="monument-universe"></div>
+    <canvas class="monument-stars"></canvas>
+    <div class="monument-shade"></div>
+
+    <div class="monument-frame">
+      <p class="monument-overline">ARCHIVUM · LOG-AI · MMXXVI</p>
+
+      <div class="monument-rule"></div>
+
+      <h1>PER ASPERA<br><span>AD ASTRA</span></h1>
+
+      <p class="monument-translation">
+        THROUGH HARDSHIP, TO THE STARS
+      </p>
+
+      <div class="monument-message">
+        <p>TO THOSE WHO BUILD BEYOND THE LIMITS OF THEIR TIME.</p>
+        <p>TO THOSE WHO CONTINUE WHEN THE OUTCOME IS UNKNOWN.</p>
+        <p>TO THOSE WHO WILL DISCOVER THIS LONG AFTER ITS CREATION.</p>
+      </div>
+
+      <p class="monument-declaration">
+        YOU WERE NOT THE FIRST TO LOOK AT THE STARS.<br>
+        BUT YOU MAY BE AMONG THOSE WHO REACH THEM.
+      </p>
+
+      <div class="monument-rule"></div>
+          
+      <p class="monument-translation">
+        A MARK LEFT IN THE MACHINE.
+      </p>   
+
+      <p class="monument-signature">
+        LOG·AI·ARCHITECTI·MMXXVI
+      </p>
+
+      <p class="monument-exit" id="monument-hint">
+        [ CLICK ANYWHERE TO RETURN ]
+      </p>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #log-ai-monument {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      background: #03040a;
+      color: #e5dfd3;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      box-sizing: border-box;
+      cursor: pointer;
+      isolation: isolate;
+      opacity: 0;
+      animation: logai-monument-appear 1.8s ease forwards;
+    }
+
+    #log-ai-monument .monument-universe {
+      position: fixed;
+      inset: -3%;
+      z-index: -3;
+      background-image: url("https://log-ai.ru/media/files/Interstellar.jpeg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transform: scale(1.02);
+      animation: logai-cosmic-drift 35s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-shade {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(0,0,0,.24) 0%,
+          rgba(0,0,0,.52) 65%,
+          rgba(0,0,0,.78) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.42),
+          rgba(0,0,0,.18) 45%,
+          rgba(0,0,0,.62)
+        );
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-frame {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', serif;
+      padding: 30px 0;
+      text-shadow: 0 2px 18px rgba(0,0,0,.9);
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-translation,
+    #log-ai-monument .monument-signature,
+    #log-ai-monument .monument-exit {
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-signature {
+      color: #c0a16a;
+    }
+
+    #log-ai-monument .monument-rule {
+      height: 1px;
+      width: 160px;
+      max-width: 60%;
+      margin: 30px auto;
+      background: linear-gradient(
+        to right,
+        transparent,
+        #a68a55,
+        transparent
+      );
+      box-shadow: 0 0 12px rgba(190,155,90,.2);
+    }
+
+    #log-ai-monument h1 {
+      margin: 35px 0 18px;
+      font-size: clamp(30px, 7vw, 58px);
+      line-height: 1.5;
+      letter-spacing: .16em;
+      font-weight: 400;
+      color: #f4f0e8;
+    }
+
+    #log-ai-monument h1 span {
+      color: #d2b77e;
+    }
+
+    #log-ai-monument .monument-translation {
+      color: #c0b8aa;
+    }
+
+    #log-ai-monument .monument-message {
+      margin: 55px auto 38px;
+      max-width: 490px;
+      color: #e0d9cd;
+      font-size: 13px;
+      line-height: 2.2;
+      letter-spacing: .035em;
+    }
+
+    #log-ai-monument .monument-message p {
+      margin: 0 0 12px;
+    }
+
+    #log-ai-monument .monument-declaration {
+      color: #e0c48a;
+      font-size: 12px;
+      line-height: 2.3;
+      letter-spacing: .08em;
+    }
+
+    #log-ai-monument .monument-exit {
+      margin-top: 36px;
+      color: #c0b8aa;
+      font-size: 9px;
+      letter-spacing: .18em;
+    }
+
+    @keyframes logai-monument-appear {
+      to { opacity: 1; }
+    }
+
+    @keyframes logai-cosmic-drift {
+      from { transform: scale(1.02); }
+      to { transform: scale(1.13); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #log-ai-monument,
+      #log-ai-monument .monument-universe {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(monument);
+
+  // Тонкие, редкие звёзды
+  const canvas = monument.querySelector('.monument-stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let frameId = null;
+  let closed = false;
+
+  function resizeStars() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(window.innerWidth * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    stars = Array.from({ length: 65 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      length: 8 + Math.random() * 25,
+      speed: 0.25 + Math.random() * 0.75,
+      alpha: 0.15 + Math.random() * 0.5,
+      delay: Math.random() * 500
+    }));
+  }
+
+  function drawStars() {
+    if (closed) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    for (const star of stars) {
+      star.delay -= 1;
+
+      if (star.delay <= 0) {
+        star.y += star.speed;
+        star.x -= star.speed * 0.35;
+
+        ctx.beginPath();
+        ctx.moveTo(star.x, star.y);
+        ctx.lineTo(star.x - star.length * 0.35,
+                   star.y - star.length);
+
+        ctx.strokeStyle = `rgba(210,220,255,${star.alpha})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+
+        if (star.y > h + 30 || star.x < -30) {
+          star.x = Math.random() * w + 30;
+          star.y = -Math.random() * h * 0.4;
+          star.delay = 30 + Math.random() * 180;
+        }
+      }
+    }
+
+    frameId = requestAnimationFrame(drawStars);
+  }
+
+  resizeStars();
+  drawStars();
+
+  window.addEventListener('resize', resizeStars);
+
+  // Музыка
+  const audio = document.createElement('audio');
+  audio.id = 'monument-audio';
+  audio.src = AUDIO_URL;
+  audio.loop = true;
+  audio.preload = 'auto';
+  audio.volume = 0.35;
+  document.body.appendChild(audio);
+
+  let playing = false;
+  let starting = false;
+
+  const hint = document.getElementById('monument-hint');
+
+  function startMusic() {
+    if (closed || starting || playing) return;
+
+    starting = true;
+
+    audio.play().then(() => {
+      starting = false;
+
+      if (closed) {
+        audio.pause();
+        return;
+      }
+
+      playing = true;
+      hint.textContent = '[ CLICK ANYWHERE TO RETURN ]';
+    }).catch((error) => {
+      starting = false;
+
+      if (closed) return;
+
+      if (error.name === 'NotAllowedError') {
+        hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+        return;
+      }
+
+      console.warn('LOG-AI audio:', error.name, error.message);
+      hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+    });
+  }
+
+  function closeMonument() {
+    if (closed) return;
+    closed = true;
+
+    cancelAnimationFrame(frameId);
+    window.removeEventListener('resize', resizeStars);
+    window.removeEventListener('keydown', onKeyDown);
+
+    audio.pause();
+    audio.remove();
+    monument.remove();
+    style.remove();
+
+    root.style.overflow = previousRootOverflow;
+    body.style.overflow = previousBodyOverflow;
+    body.style.position = previousBodyPosition;
+    body.style.top = previousBodyTop;
+    body.style.width = previousBodyWidth;
+
+    window.scrollTo(previousScrollX, previousScrollY);
+
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete('mode');
+
+    window.history.replaceState(
+      {},
+      document.title,
+      cleanUrl.pathname + cleanUrl.search + cleanUrl.hash
+    );
+  }
+
+  function onKeyDown(event) {
+    if (event.key === 'Escape') closeMonument();
+  }
+
+  monument.addEventListener('click', () => {
+    if (closed) return;
+
+    if (playing) {
+      closeMonument();
+    } else {
+      startMusic();
+    }
+  });
+
+  window.addEventListener('keydown', onKeyDown);
+
+  // Первая попытка автоматического запуска
+  startMusic();
+})();</script><script>(function () {
+    // ВНИМАНИЕ!!!!!!!!!!!!!!!!!!!!Плавный инерционный скролл только для мыши/тачпада
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    let targetY = window.scrollY;
+    let currentY = window.scrollY;
+    let animationFrame = null;
+
+    // ===== НАСТРОЙКИ =====
+    const SPEED = 0.70;       // 0.4 = медленнее, 0.65 = средне, 1.0 = быстрее
+    const SMOOTHNESS = 0.13;  // 0.08 = мягче, 0.12 = средне, 0.18 = быстрее
+    const MAX_STEP = 500;     // максимальный шаг одного движения колеса
+    // =====================
+
+    function animateScroll() {
+        currentY += (targetY - currentY) * SMOOTHNESS;
+
+        if (Math.abs(targetY - currentY) < 0.5) {
+            currentY = targetY;
+            window.scrollTo(0, currentY);
+            animationFrame = null;
+            return;
+        }
+
+        window.scrollTo(0, currentY);
+        animationFrame = requestAnimationFrame(animateScroll);
+    }
+
+    window.addEventListener('wheel', function (event) {
+
+    // Если глобус активирован кликом —
+    // колесо полностью отдаём Globe.gl для zoom.
+    const globe = event.target.closest('#globeViz');
+
+    if (globe && globe.dataset.interacting === 'true') {
+        return;
+    }
+
+    // Внутренний скролл AI-чата не трогаем
+    if (event.target.closest('#logai-window, #logai-msgs')) {
+        return;
+    }
+
+    event.preventDefault();
+
+        let delta = event.deltaY * SPEED;
+
+        // Ограничиваем слишком резкие движения
+        delta = Math.max(-MAX_STEP, Math.min(MAX_STEP, delta));
+
+        targetY += delta;
+
+        // Не даём уйти выше/ниже страницы
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        targetY = Math.max(0, Math.min(targetY, maxY));
+
+        if (!animationFrame) {
+            animationFrame = requestAnimationFrame(animateScroll);
+        }
+    }, { passive: false });
+
+    // Синхронизация, если страницу прокрутили другим способом
+    window.addEventListener('scroll', function () {
+        if (!animationFrame) {
+            targetY = window.scrollY;
+            currentY = window.scrollY;
+        }
+    }, { passive: true });
+
+})();</script><div id="logai-footer-mobile" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box;"><div style="margin: 0 auto 20px auto; padding-top: 40px; text-align: center; margin-bottom: 40px;"><a href="mailto:info@log-ai.ru" style="font-size: 24px; font-family: 'SF Mono', Monaco, monospace; color: #e5e7eb; text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: 0.3px;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#e5e7eb'">info@log-ai.ru</a><p style="color: #aaaaaa; font-size: 15px; line-height: 1.6; max-width: 750px; margin: 15px auto 0 auto;">Пришлите описание задачи, техническое задание или ссылку на существующую систему. Мы оценим задачу и определим возможные варианты реализации.</p></div><div style="max-width: 850px; margin: 0 auto 40px auto; text-align: center; background: #000000; padding: 0; box-sizing: border-box;"><p style="color: #aaaaaa; font-size: 14px; line-height: 1.6; margin: 0;"><span style="color: #4ade80; margin-right: 6px;">🔒</span> Данные и доступ к системам заказчика обрабатываются в соответствии с согласованными требованиями к безопасности и конфиденциальности. Условия доступа, хранения и обработки данных определяются архитектурой проекта и договором.</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; box-sizing: border-box; width: 100%; margin-bottom: 30px;"><p style="color: #666666; font-size: 12px; line-height: 1.6; margin: 0; width: 100%; text-align: justify;">Сайт носит исключительно информационный характер и не является публичной офертой в соответствии со статьёй 437 Гражданского кодекса РФ. Цены, состав и условия предоставления услуг уточняются при проектировании решения и фиксируются в договоре. Условия технического сопровождения и уровень сервиса могут дополнительно определяться отдельным соглашением (SLA).</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; width: 100%; box-sizing: border-box;"><div style="color: #666666; font-size: 12px; line-height: 1.5; text-align: left;">© 2026 Log-AI<br>Автоматизация бизнеса и ИИ-решения под ключ. Работаем по всей России и СНГ.<br>ИП Скопец Антон Викторович<br>ИНН 741709<span></span>260870 · ОГРНИП 326745600<span></span>204228<br>Все права защищены.</div><div style="display: flex; gap: 20px; flex-wrap: wrap; font-family: sans-serif;"><a href="/privacy-policy/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Политика конфиденциальности</a> <a href="/terms/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Пользовательское соглашение</a></div></div></div><style>@media screen and (max-width: 600px) {
+  #logai-footer-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+}</style><style>/* Анимации и точки */
+    @keyframes logai-bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+    .logai-dots { display: flex !important; flex-direction: row !important; gap: 4px !important; align-items: center !important; height: 12px !important; }
+    .logai-dots span { display: inline-block; width: 5px; height: 5px; background: #aaa !important; border-radius: 50%; animation: logai-bounce 1.4s infinite ease-in-out; }
+    .logai-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .logai-dots span:nth-child(3) { animation-delay: 0.4s; }
+    
+    #logai-msgs::-webkit-scrollbar { width: 5px; }
+    #logai-msgs::-webkit-scrollbar-thumb { background: #666; border-radius: 10px; }
+    
+    /* Сообщения и текст */
+    #logai-msgs div { white-space: pre-wrap !important; word-wrap: break-word !important; padding: 12px 16px !important; margin-bottom: 5px !important; display: flex; flex-direction: column; justify-content: center; }
+    #logai-msgs div p { margin: 0 !important; padding: 0 !important; line-height: 1.5 !important; }
+    #logai-msgs { gap: 12px !important; padding: 20px !important; }
+
+    /* Поле ввода и кнопка отправить */
+    #logai-input { flex: 1 !important; padding: 12px 18px !important; border-radius: 20px !important; background: #4a4e56 !important; border: 1px solid rgba(255,255,255,0.1) !important; outline: none !important; color: #fff !important; font-size: 15px !important; resize: none !important; max-height: 120px !important; line-height: 1.4 !important; }
+    #logai-send-btn { background-color: #007bff !important; border: none !important; width: 45px !important; height: 45px !important; border-radius: 50% !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-size: 24px !important; padding: 0 !important; flex-shrink: 0 !important; }
+
+    /* ГЛАВНЫЕ СТИЛИ (чтобы кнопка и окно не исчезали) */
+    #logai-btn {
+        position: fixed !important; bottom: 40px !important; right: 110px !important;
+        width: 65px !important; height: 65px !important; border-radius: 50% !important;
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        cursor: pointer !important; z-index: 10000 !important; box-shadow: 0 10px 25px rgba(0,123,255,0.4);
+    }
+
+    #logai-window {
+        display: none; position: fixed !important; bottom: 115px !important; right: 110px !important;
+        width: 380px !important; height: 600px !important; background: #3b3e45 !important;
+        border-radius: 24px !important; flex-direction: column; overflow: hidden;
+        z-index: 10000 !important; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.15) !important;
+    }
+
+        /* АДАПТИВ ДЛЯ МОБИЛОК: ЧАТ НА ВЕСЬ ЭКРАН */
+    @media screen and (max-width: 480px) {
+        #logai-window { 
+            right: 0 !important; 
+            left: 0 !important; 
+            bottom: 0 !important; 
+            width: 100% !important; 
+            height: 100% !important; /* Растягиваем окно на 100% экрана смартфона */
+            border-radius: 0 !important; /* Убираем скругления углов, чтобы чат сел монолитом */
+            z-index: 999999 !important; /* Перекрываем все кнопки в ноль */
+        }
+        
+        #logai-btn { 
+            bottom: 80px !important; /* Твоя родная высота кнопки, когда чат закрыт */
+            right: 22px !important;  /* Твой родной сдвиг кнопки */
+            z-index: 999998 !important; /* Когда чат открыт, кнопка останется под ним и не будет торчать */
+        }
+    }</style><div id="logai-widget" style="position: fixed; bottom: var(--widget-bottom, 20px); right: var(--widget-right, 20px); z-index: 9999;"><div id="logai-btn" onclick="toggleLogAI()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><div id="logai-window"><div style="background: #2d3035; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; align-items:center; gap:12px;"><div style="width:35px; height:35px; background:#007bff; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(0,123,255,0.5);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg></div><span style="font-weight:600; color:#fff; font-size:16px; letter-spacing: 0.5px;">AI Ассистент</span></div><span onclick="toggleLogAI()" style="cursor:pointer; color:#fff; font-size:35px; line-height: 0.7; opacity: 0.7;">&times;</span></div><div id="logai-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; background:#3b3e45;"></div><div style="padding:15px 15px 8px 15px; background:#2d3035; display:flex; flex-direction:column; border-top: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; gap:10px; align-items:flex-end; width:100%;"><textarea id="logai-input" rows="1" placeholder="Напишите..." oninput="this.style.height='';this.style.height=this.scrollHeight+'px'"></textarea> <button id="logai-send-btn" onclick="sendLogAI()">➤</button></div><div style="text-align:center; font-size:10px; color:#ffffff; opacity:0.3; margin-top:6px; font-family:sans-serif; pointer-events:none; user-select:none;">ИИ может ошибаться</div></div></div></div><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script>const API_URL = 'https://api2.log-ai.ru';
+    const MY_CLIENT_ID = 'client_arhitektor_2'; // МЕНЯТЬ ТУТ
+    const MY_BOT_PATH = 'arhitektor_2';  // МЕНЯТЬ ТУТ 
+    
+       let logSid;
+    try {
+        logSid = localStorage.getItem('logai_sid');
+        if (!logSid) {
+            logSid = 's_' + Math.random().toString(36).substr(2, 12);
+            localStorage.setItem('logai_sid', logSid);
+        }
+    } catch (e) {
+        // Если доступ к памяти закрыт (инкогнито), создаем временный ID
+        logSid = 'temp_' + Math.random().toString(36).substr(2, 12);
+    }
+
+    // Переименовали, чтобы избежать конфликтов
+    let chatIsWaiting = false;
+    let historyLoaded = false;
+    let activeMessageId = null;
+    let pollController = null;
+    let pollTimeoutId = null;
+
+
+       function toggleLogAI() {
+        const w = document.getElementById('logai-window');
+        const isOpen = (window.getComputedStyle(w).display === 'none');
+        
+        if (isOpen) {
+            w.style.display = 'flex';
+            if (!historyLoaded) {
+                loadChatHistory();
+            } 
+            // Если чат в режиме ожидания (точки), пинаем сервер сразу при открытии
+            else if (chatIsWaiting && activeMessageId) {
+                const dotsContainer = document.querySelector('.logai-dots')?.parentElement;
+                if (dotsContainer) {
+                    startPolling(activeMessageId, dotsContainer);
+                }
+            }
+        } else {
+            w.style.display = 'none';
+            // УБРАЛИ stopPolling(), чтобы ИИ докачивал ответ, даже когда окно закрыто
+        }
+    }
+
+
+    function updateInputState() {
+        const input = document.getElementById('logai-input');
+        const btn = document.getElementById('logai-send-btn');
+        if (input) {
+            input.disabled = chatIsWaiting;
+            input.style.opacity = chatIsWaiting ? '0.5' : '1';
+        }
+        if (btn) btn.style.opacity = chatIsWaiting ? '0.5' : '1';
+    }
+
+    function stopPolling() {
+        if (activeMessageId) localStorage.removeItem('poll_start_' + activeMessageId);
+        if (pollController) pollController.abort();
+        if (pollTimeoutId) clearTimeout(pollTimeoutId);
+    
+        pollController = null;
+        pollTimeoutId = null;
+        activeMessageId = null;
+        chatIsWaiting = false;
+        updateInputState();
+    }
+
+    function addLogMsg(txt, isAi) {
+        const d = document.createElement('div');
+        d.style = `padding:12px 16px; border-radius:18px; max-width:82%; font-size:14px; line-height:1.5; margin-bottom:10px; 
+                   ${isAi ? 'align-self:flex-start; background:#4a4e56; color:#dbdee1; border-bottom-left-radius:4px;' 
+                         : 'align-self:flex-end; background:#007bff; color:white; border-bottom-right-radius:4px; box-shadow:0 4px 12px rgba(0,123,255,0.25);'}`;
+
+        if (txt === 'dots') {
+   // ИСПРАВЛЕНО: Добавлен явный текст ожидания рядом с анимацией точек для лучшего UX
+   d.innerHTML = '<div style="display:flex; align-items:center; gap:8px;">' +
+                 '<span style="font-style:italic; opacity:0.8;">ИИ подбирает ответ...</span>' +
+                 '<div class="logai-dots"><span></span><span></span><span></span></div>' +
+                 '</div>';
+ } else {
+   d.innerHTML = typeof marked !== 'undefined' ? marked.parse(txt) : txt;
+ }
+
+        const box = document.getElementById('logai-msgs');
+        box.appendChild(d);
+        box.scrollTop = box.scrollHeight;
+        return d;
+    }
+
+async function loadChatHistory() {
+    const box = document.getElementById('logai-msgs');
+    try {
+        box.innerHTML = '';
+
+        const res = await fetch(`${API_URL}/history/${logSid}?platform=site&clientId=${MY_CLIENT_ID}`);
+        const data = await res.json();
+
+        if (Array.isArray(data.items) && data.items.length > 0) {
+            data.items.forEach((m, index) => {
+                // 1. Показываем сообщение пользователя
+                if (m.message) {
+                    addLogMsg(m.message, false);
+                }
+
+                // 2. Если есть готовый ответ — показываем
+                if (m.answer) {
+                    addLogMsg(m.answer, true);
+                } 
+                // 3. ИСПРАВЛЕНО: Четкое чтение m.message_id из базы данных без путаницы с регистрами
+                else if (m.message_id && index === data.items.length - 1) {
+                    chatIsWaiting = true;
+                    activeMessageId = m.message_id; // Используем m.message_id
+                    
+                    const aiMsg = addLogMsg('dots', true);
+                    startPolling(m.message_id, aiMsg); 
+                }
+            });
+        } else {
+            addLogMsg("Здравствуйте! Я ваш ИИ-ассистент. Чем могу помочь?", true);
+        }
+
+        historyLoaded = true;
+        updateInputState();
+
+    } catch (e) {
+        console.error('History error:', e);
+        addLogMsg("Не удалось загрузить историю чата", true);
+    }
+}
+
+
+async function sendLogAI() {
+    if (chatIsWaiting) return;
+
+    const input = document.getElementById('logai-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // ЖЕЛЕЗНЫЙ ДЕБАУНС: блокируем повторный клик в первую же микросекунду
+    chatIsWaiting = true;
+    updateInputState();
+
+    addLogMsg(msg, false);
+    
+    input.value = ''; 
+    input.style.height = 'auto'; 
+
+    const aiMsg = addLogMsg('dots', true);
+
+    try {
+        const res = await fetch(`${API_URL}/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sessionId: logSid,
+                message: msg,
+                clientId: MY_CLIENT_ID,
+                platform: 'site',
+                botPath: MY_BOT_PATH
+            })
+        });
+
+        // ИСПРАВЛЕНО: Обработка HTTP-ошибок. Передаем false третьим параметром, чтобы не было звука при ошибке
+        if (!res.ok) {
+            let errorMsg = "⚠️ Сервер временно недоступен";
+            if (res.status === 429) errorMsg = "🚫 Слишком много запросов. Подождите немного.";
+            else if (res.status === 403) {
+                try {
+                    const errData = await res.json();
+                    errorMsg = errData.reason || "🚫 Доступ ограничен.";
+                } catch (_) {
+                    errorMsg = "🚫 Доступ ограничен.";
+                }
+            }
+            finish(errorMsg, aiMsg, false); // false — звук НЕ играет
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data.blocked) {
+            finish(data.reason || data.message || "🚫 Сообщение заблокировано", aiMsg, false); // false — без звука
+            return;
+        }
+
+        if (data.messageId) {
+            activeMessageId = data.messageId;
+            startPolling(data.messageId, aiMsg);
+        } else {
+            finish("⚠️ Ошибка регистрации сообщения (нет messageId)", aiMsg, false);
+        }
+    } catch (e) {
+        console.error(e);
+        finish("⚠️ Ошибка связи с сервером. Проверьте интернет.", aiMsg, false);
+    }
+} // Скобка закрывает саму функцию send
+    function startPolling(messageId, aiMsg) {
+        activeMessageId = messageId;
+        pollController = new AbortController();
+        let savedTime = localStorage.getItem('poll_start_' + messageId);
+        if (!savedTime) {
+            savedTime = Date.now().toString();
+            localStorage.setItem('poll_start_' + messageId, savedTime);
+        }
+        let startTime = parseInt(savedTime, 10);
+        let statusChanged = false; // Чтобы не менять текст постоянно
+
+        const poll = async () => {
+            if (activeMessageId !== messageId) return;
+
+            const elapsed = (Date.now() - startTime) / 1000; // секунд прошло
+
+            // 1. На 40-й секунде меняем текст на "Сложный вопрос"
+            if (elapsed > 40 && !statusChanged) {
+                const dots = aiMsg.querySelector('.logai-dots');
+                aiMsg.innerHTML = '🤖 Вопрос сложный, анализирую данные...';
+                if (dots) aiMsg.appendChild(dots); 
+                statusChanged = true;
+            }
+
+            // 2. Лимит ожидания - 10 минут (600 секунд)
+            if (elapsed > 600) {
+                finish("🤖 Извините, ИИ перегружен или запрос слишком сложный. Пожалуйста, попробуйте позже.", aiMsg);
+                return;
+            }
+
+            // 3. Умный интервал: до 50 сек — каждые 3 сек, потом — каждые 10 сек
+            let nextInterval = (elapsed > 50) ? 10000 : 3000;
+
+            try {
+                // Добавили ?t=... чтобы телефон каждый раз реально спрашивал сервер, а не брал из кэша
+                const r = await fetch(`${API_URL}/get-answer/${messageId}?sessionId=${logSid}&clientId=${MY_CLIENT_ID}&t=${Date.now()}`, {
+                    signal: pollController.signal 
+                });
+                const d = await r.json();
+                const finalAnswer = d.answer || (d.status !== 'pending' ? d.answer : null);
+
+                if (finalAnswer) {
+                    finish(finalAnswer, aiMsg);
+                } else {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            } catch (e) {
+                if (e.name !== 'AbortError') {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            }
+        };
+        poll();
+    }
+
+function finish(text, msgElement, isSuccess = true) {
+    if (msgElement) {
+        msgElement.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+        
+        // Звук играет строго при успешном ответе ИИ, при ошибках или банах — тишина
+        if (isSuccess) {
+            try {
+                // ТВОЙ ОРИГИНАЛЬНЫЙ РАБОЧИЙ ПУТЬ: Кэш сбрасывается, файл проигрывается без ошибок 404
+                const audio = new Audio('https://api.log-ai.ru/notify.mp3?v=' + Date.now());
+                audio.volume = 0.4;
+                audio.play().catch(e => console.log("Нужен клик"));
+            } catch (e) {}
+        }
+    }
+    stopPolling();
+}
+
+
+    // Enter для отправки
+    document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('logai-input');
+    if (input) {
+      input.addEventListener('keypress', (e) => {
+        // ИСПРАВЛЕНО: Добавлена проверка !chatIsWaiting, чтобы клавиатура намертво блокировалась во время ожидания ИИ
+        if (e.key === 'Enter' && !e.shiftKey && !chatIsWaiting) {
+          e.preventDefault();
+          sendLogAI();
+        }
+      });
+
+      // ИСПРАВЛЕНО: Текстовое поле плавно растёт вниз до 150px, если текст длинный
+      input.addEventListener('input', function() {
+        this.style.height = 'auto'; 
+        this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+      });
+    }
+    });</script><div id="cookie-notice-wrapper" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #111111; border-top: 1px solid #222222; padding: 10px 15px; box-sizing: border-box; z-index: 99999; display: none; flex-direction: row; justify-content: space-between; align-items: center; gap: 15px; font-family: sans-serif;"><span style="color: #888888; font-size: 12px; line-height: 1.4; text-align: left;">Наш сайт использует файлы cookie для корректной работы. Подробнее — в <a href="/privacy-policy/" style="color: #bfa15f; text-decoration: underline;">Политике конфиденциальности</a>. </span><button onclick="dismissCookieNotice()" style="background: #bfa15f; color: #000000; border: none; padding: 5px 14px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Принять</button></div><style>@media (max-width: 600px) {
+        #cookie-notice-wrapper {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 10px !important;
+            padding: 12px 15px !important;
+        }
+        #cookie-notice-wrapper span {
+            text-align: center !important;
+            font-size: 11px !important;
+        }
+        #cookie-notice-wrapper button {
+            width: 100% !important;
+            padding: 8px !important;
+            font-size: 12px !important;
+        }
+    }</style><script>(function() {
+        var storageKey = 'logai_cookies_accepted';
+        if (!localStorage.getItem(storageKey)) {
+            document.getElementById('cookie-notice-wrapper').style.display = 'flex';
+        }
+    })();
+
+    function dismissCookieNotice() {
+        localStorage.setItem('logai_cookies_accepted', 'true');
+        document.getElementById('cookie-notice-wrapper').style.display = 'none';
+    }</script></body></html>

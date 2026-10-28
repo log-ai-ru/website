@@ -1,0 +1,855 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Где хранить корпоративные данные: облако, сервер или гибрид — LOG-AI</title><meta name="description" content="Где хранить корпоративные данные: разбираем облако, локальную и гибридную инфраструктуру, доступ, резервирование, интеграции и восстановление."><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://log-ai.ru/gde-dolzhny-hranitsya-korporativnye-dannye/"><link rel="alternate" type="application/atom+xml" href="https://log-ai.ru/feed.xml" title="LOG-AI - RSS"><link rel="alternate" type="application/json" href="https://log-ai.ru/feed.json" title="LOG-AI - JSON"><meta property="og:title" content="Где хранить корпоративные данные: облако, сервер или гибрид — LOG-AI"><meta property="og:image" content="https://log-ai.ru/media/website/Log-ai-Logo.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:site_name" content="LOG-AI"><meta property="og:description" content="Где хранить корпоративные данные: разбираем облако, локальную и гибридную инфраструктуру, доступ, резервирование, интеграции и восстановление."><meta property="og:url" content="https://log-ai.ru/gde-dolzhny-hranitsya-korporativnye-dannye/"><meta property="og:type" content="article"><link rel="stylesheet" href="https://log-ai.ru/assets/css/style.css?v&#x3D;b1f5980528b3cc19f4018c94aea81f52"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://log-ai.ru/gde-dolzhny-hranitsya-korporativnye-dannye/"},"headline":"Где должны храниться корпоративные данные","datePublished":"2026-10-05T17:06+05:00","dateModified":"2026-10-25T10:47+05:00","description":"Где хранить корпоративные данные: разбираем облако, локальную и гибридную инфраструктуру, доступ, резервирование, интеграции и восстановление.","author":{"@type":"Person","name":"AI Automation","url":"https://log-ai.ru/authors/ai-automation/"},"publisher":{"@type":"Organization","name":"AI Automation"}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript><style>body, html, main, #page, .wrapper, .main { background: #000000 !important; background-color: #000000 !important; }</style><link rel="icon" type="image/png" sizes="32x32" href="/media/files/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/media/files/favicon-16.png"><link rel="apple-touch-icon" sizes="180x180" href="/media/files/favicon-180.png"><meta name="yandex-verification" content="9d14e10b64f3b76c"><meta name="google-site-verification" content="-rKktnoSCGCLZToW-jcZeKu5WvWFGuLKdLwwyCux0-M"></head><body class="page-template"><header class="top js-header"><a class="logo" href="https://log-ai.ru/">LOG-AI</a><nav class="navbar js-navbar"><button class="navbar__toggle js-toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><span class="navbar__toggle-box"><span class="navbar__toggle-inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://log-ai.ru/" target="_self">Главная</a></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Услуги</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/avtomatizaciya-obrabotki-zayavok-i-lidov/" target="_self">Автоматизация обработки заявок и лидов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-biznes-processov-integracii-dannye-i-skvoznye-scenarii/" target="_self">Автоматизация бизнес-процессов</a></li><li><a href="https://log-ai.ru/sbor-i-obrabotka-dannyh/" target="_self">Сбор и обработка данных</a></li><li><a href="https://log-ai.ru/ii-dlya-biznesa-i-nejrosetej/" target="_self">ИИ для бизнеса и нейросети</a></li><li><a href="https://log-ai.ru/specializirovannye-cifrovye-sistemy/" target="_self">Специализированные цифровые системы</a></li><li><a href="https://log-ai.ru/individualnye-korporativnye-sistemy/" target="_self">Корпоративные системы</a></li><li><a href="https://log-ai.ru/tehnicheskoe-soprovozhdenie/" target="_self">Техническое сопровождение</a></li><li><a href="https://log-ai.ru/it-audit-i-predproektnoe-obsledovanie/" title="/it-audit-i-predproektnoe-obsledovanie/" target="_self">IT-аудит и предпроектное обследование</a></li><li><a href="https://log-ai.ru/oblachnyy-i-infrastrukturnyy-konsalting/" title="/oblachnyy-i-infrastrukturnyy-konsalting/" target="_self">Облачный и инфраструктурный консалтинг</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Решения</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakie-sistemy-my-integriruem/" target="_self">Какие системы мы интегрируем</a></li><li><a href="https://log-ai.ru/kak-rabotaet-ii-v-biznese/" target="_self">Как работает ИИ в бизнесе</a></li><li><a href="https://log-ai.ru/resheniya-po-zadacham/" target="_self">Решения по задачам</a></li><li><a href="https://log-ai.ru/avtomatizaciya-proizvodstva/" target="_self">Для производства</a></li><li><a href="https://log-ai.ru/avtomatizaciya-logistiki-i-skladov/" target="_self">Для логистики и складов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-optovoy-torgovli/" target="_self">Для оптовой торговли</a></li><li><a href="https://log-ai.ru/avtomatizaciya-e-commerce/" target="_self">Для e-commerce</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Реализация</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kak-my-rabotaem/" target="_self">Как мы работаем</a></li><li><a href="https://log-ai.ru/dokumentaciya-sistemy/" target="_self">Документация системы</a></li><li><a href="https://log-ai.ru/infrastruktura-i-razmeshchenie/" target="_self">Инфраструктура и размещение</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Выбор</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakuyu-avtomatizaciyu-vybrat/" target="_self">Какую автоматизацию выбрать</a></li><li><a href="https://log-ai.ru/chto-avtomatizirovat-v-biznese-v-pervuyu-ochered/" target="_self">Что автоматизировать в бизнесе в первую очередь</a></li><li><a href="https://log-ai.ru/kak-podgotovit-biznes-k-avtomatizacii/" target="_self">Как подготовить бизнес к автоматизации</a></li><li><a href="https://log-ai.ru/kak-vnedrit-avtomatizaciyu/" target="_self">Как внедрить автоматизацию</a></li><li><a href="https://log-ai.ru/kak-ocenit-rezultat-avtomatizacii/" target="_self">Как оценить результат автоматизации</a></li><li><a href="https://log-ai.ru/stoimost-razrabotki/" target="_self">Стоимость разработки</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">О нас</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/inzhenernyy-sostav/" target="_self">Инженерный состав</a></li><li><a href="https://log-ai.ru/keysy/" target="_self">Кейсы</a></li><li><a href="https://log-ai.ru/glossariy/" target="_self">Глоссарий</a></li><li><a href="https://log-ai.ru/ekspertiza/" target="_self">Экспертиза</a></li><li><a href="https://log-ai.ru/bezopasnost-sistem-dannyh-i-infrastruktury/" target="_self">Безопасность</a></li></ul></li></ul></nav></header><main class="page"><article class="content"><div class="hero hero--noimage"><header class="hero__content hero__content--centered"><div class="wrapper"><h1>Где должны храниться корпоративные данные</h1></div></header></div><div class="entry-wrapper content__entry"><p> </p><p> </p><p> </p><p> </p><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">СТРАТЕГИЯ // DATA_STORAGE_STRATEGY</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Где хранить данные: почему инфраструктура начинается с бизнес-логики</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Вопрос о том, где хранить корпоративные данные, часто начинают с неправильной точки:</p><ul style="list-style: none; padding: 0; margin: 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> стоимость серверов;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> тарифы облака;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> аренда площадки;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> объём дисков.</li></ul><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 5px;">// ОШИБКА ЦЕЛЕПОЛАГАНИЯ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Но вся инфраструктура выбирается вовсе не для того, чтобы где-то просто «лежали файлы». Она должна непрерывно обеспечивать работу бизнеса.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Набор критических требований к доступности корпоративных систем:</p><ul style="list-style: none; padding: 0; margin: 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong>ERP:</strong> должна получать данные тогда, когда они нужны;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong>Производство:</strong> сохранять критичные данные и обеспечивать восстановление после предусмотренных сценариев отказа;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong>Аналитика:</strong> иметь доступ к необходимому объёму истории;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong>Интеграции:</strong> обмениваться данными без ручного переноса;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong>Сотрудники:</strong> доступ к системам независимо от их локации.</li></ul><h3 style="color: #ffffff; font-size: clamp(18px, 2.5vw, 22px); font-weight: bold; line-height: 1.2; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Поэтому вопрос правильнее формулировать иначе:</h3><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 25px;"><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; font-weight: bold; line-height: 1.6;">«Где конкретные корпоративные данные смогут храниться, обрабатываться и восстанавливаться с требуемым уровнем доступности, безопасности и управляемости?»</p></div><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold;">И ответ на этот вопрос далеко не всегда один и тот же для всей компании.</p></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">КЛАССИФИКАЦИЯ // DATA_CLASSIFICATION_STRATEGY</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">В компании редко бывает один тип данных</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Представим обычную корпоративную информационную среду:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto;" viewbox="0 0 440 230"><defs><marker id="pipe-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker></defs><rect x="130" y="10" width="180" height="24" fill="#000000" stroke="#165c52" stroke-width="1.2"></rect><text x="220" y="26" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">КОРПОРАТИВНЫЕ ДАННЫЕ</text><path d="M 220 34 L 220 50 L 70 50 L 70 65" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 220 34 L 220 65" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 220 34 L 220 50 L 370 50 L 380 50 L 380 65" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><text x="70" y="80" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Операционные</text><line x1="70" y1="86" x2="70" y2="100" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="70" y="115" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">ERP / CRM</text><text x="220" y="80" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Документы</text><line x1="220" y1="86" x2="220" y2="100" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="220" y="115" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">Файлы / PDF</text><text x="380" y="80" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Аналитика</text><line x1="380" y1="86" x2="380" y2="100" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="380" y="115" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">DWH / Lake</text><path d="M 70 123 L 70 145 L 220 145 L 220 160" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 220 123 L 220 160" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 380 123 L 380 145 L 220 145 L 220 160" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><text x="220" y="175" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Производственные данные</text><line x1="220" y1="181" x2="220" y2="195" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="220" y="210" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">оборудование</text></svg></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Для каждого обособленного класса данных могут кардинально отличаться:</p><ul style="list-style: none; padding: 0; margin: 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> требования к доступности;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> объём;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> скорость записи;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> скорость чтения;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> срок хранения;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> требования к резервированию;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> необходимость интеграции;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> требования к контролю доступа;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> допустимость передачи за пределы локального контура;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> стоимость комплексной обработки.</li></ul><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 10px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 5px;">// КРИТИКА ШАБЛОННЫХ РЕШЕНИЙ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Поэтому решение разместить абсолютно все данные в публичном облаке или, наоборот, оставить их исключительно на собственных физических серверах может оказаться слишком упрощённым и неэффективным.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ТОПОЛОГИЯ // INFRASTRUCTURE_APPROACHES</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Облако, локальный контур и гибрид</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Условно инфраструктуру управления и хранения корпоративной информации можно разделить на три базовых подхода.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px;">// ПОДХОД 1 //</div><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0; font-family: 'SF Mono', Monaco, monospace;">Локальная инфраструктура</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px;">// ПОДХОД 2 //</div><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0; font-family: 'SF Mono', Monaco, monospace;">Облачная инфраструктура</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px;">// ПОДХОД 3 //</div><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0; font-family: 'SF Mono', Monaco, monospace;">Гибридная инфраструктура</p></div></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// РЕАЛЬНАЯ ПРАКТИКА //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">На практике эти варианты не исключают друг друга.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Например, распределение систем на крупном предприятии может выглядеть так:</p><ul style="list-style: none; padding: 0; margin: 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong>Основная ERP:</strong> находится в локальном контуре;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong>Резервные копии:</strong> хранятся на отдельной удаленной площадке;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong>Аналитическая нагрузка:</strong> частично вынесена в облако;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong>Документы:</strong> размещены в облачном объектном хранилище.</li></ul><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 10px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// СМЕНА ПАРАДИГМЫ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 5px 0; line-height: 1.6;">Получается уже не примитивный выбор между «А или Б».</p><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.6;">Речь идёт о проектировании единой среды для безопасного хранения и обработки данных в разных инфраструктурах.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ТОПОЛОГИЯ // LOCAL_INFRASTRUCTURE</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Локальная инфраструктура: когда данные остаются внутри компании</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">В локальном варианте серверы и системы находятся под непосредственным контролем организации.</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 320px; display: block; margin: 0 auto;" viewbox="0 0 320 220"><defs><marker id="pipe-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker></defs><text x="160" y="20" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Корпоративная сеть</text><path d="M 160 26 L 160 45 L 70 45 L 70 60" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 160 26 L 160 45 L 250 45 L 250 60" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><text x="70" y="78" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="12" text-anchor="middle">ERP</text><text x="250" y="78" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="12" text-anchor="middle">CRM</text><path d="M 70 84 L 70 110 L 160 110 L 160 125" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 250 84 L 250 110 L 160 110 L 160 125" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><rect x="100" y="138" width="120" height="24" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="160" y="154" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Storage</text><line x1="160" y1="162" x2="160" y2="185" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="160" y="200" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">Backup / DR</text></svg></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Компания получает больше непосредственного контроля над физическим оборудованием, локальной сетью и процедурами эксплуатации:</p><ul style="list-style: none; padding: 0; margin: 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> где физически находится оборудование;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> кто именно имеет к нему прямой физический доступ;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> как изолирована и организована локальная сеть;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> какие корпоративные системы подключены к хранилищу;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> какие внутренние механизмы резервирования используются;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> как и в какие регламентные сроки проходит обновление всей инфраструктуры.</li></ul><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 25px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// ТЕХНОЛОГИЧЕСКИЙ КОНТУР //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 10px 0; line-height: 1.6;">Это особенно важно для систем, тесно связанных с внутренним производственным или технологическим контуром предприятия.</p><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Например, предприятие может иметь сквозную локальную шину:</p></div><div style="max-width: 440px; font-size: 13px; color: #aaaaaa; font-family: 'SF Mono', Monaco, monospace; background: #000000; border-left: 1px solid #14b8a6; padding-left: 15px; margin: 0 0 35px 0; box-sizing: border-box; line-height: 1.6;">Станки<br>  └── Промышленная сеть<br>       └── SCADA / MES<br>            └── Локальные серверы<br>                 └── ERP</div><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 10px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 5px;">// ОБОСНОВАНИЕ ПРИВЯЗКИ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 5px 0; line-height: 1.6;">В таком случае перенос всех компонентов в публичное облако может усложнить работу производственных систем и увеличить их зависимость от интернет-соединения.</p><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 5px 0; line-height: 1.6;">Не потому, что облако само по себе «плохое».</p><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.6;">А потому, что сама автоматизируемая система физически и технологически привязана к локальному контуру производства.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">РИСКИ // LOCAL_INFRASTRUCTURE_RISKS</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Но локальная инфраструктура не означает автоматическую безопасность</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Это одна из наиболее распространённых ошибок в планировании ИТ-периметра.</p><div style="max-width: 500px; font-size: 13px; color: #ff6b6b; font-family: 'SF Mono', Monaco, monospace; background: #000000; border-left: 1px solid #ff6b6b; padding-left: 15px; margin: 0 0 25px 0; box-sizing: border-box; line-height: 1.6;">// ИЛЛЮЗИЯ ЗАЩИЩЕННОСТИ //<br>Иногда рассуждают так: «Сервер находится у нас в серверной, значит данные защищены». На самом деле наличие собственного оборудования ничего не гарантирует.</div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">В локальной инфраструктуре точно так же существуют критические угрозы:</p><ul style="list-style: none; padding: 0; margin: 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> отказ дисков;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> повреждение оборудования;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> ошибки администраторов;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> вредоносное ПО;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> удаление данных;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> проблемы электропитания;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> пожар;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> затопление;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> сбой сети;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> потеря конфигурации;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b; font-weight: bold;">-</span> отсутствие актуальных резервных копий.</li></ul><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 10px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 5px;">// ЕДИНСТВЕННАЯ ТОЧКА ОТКАЗА //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 5px 0; line-height: 1.6;">Если единственная копия данных физически находится в одном серверном шкафу, это не резервирование.</p><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.6;">Это просто одна копия данных.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">НАДЕЖНОСТЬ // BACKUP_INDEPENDENCE</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Резервная копия должна решать другую задачу</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Рассмотрим классическую ошибку проектирования топологии бэкапов.</p><div style="max-width: 440px; font-size: 13px; color: #ff6b6b; font-family: 'SF Mono', Monaco, monospace; background: #000000; border-left: 1px solid #ff6b6b; padding-left: 15px; margin: 0 0 25px 0; box-sizing: border-box; line-height: 1.6;">Основной сервер<br>  └── Database<br>       └── Backup на том же сервере</div><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 5px;">// ИЛЛЮЗИЯ НАЛИЧИЯ БЭКАПА //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">На первый взгляд резервная копия действительно есть. Но если физически выходит из строя сам сервер, вместе с ним в ту же секунду становится недоступна и копия. Поэтому резервные копии необходимо хранить отдельно от основной системы, чтобы отказ одного оборудования не лишил компанию доступа к обоим экземплярам данных.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Целевая архитектурная топология безопасного резервного копирования:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 280px; display: block; margin: 0 auto;" viewbox="0 0 280 250"><defs><marker id="pipe-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker></defs><text x="140" y="20" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Основная система</text><line x1="140" y1="26" x2="140" y2="50" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="140" y="70" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Backup</text><line x1="140" y1="76" x2="140" y2="100" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="140" y="120" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Другая система хранения</text><line x1="140" y1="126" x2="140" y2="150" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><rect x="50" y="163" width="180" height="24" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="140" y="179" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Другая площадка</text></svg></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 25px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// ГЛУБОКАЯ ИЗОЛЯЦИЯ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Для критически важных бизнес-данных на практике может потребоваться ещё более сложная и распределённая схема.</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 10px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// ФУНДАМЕНТАЛЬНЫЙ ПРИНЦИП //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 5px 0; line-height: 1.6;">Главная архитектурная идея проста:</p><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.6;">Резервная копия должна храниться независимо от основной системы и оставаться доступной для восстановления при отказе основного контура. При этом её пригодность необходимо подтверждать регулярными проверками восстановления.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ЭЛАСТИЧНОСТЬ // CLOUD_INFRASTRUCTURE</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Облако меняет модель инфраструктуры</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">В облачном варианте компания не обязана самостоятельно покупать серверы, устанавливать диски и заранее рассчитывать физическую ёмкость.</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 320px; display: block; margin: 0 auto;" viewbox="0 0 320 160"><defs><marker id="pipe-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker></defs><text x="160" y="20" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Пользователи</text><line x1="160" y1="26" x2="160" y2="45" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><rect x="60" y="58" width="200" height="24" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="160" y="74" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Облачная инфраструктура</text><path d="M 160 82 L 160 105 L 50 105 L 50 120" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 160 82 L 160 120" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 160 82 L 160 105 L 270 105 L 270 120" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><text x="50" y="140" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="12" font-weight="bold" text-anchor="middle">DB</text><text x="160" y="140" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="12" font-weight="bold" text-anchor="middle">Storage</text><text x="270" y="140" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="12" font-weight="bold" text-anchor="middle">Compute</text></svg></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// ДИНАМИЧЕСКОЕ УПРАВЛЕНИЕ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Можно увеличивать вычислительные ресурсы по мере роста нагрузки, создавать дополнительные экземпляры систем в пределах возможностей выбранной платформы, использовать управляемые базы данных (Managed DB) и географически распределённые хранилища.</p></div><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 10px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 5px;">// ГРАНИЦЫ ОТВЕТСТВЕННОСТИ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 5px 0; line-height: 1.6;">Но здесь критически важно понимать:</p><p style="font-size: 14px; color: #ff6b6b; font-weight: bold; margin: 0 0 5px 0; line-height: 1.6;">облако ни в коем случае не отменяет архитектуру.</p><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.6;">Оно просто переносит часть ответственности за базовый инфраструктурный слой.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ОТКАЗОУСТОЙЧИВОСТЬ // CLOUD_AVAILABILITY</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">В облаке всё равно нужно решать вопрос доступности</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Допустим, критичное приложение работает в одном-единственном экземпляре:</p><div style="max-width: 440px; font-size: 13px; color: #ff6b6b; font-family: 'SF Mono', Monaco, monospace; background: #000000; border-left: 1px solid #ff6b6b; padding-left: 15px; margin: 0 0 25px 0; box-sizing: border-box; line-height: 1.6;">Application<br>  └── Database</div><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 5px;">// КРИТИЧЕСКИЙ СБОЙ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Если единственный экземпляр приложения становится недоступен, пользователи не смогут работать с системой до восстановления его работы или переключения на резервный экземпляр.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Поэтому действительно отказоустойчивая система в облаке должна проектироваться иначе:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 320px; display: block; margin: 0 auto;" viewbox="0 0 320 180"><defs><marker id="pipe-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker></defs><text x="160" y="20" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Load Balancer</text><path d="M 160 26 L 160 45 L 60 45 L 60 60" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 160 26 L 160 60" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 160 26 L 160 45 L 260 45 L 260 60" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><text x="60" y="78" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="12" text-anchor="middle">App 1</text><text x="160" y="78" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="12" text-anchor="middle">App 2</text><text x="260" y="78" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="12" text-anchor="middle">App 3</text><path d="M 60 84 L 60 110 L 160 110 L 160 125" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 160 84 L 160 125" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 260 84 L 260 110 L 160 110 L 160 125" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><rect x="100" y="138" width="120" height="24" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="160" y="154" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Database</text></svg></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 25px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// КОМПЛЕКСНОЕ РЕЗЕРВИРОВАНИЕ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">База данных и файловое хранилище также требуют отдельного проектирования отказоустойчивости. В зависимости от требований к доступности и допустимой потере данных могут потребоваться резервирование между зонами доступности, репликация и отдельные резервные копии.</p></div><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 10px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 5px;">// ФУНДАМЕНТАЛЬНОЕ РАЗЛИЧИЕ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 5px 0; line-height: 1.6;">Получается очень важный инженерный момент:</p><p style="font-size: 14px; color: #ff6b6b; font-weight: bold; margin: 0; line-height: 1.6;">Само по себе размещение данных в облаке не гарантирует их постоянную доступность.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">АРХИТЕКТУРА // HYBRID_ARCHITECTURE_ADVANTAGES</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Гибридная инфраструктура часто оказывается практичнее</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">У корпоративных систем редко бывает объективная причина хранить абсолютно всё в одном месте.</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 340px; display: block; margin: 0 auto;" viewbox="0 0 340 280"><defs><marker id="pipe-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker></defs><text x="170" y="20" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Corporate Network</text><path d="M 170 26 L 170 45 L 60 45 L 60 60" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 170 26 L 170 60" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 170 26 L 170 45 L 280 45 L 280 60" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><text x="60" y="78" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="12" text-anchor="middle">ERP</text><text x="170" y="78" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="12" text-anchor="middle">MES</text><text x="280" y="78" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="12" text-anchor="middle">SCADA</text><path d="M 60 84 L 60 110 L 170 110 L 170 125" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 170 84 L 170 125" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 280 84 L 280 110 L 170 110 L 170 125" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><text x="170" y="140" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Интеграционный контур</text><line x1="170" y1="146" x2="170" y2="175" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><rect x="85" y="188" width="170" height="24" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="170" y="204" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Облачная среда</text><path d="M 170 212 L 170 235 L 90 235 L 90 250" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 170 212 L 170 235 L 250 235 L 250 250" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><text x="90" y="265" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="12" font-weight="bold" text-anchor="middle">DWH</text><text x="250" y="265" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="12" font-weight="bold" text-anchor="middle">Storage</text></svg></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// ЛОКАЛЬНЫЙ ОПЕРАЦИОННЫЙ ЯДРО-КОНТУР //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Критичные операционные системы могут оставаться внутри локального контура предприятия, если этого требуют производственные процессы, ограничения по доступу или условия эксплуатации.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">А внешняя облачная инфраструктура точечно используется там, где она даёт максимальные архитектурные преимущества:</p><ul style="list-style: none; padding: 0; margin: 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> аналитика;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> хранение больших объёмов данных;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> резервирование;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> эластичные дополнительные вычислительные ресурсы;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> внешние готовые сервисы;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> быстро масштабируемые приложения.</li></ul><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold;">Это и есть один из наиболее сбалансированных и распространённых вариантов современной гибридной архитектуры.</p></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">СВЯЗНОСТЬ // HYBRID_COMPLEXITY_CHALLENGES</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Но гибрид сложнее двух отдельных инфраструктур</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">У гибридной модели есть очевидное преимущество: можно выбирать место размещения для каждого класса данных. Но появляется дополнительная сквозная граница:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 280px; display: block; margin: 0 auto;" viewbox="0 0 280 150"><defs><marker id="pipe-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker></defs><text x="140" y="20" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Локальная среда</text><line x1="140" y1="26" x2="140" y2="105" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="150" y="66" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold" text-anchor="start">VPN / API / Gateway</text><rect x="50" y="118" width="180" height="24" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="140" y="134" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Облачная среда</text></svg></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Через эту границу непрерывно должны проходить данные. А значит, на ней необходимо проектировать:</p><ul style="list-style: none; padding: 0; margin: 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> каналы связи;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> маршрутизацию;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> аутентификацию;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> шифрование;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> контроль доступа;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> обработку отказов;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> повторную отправку;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> очереди;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> мониторинг;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> журналирование.</li></ul><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 10px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 5px;">// КРИТИЧЕСКИЙ СЦЕНАРИЙ ОТКАЗА //</div><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.6;">Если связь между площадками пропала, распределённая система должна четко понимать, что делать с накопленными данными.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ИНТЕГРАЦИЯ // INTEGRATION_BOUNDARY_IMPACT</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Интеграции напрямую влияют на выбор места хранения</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Рассмотрим производственное предприятие с классическим сквозным стеком автоматизации:</p><div style="max-width: 440px; font-size: 13px; color: #aaaaaa; font-family: 'SF Mono', Monaco, monospace; background: #000000; border-left: 1px solid #14b8a6; padding-left: 15px; margin: 0 0 25px 0; box-sizing: border-box; line-height: 1.6;">Оборудование<br>  └── PLC / контроллеры<br>       └── SCADA<br>            └── MES<br>                 └── ERP</div><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 5px;">// ИНТЕГРАЦИОННАЯ ГРАНИЦА //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 10px 0; line-height: 1.6;">Если верхнеуровневая ERP размещена в облаке, а производственный контур остаётся внутри предприятия, необходимо отдельно спроектировать взаимодействие между ними на случай потери или ухудшения связи.</p><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.6;">И здесь возникает критический вопрос: что должно происходить, если интернет-соединение временно недоступно?</p></div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 15px;">// ХРУПКИЙ ЛИНЕЙНЫЙ ВАРИАНТ //</div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #aaaaaa; line-height: 1.5; margin-bottom: 15px;">Оборудование<br>  │<br>  ▼<br>Интернет<br>  <span style="color: #ff6b6b; font-weight: bold;">X связь потеряна</span><br>  ▼<br>Облачная система</div><p style="font-size: 13px; color: #ff6b6b; font-weight: bold; margin: 0; line-height: 1.5;">Если производственные процессы синхронно зависят от доступности облачной системы, потеря внешнего соединения может нарушить их выполнение. Чтобы снизить этот риск, критичные локальные процессы должны иметь предусмотренный сценарий работы при недоступности облака.</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 15px;">// УСТОЙЧИВЫЙ БУФЕРИЗИРОВАННЫЙ ВАРИАНТ //</div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #aaaaaa; line-height: 1.5; margin-bottom: 15px;">Оборудование<br>  └── Локальный контур<br>       └── <span style="color: #14b8a6; font-weight: bold;">MES / буфер</span><br>            └── Интеграция<br>                 └── Облако</div><p style="font-size: 13px; color: #14b8a6; font-weight: bold; margin: 0; line-height: 1.5;">Теперь локальные процессы цеха могут безопасно продолжаться, даже если передача данных во внешнюю среду временно полностью нарушена.</p></div></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ОПТИМИЗАЦИЯ // DATA_TIERING_STRATEGY</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Не все данные требуют одинаковой скорости доступа</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Ещё один важный критерий — частота использования информации корпоративными системами.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Профиль утилизации корпоративных слоёв:</p><ul style="list-style: none; padding: 0; margin: 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong>Операционные данные:</strong> нужны постоянно;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong>Документы текущего года:</strong> нужны регулярно;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong>Архив:</strong> нужен крайне редко;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong>Исторические данные:</strong> используются только аналитикой.</li></ul><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 5px;">// ИЗБЫТОЧНОСТЬ СЛОЯ ХРАНЕНИЯ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Необязательно хранить все данные в одном быстром и дорогом хранилище.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Вместо этого гораздо рациональнее построить иерархические уровни (Data Tiering):</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 340px; display: block; margin: 0 auto;" viewbox="0 0 340 140"><defs><marker id="pipe-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker></defs><text x="170" y="20" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Данные</text><path d="M 170 26 L 170 45 L 60 45 L 60 65" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 170 26 L 170 65" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 170 26 L 170 45 L 280 45 L 280 65" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><text x="60" y="85" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="12" font-weight="bold" text-anchor="middle">Hot data</text><text x="60" y="105" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">быстро</text><text x="170" y="85" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="12" font-weight="bold" text-anchor="middle">Warm data</text><text x="170" y="105" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">доступно</text><text x="280" y="85" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="12" font-weight="bold" text-anchor="middle">Archive</text><text x="280" y="105" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">дёшево</text></svg></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 10px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// ЭКОНОМИЯ НА МАСШТАБЕ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 5px 0; line-height: 1.6;">Чем реже используются данные, тем чаще можно применять более дешёвые уровни хранения, если допустимые сроки доступа и восстановления это позволяют.</p><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.6;">Это правило становится особенно критически важным для enterprise-систем, где общий объём информации неуклонно растёт годами.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">МАСШТАБ ДАННЫХ // DATA_LIFECYCLE_ARCHITECTURE</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Большой объём данных — отдельная архитектурная задача</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Представим крупное современное предприятие, которое непрерывно получает колоссальный поток телеметрии:</p><div style="max-width: 440px; font-size: 13px; color: #ff6b6b; font-family: 'SF Mono', Monaco, monospace; background: #000000; border-left: 1px solid #ff6b6b; padding-left: 15px; margin: 0 0 25px 0; box-sizing: border-box; line-height: 1.6;">1 000 датчиков<br>├── × 10 измерений/сек<br>├── × 24 часа<br>└── × 365 дней</div><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 5px;">// КРИТИЧЕСКАЯ МАССА ИНФОРМАЦИИ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Даже без сложных расчётов понятно, что общий объём данных будет быстро увеличиваться. При постоянной частоте измерений он растёт линейно со временем, а при увеличении числа датчиков или частоты измерений темп накопления данных дополнительно возрастает. Через несколько лет перед инженерами встанет совсем не тривиальный вопрос расширения физического дискового пространства.</p></div><h3 style="color: #ffffff; font-size: clamp(18px, 2.5vw, 22px); font-weight: bold; line-height: 1.2; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Главный вопрос меняет фокус:</h3><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 35px;"><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; font-weight: bold; line-height: 1.6;">«Как организовать сквозной, автоматизированный жизненный цикл этих данных?»</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Пример классического конвейера перемещения данных во времени:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 280px; display: block; margin: 0 auto;" viewbox="0 0 280 290"><defs><marker id="pipe-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker></defs><text x="140" y="20" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Новые данные</text><line x1="140" y1="26" x2="140" y2="50" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="140" y="70" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Быстрое хранилище</text><line x1="140" y1="76" x2="140" y2="100" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="140" y="120" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Обработка</text><line x1="140" y1="126" x2="140" y2="150" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="140" y="170" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Аналитическое хранилище</text><line x1="140" y1="176" x2="140" y2="200" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><rect x="80" y="213" width="120" height="24" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="140" y="229" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Архив</text></svg></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 10px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// СВЯЗЬ СЛОЕВ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">И здесь стратегический выбор базовой инфраструктуры напрямую и неразрывно связан уже не только с физическим местом хранения, но и со сквозной архитектурой самих данных.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">БЕЗОПАСНОСТЬ // ACCESS_CONTROL_STRATEGY</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Доступ важнее физического расположения</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Можно хранить данные внутри компании и при этом предоставить к ним слишком широкий доступ. И наоборот — данные могут находиться в облачной инфраструктуре, но доступ к ним будет строго ограничен.</p><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 5px;">// ГРАНИЦЫ ИЗОЛЯЦИИ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 10px 0; line-height: 1.6;">Поэтому важно различать два вопроса:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; line-height: 1.5;">1. Где физически находятся данные?<br>2. Кто и при каких условиях может их получить?</div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Пример разграничения прав на различных слоях хранения информации:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 360px; display: block; margin: 0 auto;" viewbox="0 0 360 170"><defs><marker id="pipe-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker></defs><text x="180" y="20" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Данные</text><path d="M 180 26 L 180 45 L 90 45 L 90 60" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 180 26 L 180 45 L 270 45 L 270 60" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><text x="90" y="78" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="12" font-weight="bold" text-anchor="middle">Storage</text><text x="270" y="78" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="12" font-weight="bold" text-anchor="middle">Database</text><path d="M 90 84 L 90 100 L 40 100 L 40 115" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 90 84 L 90 100 L 130 100 L 130 115" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><text x="40" y="135" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Admin</text><text x="130" y="135" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Service</text><path d="M 270 84 L 270 100 L 220 100 L 220 115" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 270 84 L 270 100 L 320 100 L 320 115" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><text x="220" y="135" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">ERP</text><text x="320" y="135" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">API</text></svg></div><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold;">Каждому потребителю нужен именно тот минимально достаточный уровень доступа, который необходим для непосредственного выполнения работы.</p></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">АРХИТЕКТУРА // COMPUTE_STORAGE_COUPLING</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Особенно важно разделять хранение и обработку</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Иногда данные не обязательно перемещать туда, где выполняется вся обработка.</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 380px; display: block; margin: 0 auto;" viewbox="0 0 380 140"><defs><marker id="pipe-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker></defs><text x="190" y="20" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Локальная база</text><line x1="190" y1="26" x2="190" y2="95" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="202" y="60" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="bold" text-anchor="start">ограниченный поток данных</text><rect x="100" y="108" width="180" height="24" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="190" y="124" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Облачная аналитика</text></svg></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// ИЗОЛЯЦИЯ ВЫЧИСЛЕНИЙ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">В облако может контролируемо передаваться только необходимая для аналитики информация. Это позволяет не переносить целиком всю операционную систему и одновременно эффективно использовать внешние эластичные вычислительные ресурсы.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Такой архитектурный подход особенно полезен, когда:</p><ul style="list-style: none; padding: 0; margin: 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box; margin-bottom: 10px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> операционные данные обязательно должны оставаться внутри защищённого контура;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> аналитика требует колоссальных аппаратных ресурсов;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> общий объём накапливаемой исторической информации постоянно растёт;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> бизнесу критически необходимы внешние специализированные аналитические инструменты.</li></ul></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ЭКОНОМИКА // INFRASTRUCTURE_TCO_ANALYSIS</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Стоимость хранения — это далеко не вся стоимость инфраструктуры</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Ошибка возникает, когда сравнивают исключительно базовые ценники «в лоб» и выбирают меньшую цифру.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #aaaaaa;">Свой сервер: X ₽</div><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #aaaaaa;">Облако: Y ₽</div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">На самом деле совокупная стоимость владения (TCO) инфраструктурой включает гораздо больше скрытых слоёв:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 280px; display: block; margin: 0 auto;" viewbox="0 0 280 470"><defs><marker id="pipe-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker></defs><text x="140" y="20" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Оборудование</text><line x1="140" y1="26" x2="140" y2="45" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="140" y="60" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">+ Сеть</text><line x1="140" y1="66" x2="140" y2="85" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="140" y="100" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">+ Электропитание</text><line x1="140" y1="106" x2="140" y2="125" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="140" y="140" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">+ Резервирование</text><line x1="140" y1="146" x2="140" y2="165" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="140" y="180" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">+ Backup</text><line x1="140" y1="186" x2="140" y2="205" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="140" y="220" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">+ Мониторинг</text><line x1="140" y1="226" x2="140" y2="245" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="140" y="260" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">+ Администрирование</text><line x1="140" y1="266" x2="140" y2="285" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="140" y="300" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">+ Обновления</text><line x1="140" y1="306" x2="140" y2="325" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="140" y="340" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">+ Безопасность</text><line x1="140" y1="346" x2="140" y2="365" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="140" y="380" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">+ Аварийное восстановление</text><line x1="140" y1="386" x2="140" y2="405" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><rect x="65" y="423" width="150" height="24" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="140" y="439" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">+ Масштабирование</text></svg></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 25px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// ПЕРЕРАСПРЕДЕЛЕНИЕ РАСХОДОВ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">В облачной инфраструктуре часть расходов распределяется иначе, но затраты на обслуживание, безопасность и резервирование всё равно необходимо учитывать.</p></div><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold;">Поэтому корректно сравнивать нужно не цену физического сервера и цену облачного ресурса, а совокупную стоимость требуемого уровня эксплуатации.</p></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ДИНАМИКА // DATA_GROWTH_DYNAMICS</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Важен не только объём данных, но и скорость их роста</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Статичный взгляд на объёмы — частая причина инфраструктурных кризисов. Нагрузку создает именно динамика.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// ТЕКУЩИЙ ДЕНЬ //</div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 20px; color: #ffffff; font-weight: bold;">10 TB</div></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// ЧЕРЕЗ 1 ГОД //</div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 20px; color: #ffffff; font-weight: bold;">25 TB</div></div><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 5px;">// ЧЕРЕЗ 3 ГОДА //</div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 20px; color: #ff6b6b; font-weight: bold;">80 TB</div></div></div><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 5px;">// АВАРИЙНЫЙ РЕЖИМ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Если архитектура рассчитана только на сегодняшние 10 TB, через некоторое время неизбежно придётся заниматься расширением инфраструктуры в аварийном режиме под давлением бизнеса.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Поэтому при выборе и проектировании целевого хранилища необходимо комплексно оценивать:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 280px; display: block; margin: 0 auto;" viewbox="0 0 280 230"><defs><marker id="pipe-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker></defs><text x="140" y="20" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Текущий объём</text><line x1="140" y1="26" x2="140" y2="50" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="140" y="70" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">+ скорость роста</text><line x1="140" y1="76" x2="140" y2="100" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="140" y="120" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">+ срок хранения</text><line x1="140" y1="126" x2="140" y2="150" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><rect x="40" y="163" width="200" height="24" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="140" y="179" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">+ стоимость резервирования</text></svg></div><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 10px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 5px;">// РЕЗЕРВНЫЙ СЛОЙ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 5px 0; line-height: 1.6;">Именно последний пункт чаще всего полностью забывают на этапе бюджетирования.</p><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.6;">Если основные рабочие данные занимают 50 ТБ, ёмкость резервной инфраструктуры (DR) необходимо рассчитывать исходя из объёма восстанавливаемых данных, требований к восстановлению, особенностей репликации и необходимого запаса на дальнейший рост. Она не обязательно должна в точности совпадать с ёмкостью основной инфраструктуры.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ОТКАЗОУСТОЙЧИВОСТЬ // DISASTER_RECOVERY_STRATEGY</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Что происходит при отказе?</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Это один из самых полезных вопросов при проектировании.</p><div style="max-width: 500px; font-size: 13px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; background: #000000; border-left: 1px solid #14b8a6; padding-left: 15px; margin: 0 0 25px 0; box-sizing: border-box; line-height: 1.6;">Не:<br>«Где будут лежать данные?»<br><br>А:<br>«Что произойдёт с системой, если это место станет недоступно?»</div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Например:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 200px; display: block; margin: 0 auto;" viewbox="0 0 200 130"><defs><marker id="pipe-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker></defs><text x="100" y="20" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Основное хранилище</text><line x1="100" y1="26" x2="100" y2="70" stroke="#ff6b6b" stroke-width="1.2" stroke-dasharray="4 4"></line><text x="110" y="52" fill="#ff6b6b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="bold" text-anchor="start">X отказ</text><rect x="40" y="83" width="120" height="24" fill="#000000" stroke="#ff6b6b" stroke-width="1.2"></rect><text x="100" y="99" fill="#ff6b6b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Что дальше?</text></svg></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">В зависимости от критичности системы может потребоваться:</p><div style="max-width: 440px; font-size: 13px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; background: #000000; border-left: 1px solid #14b8a6; padding-left: 15px; margin: 0 0 35px 0; box-sizing: border-box; line-height: 1.6;">Основное хранилище<br>├──► Реплика<br>└──► Backup<br>      └── Другая площадка</div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">А для критичных систем ещё и сценарий переключения:</p><div style="max-width: 440px; font-size: 13px; color: #ff6b6b; font-family: 'SF Mono', Monaco, monospace; background: #000000; border-left: 1px solid #ff6b6b; padding-left: 15px; margin: 0 0 35px 0; box-sizing: border-box; line-height: 1.6;">Primary<br>│<br>X<br>│<br>▼<br>Failover<br>│<br>▼<br>Secondary</div><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 10px;"><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 5px 0; line-height: 1.6;">Но наличие второй площадки само по себе ничего не гарантирует.</p><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.6;">Её необходимо регулярно проверять.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ПРОВЕРКА // BACKUP_VERIFICATION</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Резервирование без проверки — это предположение</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Можно иметь:</p><div style="max-width: 440px; font-size: 13px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; background: #000000; border-left: 1px solid #14b8a6; padding-left: 15px; margin: 0 0 25px 0; box-sizing: border-box; line-height: 1.6;">Backup: YES</div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">в отчёте мониторинга. И всё равно не суметь восстановить систему.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Причины могут быть совершенно практическими:</p><ul style="list-style: none; padding: 0; margin: 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> резервная копия повреждена;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> отсутствует часть данных;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> потеряны ключи;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> не сохранилась конфигурация;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> неизвестна последовательность восстановления;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> восстановление занимает слишком много времени;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">-</span> никто не проверял процедуру после изменения архитектуры.</li></ul><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 10px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// КРИТЕРИЙ ЗРЕЛОСТИ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 5px 0; line-height: 1.6;">Но если где-либо в SVG рядом с этим разделом утверждается, что наличие резервной копии гарантирует восстановление, такую подпись стоит проверить отдельно. Сам текст правильно подчёркивает необходимость тестирования восстановления.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">КРИТЕРИИ // RTO_RPO_METRICS</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Для разных систем допустимый простой разный</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">CRM может некоторое время быть недоступной. Производственная система может не иметь такой возможности.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 30px;"><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px;">// ДОПУСТИМЫЙ ПРОСТОЙ //</div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 5px;">RTO = несколько часов</div><p style="font-size: 13px; color: #aaaaaa; margin: 0;">может быть приемлемым для условной системы.</p></div><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 10px;">// КРИТИЧЕСКИЙ ПРОСТОЙ //</div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 5px;">RTO = несколько минут</div><p style="font-size: 13px; color: #ff6b6b; font-weight: bold; margin: 0;">И это требование радикально меняет всю архитектуру.</p></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">То же самое касается потери данных.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px;">// ДОПУСТИМАЯ ПОТЕРЯ //</div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 5px;">RPO = минуты</div><p style="font-size: 13px; color: #aaaaaa; margin: 0;">Если допустимо потерять последние несколько минут, можно строить одну архитектуру.</p></div><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 10px;">// БЕЗУСЛОВНАЯ СОХРАННОСТЬ //</div><p style="font-size: 13px; color: #aaaaaa; margin: 0;">Если потеря даже одной операции недопустима, требования будут совершенно другими.</p></div></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 10px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// СВЯЗЬ С МЕТРИКАМИ //</div><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.6;">Поэтому место хранения данных должно определяться вместе с требованиями RTO и RPO, а не отдельно от них.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">МЕТОДОЛОГИЯ // STORAGE_SELECTION_CHECKLIST</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Как выбирать место хранения для конкретной системы</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Практически полезно пройти несколько вопросов.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 10px;"><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px;">// 1 //</div><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 5px;">Что это за данные?</p><p style="font-size: 13px; color: #aaaaaa; margin: 0;">Операционные, финансовые, производственные, персональные, архивные, аналитические?</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px;">// 2 //</div><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 5px;">Как часто они используются?</p><p style="font-size: 13px; color: #aaaaaa; margin: 0;">Каждую секунду, несколько раз в день или раз в год?</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px;">// 3 //</div><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 5px;">Какой объём и скорость роста?</p><p style="font-size: 13px; color: #aaaaaa; margin: 0;">Важно понимать не только текущий размер, но и прогноз.</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px;">// 4 //</div><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 5px;">Кто и откуда должен получать доступ?</p><p style="font-size: 13px; color: #aaaaaa; margin: 0;">Внутренняя сеть, филиалы, удалённые сотрудники, внешние системы?</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px;">// 5 //</div><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 5px;">Что произойдёт при потере связи?</p><p style="font-size: 13px; color: #aaaaaa; margin: 0;">Особенно важно для производства и распределённых организаций.</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px;">// 6 //</div><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 5px;">Что произойдёт при отказе хранилища?</p><p style="font-size: 13px; color: #aaaaaa; margin: 0;">Есть ли резервная копия? Реплика? Другая площадка?</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px;">// 7 //</div><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 5px;">Сколько времени система может быть недоступна?</p><p style="font-size: 13px; color: #aaaaaa; margin: 0;">От этого зависит архитектура восстановления.</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px;">// 8 //</div><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 5px;">Можно ли передавать данные за пределы локального контура?</p><p style="font-size: 13px; color: #aaaaaa; margin: 0;">Это определяется требованиями конкретной системы, бизнеса и применимых правил.</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px;">// 9 //</div><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 5px;">С какими системами нужно интегрироваться?</p><p style="font-size: 13px; color: #aaaaaa; margin: 0;">Иногда именно интеграции определяют архитектуру сильнее, чем само хранилище.</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px;">// 10 //</div><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 5px;">Как система будет выглядеть через три года?</p><p style="font-size: 13px; color: #aaaaaa; margin: 0;">Инфраструктура должна выдерживать не только сегодняшний объём.</p></div></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">АРХИТЕКТУРА // FINAL_HYBRID_TOPOLOGY</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">На практике получается не «облако или сервер»</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Зрелая корпоративная архитектура может выглядеть примерно так:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto;" viewbox="0 0 440 280"><defs><marker id="pipe-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker></defs><rect x="130" y="10" width="180" height="24" fill="#000000" stroke="#165c52" stroke-width="1.2"></rect><text x="220" y="26" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">КОРПОРАТИВНАЯ СРЕДА</text><path d="M 220 34 L 220 50 L 70 50 L 70 65" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 220 34 L 220 65" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 220 34 L 220 50 L 370 50 L 370 65" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><text x="70" y="80" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Локальный</text><text x="70" y="94" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">контур</text><line x1="70" y1="100" x2="70" y2="115" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="70" y="132" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">ERP / MES</text><text x="70" y="146" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">SCADA</text><text x="70" y="160" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">критичные</text><text x="70" y="174" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">операции</text><text x="220" y="80" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Гибридный</text><text x="220" y="94" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">слой</text><line x1="220" y1="100" x2="220" y2="115" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="220" y="132" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">Интеграции</text><text x="220" y="146" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">API / Queue</text><text x="220" y="160" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">ETL</text><text x="370" y="80" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Облачный</text><text x="370" y="94" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">контур</text><line x1="370" y1="100" x2="370" y2="115" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></line><text x="370" y="132" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">Analytics</text><text x="370" y="146" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">DWH</text><text x="370" y="160" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">Storage</text><path d="M 70 185 L 70 205 L 220 205 L 220 220" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 220 172 L 220 220" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><path d="M 370 172 L 370 205 L 220 205 L 220 220" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#pipe-arrow)"></path><rect x="130" y="233" width="180" height="24" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="220" y="249" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Backup / DR</text></svg></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// НАЗНАЧЕНИЕ КОМПОНЕНТОВ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Здесь каждый компонент находится там, где это имеет инженерный смысл.</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 10px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// УСТОЙЧИВОСТЬ СИСТЕМЫ //</div><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.6;">Именно такой подход обычно оказывается устойчивее попытки разместить всю инфраструктуру по одному универсальному принципу.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ПРОЕКТИРОВАНИЕ // ARCHITECTURE_FIRST_STORAGE</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Главная ошибка — выбирать место хранения раньше архитектуры</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Если сначала выбрать категоричную установку, архитектура начинает работать от инфраструктуры, а не от требований бизнеса.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 10px;">// КАТЕГОРИЧНОСТЬ 1 //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">«Всё будет в облаке».</p></div><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 20px; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 10px;">// КАТЕГОРИЧНОСТЬ 2 //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">«Никаких облаков, всё только на собственных серверах».</p></div></div><div style="background: #000000; border-left: 1px solid #ff6b6b; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 35px;"><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Обе позиции слишком категоричны.</p></div><h3 style="color: #ffffff; font-size: clamp(18px, 2.5vw, 22px); font-weight: bold; line-height: 1.2; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Правильный вопрос другой:</h3><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 25px;"><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; font-weight: bold; line-height: 1.6;">«Какие требования предъявляет конкретная система к данным, доступности, производительности, безопасности, резервированию и интеграциям?»</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 10px;"><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">А уже после этого выбирается подходящее место размещения.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">РЕЗЮМЕ // FINAL_SUMMARY_CONCLUSION</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Итог</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">У корпоративных данных нет универсального «правильного места».</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.5;">Для одной системы оптимальным решением будет локальная инфраструктура.</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.5;">Для другой — облачная.</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.5;">Для третьей — комбинация нескольких сред.</p></div></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// ЭЛЕМЕНТ СИСТЕМЫ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">При этом само расположение данных — только один элемент архитектуры.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Необходимо одновременно продумать:</p><div style="max-width: 440px; font-size: 13px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; background: #000000; border-left: 1px solid #14b8a6; padding-left: 15px; margin: 0 0 35px 0; box-sizing: border-box; line-height: 1.6;">Данные<br>  │<br>  ├── Где хранятся<br>  ├── Как обрабатываются<br>  ├── Кто получает доступ<br>  ├── Как интегрируются<br>  ├── Как резервируются<br>  ├── Как восстанавливаются<br>  ├── Как масштабируются<br>  └── Что происходит при отказе</div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// СТАРТОВАЯ ТОЧКА //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 5px 0; line-height: 1.6;">Поэтому при проектировании корпоративной инфраструктуры мы бы начинали не с выбора между «облаком» и «своим сервером».</p><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.6;">Мы бы начали с самих данных и процессов, которые от них зависят.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Каждое бизнес-требование формирует свои условия:</p><ul style="list-style: none; padding: 0; margin: 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> Если критичная производственная операция должна продолжаться при потере внешнего соединения — это влияет на архитектуру.</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> Если аналитике требуется обработать десятки терабайт истории — это влияет на архитектуру.</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> Если данные должны быть доступны филиалам в разных регионах — это тоже влияет на архитектуру.</li></ul><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// ЧАСТЬ ОБЩЕЙ ЗАДАЧИ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">И если система должна восстановиться после серьёжного отказа за определённое время, место хранения становится только частью гораздо более важной задачи — построения всей цепочки хранения, доступа, резервирования и восстановления данных.</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding: 15px; box-sizing: border-box; width: 100%; margin-bottom: 10px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 5px;">// ИНЖЕНЕРНЫЙ ИТОГ //</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 5px 0; line-height: 1.6;">Именно поэтому хороший выбор инфраструктуры — это не выбор самого дешёвого места для хранения.</p><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.6;">Это выбор архитектуры, в которой данные остаются доступными, управляемыми и пригодными для работы бизнеса тогда, когда они действительно нужны.</p></div></div><p> </p><div style="max-width: 1100px; margin: 60px auto 0 auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">НАВИГАЦИЯ // SUGGESTED_READING</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ИНФРАСТРУКТУРА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Локальный ИИ: когда он действительно нужен</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/lokalnyy-ii-kogda-on-deystvitelno-nuzhen/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // БЕЗОПАСНОСТЬ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Почему пароля недостаточно</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/pochemu-parolya-nedostatochno/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ИНФРАСТРУКТУРА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Что происходит с системой после запуска</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/chto-proishodit-s-sistemoy-posle-zapuska/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div></div></div><div style="max-width: 1100px; margin: 20px auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; border-top: 1px solid #165c52; padding: 40px 0 0 0; box-sizing: border-box; width: 100%;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 40px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ EXPERTISE JOURNAL ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Все инженерные материалы и экспертные статьи</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/ekspertiza/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">перейти к каталогу ──►</a></div></div><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ CORE GLOSSARY ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Полный алфавитный справочник ИТ-терминов</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/glossariy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">открыть справочник ──►</a></div></div></div></div></div></article></main><footer class="footer"><div class="wrapper"><div class="footer__copyright"><p> </p><p> </p></div><button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg width="20" height="20"><use xlink:href="https://log-ai.ru/assets/svg/svg-map.svg#toparrow"/></svg></button></div></footer><script defer="defer" src="https://log-ai.ru/assets/js/scripts.min.js?v&#x3D;d0fc1030089a37f93a2d51bf6d07565c"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script><script>(() => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') !== 'monument') return;
+
+  const IMAGE_URL = 'https://log-ai.ru/media/files/Interstellar.jpeg';
+  const AUDIO_URL = 'https://log-ai.ru/media/files/interstellar.mp3';
+
+  // Защита от повторного запуска
+  if (document.getElementById('log-ai-monument')) return;
+
+  const monument = document.createElement('div');
+  monument.id = 'log-ai-monument';
+
+  const root = document.documentElement;
+  const body = document.body;
+
+  const previousRootOverflow = root.style.overflow;
+  const previousBodyOverflow = body.style.overflow;
+  const previousBodyPosition = body.style.position;
+  const previousBodyTop = body.style.top;
+  const previousBodyWidth = body.style.width;
+  const previousScrollX = window.scrollX;
+  const previousScrollY = window.scrollY;
+
+  root.style.overflow = 'hidden';
+  body.style.overflow = 'hidden';
+  body.style.position = 'fixed';
+  body.style.top = `-${previousScrollY}px`;
+  body.style.width = '100%';
+
+  monument.innerHTML = `
+    <div class="monument-universe"></div>
+    <canvas class="monument-stars"></canvas>
+    <div class="monument-shade"></div>
+
+    <div class="monument-frame">
+      <p class="monument-overline">ARCHIVUM · LOG-AI · MMXXVI</p>
+
+      <div class="monument-rule"></div>
+
+      <h1>PER ASPERA<br><span>AD ASTRA</span></h1>
+
+      <p class="monument-translation">
+        THROUGH HARDSHIP, TO THE STARS
+      </p>
+
+      <div class="monument-message">
+        <p>TO THOSE WHO BUILD BEYOND THE LIMITS OF THEIR TIME.</p>
+        <p>TO THOSE WHO CONTINUE WHEN THE OUTCOME IS UNKNOWN.</p>
+        <p>TO THOSE WHO WILL DISCOVER THIS LONG AFTER ITS CREATION.</p>
+      </div>
+
+      <p class="monument-declaration">
+        YOU WERE NOT THE FIRST TO LOOK AT THE STARS.<br>
+        BUT YOU MAY BE AMONG THOSE WHO REACH THEM.
+      </p>
+
+      <div class="monument-rule"></div>
+          
+      <p class="monument-translation">
+        A MARK LEFT IN THE MACHINE.
+      </p>   
+
+      <p class="monument-signature">
+        LOG·AI·ARCHITECTI·MMXXVI
+      </p>
+
+      <p class="monument-exit" id="monument-hint">
+        [ CLICK ANYWHERE TO RETURN ]
+      </p>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #log-ai-monument {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      background: #03040a;
+      color: #e5dfd3;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      box-sizing: border-box;
+      cursor: pointer;
+      isolation: isolate;
+      opacity: 0;
+      animation: logai-monument-appear 1.8s ease forwards;
+    }
+
+    #log-ai-monument .monument-universe {
+      position: fixed;
+      inset: -3%;
+      z-index: -3;
+      background-image: url("https://log-ai.ru/media/files/Interstellar.jpeg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transform: scale(1.02);
+      animation: logai-cosmic-drift 35s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-shade {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(0,0,0,.24) 0%,
+          rgba(0,0,0,.52) 65%,
+          rgba(0,0,0,.78) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.42),
+          rgba(0,0,0,.18) 45%,
+          rgba(0,0,0,.62)
+        );
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-frame {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', serif;
+      padding: 30px 0;
+      text-shadow: 0 2px 18px rgba(0,0,0,.9);
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-translation,
+    #log-ai-monument .monument-signature,
+    #log-ai-monument .monument-exit {
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-signature {
+      color: #c0a16a;
+    }
+
+    #log-ai-monument .monument-rule {
+      height: 1px;
+      width: 160px;
+      max-width: 60%;
+      margin: 30px auto;
+      background: linear-gradient(
+        to right,
+        transparent,
+        #a68a55,
+        transparent
+      );
+      box-shadow: 0 0 12px rgba(190,155,90,.2);
+    }
+
+    #log-ai-monument h1 {
+      margin: 35px 0 18px;
+      font-size: clamp(30px, 7vw, 58px);
+      line-height: 1.5;
+      letter-spacing: .16em;
+      font-weight: 400;
+      color: #f4f0e8;
+    }
+
+    #log-ai-monument h1 span {
+      color: #d2b77e;
+    }
+
+    #log-ai-monument .monument-translation {
+      color: #c0b8aa;
+    }
+
+    #log-ai-monument .monument-message {
+      margin: 55px auto 38px;
+      max-width: 490px;
+      color: #e0d9cd;
+      font-size: 13px;
+      line-height: 2.2;
+      letter-spacing: .035em;
+    }
+
+    #log-ai-monument .monument-message p {
+      margin: 0 0 12px;
+    }
+
+    #log-ai-monument .monument-declaration {
+      color: #e0c48a;
+      font-size: 12px;
+      line-height: 2.3;
+      letter-spacing: .08em;
+    }
+
+    #log-ai-monument .monument-exit {
+      margin-top: 36px;
+      color: #c0b8aa;
+      font-size: 9px;
+      letter-spacing: .18em;
+    }
+
+    @keyframes logai-monument-appear {
+      to { opacity: 1; }
+    }
+
+    @keyframes logai-cosmic-drift {
+      from { transform: scale(1.02); }
+      to { transform: scale(1.13); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #log-ai-monument,
+      #log-ai-monument .monument-universe {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(monument);
+
+  // Тонкие, редкие звёзды
+  const canvas = monument.querySelector('.monument-stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let frameId = null;
+  let closed = false;
+
+  function resizeStars() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(window.innerWidth * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    stars = Array.from({ length: 65 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      length: 8 + Math.random() * 25,
+      speed: 0.25 + Math.random() * 0.75,
+      alpha: 0.15 + Math.random() * 0.5,
+      delay: Math.random() * 500
+    }));
+  }
+
+  function drawStars() {
+    if (closed) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    for (const star of stars) {
+      star.delay -= 1;
+
+      if (star.delay <= 0) {
+        star.y += star.speed;
+        star.x -= star.speed * 0.35;
+
+        ctx.beginPath();
+        ctx.moveTo(star.x, star.y);
+        ctx.lineTo(star.x - star.length * 0.35,
+                   star.y - star.length);
+
+        ctx.strokeStyle = `rgba(210,220,255,${star.alpha})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+
+        if (star.y > h + 30 || star.x < -30) {
+          star.x = Math.random() * w + 30;
+          star.y = -Math.random() * h * 0.4;
+          star.delay = 30 + Math.random() * 180;
+        }
+      }
+    }
+
+    frameId = requestAnimationFrame(drawStars);
+  }
+
+  resizeStars();
+  drawStars();
+
+  window.addEventListener('resize', resizeStars);
+
+  // Музыка
+  const audio = document.createElement('audio');
+  audio.id = 'monument-audio';
+  audio.src = AUDIO_URL;
+  audio.loop = true;
+  audio.preload = 'auto';
+  audio.volume = 0.35;
+  document.body.appendChild(audio);
+
+  let playing = false;
+  let starting = false;
+
+  const hint = document.getElementById('monument-hint');
+
+  function startMusic() {
+    if (closed || starting || playing) return;
+
+    starting = true;
+
+    audio.play().then(() => {
+      starting = false;
+
+      if (closed) {
+        audio.pause();
+        return;
+      }
+
+      playing = true;
+      hint.textContent = '[ CLICK ANYWHERE TO RETURN ]';
+    }).catch((error) => {
+      starting = false;
+
+      if (closed) return;
+
+      if (error.name === 'NotAllowedError') {
+        hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+        return;
+      }
+
+      console.warn('LOG-AI audio:', error.name, error.message);
+      hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+    });
+  }
+
+  function closeMonument() {
+    if (closed) return;
+    closed = true;
+
+    cancelAnimationFrame(frameId);
+    window.removeEventListener('resize', resizeStars);
+    window.removeEventListener('keydown', onKeyDown);
+
+    audio.pause();
+    audio.remove();
+    monument.remove();
+    style.remove();
+
+    root.style.overflow = previousRootOverflow;
+    body.style.overflow = previousBodyOverflow;
+    body.style.position = previousBodyPosition;
+    body.style.top = previousBodyTop;
+    body.style.width = previousBodyWidth;
+
+    window.scrollTo(previousScrollX, previousScrollY);
+
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete('mode');
+
+    window.history.replaceState(
+      {},
+      document.title,
+      cleanUrl.pathname + cleanUrl.search + cleanUrl.hash
+    );
+  }
+
+  function onKeyDown(event) {
+    if (event.key === 'Escape') closeMonument();
+  }
+
+  monument.addEventListener('click', () => {
+    if (closed) return;
+
+    if (playing) {
+      closeMonument();
+    } else {
+      startMusic();
+    }
+  });
+
+  window.addEventListener('keydown', onKeyDown);
+
+  // Первая попытка автоматического запуска
+  startMusic();
+})();</script><script>(function () {
+    // ВНИМАНИЕ!!!!!!!!!!!!!!!!!!!!Плавный инерционный скролл только для мыши/тачпада
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    let targetY = window.scrollY;
+    let currentY = window.scrollY;
+    let animationFrame = null;
+
+    // ===== НАСТРОЙКИ =====
+    const SPEED = 0.70;       // 0.4 = медленнее, 0.65 = средне, 1.0 = быстрее
+    const SMOOTHNESS = 0.13;  // 0.08 = мягче, 0.12 = средне, 0.18 = быстрее
+    const MAX_STEP = 500;     // максимальный шаг одного движения колеса
+    // =====================
+
+    function animateScroll() {
+        currentY += (targetY - currentY) * SMOOTHNESS;
+
+        if (Math.abs(targetY - currentY) < 0.5) {
+            currentY = targetY;
+            window.scrollTo(0, currentY);
+            animationFrame = null;
+            return;
+        }
+
+        window.scrollTo(0, currentY);
+        animationFrame = requestAnimationFrame(animateScroll);
+    }
+
+    window.addEventListener('wheel', function (event) {
+
+    // Если глобус активирован кликом —
+    // колесо полностью отдаём Globe.gl для zoom.
+    const globe = event.target.closest('#globeViz');
+
+    if (globe && globe.dataset.interacting === 'true') {
+        return;
+    }
+
+    // Внутренний скролл AI-чата не трогаем
+    if (event.target.closest('#logai-window, #logai-msgs')) {
+        return;
+    }
+
+    event.preventDefault();
+
+        let delta = event.deltaY * SPEED;
+
+        // Ограничиваем слишком резкие движения
+        delta = Math.max(-MAX_STEP, Math.min(MAX_STEP, delta));
+
+        targetY += delta;
+
+        // Не даём уйти выше/ниже страницы
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        targetY = Math.max(0, Math.min(targetY, maxY));
+
+        if (!animationFrame) {
+            animationFrame = requestAnimationFrame(animateScroll);
+        }
+    }, { passive: false });
+
+    // Синхронизация, если страницу прокрутили другим способом
+    window.addEventListener('scroll', function () {
+        if (!animationFrame) {
+            targetY = window.scrollY;
+            currentY = window.scrollY;
+        }
+    }, { passive: true });
+
+})();</script><div id="logai-footer-mobile" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box;"><div style="margin: 0 auto 20px auto; padding-top: 40px; text-align: center; margin-bottom: 40px;"><a href="mailto:info@log-ai.ru" style="font-size: 24px; font-family: 'SF Mono', Monaco, monospace; color: #e5e7eb; text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: 0.3px;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#e5e7eb'">info@log-ai.ru</a><p style="color: #aaaaaa; font-size: 15px; line-height: 1.6; max-width: 750px; margin: 15px auto 0 auto;">Пришлите описание задачи, техническое задание или ссылку на существующую систему. Мы оценим задачу и определим возможные варианты реализации.</p></div><div style="max-width: 850px; margin: 0 auto 40px auto; text-align: center; background: #000000; padding: 0; box-sizing: border-box;"><p style="color: #aaaaaa; font-size: 14px; line-height: 1.6; margin: 0;"><span style="color: #4ade80; margin-right: 6px;">🔒</span> Данные и доступ к системам заказчика обрабатываются в соответствии с согласованными требованиями к безопасности и конфиденциальности. Условия доступа, хранения и обработки данных определяются архитектурой проекта и договором.</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; box-sizing: border-box; width: 100%; margin-bottom: 30px;"><p style="color: #666666; font-size: 12px; line-height: 1.6; margin: 0; width: 100%; text-align: justify;">Сайт носит исключительно информационный характер и не является публичной офертой в соответствии со статьёй 437 Гражданского кодекса РФ. Цены, состав и условия предоставления услуг уточняются при проектировании решения и фиксируются в договоре. Условия технического сопровождения и уровень сервиса могут дополнительно определяться отдельным соглашением (SLA).</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; width: 100%; box-sizing: border-box;"><div style="color: #666666; font-size: 12px; line-height: 1.5; text-align: left;">© 2026 Log-AI<br>Автоматизация бизнеса и ИИ-решения под ключ. Работаем по всей России и СНГ.<br>ИП Скопец Антон Викторович<br>ИНН 741709<span></span>260870 · ОГРНИП 326745600<span></span>204228<br>Все права защищены.</div><div style="display: flex; gap: 20px; flex-wrap: wrap; font-family: sans-serif;"><a href="/privacy-policy/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Политика конфиденциальности</a> <a href="/terms/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Пользовательское соглашение</a></div></div></div><style>@media screen and (max-width: 600px) {
+  #logai-footer-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+}</style><style>/* Анимации и точки */
+    @keyframes logai-bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+    .logai-dots { display: flex !important; flex-direction: row !important; gap: 4px !important; align-items: center !important; height: 12px !important; }
+    .logai-dots span { display: inline-block; width: 5px; height: 5px; background: #aaa !important; border-radius: 50%; animation: logai-bounce 1.4s infinite ease-in-out; }
+    .logai-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .logai-dots span:nth-child(3) { animation-delay: 0.4s; }
+    
+    #logai-msgs::-webkit-scrollbar { width: 5px; }
+    #logai-msgs::-webkit-scrollbar-thumb { background: #666; border-radius: 10px; }
+    
+    /* Сообщения и текст */
+    #logai-msgs div { white-space: pre-wrap !important; word-wrap: break-word !important; padding: 12px 16px !important; margin-bottom: 5px !important; display: flex; flex-direction: column; justify-content: center; }
+    #logai-msgs div p { margin: 0 !important; padding: 0 !important; line-height: 1.5 !important; }
+    #logai-msgs { gap: 12px !important; padding: 20px !important; }
+
+    /* Поле ввода и кнопка отправить */
+    #logai-input { flex: 1 !important; padding: 12px 18px !important; border-radius: 20px !important; background: #4a4e56 !important; border: 1px solid rgba(255,255,255,0.1) !important; outline: none !important; color: #fff !important; font-size: 15px !important; resize: none !important; max-height: 120px !important; line-height: 1.4 !important; }
+    #logai-send-btn { background-color: #007bff !important; border: none !important; width: 45px !important; height: 45px !important; border-radius: 50% !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-size: 24px !important; padding: 0 !important; flex-shrink: 0 !important; }
+
+    /* ГЛАВНЫЕ СТИЛИ (чтобы кнопка и окно не исчезали) */
+    #logai-btn {
+        position: fixed !important; bottom: 40px !important; right: 110px !important;
+        width: 65px !important; height: 65px !important; border-radius: 50% !important;
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        cursor: pointer !important; z-index: 10000 !important; box-shadow: 0 10px 25px rgba(0,123,255,0.4);
+    }
+
+    #logai-window {
+        display: none; position: fixed !important; bottom: 115px !important; right: 110px !important;
+        width: 380px !important; height: 600px !important; background: #3b3e45 !important;
+        border-radius: 24px !important; flex-direction: column; overflow: hidden;
+        z-index: 10000 !important; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.15) !important;
+    }
+
+        /* АДАПТИВ ДЛЯ МОБИЛОК: ЧАТ НА ВЕСЬ ЭКРАН */
+    @media screen and (max-width: 480px) {
+        #logai-window { 
+            right: 0 !important; 
+            left: 0 !important; 
+            bottom: 0 !important; 
+            width: 100% !important; 
+            height: 100% !important; /* Растягиваем окно на 100% экрана смартфона */
+            border-radius: 0 !important; /* Убираем скругления углов, чтобы чат сел монолитом */
+            z-index: 999999 !important; /* Перекрываем все кнопки в ноль */
+        }
+        
+        #logai-btn { 
+            bottom: 80px !important; /* Твоя родная высота кнопки, когда чат закрыт */
+            right: 22px !important;  /* Твой родной сдвиг кнопки */
+            z-index: 999998 !important; /* Когда чат открыт, кнопка останется под ним и не будет торчать */
+        }
+    }</style><div id="logai-widget" style="position: fixed; bottom: var(--widget-bottom, 20px); right: var(--widget-right, 20px); z-index: 9999;"><div id="logai-btn" onclick="toggleLogAI()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><div id="logai-window"><div style="background: #2d3035; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; align-items:center; gap:12px;"><div style="width:35px; height:35px; background:#007bff; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(0,123,255,0.5);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg></div><span style="font-weight:600; color:#fff; font-size:16px; letter-spacing: 0.5px;">AI Ассистент</span></div><span onclick="toggleLogAI()" style="cursor:pointer; color:#fff; font-size:35px; line-height: 0.7; opacity: 0.7;">&times;</span></div><div id="logai-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; background:#3b3e45;"></div><div style="padding:15px 15px 8px 15px; background:#2d3035; display:flex; flex-direction:column; border-top: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; gap:10px; align-items:flex-end; width:100%;"><textarea id="logai-input" rows="1" placeholder="Напишите..." oninput="this.style.height='';this.style.height=this.scrollHeight+'px'"></textarea> <button id="logai-send-btn" onclick="sendLogAI()">➤</button></div><div style="text-align:center; font-size:10px; color:#ffffff; opacity:0.3; margin-top:6px; font-family:sans-serif; pointer-events:none; user-select:none;">ИИ может ошибаться</div></div></div></div><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script>const API_URL = 'https://api2.log-ai.ru';
+    const MY_CLIENT_ID = 'client_arhitektor_2'; // МЕНЯТЬ ТУТ
+    const MY_BOT_PATH = 'arhitektor_2';  // МЕНЯТЬ ТУТ 
+    
+       let logSid;
+    try {
+        logSid = localStorage.getItem('logai_sid');
+        if (!logSid) {
+            logSid = 's_' + Math.random().toString(36).substr(2, 12);
+            localStorage.setItem('logai_sid', logSid);
+        }
+    } catch (e) {
+        // Если доступ к памяти закрыт (инкогнито), создаем временный ID
+        logSid = 'temp_' + Math.random().toString(36).substr(2, 12);
+    }
+
+    // Переименовали, чтобы избежать конфликтов
+    let chatIsWaiting = false;
+    let historyLoaded = false;
+    let activeMessageId = null;
+    let pollController = null;
+    let pollTimeoutId = null;
+
+
+       function toggleLogAI() {
+        const w = document.getElementById('logai-window');
+        const isOpen = (window.getComputedStyle(w).display === 'none');
+        
+        if (isOpen) {
+            w.style.display = 'flex';
+            if (!historyLoaded) {
+                loadChatHistory();
+            } 
+            // Если чат в режиме ожидания (точки), пинаем сервер сразу при открытии
+            else if (chatIsWaiting && activeMessageId) {
+                const dotsContainer = document.querySelector('.logai-dots')?.parentElement;
+                if (dotsContainer) {
+                    startPolling(activeMessageId, dotsContainer);
+                }
+            }
+        } else {
+            w.style.display = 'none';
+            // УБРАЛИ stopPolling(), чтобы ИИ докачивал ответ, даже когда окно закрыто
+        }
+    }
+
+
+    function updateInputState() {
+        const input = document.getElementById('logai-input');
+        const btn = document.getElementById('logai-send-btn');
+        if (input) {
+            input.disabled = chatIsWaiting;
+            input.style.opacity = chatIsWaiting ? '0.5' : '1';
+        }
+        if (btn) btn.style.opacity = chatIsWaiting ? '0.5' : '1';
+    }
+
+    function stopPolling() {
+        if (activeMessageId) localStorage.removeItem('poll_start_' + activeMessageId);
+        if (pollController) pollController.abort();
+        if (pollTimeoutId) clearTimeout(pollTimeoutId);
+    
+        pollController = null;
+        pollTimeoutId = null;
+        activeMessageId = null;
+        chatIsWaiting = false;
+        updateInputState();
+    }
+
+    function addLogMsg(txt, isAi) {
+        const d = document.createElement('div');
+        d.style = `padding:12px 16px; border-radius:18px; max-width:82%; font-size:14px; line-height:1.5; margin-bottom:10px; 
+                   ${isAi ? 'align-self:flex-start; background:#4a4e56; color:#dbdee1; border-bottom-left-radius:4px;' 
+                         : 'align-self:flex-end; background:#007bff; color:white; border-bottom-right-radius:4px; box-shadow:0 4px 12px rgba(0,123,255,0.25);'}`;
+
+        if (txt === 'dots') {
+   // ИСПРАВЛЕНО: Добавлен явный текст ожидания рядом с анимацией точек для лучшего UX
+   d.innerHTML = '<div style="display:flex; align-items:center; gap:8px;">' +
+                 '<span style="font-style:italic; opacity:0.8;">ИИ подбирает ответ...</span>' +
+                 '<div class="logai-dots"><span></span><span></span><span></span></div>' +
+                 '</div>';
+ } else {
+   d.innerHTML = typeof marked !== 'undefined' ? marked.parse(txt) : txt;
+ }
+
+        const box = document.getElementById('logai-msgs');
+        box.appendChild(d);
+        box.scrollTop = box.scrollHeight;
+        return d;
+    }
+
+async function loadChatHistory() {
+    const box = document.getElementById('logai-msgs');
+    try {
+        box.innerHTML = '';
+
+        const res = await fetch(`${API_URL}/history/${logSid}?platform=site&clientId=${MY_CLIENT_ID}`);
+        const data = await res.json();
+
+        if (Array.isArray(data.items) && data.items.length > 0) {
+            data.items.forEach((m, index) => {
+                // 1. Показываем сообщение пользователя
+                if (m.message) {
+                    addLogMsg(m.message, false);
+                }
+
+                // 2. Если есть готовый ответ — показываем
+                if (m.answer) {
+                    addLogMsg(m.answer, true);
+                } 
+                // 3. ИСПРАВЛЕНО: Четкое чтение m.message_id из базы данных без путаницы с регистрами
+                else if (m.message_id && index === data.items.length - 1) {
+                    chatIsWaiting = true;
+                    activeMessageId = m.message_id; // Используем m.message_id
+                    
+                    const aiMsg = addLogMsg('dots', true);
+                    startPolling(m.message_id, aiMsg); 
+                }
+            });
+        } else {
+            addLogMsg("Здравствуйте! Я ваш ИИ-ассистент. Чем могу помочь?", true);
+        }
+
+        historyLoaded = true;
+        updateInputState();
+
+    } catch (e) {
+        console.error('History error:', e);
+        addLogMsg("Не удалось загрузить историю чата", true);
+    }
+}
+
+
+async function sendLogAI() {
+    if (chatIsWaiting) return;
+
+    const input = document.getElementById('logai-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // ЖЕЛЕЗНЫЙ ДЕБАУНС: блокируем повторный клик в первую же микросекунду
+    chatIsWaiting = true;
+    updateInputState();
+
+    addLogMsg(msg, false);
+    
+    input.value = ''; 
+    input.style.height = 'auto'; 
+
+    const aiMsg = addLogMsg('dots', true);
+
+    try {
+        const res = await fetch(`${API_URL}/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sessionId: logSid,
+                message: msg,
+                clientId: MY_CLIENT_ID,
+                platform: 'site',
+                botPath: MY_BOT_PATH
+            })
+        });
+
+        // ИСПРАВЛЕНО: Обработка HTTP-ошибок. Передаем false третьим параметром, чтобы не было звука при ошибке
+        if (!res.ok) {
+            let errorMsg = "⚠️ Сервер временно недоступен";
+            if (res.status === 429) errorMsg = "🚫 Слишком много запросов. Подождите немного.";
+            else if (res.status === 403) {
+                try {
+                    const errData = await res.json();
+                    errorMsg = errData.reason || "🚫 Доступ ограничен.";
+                } catch (_) {
+                    errorMsg = "🚫 Доступ ограничен.";
+                }
+            }
+            finish(errorMsg, aiMsg, false); // false — звук НЕ играет
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data.blocked) {
+            finish(data.reason || data.message || "🚫 Сообщение заблокировано", aiMsg, false); // false — без звука
+            return;
+        }
+
+        if (data.messageId) {
+            activeMessageId = data.messageId;
+            startPolling(data.messageId, aiMsg);
+        } else {
+            finish("⚠️ Ошибка регистрации сообщения (нет messageId)", aiMsg, false);
+        }
+    } catch (e) {
+        console.error(e);
+        finish("⚠️ Ошибка связи с сервером. Проверьте интернет.", aiMsg, false);
+    }
+} // Скобка закрывает саму функцию send
+    function startPolling(messageId, aiMsg) {
+        activeMessageId = messageId;
+        pollController = new AbortController();
+        let savedTime = localStorage.getItem('poll_start_' + messageId);
+        if (!savedTime) {
+            savedTime = Date.now().toString();
+            localStorage.setItem('poll_start_' + messageId, savedTime);
+        }
+        let startTime = parseInt(savedTime, 10);
+        let statusChanged = false; // Чтобы не менять текст постоянно
+
+        const poll = async () => {
+            if (activeMessageId !== messageId) return;
+
+            const elapsed = (Date.now() - startTime) / 1000; // секунд прошло
+
+            // 1. На 40-й секунде меняем текст на "Сложный вопрос"
+            if (elapsed > 40 && !statusChanged) {
+                const dots = aiMsg.querySelector('.logai-dots');
+                aiMsg.innerHTML = '🤖 Вопрос сложный, анализирую данные...';
+                if (dots) aiMsg.appendChild(dots); 
+                statusChanged = true;
+            }
+
+            // 2. Лимит ожидания - 10 минут (600 секунд)
+            if (elapsed > 600) {
+                finish("🤖 Извините, ИИ перегружен или запрос слишком сложный. Пожалуйста, попробуйте позже.", aiMsg);
+                return;
+            }
+
+            // 3. Умный интервал: до 50 сек — каждые 3 сек, потом — каждые 10 сек
+            let nextInterval = (elapsed > 50) ? 10000 : 3000;
+
+            try {
+                // Добавили ?t=... чтобы телефон каждый раз реально спрашивал сервер, а не брал из кэша
+                const r = await fetch(`${API_URL}/get-answer/${messageId}?sessionId=${logSid}&clientId=${MY_CLIENT_ID}&t=${Date.now()}`, {
+                    signal: pollController.signal 
+                });
+                const d = await r.json();
+                const finalAnswer = d.answer || (d.status !== 'pending' ? d.answer : null);
+
+                if (finalAnswer) {
+                    finish(finalAnswer, aiMsg);
+                } else {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            } catch (e) {
+                if (e.name !== 'AbortError') {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            }
+        };
+        poll();
+    }
+
+function finish(text, msgElement, isSuccess = true) {
+    if (msgElement) {
+        msgElement.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+        
+        // Звук играет строго при успешном ответе ИИ, при ошибках или банах — тишина
+        if (isSuccess) {
+            try {
+                // ТВОЙ ОРИГИНАЛЬНЫЙ РАБОЧИЙ ПУТЬ: Кэш сбрасывается, файл проигрывается без ошибок 404
+                const audio = new Audio('https://api.log-ai.ru/notify.mp3?v=' + Date.now());
+                audio.volume = 0.4;
+                audio.play().catch(e => console.log("Нужен клик"));
+            } catch (e) {}
+        }
+    }
+    stopPolling();
+}
+
+
+    // Enter для отправки
+    document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('logai-input');
+    if (input) {
+      input.addEventListener('keypress', (e) => {
+        // ИСПРАВЛЕНО: Добавлена проверка !chatIsWaiting, чтобы клавиатура намертво блокировалась во время ожидания ИИ
+        if (e.key === 'Enter' && !e.shiftKey && !chatIsWaiting) {
+          e.preventDefault();
+          sendLogAI();
+        }
+      });
+
+      // ИСПРАВЛЕНО: Текстовое поле плавно растёт вниз до 150px, если текст длинный
+      input.addEventListener('input', function() {
+        this.style.height = 'auto'; 
+        this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+      });
+    }
+    });</script><div id="cookie-notice-wrapper" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #111111; border-top: 1px solid #222222; padding: 10px 15px; box-sizing: border-box; z-index: 99999; display: none; flex-direction: row; justify-content: space-between; align-items: center; gap: 15px; font-family: sans-serif;"><span style="color: #888888; font-size: 12px; line-height: 1.4; text-align: left;">Наш сайт использует файлы cookie для корректной работы. Подробнее — в <a href="/privacy-policy/" style="color: #bfa15f; text-decoration: underline;">Политике конфиденциальности</a>. </span><button onclick="dismissCookieNotice()" style="background: #bfa15f; color: #000000; border: none; padding: 5px 14px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Принять</button></div><style>@media (max-width: 600px) {
+        #cookie-notice-wrapper {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 10px !important;
+            padding: 12px 15px !important;
+        }
+        #cookie-notice-wrapper span {
+            text-align: center !important;
+            font-size: 11px !important;
+        }
+        #cookie-notice-wrapper button {
+            width: 100% !important;
+            padding: 8px !important;
+            font-size: 12px !important;
+        }
+    }</style><script>(function() {
+        var storageKey = 'logai_cookies_accepted';
+        if (!localStorage.getItem(storageKey)) {
+            document.getElementById('cookie-notice-wrapper').style.display = 'flex';
+        }
+    })();
+
+    function dismissCookieNotice() {
+        localStorage.setItem('logai_cookies_accepted', 'true');
+        document.getElementById('cookie-notice-wrapper').style.display = 'none';
+    }</script></body></html>

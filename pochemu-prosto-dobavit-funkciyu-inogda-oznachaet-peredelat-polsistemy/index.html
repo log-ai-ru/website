@@ -1,0 +1,855 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Почему «просто добавить функцию» дорого: технический долг | Log-AI</title><meta name="description" content="Почему стоимость изменений в IT-системах растёт со временем: технический долг, зависимости, архитектурные ограничения и сложность развития продукта."><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://log-ai.ru/pochemu-prosto-dobavit-funkciyu-inogda-oznachaet-peredelat-polsistemy/"><link rel="alternate" type="application/atom+xml" href="https://log-ai.ru/feed.xml" title="LOG-AI - RSS"><link rel="alternate" type="application/json" href="https://log-ai.ru/feed.json" title="LOG-AI - JSON"><meta property="og:title" content="Почему «просто добавить функцию» дорого: технический долг | Log-AI"><meta property="og:image" content="https://log-ai.ru/media/website/Log-ai-Logo.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:site_name" content="LOG-AI"><meta property="og:description" content="Почему стоимость изменений в IT-системах растёт со временем: технический долг, зависимости, архитектурные ограничения и сложность развития продукта."><meta property="og:url" content="https://log-ai.ru/pochemu-prosto-dobavit-funkciyu-inogda-oznachaet-peredelat-polsistemy/"><meta property="og:type" content="article"><link rel="stylesheet" href="https://log-ai.ru/assets/css/style.css?v&#x3D;b1f5980528b3cc19f4018c94aea81f52"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://log-ai.ru/pochemu-prosto-dobavit-funkciyu-inogda-oznachaet-peredelat-polsistemy/"},"headline":"Почему «просто добавить функцию» иногда означает переделать полсистемы","datePublished":"2026-10-04T13:37+05:00","dateModified":"2026-10-25T13:14+05:00","description":"Почему стоимость изменений в IT-системах растёт со временем: технический долг, зависимости, архитектурные ограничения и сложность развития продукта.","author":{"@type":"Person","name":"AI Automation","url":"https://log-ai.ru/authors/ai-automation/"},"publisher":{"@type":"Organization","name":"AI Automation"}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript><style>body, html, main, #page, .wrapper, .main { background: #000000 !important; background-color: #000000 !important; }</style><link rel="icon" type="image/png" sizes="32x32" href="/media/files/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/media/files/favicon-16.png"><link rel="apple-touch-icon" sizes="180x180" href="/media/files/favicon-180.png"><meta name="yandex-verification" content="9d14e10b64f3b76c"><meta name="google-site-verification" content="-rKktnoSCGCLZToW-jcZeKu5WvWFGuLKdLwwyCux0-M"></head><body class="page-template"><header class="top js-header"><a class="logo" href="https://log-ai.ru/">LOG-AI</a><nav class="navbar js-navbar"><button class="navbar__toggle js-toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><span class="navbar__toggle-box"><span class="navbar__toggle-inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://log-ai.ru/" target="_self">Главная</a></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Услуги</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/avtomatizaciya-obrabotki-zayavok-i-lidov/" target="_self">Автоматизация обработки заявок и лидов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-biznes-processov-integracii-dannye-i-skvoznye-scenarii/" target="_self">Автоматизация бизнес-процессов</a></li><li><a href="https://log-ai.ru/sbor-i-obrabotka-dannyh/" target="_self">Сбор и обработка данных</a></li><li><a href="https://log-ai.ru/ii-dlya-biznesa-i-nejrosetej/" target="_self">ИИ для бизнеса и нейросети</a></li><li><a href="https://log-ai.ru/specializirovannye-cifrovye-sistemy/" target="_self">Специализированные цифровые системы</a></li><li><a href="https://log-ai.ru/individualnye-korporativnye-sistemy/" target="_self">Корпоративные системы</a></li><li><a href="https://log-ai.ru/tehnicheskoe-soprovozhdenie/" target="_self">Техническое сопровождение</a></li><li><a href="https://log-ai.ru/it-audit-i-predproektnoe-obsledovanie/" title="/it-audit-i-predproektnoe-obsledovanie/" target="_self">IT-аудит и предпроектное обследование</a></li><li><a href="https://log-ai.ru/oblachnyy-i-infrastrukturnyy-konsalting/" title="/oblachnyy-i-infrastrukturnyy-konsalting/" target="_self">Облачный и инфраструктурный консалтинг</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Решения</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakie-sistemy-my-integriruem/" target="_self">Какие системы мы интегрируем</a></li><li><a href="https://log-ai.ru/kak-rabotaet-ii-v-biznese/" target="_self">Как работает ИИ в бизнесе</a></li><li><a href="https://log-ai.ru/resheniya-po-zadacham/" target="_self">Решения по задачам</a></li><li><a href="https://log-ai.ru/avtomatizaciya-proizvodstva/" target="_self">Для производства</a></li><li><a href="https://log-ai.ru/avtomatizaciya-logistiki-i-skladov/" target="_self">Для логистики и складов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-optovoy-torgovli/" target="_self">Для оптовой торговли</a></li><li><a href="https://log-ai.ru/avtomatizaciya-e-commerce/" target="_self">Для e-commerce</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Реализация</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kak-my-rabotaem/" target="_self">Как мы работаем</a></li><li><a href="https://log-ai.ru/dokumentaciya-sistemy/" target="_self">Документация системы</a></li><li><a href="https://log-ai.ru/infrastruktura-i-razmeshchenie/" target="_self">Инфраструктура и размещение</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Выбор</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakuyu-avtomatizaciyu-vybrat/" target="_self">Какую автоматизацию выбрать</a></li><li><a href="https://log-ai.ru/chto-avtomatizirovat-v-biznese-v-pervuyu-ochered/" target="_self">Что автоматизировать в бизнесе в первую очередь</a></li><li><a href="https://log-ai.ru/kak-podgotovit-biznes-k-avtomatizacii/" target="_self">Как подготовить бизнес к автоматизации</a></li><li><a href="https://log-ai.ru/kak-vnedrit-avtomatizaciyu/" target="_self">Как внедрить автоматизацию</a></li><li><a href="https://log-ai.ru/kak-ocenit-rezultat-avtomatizacii/" target="_self">Как оценить результат автоматизации</a></li><li><a href="https://log-ai.ru/stoimost-razrabotki/" target="_self">Стоимость разработки</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">О нас</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/inzhenernyy-sostav/" target="_self">Инженерный состав</a></li><li><a href="https://log-ai.ru/keysy/" target="_self">Кейсы</a></li><li><a href="https://log-ai.ru/glossariy/" target="_self">Глоссарий</a></li><li><a href="https://log-ai.ru/ekspertiza/" target="_self">Экспертиза</a></li><li><a href="https://log-ai.ru/bezopasnost-sistem-dannyh-i-infrastruktury/" target="_self">Безопасность</a></li></ul></li></ul></nav></header><main class="page"><article class="content"><div class="hero hero--noimage"><header class="hero__content hero__content--centered"><div class="wrapper"><h1>Почему «просто добавить функцию» иногда означает переделать полсистемы</h1></div></header></div><div class="entry-wrapper content__entry"><p> </p><p> </p><p> </p><p> </p><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ПРОЕКТИРОВАНИЕ // DEPENDENCY_IMPACT</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Стоимость новых функций</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">«Добавьте ещё одну функцию».</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">На уровне бизнес-задачи это может звучать совершенно безобидно. Нужно добавить новый статус заказа, разрешить ещё один способ оплаты, подключить дополнительный канал продаж или дать определённым сотрудникам новый сценарий работы.</p><p style="font-size: 15px; color: #ff6b6b; margin: 0 0 25px 0; font-weight: bold;">Кажется, что речь идёт об одной небольшой доработке.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; font-weight: bold;">Но в работающей информационной системе почти не бывает изменений, которые существуют изолированно.</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto; z-index: 1;" viewbox="0 0 440 260"><defs><marker id="arrow-impact-red" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#ff6b6b"></path></marker></defs><rect x="150" y="113" width="140" height="34" fill="#110505" stroke="#ff6b6b" stroke-width="1"></rect><text x="220" y="134" fill="#ff6b6b" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">Новая функция ⟳</text><path d="M 150,130 L 80,44" fill="none" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-impact-red)"></path><path d="M 150,130 L 100,104" fill="none" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-impact-red)"></path><path d="M 150,130 L 100,156" fill="none" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-impact-red)"></path><path d="M 150,130 L 80,216" fill="none" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-impact-red)"></path><path d="M 290,130 L 360,44" fill="none" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-impact-red)"></path><path d="M 290,130 L 340,104" fill="none" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-impact-red)"></path><path d="M 290,130 L 340,156" fill="none" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-impact-red)"></path><path d="M 290,130 L 360,216" fill="none" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-impact-red)"></path><text x="70" y="40" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" text-anchor="end">База данных</text><text x="90" y="100" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="end">API</text><text x="90" y="160" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" text-anchor="end">Бизнес-логика</text><text x="70" y="220" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" text-anchor="end">Интерфейс</text><text x="370" y="40" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" text-anchor="start">Интеграция с ERP</text><text x="350" y="100" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" text-anchor="start">Уведомления</text><text x="350" y="160" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" text-anchor="start">Отчётность</text><text x="370" y="220" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" text-anchor="start">Права доступа</text></svg></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Новый статус может затронуть базу данных, API, бизнес-логику, интерфейс, интеграцию с ERP, уведомления, отчётность и права доступа. Новый способ оплаты — финансовый контур, возвраты, сверку платежей, договоры с провайдерами и бухгалтерскую отчётность. Новый тип клиента может повлиять на расчёт цены, CRM, документы и правила маршрутизации.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">В результате задача, которая выглядит как «добавить одно поле», превращается в изменение нескольких связанных компонентов.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 35px 0;">И чем дольше система развивается без пересмотра архитектуры, тем выше вероятность, что очередная небольшая функция затронет гораздо больше, чем предполагалось.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ДИАГНОЗ // EVOLUTION_LIMITS</div><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Это не обязательно означает, что система плохо написана.</p><p style="font-size: 15px; color: #14b8a6; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Чаще проблема в другом: требования бизнеса растут быстрее, чем архитектура успевает адаптироваться к этим изменениям.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">АРХИТЕКТУРА // COUPLING_COMPLEXITY</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Программный продукт меняется не по одному месту</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Представим простую систему заказов.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">В ней есть: <code>заказ → клиент → товар → оплата → доставка</code></p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">На раннем этапе всё может быть достаточно просто. Затем бизнес начинает развиваться.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Появляются:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">РАСШИРЕНИЕ // EVOLVING_REQUIREMENTS</div><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> несколько типов клиентов;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> разные способы оплаты;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> возвраты;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> частичные отгрузки;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> несколько складов;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> программы лояльности;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> интеграция с ERP;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> мобильное приложение;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> личный кабинет;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> новые каналы продаж.</li></ul><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Каждое требование само по себе кажется небольшим.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; font-weight: bold;">Но система уже состоит из множества взаимосвязанных решений.</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto; z-index: 1;" viewbox="0 0 440 310"><defs><marker id="arrow-chg-cyan" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><text x="220" y="15" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">НОВОЕ ТРЕБОВАНИЕ</text><line x1="220" y1="22" x2="220" y2="40" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-chg-cyan)"></line><rect x="150" y="46" width="140" height="28" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="63" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">Бизнес-логика</text><path d="M 220,74 L 220,90 L 65,90 L 65,112" fill="none" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-chg-cyan)"></path><path d="M 220,74 L 220,112" fill="none" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-chg-cyan)"></path><path d="M 220,74 L 220,90 L 375,90 L 375,112" fill="none" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-chg-cyan)"></path><rect x="15" y="118" width="100" height="28" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="65" y="135" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" text-anchor="middle">База данных</text><rect x="170" y="118" width="100" height="28" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="135" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">API</text><rect x="325" y="118" width="100" height="28" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="375" y="135" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" text-anchor="middle">Интерфейс</text><line x1="65" y1="146" x2="65" y2="182" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-chg-cyan)"></line><line x1="220" y1="146" x2="220" y2="182" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-chg-cyan)"></line><line x1="375" y1="146" x2="375" y2="182" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-chg-cyan)"></line><rect x="15" y="188" width="100" height="28" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="65" y="205" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" text-anchor="middle">Отчёты</text><rect x="170" y="188" width="100" height="28" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="205" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" text-anchor="middle">Интеграции</text><rect x="325" y="188" width="100" height="42" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="375" y="205" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" text-anchor="middle">Клиентский</text><text x="375" y="219" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" text-anchor="middle">сценарий</text><line x1="65" y1="216" x2="65" y2="252" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-chg-cyan)"></line><line x1="220" y1="216" x2="220" y2="252" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-chg-cyan)"></line><text x="65" y="275" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">Аналитика</text><text x="220" y="275" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">ERP / CRM</text></svg></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Изменение не обязательно большое.</p><p style="font-size: 15px; color: #ff6b6b; margin: 0 0 25px 0; font-weight: bold;">Большим становится количество зависимостей, которые нужно сохранить после этого изменения.</p><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0;">В работающей системе приходится учитывать существующие зависимости и сохранять совместимость с уже используемыми компонентами. В новом проекте таких ограничений обычно меньше.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ЭВОЛЮЦИЯ // ARCHITECTURAL_HISTORY</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Почему в новой системе изменить что-то проще</h3><p style="font-size: 16px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Когда продукт только создаётся, архитектура ещё не связана историческими решениями.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Разработчики могут свободно определить:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ПРОЕКТИРОВАНИЕ // GREENFIELD_FREEDOM</div><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> структуру данных;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> границы модулей;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> интерфейсы между компонентами;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> правила доступа;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> формат API;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> способы обработки ошибок;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> механизмы интеграции.</li></ul><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Но по мере эксплуатации система накапливает решения.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">НАСЛОЕНИЯ // ACCUMULATED_DECISIONS</div><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 15px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> Некоторые из них были приняты осознанно.</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> Другие появились как временные.</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> Третьи были оптимальными несколько лет назад, но перестали соответствовать текущим требованиям.</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> Четвёртые возникли из-за ограничений внешних систем.</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> Пятые появились просто потому, что бизнесу нужно было выпустить функцию вчера.</li></ul><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Постепенно архитектура начинает отражать не только первоначальный замысел, но и всю историю развития продукта.</p><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace; margin: 0;">&gt; И именно здесь возникает технический долг.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ОПРЕДЕЛЕНИЕ // TECHNICAL_DEBT_NATURE</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Технический долг — это не просто «плохой код»</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Термин часто используют слишком широко. Иногда техническим долгом называют любой старый код, который не нравится разработчикам. Это неточно.</p><div style="max-width: 680px; font-size: 13px; color: #ff6b6b; font-family: 'SF Mono', Monaco, monospace; background: #110505; border: 1px dashed #5c1616; padding: 20px; margin: 0 0 25px 0; box-sizing: border-box; line-height: 1.5;">Технический долг возникает, когда принятое техническое решение увеличивает стоимость последующих изменений или сопровождения системы.</div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Компания может сознательно выбрать более быстрый и менее универсальный вариант, чтобы быстрее вывести продукт на рынок. Например, вместо полноценной архитектуры скидок реализовать несколько конкретных правил. В момент запуска это может быть абсолютно рациональным решением.</p><p style="font-size: 15px; color: #ff6b6b; margin: 0 0 25px 0; font-weight: bold;">Проблема появляется позже, когда правил становится двадцать, они начинают пересекаться, а новая акция требует изменения сразу нескольких частей системы.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; font-weight: bold;">Первоначально сэкономленное время превращается в будущую стоимость изменений.</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto; z-index: 1;" viewbox="0 0 440 330"><defs><marker id="arrow-debt-red" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#ff6b6b"></path></marker></defs><text x="220" y="15" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">Быстрое решение</text><line x1="220" y1="22" x2="220" y2="40" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-debt-red)"></line><text x="220" y="53" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">Меньше затрат сегодня</text><line x1="220" y1="60" x2="220" y2="78" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-debt-red)"></line><text x="220" y="91" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">Архитектура получает ограничение</text><line x1="220" y1="98" x2="220" y2="116" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-debt-red)"></line><text x="220" y="129" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Появляются новые требования</text><line x1="220" y1="136" x2="220" y2="154" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-debt-red)"></line><text x="220" y="167" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">Изменение затрагивает больше компонентов</text><line x1="220" y1="174" x2="220" y2="192" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-debt-red)"></line><text x="220" y="205" fill="#ff6b6b" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">Растёт стоимость следующего изменения</text></svg></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Поэтому технический долг — не обязательно ошибка.</p><p style="font-size: 15px; color: #14b8a6; margin: 0 0 25px 0; font-weight: bold;">Такое решение позволяет сэкономить время или ресурсы сейчас, но может увеличить затраты на дальнейшую разработку.</p><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace; margin: 0;">Проблемой он становится тогда, когда компания перестаёт контролировать размер и последствия этого обязательства.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">МЕТРИКИ // CHANGE_COST_DRIVERS</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Почему стоимость изменений растёт</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Стоимость функции зависит не только от объёма кода, но и от числа компонентов, которые необходимо проверить и изменить.</p><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">На неё влияет количество системных ограничений, которые необходимо учесть.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ФОРМУЛА // COST_EQUATION</div><div style="background: #110505; border: 1px dashed #5c1616; padding: 20px; max-width: 840px; margin-bottom: 25px; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ff6b6b; line-height: 1.5; font-weight: bold;">стоимость изменения = анализ требований и зависимостей + разработка + тестирование + миграция данных + адаптация интеграций + внедрение + сопровождение и управление рисками</div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">На ранней стадии большая часть этой формулы может быть небольшой.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">По мере роста системы всё больше времени может уходить на проверку совместимости, регрессионное тестирование и поиск побочных эффектов изменения.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Например, изменение поля status может потребовать проверить:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ОБЛАСТЬ_ПРОВЕРКИ // IMPACT_RADIUS_CHECK</div><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> бизнес-логику;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> API;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> мобильное приложение;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> отчёты;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> интеграцию с CRM;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> интеграцию с ERP;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> уведомления;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> права доступа;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> фоновые задачи;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> исторические данные.</li></ul><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #000000; border: 1px solid #1a2433; padding: 20px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 6px;">[ ИЗМЕНЕНИЕ ]</div><span style="font-size: 14px; color: #aaaaaa; line-height: 1.5;">Само изменение может занять несколько часов.</span></div><div style="background: #110505; border: 1px solid #5c1616; padding: 20px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 6px;">[ ВАЛИДАЦИЯ ]</div><span style="font-size: 14px; color: #aaaaaa; line-height: 1.5;">Но проверить, что изменение не нарушило существующее поведение системы, может потребовать значительно больше времени. Чем шире область влияния изменения и слабее автоматизированные проверки, тем больше усилий требуется для регрессионного тестирования.</span></div></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ЗАВИСИМОСТИ // COUPLING_IMPACT</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Чем больше связей, тем дороже изменение</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Представим компонент, который используется только одним сервисом. Изменить его относительно просто.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Теперь представим компонент, которым пользуются:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ПОТРЕБИТЕЛИ_КОМПОНЕНТА // COMPONENT_DEPENDENTS</div><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> пять внутренних сервисов;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> мобильное приложение;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> внешний API;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> интеграция с ERP;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> аналитический контур.</li></ul><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Любое изменение его поведения требует учитывать всех потребителей.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ЗАКОН_СВЯЗАННОСТИ // ARCHITECTURAL_LAW</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 35px 25px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 5px 0;">Количество зависимостей само по себе не определяет стоимость изменения. Важнее, насколько тесно связаны компоненты, насколько стабильны контракты между ними и сколько потребителей необходимо проверить после изменения.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace; margin: 0;">Чем больше критичных и плохо изолированных зависимостей, тем выше вероятность, что локальная доработка потребует изменений и проверок в других частях системы.</p></div><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0;">Поэтому архитектура влияет не только на производительность и устройство кода, но и на затраты на разработку, тестирование и сопровождение продукта.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">УГРОЗЫ // SHADOW_DEPENDENCIES</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Самая опасная зависимость — скрытая</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Явную зависимость обычно обнаружить несложно.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Например, сервис A вызывает API сервиса B. Это можно увидеть в архитектурной документации, коде или конфигурации.</p><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Скрытые зависимости обнаружить сложнее, поскольку они не описаны в интерфейсах компонентов или документации.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">КЕЙСЫ // HIDDEN_CONTRACTS</div><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 15px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> другой сервис не вызывает API напрямую, но читает общую таблицу и зависит от её структуры, значений полей или внутренних правил обновления данных;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> отчёт предполагает, что определённый статус заказа означает конкретное бизнес-состояние;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> внешняя система ожидает, что поле никогда не будет пустым.</li></ul><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">АНАЛИЗ_СВЯЗЕЙ // UNTRACKED_COUPLING</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 25px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Формально компоненты могут выглядеть независимыми.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Фактически они связаны контрактом, который нигде не описан.</p></div><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0;">Такие зависимости затрудняют оценку последствий изменений: разработчик может не знать, какие компоненты полагаются на прежнее поведение.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ПРОЦЕССЫ // STATE_MACHINE_EVOLUTION</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Почему «одно поле» иногда становится большой задачей</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Рассмотрим типичный пример.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Бизнес говорит:</p><div style="max-width: 520px; font-size: 13px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; background: #050807; border: 1px dashed #165c52; padding: 20px; margin: 0 0 25px 0; box-sizing: border-box; line-height: 1.5;">«Добавим заказу новый статус — “Ожидает подтверждения”».</div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">В базе данных добавить значение относительно просто. Но что дальше?</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Нужно определить:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">АНАЛИЗ_СОСТОЯНИЯ // STATE_IMPACT_CHECKLIST</div><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> кто может установить этот статус;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> из каких состояний в него можно перейти;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> в какие состояния можно перейти после него;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> что происходит с оплатой;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> нужно ли уведомлять клиента;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> появляется ли задача у сотрудника;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> что показывает CRM;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> что передаётся в ERP;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> учитывается ли заказ в отчётах;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> можно ли отгрузить такой заказ;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> что увидит мобильное приложение;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> как обрабатываются старые заказы.</li></ul><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Получается уже не изменение поля.</p><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Это изменение состояния бизнес-процесса.</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto; z-index: 1;" viewbox="0 0 440 180"><defs><marker id="arrow-st-cyan" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker><marker id="arrow-st-red" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#ff6b6b"></path></marker></defs><text x="10" y="25" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="10" font-weight="bold">БЫЛО:</text><text x="10" y="44" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Новый → В работе → Оплачен → Отгружен → Завершён</text><line x1="10" y1="65" x2="430" y2="65" stroke="#1a2433" stroke-width="1"></line><text x="10" y="85" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" font-weight="bold">СТАЛО:</text><text x="35" y="114" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">Новый</text><line x1="58" y1="110" x2="80" y2="110" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-st-cyan)"></line><text x="115" y="114" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">В работе</text><line x1="148" y1="110" x2="310" y2="110" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-st-cyan)"></line><path d="M 115,122 L 115,150 L 145,150" fill="none" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-st-red)"></path><rect x="155" y="136" width="140" height="24" fill="#000000" stroke="#ff6b6b" stroke-width="1"></rect><text x="225" y="151" fill="#ff6b6b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="10" text-anchor="middle">Ожидает подтверждения</text><path d="M 295,150 L 316,150" fill="none" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-st-red)"></path><text x="350" y="114" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">Оплачен</text><line x1="350" y1="122" x2="350" y2="136" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-st-cyan)"></line><text x="350" y="154" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">Отгружен</text></svg></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Добавилось одно состояние, но необходимо определить допустимые переходы в него и из него, условия выполнения этих переходов и связанные побочные действия.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Отдельная сложность возникает при изменении уже работающей модели данных. Новое обязательное поле может отсутствовать в старых записях, а изменение допустимых значений — нарушить работу предыдущих версий приложения или внешних интеграций. Поэтому миграцию необходимо планировать вместе с изменением бизнес-логики: определить правила обработки существующих данных, порядок обновления компонентов и условия безопасного перехода на новую версию. В распределённой системе часто требуется период совместной работы старого и нового форматов, прежде чем старый вариант можно будет окончательно удалить.</p><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0;">Если новое состояние меняет правила оплаты, отгрузки или обработки заказа, меняется и соответствующая часть бизнес-процесса. Поэтому изменение модели состояний нужно согласовать со всеми компонентами, которые от неё зависят.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ЭВОЛЮЦИЯ_РИСКОВ // ACCUMULATED_CONSTRAINTS</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Архитектурные ограничения появляются постепенно</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Архитектурные проблемы обычно накапливаются постепенно.</p><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Обычно ограничения накапливаются.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Сначала появляется небольшое исключение. Потом второе. Потом третье. Затем оказывается, что новый функционал приходится реализовывать через специальные условия.</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto; z-index: 1;" viewbox="0 0 440 370"><defs><marker id="arrow-lim-red" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#ff6b6b"></path></marker></defs><text x="20" y="25" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold">Первоначальная модель</text><line x1="20" y1="32" x2="20" y2="60" stroke="#ff6b6b" stroke-width="1.2"></line><line x1="20" y1="46" x2="140" y2="46" stroke="#ff6b6b" stroke-width="1.2"></line><text x="150" y="50" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Новое требование</text><line x1="20" y1="60" x2="20" y2="78" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-lim-red)"></line><text x="20" y="93" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Небольшое исключение</text><line x1="20" y1="100" x2="20" y2="128" stroke="#ff6b6b" stroke-width="1.2"></line><line x1="20" y1="114" x2="140" y2="114" stroke="#ff6b6b" stroke-width="1.2"></line><text x="150" y="118" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Ещё одно требование</text><line x1="20" y1="128" x2="20" y2="146" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-lim-red)"></line><text x="20" y="161" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Второе исключение</text><line x1="20" y1="168" x2="20" y2="196" stroke="#ff6b6b" stroke-width="1.2"></line><line x1="20" y1="182" x2="140" y2="182" stroke="#ff6b6b" stroke-width="1.2"></line><text x="150" y="186" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Новый канал</text><line x1="20" y1="196" x2="20" y2="214" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-lim-red)"></line><text x="20" y="229" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Дополнительная логика</text><line x1="20" y1="236" x2="20" y2="264" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-lim-red)"></line><text x="20" y="279" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11">Сложная система условий</text><line x1="20" y1="286" x2="20" y2="314" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-lim-red)"></line><text x="20" y="329" fill="#ff6b6b" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold">Изменения становятся дорогими</text></svg></div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace; margin: 0;">Каждое отдельное исключение может быть оправданным. Но со временем их сочетание усложняет бизнес-логику и увеличивает количество сценариев, которые необходимо проверять при каждом изменении.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ОГРАНИЧЕНИЯ_КОНТУРА // ARCHITECTURAL_MISALIGNMENT</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Архитектура может перестать соответствовать бизнесу</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Особенно часто это происходит с продуктами, которые начинались как относительно простые. Компания могла стартовать с одной моделью бизнеса.</p><p style="font-size: 16px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Через несколько лет она уже работает с:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">БИЗНЕС_МАСШТАБИРОВАНИЕ // ENTERPRISE_REALITY</div><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> несколькими рынками;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> разными типами клиентов;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> несколькими юридическими лицами;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> несколькими каналами продаж;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> сложными тарифами;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> партнёрами;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> внешними API;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> большим количеством интеграций.</li></ul><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">А внутри продолжает жить архитектура, рассчитанная на первоначальный сценарий.</p><p style="font-size: 15px; color: #ff6b6b; margin: 0 0 25px 0; font-weight: bold;">Тогда разработчики вынуждены постоянно добавлять исключения.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">КРИТИЧЕСКИЙ_СИГНАЛ // BOTTLENECK_DETECTED</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Это важный сигнал:</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; если новый бизнес-процесс приходится постоянно «приспосабливать» под старую архитектуру, возможно, ограничением уже является сама архитектура.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ЭКОНОМИКА_ДОЛГА // DEBT_REFAC_MANAGEMENT</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Не всякий технический долг нужно погашать</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Здесь тоже легко впасть в крайность. Увидеть старый код и решить «сначала всё перепишем» — не обязательно хорошая стратегия.</p><p style="font-size: 15px; color: #ff6b6b; margin: 0 0 25px 0; font-weight: bold;">Полное переписывание системы редко является целью само по себе.</p><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">У технического долга должна быть экономическая оценка. Стоит спросить:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">АУДИТ_ДОЛГА // REFACTORING_QUESTIONS</div><ul style="list-style: none; padding: 0; margin: 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong style="color: #ffffff;">Как часто этот участок меняется?</strong><br>Если компонент практически не меняется, его несовершенная архитектура может не создавать существенных затрат.</li><li style="position: relative; padding-left: 20px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong style="color: #ffffff;">Сколько изменений он блокирует?</strong><br>Если один старый компонент мешает развитию нескольких ключевых функций, его приоритет значительно выше.</li><li style="position: relative; padding-left: 20px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong style="color: #ffffff;">Насколько дорого каждое изменение?</strong><br>Если каждое новое требование требует длительного анализа и регрессионного тестирования, необходимо оценить, какая часть затрат связана с объективной сложностью задачи, а какая — с архитектурными ограничениями. Это помогает определить, оправдан ли рефакторинг и какой участок даст наибольший эффект.</li><li style="position: relative; padding-left: 20px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> <strong style="color: #ffffff;">Какой риск несёт существующее решение?</strong><br>Иногда проблема не в скорости разработки, а в надёжности, безопасности или невозможности масштабирования.</li><li style="position: relative; padding-left: 20px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong style="color: #ffffff;">Есть ли понятный момент для изменения архитектуры?</strong><br>Иногда правильнее не делать отдельный большой проект, а менять проблемный участок постепенно вместе с развитием функциональности.</li></ul></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">РИСКИ // PATCH_OVERLOADING</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Когда «ещё одна заплатка» становится опасной</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Допустим, команда знает, что определённая часть системы архитектурно устарела. Но каждый новый запрос решается небольшим обходным механизмом.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Это кажется дешевле. И иногда действительно дешевле.</p><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Риск возникает, когда временные обходные решения накапливаются, а команда перестаёт пересматривать их при изменении требований.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Через несколько итераций появляется слой условий:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">СЛОЙ_УСЛОВИЙ // ACCUMULATED_IF_STATEMENTS</div><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> если клиент такого типа — делаем так;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> если заказ пришёл из этого канала — делаем иначе;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> если старая интеграция — используем отдельный сценарий;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> если дата раньше определённого момента — применяем старое правило.</li></ul><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Система продолжает работать.</p><p style="font-size: 15px; color: #ff6b6b; margin: 0 0 25px 0; font-weight: bold;">Но стоимость понимания этой системы начинает расти.</p><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace; margin: 0;">А это тоже технический долг.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ЭКСПЛУАТАЦИЯ // HIDDEN_RESOURCES_COST</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Самый дорогой ресурс — иногда не разработка</h3><p style="font-size: 16px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">В зрелом enterprise-продукте значительная часть стоимости изменения может приходиться не на написание кода.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Необходимо:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ПРОЦЕССЫ_ИЗМЕНЕНИЯ // OVERHEAD_OPERATIONS</div><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> понять существующую архитектуру;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> найти зависимости;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> проверить контракты;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> согласовать изменение;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> подготовить миграцию;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> обновить интеграции;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> провести регрессионное тестирование;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> проверить данные;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> организовать релиз;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> проконтролировать работу после внедрения.</li></ul><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Поэтому одинаковый объём кода не означает одинаковых затрат на развитие: многое зависит от связанности компонентов, качества документации и возможности проверить последствия изменений.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #000000; border: 1px solid #1a2433; padding: 20px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 6px;">[ ПЕРВАЯ СИСТЕМА ]</div><span style="font-size: 14px; color: #aaaaaa; line-height: 1.5;">Одна имеет понятные границы и слабую связанность.</span></div><div style="background: #110505; border: 1px solid #5c1616; padding: 20px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 6px;">[ ВТОРАЯ СИСТЕМА ]</div><span style="font-size: 14px; color: #aaaaaa; line-height: 1.5;">Другая представляет собой сеть исторически сложившихся зависимостей.</span></div></div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace; margin: 0;">Во второй перед изменением приходится выяснять, какие компоненты зависят от затрагиваемой логики и какие побочные эффекты могут возникнуть.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ДИАГНОСТИКА // DEGRADATION_SIGNALS</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Как понять, что архитектура уже начинает мешать</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Есть несколько характерных признаков.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">СИМПТОМЫ // ARCHITECTURAL_RED_FLAGS</div><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> <strong style="color: #ffffff;">Новая функция регулярно затрагивает несколько несвязанных модулей:</strong><br>Если практически любое изменение требует правок в пяти-десяти местах, стоит проверить границы компонентов.</li><li style="position: relative; padding-left: 20px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> <strong style="color: #ffffff;">Разработчики боятся менять старый код:</strong><br>Не потому, что код старый, а потому, что неизвестно, что от него зависит.</li><li style="position: relative; padding-left: 20px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> <strong style="color: #ffffff;">Регрессионное тестирование растёт быстрее функциональности:</strong><br>Каждая новая функция требует всё большего набора проверок.</li><li style="position: relative; padding-left: 20px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> <strong style="color: #ffffff;">Появляются специальные исключения:</strong><br>Вместо общей бизнес-логики постоянно добавляются условия для отдельных клиентов, каналов или сценариев.</li><li style="position: relative; padding-left: 20px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> <strong style="color: #ffffff;">Интеграции становятся хрупкими:</strong><br>Изменение одного внутреннего объекта неожиданно ломает внешний обмен.</li><li style="position: relative; padding-left: 20px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> <strong style="color: #ffffff;">В компании есть «незаменимые» специалисты:</strong><br>Если только один человек знает, почему определённый компонент работает именно так, это не только кадровый риск. Это архитектурный сигнал.</li></ul><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">КРИТИЧЕСКИЙ_СИМПТОМ // DANGEROUS_PATTERN</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Разработка всё чаще начинается с фразы «там лучше не трогать» — это, пожалуй, один из самых характерных симптомов.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ПРОЕКТИРОВАНИЕ // CHANGE_RESILIENCE</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Архитектура должна выдерживать изменения</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Архитектура не может заранее учитывать все будущие требования. Её задача — позволять вносить ожидаемые изменения без необходимости каждый раз перестраивать несвязанные части системы.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ЗАДАЧА // DESIGN_GOAL</div><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0 0 35px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Задача архитектуры другая:</p><p style="font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0;">— сделать наиболее вероятные изменения относительно дешёвыми и локальными.</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ПРИНЦИПЫ_ИЗОЛЯЦИИ // CHANGE_LOCALIZATION</div><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 15px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> Если изменение каталога товаров не должно затрагивать механизм авторизации, эти части системы желательно разделить.</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> Если новый канал продаж не должен переписывать финансовый контур, между ними должен существовать понятный контракт.</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> Если изменение внутренней реализации сервиса не должно ломать десятки клиентов API, интерфейс сервиса должен быть отделён от его внутреннего устройства.</li></ul><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0;">Поэтому при проектировании архитектуры важно заранее определять границы компонентов и способы их взаимодействия, чтобы изменения по возможности оставались локальными.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ПРОЕКТИРОВАНИЕ // COUPLING_TYPES</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Слабая связанность — не абстрактная теория</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Термин «слабая связанность» иногда звучит как академическая архитектурная теория.</p><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">На практике это очень конкретная экономическая характеристика.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border-left: 1px solid #ff6b6b; padding-left: 20px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Если изменение компонента A требует обязательно менять B, C, D и E, система сильно связана.</p></div><div style="background: #000000; border-left: 1px solid #14b8a6; padding-left: 20px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Если A можно изменить независимо, потому что взаимодействие с другими компонентами проходит через стабильные контракты, связанность ниже.</p></div></div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 30px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="text-align: center; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #ff6b6b; font-weight: bold; text-align: left; margin-bottom: 15px;">СИЛЬНАЯ СВЯЗАННОСТЬ:</div><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto;" viewbox="0 0 440 160"><circle cx="60" cy="40" r="14" fill="#000000" stroke="#ff6b6b" stroke-width="1.2"></circle><text x="60" y="44" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">A</text><circle cx="200" cy="40" r="14" fill="#000000" stroke="#ff6b6b" stroke-width="1.2"></circle><text x="200" y="44" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">B</text><circle cx="60" cy="120" r="14" fill="#000000" stroke="#ff6b6b" stroke-width="1.2"></circle><text x="60" y="124" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">C</text><circle cx="200" cy="120" r="14" fill="#000000" stroke="#ff6b6b" stroke-width="1.2"></circle><text x="200" y="124" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">D</text><circle cx="340" cy="120" r="14" fill="#000000" stroke="#ff6b6b" stroke-width="1.2"></circle><text x="340" y="124" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">E</text><line x1="74" y1="40" x2="186" y2="40" stroke="#ff6b6b" stroke-width="1.2"></line><line x1="60" y1="54" x2="60" y2="106" stroke="#ff6b6b" stroke-width="1.2"></line><line x1="200" y1="54" x2="200" y2="106" stroke="#ff6b6b" stroke-width="1.2"></line><line x1="74" y1="120" x2="186" y2="120" stroke="#ff6b6b" stroke-width="1.2"></line><line x1="214" y1="120" x2="326" y2="120" stroke="#ff6b6b" stroke-width="1.2"></line><line x1="71" y1="49" x2="189" y2="111" stroke="#ff6b6b" stroke-width="1.2"></line></svg></div><div style="text-align: center; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; font-weight: bold; text-align: left; margin-bottom: 15px;">СЛАБАЯ СВЯЗАННОСТЬ:</div><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto;" viewbox="0 0 440 160"><defs><marker id="arrow-cpl-cyan" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="180" y="58" width="80" height="44" fill="#050807" stroke="#14b8a6" stroke-width="1" stroke-dasharray="3 3"></rect><text x="220" y="84" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">API</text><circle cx="60" cy="40" r="14" fill="#000000" stroke="#165c52" stroke-width="1.2"></circle><text x="60" y="44" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">A</text><circle cx="380" cy="40" r="14" fill="#000000" stroke="#165c52" stroke-width="1.2"></circle><text x="380" y="44" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">B</text><circle cx="60" cy="120" r="14" fill="#000000" stroke="#165c52" stroke-width="1.2"></circle><text x="60" y="124" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">C</text><circle cx="380" cy="120" r="14" fill="#000000" stroke="#165c52" stroke-width="1.2"></circle><text x="380" y="124" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">D</text><circle cx="220" cy="14" r="14" fill="#000000" stroke="#165c52" stroke-width="1.2"></circle><text x="220" y="18" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">E</text><line x1="72" y1="45" x2="175" y2="71" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-cpl-cyan)"></line><line x1="368" y1="45" x2="265" y2="71" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-cpl-cyan)"></line><line x1="72" y1="115" x2="175" y2="89" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-cpl-cyan)"></line><line x1="368" y1="115" x2="265" y2="89" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-cpl-cyan)"></line><line x1="220" y1="28" x2="220" y2="53" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-cpl-cyan)"></line><path d="M 190,80 L 110,80 L 71,49" fill="none" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-cpl-cyan)"></path></svg></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Во втором случае внутреннее изменение одного компонента не обязательно требует изменения всех остальных.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Но слабая связанность тоже имеет цену: нужны хорошие интерфейсы, контракты, обработка ошибок, версионирование и дисциплина взаимодействия.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ПРАВИЛО // COMPLEXITY_MANAGEMENT</div><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 5px 0;">Архитектура не убирает сложность.</p><p style="font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0;">— Она переносит её в управляемое место.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ИНТЕГРАЦИИ // INTEGRATION_OVERHEAD</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Почему интеграции особенно быстро увеличивают стоимость изменений</h3><p style="font-size: 16px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Каждая внешняя система добавляет контракт.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">РАЗНОРОДНОСТЬ_КОНТРАКТОВ // EXTERNAL_CONTRACTS</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #000000; border-left: 1px solid #5c1616; padding-left: 15px; box-sizing: border-box;"><span style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #aaaaaa;">CRM ожидает:</span><br><strong style="color: #ffffff; font-family: 'SF Mono', Monaco, monospace; font-size: 14px;">один формат.</strong></div><div style="background: #000000; border-left: 1px solid #5c1616; padding-left: 15px; box-sizing: border-box;"><span style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #aaaaaa;">ERP —</span><br><strong style="color: #ffffff; font-family: 'SF Mono', Monaco, monospace; font-size: 14px;">другой.</strong></div><div style="background: #000000; border-left: 1px solid #5c1616; padding-left: 15px; box-sizing: border-box;"><span style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #aaaaaa;">Платёжная система —</span><br><strong style="color: #ffffff; font-family: 'SF Mono', Monaco, monospace; font-size: 14px;">третий.</strong></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Мобильное приложение использует API.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Партнёр подключён к ещё одному интерфейсу.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">РАДИУС_ПОРАЖЕНИЯ // INTERNAL_CHANGE_RISK</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 35px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Теперь изменение внутренней модели данных нельзя рассматривать только внутри одного приложения.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Нужно проверить, какие внешние потребители от неё зависят.</p></div><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Поэтому при росте количества интеграций особенно важны:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ТРЕБОВАНИЯ // COMPONENT_STABILITY</div><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> стабильные API с явно определённым поведением;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> версионирование при несовместимых изменениях;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> чёткие контракты;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> документированные контракты взаимодействия;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> преобразование данных на границах систем;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> согласованные правила обработки ошибок и повторных запросов;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> мониторинг интеграций и контроль задержек;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> сохранение обратной совместимости на период перехода потребителей на новую версию.</li></ul><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace; margin: 0;">Если контракты не документированы и не проверяются, изменение одной системы может нарушить обмен данными с другой. Поэтому при добавлении интеграций необходимо учитывать и первоначальную разработку, и дальнейшую поддержку совместимости.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ПРОЕКТИРОВАНИЕ // BOUNDARY_REFACTORING</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Иногда проблему нужно решать не кодом, а изменением границ</h3><p style="font-size: 16px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Если один участок системы регулярно меняется независимо от остальных, стоит проверить, не объединены ли в одном компоненте функции с разными задачами и темпами развития.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Если определённый модуль постоянно меняется независимо от остальных, возможно, он должен иметь более чёткую границу. Например:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">РАЗДЕЛЕНИЕ // BOUNDARY_EXAMPLES</div><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> каталог товаров может развиваться отдельно от расчёта платежей;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> управление клиентами — отдельно от логистики;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> уведомления — отдельно от основного бизнес-процесса.</li></ul><p style="font-size: 15px; color: #ff6b6b; margin: 0 0 25px 0; font-weight: bold;">Но выделять отдельный сервис только потому, что «микросервисы — это современно», тоже неправильно.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Каждая дополнительная граница создаёт собственную сложность:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">СЛОЖНОСТЬ_ИНФРАСТРУКТУРЫ // OVERHEAD_COSTS</div><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> сетевые вызовы;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> отказоустойчивость;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> мониторинг;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> согласованность данных;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> управление версиями;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> необходимость диагностики;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> дополнительные затраты на эксплуатацию.</li></ul><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0;">Отдельный компонент или сервис имеет смысл выделять, когда у него есть самостоятельная бизнес-задача, понятная граница ответственности и причины развиваться независимо от остальной системы.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">МЕТОДОЛОГИЯ // RECOVERY_STRATEGY</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Что делать, когда требования уже обогнали архитектуру</h3><p style="font-size: 16px; color: #ffffff; margin: 0 0 10px 0; font-weight: bold;">Первый шаг — не переписывать всё.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Сначала нужно понять, где именно находится ограничение. Полезно построить карту:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto; z-index: 1;" viewbox="0 0 440 290"><defs><marker id="arrow-map-cyan" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><text x="220" y="15" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">Бизнес-функции</text><line x1="220" y1="22" x2="220" y2="40" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-map-cyan)"></line><text x="220" y="53" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">Компоненты системы</text><line x1="220" y1="60" x2="220" y2="78" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-map-cyan)"></line><text x="220" y="91" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">Зависимости</text><line x1="220" y1="98" x2="220" y2="116" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-map-cyan)"></line><text x="220" y="129" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">Интеграции</text><line x1="220" y1="136" x2="220" y2="154" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-map-cyan)"></line><text x="220" y="167" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">Данные и контракты</text></svg></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">После этого можно увидеть участки, которые:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ПРИОРИТЕТЫ // FOCUS_AREAS</div><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> меняются чаще всего;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> имеют слишком много зависимостей;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> блокируют развитие;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> содержат большое количество исключений;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> создают высокий операционный риск.</li></ul><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0;">Начинать стоит с участков, которые часто меняются, затрагивают много зависимостей или регулярно приводят к сбоям и задержкам разработки.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">МЕТОДОЛОГИЯ // REFACTORING_STRATEGY</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Рефакторинг и переписывание — не одно и то же</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Если архитектурный участок действительно мешает развитию, это не означает, что его необходимо удалить и написать заново.</p><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Часто безопаснее идти постепенно.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Например:</p><div style="max-width: 840px; font-size: 12px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; background: #050807; border: 1px dashed #165c52; padding: 15px; margin: 0 0 30px 0; box-sizing: border-box; line-height: 1.5; text-align: center;">анализ зависимостей → определение целевого контракта → создание нового интерфейса → постепенный перенос логики → проверка совместимости и результатов → переключение потребителей → наблюдение за работой → вывод старого компонента из эксплуатации</div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Такой подход позволяет менять архитектуру одновременно с развитием продукта.</p><p style="font-size: 15px; color: #ff6b6b; margin: 0 0 25px 0; font-weight: bold;">Он сложнее, чем «сделать новую систему с нуля», но существенно снижает риск остановить бизнес-процессы.</p><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0;">Для работающего enterprise-продукта это часто критически важно.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ИТОГ // CHANGE_COST_CONTROL</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Стоимость изменения можно контролировать</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Нельзя сделать систему, в которой любое будущее изменение будет дешёвым.</p><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Но можно сделать так, чтобы стоимость изменений росла предсказуемо, а не скачкообразно.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Для этого архитектуру необходимо регулярно проверять по нескольким направлениям:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">НАПРАВЛЕНИЯ_ПРОВЕРКИ // ARCHITECTURAL_HEALTH_DIRECTIONS</div><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong style="color: #ffffff;">Изменяемость.</strong><br>Какие компоненты меняются чаще всего?</li><li style="position: relative; padding-left: 20px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> <strong style="color: #ffffff;">Связанность.</strong><br>Сколько других компонентов приходится затрагивать?</li><li style="position: relative; padding-left: 20px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong style="color: #ffffff;">Контракты.</strong><br>Насколько безопасно менять внутреннюю реализацию?</li><li style="position: relative; padding-left: 20px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong style="color: #ffffff;">Данные.</strong><br>Можно ли изменить модель без разрушительных миграций?</li><li style="position: relative; padding-left: 20px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong style="color: #ffffff;">Интеграции.</strong><br>Есть ли стабильные интерфейсы между системами?</li><li style="position: relative; padding-left: 20px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> <strong style="color: #ffffff;">Тестируемость.</strong><br>Можно ли быстро доказать, что изменение не сломало существующее поведение?</li><li style="position: relative; padding-left: 20px; line-height: 1.5;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <strong style="color: #ffffff;">Наблюдаемость.</strong><br>Можно ли понять, что произошло после релиза?</li></ul><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Это не просто технические характеристики, а показатели способности бизнеса развивать цифровой продукт без постоянного увеличения стоимости изменений.</p><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0;">Для практической оценки полезно отслеживать время от согласования изменения до выпуска, частоту неудачных релизов, время восстановления после сбоев и долю изменений, требующих внеплановых исправлений. Эти показатели следует анализировать в динамике: сами по себе они не доказывают наличие архитектурной проблемы, но помогают обнаруживать ухудшение процесса разработки.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ИТОГ // FINAL_RESOLUTION</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 20px; font-weight: bold; text-transform: uppercase; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px;">Главное — не путать рост продукта с деградацией архитектуры</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Большая система не обязана быть плохой.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Сложный бизнес закономерно приводит к сложной информационной системе.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Проблема начинается не тогда, когда в системе много компонентов.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">КРИЗИС // ARCHITECTURAL_COMPLEXITY</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 35px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Проблема возникает, когда изменения бизнес-процессов требуют всё больше обходных решений, затрагивают несвязанные компоненты и становятся слишком дорогими в разработке и проверке.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Поэтому фраза «нам нужно добавить ещё одну функцию» должна восприниматься не как вопрос количества кода.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Нужно понимать:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">СПИСОК_КОНТРОЛЯ // IMPACT_ANALYSIS_LIST</div><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> что именно меняется в бизнес-процессе;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> какие компоненты отвечают за этот процесс;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> какие зависимости существуют;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> какие контракты затрагиваются;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> какие данные изменятся;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> и насколько локальным может остаться изменение.</li></ul><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border-left: 1px solid #165c52; padding-left: 20px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Если функция действительно локальна — её и нужно делать локально.</p></div><div style="background: #000000; border-left: 1px solid #5c1616; padding-left: 20px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6;">Если она затрагивает фундаментальную модель продукта, лучше признать это на этапе проектирования, чем маскировать архитектурную проблему ещё одним исключением.</p></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Потому что технический долг редко становится дорогим в момент своего появления.</p><p style="font-size: 15px; color: #ff6b6b; margin: 0 0 35px 0; font-weight: bold;">Он становится дорогим тогда, когда каждое следующее изменение начинает платить за решения, принятые раньше.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Именно поэтому архитектуру стоит оценивать не только по тому, насколько хорошо система работает сегодня.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ФУНДАМЕНТ // CORE_QUESTION</div><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Не менее важный вопрос:</p><p style="font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0;">— «сколько будет стоить изменить её завтра?»</p></div></div><p> </p><div style="max-width: 1100px; margin: 60px auto 0 auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">НАВИГАЦИЯ // SUGGESTED_READING</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // РАЗРАБОТКА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Как понять, что программу пора переписывать</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kak-ponyat-chto-programmu-pora-perepisyvat/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // АРХИТЕКТУРА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Монолит или микросервисы?</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/monolit-ili-mikroservisy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // РАЗРАБОТКА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Когда готового программного обеспечения уже недостаточно</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kogda-gotovogo-programmnogo-obespecheniya-uzhe-nedostatochno/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div></div></div><div style="max-width: 1100px; margin: 20px auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; border-top: 1px solid #165c52; padding: 40px 0 0 0; box-sizing: border-box; width: 100%;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 40px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ EXPERTISE JOURNAL ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Все инженерные материалы и экспертные статьи</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/ekspertiza/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">перейти к каталогу ──►</a></div></div><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ CORE GLOSSARY ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Полный алфавитный справочник ИТ-терминов</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/glossariy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">открыть справочник ──►</a></div></div></div></div></div></article></main><footer class="footer"><div class="wrapper"><div class="footer__copyright"><p> </p><p> </p></div><button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg width="20" height="20"><use xlink:href="https://log-ai.ru/assets/svg/svg-map.svg#toparrow"/></svg></button></div></footer><script defer="defer" src="https://log-ai.ru/assets/js/scripts.min.js?v&#x3D;d0fc1030089a37f93a2d51bf6d07565c"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script><script>(() => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') !== 'monument') return;
+
+  const IMAGE_URL = 'https://log-ai.ru/media/files/Interstellar.jpeg';
+  const AUDIO_URL = 'https://log-ai.ru/media/files/interstellar.mp3';
+
+  // Защита от повторного запуска
+  if (document.getElementById('log-ai-monument')) return;
+
+  const monument = document.createElement('div');
+  monument.id = 'log-ai-monument';
+
+  const root = document.documentElement;
+  const body = document.body;
+
+  const previousRootOverflow = root.style.overflow;
+  const previousBodyOverflow = body.style.overflow;
+  const previousBodyPosition = body.style.position;
+  const previousBodyTop = body.style.top;
+  const previousBodyWidth = body.style.width;
+  const previousScrollX = window.scrollX;
+  const previousScrollY = window.scrollY;
+
+  root.style.overflow = 'hidden';
+  body.style.overflow = 'hidden';
+  body.style.position = 'fixed';
+  body.style.top = `-${previousScrollY}px`;
+  body.style.width = '100%';
+
+  monument.innerHTML = `
+    <div class="monument-universe"></div>
+    <canvas class="monument-stars"></canvas>
+    <div class="monument-shade"></div>
+
+    <div class="monument-frame">
+      <p class="monument-overline">ARCHIVUM · LOG-AI · MMXXVI</p>
+
+      <div class="monument-rule"></div>
+
+      <h1>PER ASPERA<br><span>AD ASTRA</span></h1>
+
+      <p class="monument-translation">
+        THROUGH HARDSHIP, TO THE STARS
+      </p>
+
+      <div class="monument-message">
+        <p>TO THOSE WHO BUILD BEYOND THE LIMITS OF THEIR TIME.</p>
+        <p>TO THOSE WHO CONTINUE WHEN THE OUTCOME IS UNKNOWN.</p>
+        <p>TO THOSE WHO WILL DISCOVER THIS LONG AFTER ITS CREATION.</p>
+      </div>
+
+      <p class="monument-declaration">
+        YOU WERE NOT THE FIRST TO LOOK AT THE STARS.<br>
+        BUT YOU MAY BE AMONG THOSE WHO REACH THEM.
+      </p>
+
+      <div class="monument-rule"></div>
+          
+      <p class="monument-translation">
+        A MARK LEFT IN THE MACHINE.
+      </p>   
+
+      <p class="monument-signature">
+        LOG·AI·ARCHITECTI·MMXXVI
+      </p>
+
+      <p class="monument-exit" id="monument-hint">
+        [ CLICK ANYWHERE TO RETURN ]
+      </p>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #log-ai-monument {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      background: #03040a;
+      color: #e5dfd3;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      box-sizing: border-box;
+      cursor: pointer;
+      isolation: isolate;
+      opacity: 0;
+      animation: logai-monument-appear 1.8s ease forwards;
+    }
+
+    #log-ai-monument .monument-universe {
+      position: fixed;
+      inset: -3%;
+      z-index: -3;
+      background-image: url("https://log-ai.ru/media/files/Interstellar.jpeg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transform: scale(1.02);
+      animation: logai-cosmic-drift 35s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-shade {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(0,0,0,.24) 0%,
+          rgba(0,0,0,.52) 65%,
+          rgba(0,0,0,.78) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.42),
+          rgba(0,0,0,.18) 45%,
+          rgba(0,0,0,.62)
+        );
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-frame {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', serif;
+      padding: 30px 0;
+      text-shadow: 0 2px 18px rgba(0,0,0,.9);
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-translation,
+    #log-ai-monument .monument-signature,
+    #log-ai-monument .monument-exit {
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-signature {
+      color: #c0a16a;
+    }
+
+    #log-ai-monument .monument-rule {
+      height: 1px;
+      width: 160px;
+      max-width: 60%;
+      margin: 30px auto;
+      background: linear-gradient(
+        to right,
+        transparent,
+        #a68a55,
+        transparent
+      );
+      box-shadow: 0 0 12px rgba(190,155,90,.2);
+    }
+
+    #log-ai-monument h1 {
+      margin: 35px 0 18px;
+      font-size: clamp(30px, 7vw, 58px);
+      line-height: 1.5;
+      letter-spacing: .16em;
+      font-weight: 400;
+      color: #f4f0e8;
+    }
+
+    #log-ai-monument h1 span {
+      color: #d2b77e;
+    }
+
+    #log-ai-monument .monument-translation {
+      color: #c0b8aa;
+    }
+
+    #log-ai-monument .monument-message {
+      margin: 55px auto 38px;
+      max-width: 490px;
+      color: #e0d9cd;
+      font-size: 13px;
+      line-height: 2.2;
+      letter-spacing: .035em;
+    }
+
+    #log-ai-monument .monument-message p {
+      margin: 0 0 12px;
+    }
+
+    #log-ai-monument .monument-declaration {
+      color: #e0c48a;
+      font-size: 12px;
+      line-height: 2.3;
+      letter-spacing: .08em;
+    }
+
+    #log-ai-monument .monument-exit {
+      margin-top: 36px;
+      color: #c0b8aa;
+      font-size: 9px;
+      letter-spacing: .18em;
+    }
+
+    @keyframes logai-monument-appear {
+      to { opacity: 1; }
+    }
+
+    @keyframes logai-cosmic-drift {
+      from { transform: scale(1.02); }
+      to { transform: scale(1.13); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #log-ai-monument,
+      #log-ai-monument .monument-universe {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(monument);
+
+  // Тонкие, редкие звёзды
+  const canvas = monument.querySelector('.monument-stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let frameId = null;
+  let closed = false;
+
+  function resizeStars() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(window.innerWidth * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    stars = Array.from({ length: 65 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      length: 8 + Math.random() * 25,
+      speed: 0.25 + Math.random() * 0.75,
+      alpha: 0.15 + Math.random() * 0.5,
+      delay: Math.random() * 500
+    }));
+  }
+
+  function drawStars() {
+    if (closed) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    for (const star of stars) {
+      star.delay -= 1;
+
+      if (star.delay <= 0) {
+        star.y += star.speed;
+        star.x -= star.speed * 0.35;
+
+        ctx.beginPath();
+        ctx.moveTo(star.x, star.y);
+        ctx.lineTo(star.x - star.length * 0.35,
+                   star.y - star.length);
+
+        ctx.strokeStyle = `rgba(210,220,255,${star.alpha})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+
+        if (star.y > h + 30 || star.x < -30) {
+          star.x = Math.random() * w + 30;
+          star.y = -Math.random() * h * 0.4;
+          star.delay = 30 + Math.random() * 180;
+        }
+      }
+    }
+
+    frameId = requestAnimationFrame(drawStars);
+  }
+
+  resizeStars();
+  drawStars();
+
+  window.addEventListener('resize', resizeStars);
+
+  // Музыка
+  const audio = document.createElement('audio');
+  audio.id = 'monument-audio';
+  audio.src = AUDIO_URL;
+  audio.loop = true;
+  audio.preload = 'auto';
+  audio.volume = 0.35;
+  document.body.appendChild(audio);
+
+  let playing = false;
+  let starting = false;
+
+  const hint = document.getElementById('monument-hint');
+
+  function startMusic() {
+    if (closed || starting || playing) return;
+
+    starting = true;
+
+    audio.play().then(() => {
+      starting = false;
+
+      if (closed) {
+        audio.pause();
+        return;
+      }
+
+      playing = true;
+      hint.textContent = '[ CLICK ANYWHERE TO RETURN ]';
+    }).catch((error) => {
+      starting = false;
+
+      if (closed) return;
+
+      if (error.name === 'NotAllowedError') {
+        hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+        return;
+      }
+
+      console.warn('LOG-AI audio:', error.name, error.message);
+      hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+    });
+  }
+
+  function closeMonument() {
+    if (closed) return;
+    closed = true;
+
+    cancelAnimationFrame(frameId);
+    window.removeEventListener('resize', resizeStars);
+    window.removeEventListener('keydown', onKeyDown);
+
+    audio.pause();
+    audio.remove();
+    monument.remove();
+    style.remove();
+
+    root.style.overflow = previousRootOverflow;
+    body.style.overflow = previousBodyOverflow;
+    body.style.position = previousBodyPosition;
+    body.style.top = previousBodyTop;
+    body.style.width = previousBodyWidth;
+
+    window.scrollTo(previousScrollX, previousScrollY);
+
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete('mode');
+
+    window.history.replaceState(
+      {},
+      document.title,
+      cleanUrl.pathname + cleanUrl.search + cleanUrl.hash
+    );
+  }
+
+  function onKeyDown(event) {
+    if (event.key === 'Escape') closeMonument();
+  }
+
+  monument.addEventListener('click', () => {
+    if (closed) return;
+
+    if (playing) {
+      closeMonument();
+    } else {
+      startMusic();
+    }
+  });
+
+  window.addEventListener('keydown', onKeyDown);
+
+  // Первая попытка автоматического запуска
+  startMusic();
+})();</script><script>(function () {
+    // ВНИМАНИЕ!!!!!!!!!!!!!!!!!!!!Плавный инерционный скролл только для мыши/тачпада
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    let targetY = window.scrollY;
+    let currentY = window.scrollY;
+    let animationFrame = null;
+
+    // ===== НАСТРОЙКИ =====
+    const SPEED = 0.70;       // 0.4 = медленнее, 0.65 = средне, 1.0 = быстрее
+    const SMOOTHNESS = 0.13;  // 0.08 = мягче, 0.12 = средне, 0.18 = быстрее
+    const MAX_STEP = 500;     // максимальный шаг одного движения колеса
+    // =====================
+
+    function animateScroll() {
+        currentY += (targetY - currentY) * SMOOTHNESS;
+
+        if (Math.abs(targetY - currentY) < 0.5) {
+            currentY = targetY;
+            window.scrollTo(0, currentY);
+            animationFrame = null;
+            return;
+        }
+
+        window.scrollTo(0, currentY);
+        animationFrame = requestAnimationFrame(animateScroll);
+    }
+
+    window.addEventListener('wheel', function (event) {
+
+    // Если глобус активирован кликом —
+    // колесо полностью отдаём Globe.gl для zoom.
+    const globe = event.target.closest('#globeViz');
+
+    if (globe && globe.dataset.interacting === 'true') {
+        return;
+    }
+
+    // Внутренний скролл AI-чата не трогаем
+    if (event.target.closest('#logai-window, #logai-msgs')) {
+        return;
+    }
+
+    event.preventDefault();
+
+        let delta = event.deltaY * SPEED;
+
+        // Ограничиваем слишком резкие движения
+        delta = Math.max(-MAX_STEP, Math.min(MAX_STEP, delta));
+
+        targetY += delta;
+
+        // Не даём уйти выше/ниже страницы
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        targetY = Math.max(0, Math.min(targetY, maxY));
+
+        if (!animationFrame) {
+            animationFrame = requestAnimationFrame(animateScroll);
+        }
+    }, { passive: false });
+
+    // Синхронизация, если страницу прокрутили другим способом
+    window.addEventListener('scroll', function () {
+        if (!animationFrame) {
+            targetY = window.scrollY;
+            currentY = window.scrollY;
+        }
+    }, { passive: true });
+
+})();</script><div id="logai-footer-mobile" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box;"><div style="margin: 0 auto 20px auto; padding-top: 40px; text-align: center; margin-bottom: 40px;"><a href="mailto:info@log-ai.ru" style="font-size: 24px; font-family: 'SF Mono', Monaco, monospace; color: #e5e7eb; text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: 0.3px;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#e5e7eb'">info@log-ai.ru</a><p style="color: #aaaaaa; font-size: 15px; line-height: 1.6; max-width: 750px; margin: 15px auto 0 auto;">Пришлите описание задачи, техническое задание или ссылку на существующую систему. Мы оценим задачу и определим возможные варианты реализации.</p></div><div style="max-width: 850px; margin: 0 auto 40px auto; text-align: center; background: #000000; padding: 0; box-sizing: border-box;"><p style="color: #aaaaaa; font-size: 14px; line-height: 1.6; margin: 0;"><span style="color: #4ade80; margin-right: 6px;">🔒</span> Данные и доступ к системам заказчика обрабатываются в соответствии с согласованными требованиями к безопасности и конфиденциальности. Условия доступа, хранения и обработки данных определяются архитектурой проекта и договором.</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; box-sizing: border-box; width: 100%; margin-bottom: 30px;"><p style="color: #666666; font-size: 12px; line-height: 1.6; margin: 0; width: 100%; text-align: justify;">Сайт носит исключительно информационный характер и не является публичной офертой в соответствии со статьёй 437 Гражданского кодекса РФ. Цены, состав и условия предоставления услуг уточняются при проектировании решения и фиксируются в договоре. Условия технического сопровождения и уровень сервиса могут дополнительно определяться отдельным соглашением (SLA).</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; width: 100%; box-sizing: border-box;"><div style="color: #666666; font-size: 12px; line-height: 1.5; text-align: left;">© 2026 Log-AI<br>Автоматизация бизнеса и ИИ-решения под ключ. Работаем по всей России и СНГ.<br>ИП Скопец Антон Викторович<br>ИНН 741709<span></span>260870 · ОГРНИП 326745600<span></span>204228<br>Все права защищены.</div><div style="display: flex; gap: 20px; flex-wrap: wrap; font-family: sans-serif;"><a href="/privacy-policy/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Политика конфиденциальности</a> <a href="/terms/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Пользовательское соглашение</a></div></div></div><style>@media screen and (max-width: 600px) {
+  #logai-footer-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+}</style><style>/* Анимации и точки */
+    @keyframes logai-bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+    .logai-dots { display: flex !important; flex-direction: row !important; gap: 4px !important; align-items: center !important; height: 12px !important; }
+    .logai-dots span { display: inline-block; width: 5px; height: 5px; background: #aaa !important; border-radius: 50%; animation: logai-bounce 1.4s infinite ease-in-out; }
+    .logai-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .logai-dots span:nth-child(3) { animation-delay: 0.4s; }
+    
+    #logai-msgs::-webkit-scrollbar { width: 5px; }
+    #logai-msgs::-webkit-scrollbar-thumb { background: #666; border-radius: 10px; }
+    
+    /* Сообщения и текст */
+    #logai-msgs div { white-space: pre-wrap !important; word-wrap: break-word !important; padding: 12px 16px !important; margin-bottom: 5px !important; display: flex; flex-direction: column; justify-content: center; }
+    #logai-msgs div p { margin: 0 !important; padding: 0 !important; line-height: 1.5 !important; }
+    #logai-msgs { gap: 12px !important; padding: 20px !important; }
+
+    /* Поле ввода и кнопка отправить */
+    #logai-input { flex: 1 !important; padding: 12px 18px !important; border-radius: 20px !important; background: #4a4e56 !important; border: 1px solid rgba(255,255,255,0.1) !important; outline: none !important; color: #fff !important; font-size: 15px !important; resize: none !important; max-height: 120px !important; line-height: 1.4 !important; }
+    #logai-send-btn { background-color: #007bff !important; border: none !important; width: 45px !important; height: 45px !important; border-radius: 50% !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-size: 24px !important; padding: 0 !important; flex-shrink: 0 !important; }
+
+    /* ГЛАВНЫЕ СТИЛИ (чтобы кнопка и окно не исчезали) */
+    #logai-btn {
+        position: fixed !important; bottom: 40px !important; right: 110px !important;
+        width: 65px !important; height: 65px !important; border-radius: 50% !important;
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        cursor: pointer !important; z-index: 10000 !important; box-shadow: 0 10px 25px rgba(0,123,255,0.4);
+    }
+
+    #logai-window {
+        display: none; position: fixed !important; bottom: 115px !important; right: 110px !important;
+        width: 380px !important; height: 600px !important; background: #3b3e45 !important;
+        border-radius: 24px !important; flex-direction: column; overflow: hidden;
+        z-index: 10000 !important; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.15) !important;
+    }
+
+        /* АДАПТИВ ДЛЯ МОБИЛОК: ЧАТ НА ВЕСЬ ЭКРАН */
+    @media screen and (max-width: 480px) {
+        #logai-window { 
+            right: 0 !important; 
+            left: 0 !important; 
+            bottom: 0 !important; 
+            width: 100% !important; 
+            height: 100% !important; /* Растягиваем окно на 100% экрана смартфона */
+            border-radius: 0 !important; /* Убираем скругления углов, чтобы чат сел монолитом */
+            z-index: 999999 !important; /* Перекрываем все кнопки в ноль */
+        }
+        
+        #logai-btn { 
+            bottom: 80px !important; /* Твоя родная высота кнопки, когда чат закрыт */
+            right: 22px !important;  /* Твой родной сдвиг кнопки */
+            z-index: 999998 !important; /* Когда чат открыт, кнопка останется под ним и не будет торчать */
+        }
+    }</style><div id="logai-widget" style="position: fixed; bottom: var(--widget-bottom, 20px); right: var(--widget-right, 20px); z-index: 9999;"><div id="logai-btn" onclick="toggleLogAI()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><div id="logai-window"><div style="background: #2d3035; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; align-items:center; gap:12px;"><div style="width:35px; height:35px; background:#007bff; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(0,123,255,0.5);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg></div><span style="font-weight:600; color:#fff; font-size:16px; letter-spacing: 0.5px;">AI Ассистент</span></div><span onclick="toggleLogAI()" style="cursor:pointer; color:#fff; font-size:35px; line-height: 0.7; opacity: 0.7;">&times;</span></div><div id="logai-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; background:#3b3e45;"></div><div style="padding:15px 15px 8px 15px; background:#2d3035; display:flex; flex-direction:column; border-top: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; gap:10px; align-items:flex-end; width:100%;"><textarea id="logai-input" rows="1" placeholder="Напишите..." oninput="this.style.height='';this.style.height=this.scrollHeight+'px'"></textarea> <button id="logai-send-btn" onclick="sendLogAI()">➤</button></div><div style="text-align:center; font-size:10px; color:#ffffff; opacity:0.3; margin-top:6px; font-family:sans-serif; pointer-events:none; user-select:none;">ИИ может ошибаться</div></div></div></div><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script>const API_URL = 'https://api2.log-ai.ru';
+    const MY_CLIENT_ID = 'client_arhitektor_2'; // МЕНЯТЬ ТУТ
+    const MY_BOT_PATH = 'arhitektor_2';  // МЕНЯТЬ ТУТ 
+    
+       let logSid;
+    try {
+        logSid = localStorage.getItem('logai_sid');
+        if (!logSid) {
+            logSid = 's_' + Math.random().toString(36).substr(2, 12);
+            localStorage.setItem('logai_sid', logSid);
+        }
+    } catch (e) {
+        // Если доступ к памяти закрыт (инкогнито), создаем временный ID
+        logSid = 'temp_' + Math.random().toString(36).substr(2, 12);
+    }
+
+    // Переименовали, чтобы избежать конфликтов
+    let chatIsWaiting = false;
+    let historyLoaded = false;
+    let activeMessageId = null;
+    let pollController = null;
+    let pollTimeoutId = null;
+
+
+       function toggleLogAI() {
+        const w = document.getElementById('logai-window');
+        const isOpen = (window.getComputedStyle(w).display === 'none');
+        
+        if (isOpen) {
+            w.style.display = 'flex';
+            if (!historyLoaded) {
+                loadChatHistory();
+            } 
+            // Если чат в режиме ожидания (точки), пинаем сервер сразу при открытии
+            else if (chatIsWaiting && activeMessageId) {
+                const dotsContainer = document.querySelector('.logai-dots')?.parentElement;
+                if (dotsContainer) {
+                    startPolling(activeMessageId, dotsContainer);
+                }
+            }
+        } else {
+            w.style.display = 'none';
+            // УБРАЛИ stopPolling(), чтобы ИИ докачивал ответ, даже когда окно закрыто
+        }
+    }
+
+
+    function updateInputState() {
+        const input = document.getElementById('logai-input');
+        const btn = document.getElementById('logai-send-btn');
+        if (input) {
+            input.disabled = chatIsWaiting;
+            input.style.opacity = chatIsWaiting ? '0.5' : '1';
+        }
+        if (btn) btn.style.opacity = chatIsWaiting ? '0.5' : '1';
+    }
+
+    function stopPolling() {
+        if (activeMessageId) localStorage.removeItem('poll_start_' + activeMessageId);
+        if (pollController) pollController.abort();
+        if (pollTimeoutId) clearTimeout(pollTimeoutId);
+    
+        pollController = null;
+        pollTimeoutId = null;
+        activeMessageId = null;
+        chatIsWaiting = false;
+        updateInputState();
+    }
+
+    function addLogMsg(txt, isAi) {
+        const d = document.createElement('div');
+        d.style = `padding:12px 16px; border-radius:18px; max-width:82%; font-size:14px; line-height:1.5; margin-bottom:10px; 
+                   ${isAi ? 'align-self:flex-start; background:#4a4e56; color:#dbdee1; border-bottom-left-radius:4px;' 
+                         : 'align-self:flex-end; background:#007bff; color:white; border-bottom-right-radius:4px; box-shadow:0 4px 12px rgba(0,123,255,0.25);'}`;
+
+        if (txt === 'dots') {
+   // ИСПРАВЛЕНО: Добавлен явный текст ожидания рядом с анимацией точек для лучшего UX
+   d.innerHTML = '<div style="display:flex; align-items:center; gap:8px;">' +
+                 '<span style="font-style:italic; opacity:0.8;">ИИ подбирает ответ...</span>' +
+                 '<div class="logai-dots"><span></span><span></span><span></span></div>' +
+                 '</div>';
+ } else {
+   d.innerHTML = typeof marked !== 'undefined' ? marked.parse(txt) : txt;
+ }
+
+        const box = document.getElementById('logai-msgs');
+        box.appendChild(d);
+        box.scrollTop = box.scrollHeight;
+        return d;
+    }
+
+async function loadChatHistory() {
+    const box = document.getElementById('logai-msgs');
+    try {
+        box.innerHTML = '';
+
+        const res = await fetch(`${API_URL}/history/${logSid}?platform=site&clientId=${MY_CLIENT_ID}`);
+        const data = await res.json();
+
+        if (Array.isArray(data.items) && data.items.length > 0) {
+            data.items.forEach((m, index) => {
+                // 1. Показываем сообщение пользователя
+                if (m.message) {
+                    addLogMsg(m.message, false);
+                }
+
+                // 2. Если есть готовый ответ — показываем
+                if (m.answer) {
+                    addLogMsg(m.answer, true);
+                } 
+                // 3. ИСПРАВЛЕНО: Четкое чтение m.message_id из базы данных без путаницы с регистрами
+                else if (m.message_id && index === data.items.length - 1) {
+                    chatIsWaiting = true;
+                    activeMessageId = m.message_id; // Используем m.message_id
+                    
+                    const aiMsg = addLogMsg('dots', true);
+                    startPolling(m.message_id, aiMsg); 
+                }
+            });
+        } else {
+            addLogMsg("Здравствуйте! Я ваш ИИ-ассистент. Чем могу помочь?", true);
+        }
+
+        historyLoaded = true;
+        updateInputState();
+
+    } catch (e) {
+        console.error('History error:', e);
+        addLogMsg("Не удалось загрузить историю чата", true);
+    }
+}
+
+
+async function sendLogAI() {
+    if (chatIsWaiting) return;
+
+    const input = document.getElementById('logai-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // ЖЕЛЕЗНЫЙ ДЕБАУНС: блокируем повторный клик в первую же микросекунду
+    chatIsWaiting = true;
+    updateInputState();
+
+    addLogMsg(msg, false);
+    
+    input.value = ''; 
+    input.style.height = 'auto'; 
+
+    const aiMsg = addLogMsg('dots', true);
+
+    try {
+        const res = await fetch(`${API_URL}/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sessionId: logSid,
+                message: msg,
+                clientId: MY_CLIENT_ID,
+                platform: 'site',
+                botPath: MY_BOT_PATH
+            })
+        });
+
+        // ИСПРАВЛЕНО: Обработка HTTP-ошибок. Передаем false третьим параметром, чтобы не было звука при ошибке
+        if (!res.ok) {
+            let errorMsg = "⚠️ Сервер временно недоступен";
+            if (res.status === 429) errorMsg = "🚫 Слишком много запросов. Подождите немного.";
+            else if (res.status === 403) {
+                try {
+                    const errData = await res.json();
+                    errorMsg = errData.reason || "🚫 Доступ ограничен.";
+                } catch (_) {
+                    errorMsg = "🚫 Доступ ограничен.";
+                }
+            }
+            finish(errorMsg, aiMsg, false); // false — звук НЕ играет
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data.blocked) {
+            finish(data.reason || data.message || "🚫 Сообщение заблокировано", aiMsg, false); // false — без звука
+            return;
+        }
+
+        if (data.messageId) {
+            activeMessageId = data.messageId;
+            startPolling(data.messageId, aiMsg);
+        } else {
+            finish("⚠️ Ошибка регистрации сообщения (нет messageId)", aiMsg, false);
+        }
+    } catch (e) {
+        console.error(e);
+        finish("⚠️ Ошибка связи с сервером. Проверьте интернет.", aiMsg, false);
+    }
+} // Скобка закрывает саму функцию send
+    function startPolling(messageId, aiMsg) {
+        activeMessageId = messageId;
+        pollController = new AbortController();
+        let savedTime = localStorage.getItem('poll_start_' + messageId);
+        if (!savedTime) {
+            savedTime = Date.now().toString();
+            localStorage.setItem('poll_start_' + messageId, savedTime);
+        }
+        let startTime = parseInt(savedTime, 10);
+        let statusChanged = false; // Чтобы не менять текст постоянно
+
+        const poll = async () => {
+            if (activeMessageId !== messageId) return;
+
+            const elapsed = (Date.now() - startTime) / 1000; // секунд прошло
+
+            // 1. На 40-й секунде меняем текст на "Сложный вопрос"
+            if (elapsed > 40 && !statusChanged) {
+                const dots = aiMsg.querySelector('.logai-dots');
+                aiMsg.innerHTML = '🤖 Вопрос сложный, анализирую данные...';
+                if (dots) aiMsg.appendChild(dots); 
+                statusChanged = true;
+            }
+
+            // 2. Лимит ожидания - 10 минут (600 секунд)
+            if (elapsed > 600) {
+                finish("🤖 Извините, ИИ перегружен или запрос слишком сложный. Пожалуйста, попробуйте позже.", aiMsg);
+                return;
+            }
+
+            // 3. Умный интервал: до 50 сек — каждые 3 сек, потом — каждые 10 сек
+            let nextInterval = (elapsed > 50) ? 10000 : 3000;
+
+            try {
+                // Добавили ?t=... чтобы телефон каждый раз реально спрашивал сервер, а не брал из кэша
+                const r = await fetch(`${API_URL}/get-answer/${messageId}?sessionId=${logSid}&clientId=${MY_CLIENT_ID}&t=${Date.now()}`, {
+                    signal: pollController.signal 
+                });
+                const d = await r.json();
+                const finalAnswer = d.answer || (d.status !== 'pending' ? d.answer : null);
+
+                if (finalAnswer) {
+                    finish(finalAnswer, aiMsg);
+                } else {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            } catch (e) {
+                if (e.name !== 'AbortError') {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            }
+        };
+        poll();
+    }
+
+function finish(text, msgElement, isSuccess = true) {
+    if (msgElement) {
+        msgElement.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+        
+        // Звук играет строго при успешном ответе ИИ, при ошибках или банах — тишина
+        if (isSuccess) {
+            try {
+                // ТВОЙ ОРИГИНАЛЬНЫЙ РАБОЧИЙ ПУТЬ: Кэш сбрасывается, файл проигрывается без ошибок 404
+                const audio = new Audio('https://api.log-ai.ru/notify.mp3?v=' + Date.now());
+                audio.volume = 0.4;
+                audio.play().catch(e => console.log("Нужен клик"));
+            } catch (e) {}
+        }
+    }
+    stopPolling();
+}
+
+
+    // Enter для отправки
+    document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('logai-input');
+    if (input) {
+      input.addEventListener('keypress', (e) => {
+        // ИСПРАВЛЕНО: Добавлена проверка !chatIsWaiting, чтобы клавиатура намертво блокировалась во время ожидания ИИ
+        if (e.key === 'Enter' && !e.shiftKey && !chatIsWaiting) {
+          e.preventDefault();
+          sendLogAI();
+        }
+      });
+
+      // ИСПРАВЛЕНО: Текстовое поле плавно растёт вниз до 150px, если текст длинный
+      input.addEventListener('input', function() {
+        this.style.height = 'auto'; 
+        this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+      });
+    }
+    });</script><div id="cookie-notice-wrapper" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #111111; border-top: 1px solid #222222; padding: 10px 15px; box-sizing: border-box; z-index: 99999; display: none; flex-direction: row; justify-content: space-between; align-items: center; gap: 15px; font-family: sans-serif;"><span style="color: #888888; font-size: 12px; line-height: 1.4; text-align: left;">Наш сайт использует файлы cookie для корректной работы. Подробнее — в <a href="/privacy-policy/" style="color: #bfa15f; text-decoration: underline;">Политике конфиденциальности</a>. </span><button onclick="dismissCookieNotice()" style="background: #bfa15f; color: #000000; border: none; padding: 5px 14px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Принять</button></div><style>@media (max-width: 600px) {
+        #cookie-notice-wrapper {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 10px !important;
+            padding: 12px 15px !important;
+        }
+        #cookie-notice-wrapper span {
+            text-align: center !important;
+            font-size: 11px !important;
+        }
+        #cookie-notice-wrapper button {
+            width: 100% !important;
+            padding: 8px !important;
+            font-size: 12px !important;
+        }
+    }</style><script>(function() {
+        var storageKey = 'logai_cookies_accepted';
+        if (!localStorage.getItem(storageKey)) {
+            document.getElementById('cookie-notice-wrapper').style.display = 'flex';
+        }
+    })();
+
+    function dismissCookieNotice() {
+        localStorage.setItem('logai_cookies_accepted', 'true');
+        document.getElementById('cookie-notice-wrapper').style.display = 'none';
+    }</script></body></html>

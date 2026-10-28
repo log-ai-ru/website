@@ -1,0 +1,855 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Почему после обновления система работает хуже: причины и диагностика</title><meta name="description" content="Почему после обновления ПО падает производительность? Разбираем регрессии, проблемы совместимости, диагностику SQL и безопасный откат без потери данных."><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://log-ai.ru/pochemu-posle-obnovleniya-sistema-nachinaet-rabotat-huzhe/"><link rel="alternate" type="application/atom+xml" href="https://log-ai.ru/feed.xml" title="LOG-AI - RSS"><link rel="alternate" type="application/json" href="https://log-ai.ru/feed.json" title="LOG-AI - JSON"><meta property="og:title" content="Почему после обновления система работает хуже: причины и диагностика"><meta property="og:image" content="https://log-ai.ru/media/website/Log-ai-Logo.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:site_name" content="LOG-AI"><meta property="og:description" content="Почему после обновления ПО падает производительность? Разбираем регрессии, проблемы совместимости, диагностику SQL и безопасный откат без потери данных."><meta property="og:url" content="https://log-ai.ru/pochemu-posle-obnovleniya-sistema-nachinaet-rabotat-huzhe/"><meta property="og:type" content="article"><link rel="stylesheet" href="https://log-ai.ru/assets/css/style.css?v&#x3D;b1f5980528b3cc19f4018c94aea81f52"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://log-ai.ru/pochemu-posle-obnovleniya-sistema-nachinaet-rabotat-huzhe/"},"headline":"Почему после обновления система начинает работать хуже","datePublished":"2026-10-11T21:34+05:00","dateModified":"2026-10-22T13:28+05:00","description":"Почему после обновления ПО падает производительность? Разбираем регрессии, проблемы совместимости, диагностику SQL и безопасный откат без потери данных.","author":{"@type":"Person","name":"AI Automation","url":"https://log-ai.ru/authors/ai-automation/"},"publisher":{"@type":"Organization","name":"AI Automation"}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript><style>body, html, main, #page, .wrapper, .main { background: #000000 !important; background-color: #000000 !important; }</style><link rel="icon" type="image/png" sizes="32x32" href="/media/files/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/media/files/favicon-16.png"><link rel="apple-touch-icon" sizes="180x180" href="/media/files/favicon-180.png"><meta name="yandex-verification" content="9d14e10b64f3b76c"><meta name="google-site-verification" content="-rKktnoSCGCLZToW-jcZeKu5WvWFGuLKdLwwyCux0-M"></head><body class="page-template"><header class="top js-header"><a class="logo" href="https://log-ai.ru/">LOG-AI</a><nav class="navbar js-navbar"><button class="navbar__toggle js-toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><span class="navbar__toggle-box"><span class="navbar__toggle-inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://log-ai.ru/" target="_self">Главная</a></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Услуги</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/avtomatizaciya-obrabotki-zayavok-i-lidov/" target="_self">Автоматизация обработки заявок и лидов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-biznes-processov-integracii-dannye-i-skvoznye-scenarii/" target="_self">Автоматизация бизнес-процессов</a></li><li><a href="https://log-ai.ru/sbor-i-obrabotka-dannyh/" target="_self">Сбор и обработка данных</a></li><li><a href="https://log-ai.ru/ii-dlya-biznesa-i-nejrosetej/" target="_self">ИИ для бизнеса и нейросети</a></li><li><a href="https://log-ai.ru/specializirovannye-cifrovye-sistemy/" target="_self">Специализированные цифровые системы</a></li><li><a href="https://log-ai.ru/individualnye-korporativnye-sistemy/" target="_self">Корпоративные системы</a></li><li><a href="https://log-ai.ru/tehnicheskoe-soprovozhdenie/" target="_self">Техническое сопровождение</a></li><li><a href="https://log-ai.ru/it-audit-i-predproektnoe-obsledovanie/" title="/it-audit-i-predproektnoe-obsledovanie/" target="_self">IT-аудит и предпроектное обследование</a></li><li><a href="https://log-ai.ru/oblachnyy-i-infrastrukturnyy-konsalting/" title="/oblachnyy-i-infrastrukturnyy-konsalting/" target="_self">Облачный и инфраструктурный консалтинг</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Решения</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakie-sistemy-my-integriruem/" target="_self">Какие системы мы интегрируем</a></li><li><a href="https://log-ai.ru/kak-rabotaet-ii-v-biznese/" target="_self">Как работает ИИ в бизнесе</a></li><li><a href="https://log-ai.ru/resheniya-po-zadacham/" target="_self">Решения по задачам</a></li><li><a href="https://log-ai.ru/avtomatizaciya-proizvodstva/" target="_self">Для производства</a></li><li><a href="https://log-ai.ru/avtomatizaciya-logistiki-i-skladov/" target="_self">Для логистики и складов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-optovoy-torgovli/" target="_self">Для оптовой торговли</a></li><li><a href="https://log-ai.ru/avtomatizaciya-e-commerce/" target="_self">Для e-commerce</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Реализация</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kak-my-rabotaem/" target="_self">Как мы работаем</a></li><li><a href="https://log-ai.ru/dokumentaciya-sistemy/" target="_self">Документация системы</a></li><li><a href="https://log-ai.ru/infrastruktura-i-razmeshchenie/" target="_self">Инфраструктура и размещение</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Выбор</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakuyu-avtomatizaciyu-vybrat/" target="_self">Какую автоматизацию выбрать</a></li><li><a href="https://log-ai.ru/chto-avtomatizirovat-v-biznese-v-pervuyu-ochered/" target="_self">Что автоматизировать в бизнесе в первую очередь</a></li><li><a href="https://log-ai.ru/kak-podgotovit-biznes-k-avtomatizacii/" target="_self">Как подготовить бизнес к автоматизации</a></li><li><a href="https://log-ai.ru/kak-vnedrit-avtomatizaciyu/" target="_self">Как внедрить автоматизацию</a></li><li><a href="https://log-ai.ru/kak-ocenit-rezultat-avtomatizacii/" target="_self">Как оценить результат автоматизации</a></li><li><a href="https://log-ai.ru/stoimost-razrabotki/" target="_self">Стоимость разработки</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">О нас</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/inzhenernyy-sostav/" target="_self">Инженерный состав</a></li><li><a href="https://log-ai.ru/keysy/" target="_self">Кейсы</a></li><li><a href="https://log-ai.ru/glossariy/" target="_self">Глоссарий</a></li><li><a href="https://log-ai.ru/ekspertiza/" target="_self">Экспертиза</a></li><li><a href="https://log-ai.ru/bezopasnost-sistem-dannyh-i-infrastruktury/" target="_self">Безопасность</a></li></ul></li></ul></nav></header><main class="page"><article class="content"><div class="hero hero--noimage"><header class="hero__content hero__content--centered"><div class="wrapper"><h1>Почему после обновления система начинает работать хуже</h1></div></header></div><div class="entry-wrapper content__entry"><p> </p><p> </p><p> </p><p> </p><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #14b8a6; font-size: clamp(22px, 3.2vw, 28px); font-weight: 800; line-height: 1.2; letter-spacing: -0.6px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 35px 0; text-transform: uppercase;">Как найти причину, доказать регрессию и безопасно восстановить работу</h3><div style="display: flex; flex-wrap: wrap; gap: 20px; background: rgba(20, 184, 166, 0.02); border: 1px dashed rgba(20, 184, 166, 0.25); border-radius: 6px; padding: 30px; margin-bottom: 35px; align-items: center;"><div style="flex: 1; min-width: 180px; text-align: center;"><div style="font-size: clamp(48px, 6vw, 64px); font-weight: 900; color: #ff6b6b; font-family: 'SF Mono', Monaco, monospace; line-height: 1;">~4X</div><div style="font-size: 11px; color: #ff6b6b; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px;">Регрессия скорости</div></div><div style="flex: 3; min-width: 280px;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold; line-height: 1.6;">Обновление прошло без ошибок. Система запускается, пользователи могут работать, документы создаются. Но после выпуска новой версии отчёт, который раньше формировался за 15 секунд, теперь выполняется почти минуту. Обмен данными с соседней системой периодически задерживается, а фоновые задания не успевают завершиться до начала следующего рабочего дня.</p></div></div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 35px;"><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.05); padding: 25px; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; margin-bottom: 10px; letter-spacing: 1px;">// ТЕХНИЧЕСКИЙ СТАТУС //</div><p style="font-size: 15px; color: #94a3b8; margin: 0; line-height: 1.6;">В таких случаях опаснее всего отсутствие очевидной аварии. Приложение не упало, сервер доступен, критических ошибок при запуске нет.</p></div><div style="background: rgba(255, 107, 107, 0.01); border: 1px solid rgba(255, 107, 107, 0.15); padding: 25px; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 10px; letter-spacing: 1px;">// БИЗНЕС-ПОСЛЕДСТВИЯ //</div><p style="font-size: 15px; color: #ffffff; margin: 0; line-height: 1.6; font-weight: 500;">Тем не менее привычные операции занимают больше времени, сотрудники ждут, а накопившиеся задержки постепенно затрагивают другие процессы.</p></div></div><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Первое подозрение закономерно падает на обновление. Но последовательность событий ещё не доказывает причинную связь. В тот же день могла измениться нагрузка, запуститься массовый импорт или начаться обслуживание базы данных. С другой стороны, новая версия действительно могла изменить алгоритм обработки, способ выполнения запросов или поведение одной из зависимостей.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; margin-bottom: 15px; font-weight: bold; text-transform: uppercase;">// Разница между этими случаями принципиальна //</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 35px;"><div style="background: #0f172a; border: 1px solid rgba(255,255,255,0.05); padding: 20px; border-radius: 4px;"><span style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b;">[Сценарий 01]</span><p style="font-size: 14px; color: #94a3b8; line-height: 1.5; margin: 8px 0 0 0;">Если проблема вызвана дополнительными запросами приложения, увеличение вычислительных ресурсов может лишь отсрочить её проявление.</p></div><div style="background: #0f172a; border: 1px solid rgba(255,255,255,0.05); padding: 20px; border-radius: 4px;"><span style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6;">[Сценарий 02]</span><p style="font-size: 14px; color: #94a3b8; line-height: 1.5; margin: 8px 0 0 0;">Если изменилась схема базы данных, возврат прежней версии приложения способен нарушить обработку новых записей.</p></div><div style="background: #0f172a; border: 1px solid rgba(255,255,255,0.05); padding: 20px; border-radius: 4px;"><span style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #94a3b8;">[Сценарий 03]</span><p style="font-size: 14px; color: #94a3b8; line-height: 1.5; margin: 8px 0 0 0;">А если замедлился внешний сервис, исправление SQL-запросов вообще не затронет причину.</p></div></div><p style="font-size: 15px; color: #ffffff; margin: 0 0 15px 0; line-height: 1.6; font-weight: bold;">Задача технического расследования — не найти настройку, после изменения которой система случайно ускорилась, а установить, какое изменение привело к ухудшению и какими данными это подтверждается.</p><p style="font-size: 15px; color: #94a3b8; margin: 0 0 35px 0; line-height: 1.6;">Для этого нужно сопоставить поведение системы до и после обновления, изучить конкретную операцию, проверить конкурирующие гипотезы и только затем выбирать исправление или откат. Ниже разберём этот процесс на технических примерах и покажем, какие проверки действительно помогают установить причину.</p></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #14b8a6; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Сначала определите, что именно стало работать хуже</h3><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold; line-height: 1.6;">Фраза «после обновления всё тормозит» понятна пользователю, но для инженера слишком расплывчата. Она объединяет несколько разных проблем, которые требуют разных способов диагностики.</p><div style="background: #0f172a; border-radius: 6px; padding: 25px; color: #f8fafc; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); margin-bottom: 35px; border: 1px solid rgba(255,255,255,0.05);"><div style="border-bottom: 1px solid #334155; padding-bottom: 15px; margin-bottom: 15px;"><span style="color: #94a3b8;">· Наблюдение:</span> Сотрудники жалуются на медленную CRM. При проверке выясняется, что поиск клиентов работает как прежде, карточки открываются без задержек...</div><div><span style="color: #14b8a6; font-weight: bold;">[ИЗОЛЯЦИЯ АНОМАЛИИ]</span><br><span style="color: #ffffff;">...но сохранение сделки иногда занимает четыре секунды вместо привычных 300–400 миллисекунд. Значит, проблема не обязательно относится ко всей CRM. Она может находиться в обработке сделки, проверке связанных данных или вызове внешней системы.</span></div></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; margin-bottom: 15px; font-weight: bold; text-transform: uppercase;">// На первом этапе важно разделить четыре типа изменений //</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 35px;"><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.05); border-top: 2px solid #14b8a6; padding: 20px; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Регрессия производительности</div><p style="font-size: 14px; color: #94a3b8; line-height: 1.5; margin: 0;">одна и та же операция при сопоставимых условиях выполняется медленнее, потребляет больше ресурсов или обрабатывает меньше запросов за единицу времени.</p></div><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.05); border-top: 2px solid rgba(255, 255, 255, 0.2); padding: 20px; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Регрессия функциональности</div><p style="font-size: 14px; color: #94a3b8; line-height: 1.5; margin: 0;">операция перестаёт работать правильно. Например, документ сохраняется, но часть его реквизитов больше не передаётся в учётную систему.</p></div><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.05); border-top: 2px solid #14b8a6; padding: 20px; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Проблема совместимости</div><p style="font-size: 14px; color: #94a3b8; line-height: 1.5; margin: 0;">компоненты перестают корректно взаимодействовать. Приложение может запускаться, но не поддерживать новый формат сообщения, изменившийся интерфейс библиотеки или правила подключения к СУБД.</p></div><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.05); border-top: 2px solid rgba(255, 255, 255, 0.2); padding: 20px; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Изменение эксплуатационного поведения</div><p style="font-size: 14px; color: #94a3b8; line-height: 1.5; margin: 0;">новая версия выполняет дополнительные проверки, чаще запускает фоновые задачи или иначе использует общие ресурсы. Ошибки в коде может и не быть, однако прежняя конфигурация больше не обеспечивает требуемого качества работы.</p></div></div></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Эти ситуации могут сочетаться. Например, приложение после обновления начинает выполнять больше запросов к базе. Запросы дольше удерживают соединения, свободных соединений становится меньше, и остальные операции начинают ждать. В итоге жалобы поступают не только на отчёт, но и на сохранение документов.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; margin-bottom: 15px; font-weight: bold; text-transform: uppercase;">// Для первичной диагностики полезно сопоставить симптом с направлением проверки //</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; margin-bottom: 35px; width: 100%; box-sizing: border-box;"><div style="background: rgba(20, 184, 166, 0.02); border: 1px solid rgba(20, 184, 166, 0.15); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #14b8a6; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">Наблюдение:</div><div style="font-size: 15px; color: #ffffff; line-height: 1.5; margin-bottom: 12px; font-weight: bold;">Замедлилась одна операция</div><div style="height: 1px; background: rgba(255, 255, 255, 0.05); margin-bottom: 12px;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Что проверить:</div><div style="font-size: 14px; color: #94a3b8; line-height: 1.4;">Код этой операции, SQL-запросы, обработку связанных данных</div></div><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.08); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">Наблюдение:</div><div style="font-size: 15px; color: #ffffff; line-height: 1.5; margin-bottom: 12px; font-weight: bold;">Ухудшились многие независимые функции</div><div style="height: 1px; background: rgba(255, 255, 255, 0.05); margin-bottom: 12px;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Что проверить:</div><div style="font-size: 14px; color: #94a3b8; line-height: 1.4;">Общие библиотеки, конфигурацию, соединения и общие зависимости</div></div><div style="background: rgba(20, 184, 166, 0.02); border: 1px solid rgba(20, 184, 166, 0.15); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #14b8a6; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">Наблюдение:</div><div style="font-size: 15px; color: #ffffff; line-height: 1.5; margin-bottom: 12px; font-weight: bold;">Появились ошибки при обмене данными</div><div style="height: 1px; background: rgba(255, 255, 255, 0.05); margin-bottom: 12px;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Что проверить:</div><div style="font-size: 14px; color: #94a3b8; line-height: 1.4;">Форматы сообщений, API, авторизацию, тайм-ауты и повторные попытки</div></div><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.08); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">Наблюдение:</div><div style="font-size: 15px; color: #ffffff; line-height: 1.5; margin-bottom: 12px; font-weight: bold;">Система постепенно замедляется</div><div style="height: 1px; background: rgba(255, 255, 255, 0.05); margin-bottom: 12px;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Что проверить:</div><div style="font-size: 14px; color: #94a3b8; line-height: 1.4;">Рост очередей, длительные транзакции, утечки ресурсов и фоновые задания</div></div><div style="background: rgba(20, 184, 166, 0.02); border: 1px solid rgba(20, 184, 166, 0.15); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #14b8a6; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">Наблюдение:</div><div style="font-size: 15px; color: #ffffff; line-height: 1.5; margin-bottom: 12px; font-weight: bold;">Проблема возникает только под нагрузкой</div><div style="height: 1px; background: rgba(255, 255, 255, 0.05); margin-bottom: 12px;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Что проверить:</div><div style="font-size: 14px; color: #94a3b8; line-height: 1.4;">Конкуренцию за соединения, блокировки, пулы потоков и ограничения параллельной обработки</div></div><div style="grid-column: 1 / -1; background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.08); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">Наблюдение: Ошибки зависят от типа документа</div><div style="display: flex; flex-direction: column; gap: 8px;"><div><span style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Что проверить:</span> <span style="font-size: 14px; color: #94a3b8; margin-left: 5px;">Конкретные ветви бизнес-логики, права доступа и особенности данных</span></div></div></div></div><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Эта матрица соответствия не содержит готовых диагнозов, а служит способом сузить поиск. Если медленно работает один отчёт, нет оснований начинать с изменения всей инфраструктуры. Если одновременно ухудшились десятки независимых операций, стоит проверить компоненты, которыми они пользуются совместно.</p><div style="margin: 0 0 35px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 600px; display: block; margin: 0 auto;" viewbox="0 0 600 160" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><line x1="300" y1="15" x2="300" y2="145" stroke="rgba(20, 184, 166, 0.2)" stroke-width="1" stroke-dasharray="4 4"></line><g><rect x="50" y="45" width="200" height="50" rx="2" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="150" y="68" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Локальная аномалия</text><text x="150" y="84" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">Одна операция</text><text x="150" y="130" fill="#64748b" font-family="sans-serif" font-size="10" text-anchor="middle">Проверка кода и SQL-запроса</text></g><g><rect x="350" y="45" width="200" height="50" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="450" y="68" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Каскадная деградация</text><text x="450" y="84" fill="#94a3b8" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">Многие функции</text><text x="450" y="130" fill="#64748b" font-family="sans-serif" font-size="10" text-anchor="middle">Проверка общих библиотек и БД</text></g></svg></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #14b8a6; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Почему обновление меняет поведение системы, даже если нужную функцию не переписывали</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">В корпоративных приложениях результат зависит не только от кода отдельной функции. На него влияют среда выполнения, библиотеки, настройки, структура и распределение данных, алгоритмы СУБД и поведение внешних сервисов.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6; font-weight: bold;">Поэтому небольшое изменение в одном компоненте способно повлиять на целую цепочку операций.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">Приложение стало выполнять больше работы</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Одна из типичных причин регрессии — изменение алгоритма получения данных.</p><div style="background: #0f172a; border-radius: 6px; padding: 25px; color: #f8fafc; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.05);"><div style="border-bottom: 1px solid #334155; padding-bottom: 15px; margin-bottom: 15px;"><span style="color: #14b8a6; font-weight: bold;">[ПРЕЖНЯЯ АРХИТЕКТУРА // Пакетный метод]</span><br><span style="color: #94a3b8;">· Логика:</span> Раньше отчёт загружал список товаров и связанные сведения несколькими пакетными запросами.</div><div><span style="color: #ff6b6b; font-weight: bold;">[НОВАЯ РЕГРЕССИЯ // Проблема N+1]</span><br><span style="color: #ffffff;">После обновления приложение стало получать дополнительные данные отдельно для каждой позиции. Так возникает проблема N+1: сначала выполняется запрос за основной коллекцией, затем приложение делает дополнительные обращения для отдельных элементов.</span></div></div><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">На небольшой тестовой базе это может быть незаметно. На рабочем наборе из десятков тысяч записей количество запросов становится существенным.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Особенно сильно проблема проявляется, когда приложение и база данных находятся на разных узлах. Каждый запрос требует не только выполнения SQL, но и обмена данными, обработки результата и дополнительных действий на стороне приложения.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Проверить такую гипотезу нужно по числу запросов на одну операцию, их суммарному времени и трассировке выполнения. Если новая версия выполняет тысячи обращений вместо нескольких пакетных запросов, появляется конкретное направление для дальнейшего расследования.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Но само по себе увеличение числа запросов ещё не доказывает дефект. Дополнительные обращения могут быть необходимы для корректности или безопасности. Важно установить, какое изменение породило дополнительную работу и оправдана ли её стоимость.</p><div style="margin: 0 0 45px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 650px; display: block; margin: 0 auto;" viewbox="0 0 650 200" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker><marker id="arrow-red" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#ff6b6b"></path></marker></defs><rect x="20" y="40" width="140" height="120" rx="4" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="90" y="95" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="12" text-anchor="middle" font-weight="bold">ПРИЛОЖЕНИЕ</text><text x="90" y="115" fill="#94a3b8" font-family="sans-serif" font-size="10" text-anchor="middle">(Слой логики)</text><line x1="160" y1="60" x2="480" y2="60" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></line><text x="320" y="50" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">Запрос 1: Получить список (коллекцию)</text><path d="M 160 90 L 480 90" fill="none" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-red)"></path><path d="M 160 110 L 480 110" fill="none" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-red)"></path><path d="M 160 130 L 480 130" fill="none" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#arrow-red)"></path><text x="320" y="155" fill="#ff6b6b" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">Повторные запросы N раз (для каждого элемента)</text><text x="320" y="172" fill="#64748b" font-family="sans-serif" font-size="10" text-anchor="middle">Сетевые задержки складываются на тысячах записей</text><rect x="490" y="40" width="140" height="120" rx="4" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="560" y="95" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="12" text-anchor="middle" font-weight="bold">БАЗА ДАННЫХ</text><text x="560" y="115" fill="#ff6b6b" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">Насыщение I/O</text></svg></div></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">Новая версия иначе использует конфигурацию</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">После обновления могут измениться значения по умолчанию, названия параметров или правила их применения. Это касается размеров пулов соединений, кеширования, тайм-аутов, повторных попыток и фоновой обработки.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Предположим, приложение сохранило прежний конфигурационный файл, но новый драйвер больше не учитывает один из параметров. При небольшом количестве пользователей это может никак не проявляться. При одновременной работе сотрудников часть запросов начинает ждать свободного соединения.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">В такой ситуации недостаточно открыть файл настроек и убедиться, что значения не изменились. Нужно проверить, какие параметры фактически применяются запущенным компонентом.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">При этом не стоит автоматически увеличивать пул соединений. Если причина в длительных запросах, увеличение пула может усилить конкуренцию за ресурсы базы данных. Сначала следует установить, где именно расходуется время: на выполнение операций, ожидание соединения или блокировки.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">База данных стала выполнять запрос иначе</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Даже при неизменном SQL-запросе обновление СУБД, изменение статистики или характера данных может повлиять на план выполнения.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Планировщик выбирает способ обработки запроса на основании оценок количества строк, стоимости операций и доступной статистики. Если эти оценки не соответствуют реальному распределению данных, выбранный план может оказаться неэффективным.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Предположим, запрос раньше использовал индекс для получения небольшой части таблицы, а теперь читает значительно больше строк. Это повод исследовать план, но не автоматическое доказательство ошибки: последовательное чтение иногда эффективнее индексного, особенно если требуется большая часть таблицы.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Для PostgreSQL имеет значение и процедура обновления. В версиях до PostgreSQL 18 при использовании pg_upgrade статистика планировщика не переносилась. PostgreSQL 18 поддерживает сохранение статистики планировщика при использовании соответствующих возможностей pg_upgrade. Применимость этой особенности зависит от конкретного перехода и используемых возможностей статистики.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Поэтому при обновлении СУБД необходимо проверять не только совместимость запросов, но и состояние статистики, планы выполнения критичных операций и рекомендации для конкретной версии.</p><div style="margin: 0 0 45px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 600px; display: block; margin: 0 auto;" viewbox="0 0 600 220" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="200" y="10" width="200" height="40" rx="3" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="300" y="34" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">ПЛАНИРОВЩИК СУБД</text><path d="M 300 50 L 300 80 M 300 80 L 140 80 L 140 110" fill="none" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-teal)"></path><path d="M 300 80 L 460 80 L 460 110" fill="none" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-teal)"></path><rect x="30" y="110" width="220" height="80" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="140" y="130" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Выборочное чтение (Index Scan)</text><text x="140" y="150" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">Актуальная статистика</text><text x="140" y="168" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">Выбирается, если запрашивается</text><text x="140" y="179" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">небольшая часть таблицы</text><rect x="350" y="110" width="220" height="80" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="460" y="130" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Полное сканирование (Seq Scan)</text><text x="460" y="150" fill="#ff6b6b" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">Устаревшая статистика</text><text x="460" y="168" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">Выбирается при неточных оценках</text><text x="460" y="179" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">или запросе большей части строк</text></svg></div></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">Изменился контракт взаимодействия с другой системой</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Обновление библиотеки или API может изменить обработку пустых значений, форматов дат, авторизации, ошибок и повторных запросов.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Например, CRM продолжает отправлять документы во внешнюю систему, но часть сообщений после обновления отклоняется. Приложение может не выдавать очевидной ошибки на этапе запуска, поскольку проблема возникает только при обработке определённого вида документа.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">В финансовых, складских и кадровых системах особенно опасны ситуации, когда сообщение принимается, но интерпретируется иначе. Внешне обмен завершается успешно, однако результат оказывается некорректным.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Поэтому совместимость нужно проверять на реальных сценариях взаимодействия, а не ограничиваться запуском приложения и проверкой доступности API.</p><div style="margin: 0 0 45px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 620px; display: block; margin: 0 auto;" viewbox="0 0 620 160" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="20" y="45" width="140" height="70" rx="3" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="90" y="78" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="12" text-anchor="middle" font-weight="bold">CRM SYSTEM</text><text x="90" y="95" fill="#94a3b8" font-family="sans-serif" font-size="10" text-anchor="middle">Отправка данных</text><path d="M 160 80 L 460 80" fill="none" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="6 4" marker-end="url(#arrow-teal)"></path><rect x="210" y="15" width="200" height="45" rx="2" fill="#1e1e2e" stroke="#ff6b6b" stroke-width="1"></rect><text x="310" y="32" fill="#ff6b6b" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">СКРЫТЫЙ СДВИГ ЛОГИКИ</text><text x="310" y="48" fill="#94a3b8" font-family="sans-serif" font-size="10" text-anchor="middle">Форматы дат / Пустые значения</text><rect x="460" y="45" width="140" height="70" rx="3" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="530" y="78" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="12" text-anchor="middle" font-weight="bold">EXTERNAL API</text><text x="530" y="95" fill="#ff6b6b" font-family="sans-serif" font-size="10" text-anchor="middle">Искажение учета</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #14b8a6; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Как доказать, что проблема связана с обновлением</h3><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold; line-height: 1.6;">Представим, новая версия установлена в 10:00, а в 10:20 пользователи начали жаловаться на задержки. Временная связь очевидна, но пока неизвестно, что именно произошло.</p><p style="font-size: 15px; color: #94a3b8; margin: 0 0 25px 0; line-height: 1.6;">В этот же период мог начаться импорт данных, измениться количество пользователей или замедлиться внешний сервис. Если команда сразу начнёт менять параметры приложения, она рискует потратить часы на устранение последствий, не затронув причину.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6; font-weight: bold;">Нужны три вида доказательств: измеримый симптом, подтверждённая разница между версиями и техническое объяснение этой разницы.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">Зафиксируйте исходное состояние</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Лучше всего, если до обновления собирались показатели критичных операций. Например, время проведения документа, длительность формирования отчёта, число ошибок интеграции и скорость обработки очереди.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Если таких данных нет, исходное состояние придётся восстанавливать по журналам, истории мониторинга и обращениям сотрудников. Это менее надёжно, но всё равно полезнее субъективного сравнения «раньше было быстрее».</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; line-height: 1.6;">Для операций с большим количеством запросов важно учитывать не только среднее время ответа. Используют также перцентили:</p><div style="margin-bottom: 25px;"><div style="margin-bottom: 12px; padding-left: 20px; border-left: 2px solid #14b8a6;"><strong style="color: #ffffff; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; text-transform: uppercase; display: block; margin-bottom: 4px;">p50 — медианное время ответа;</strong></div><div style="margin-bottom: 12px; padding-left: 20px; border-left: 2px solid #14b8a6;"><strong style="color: #ffffff; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; text-transform: uppercase; display: block; margin-bottom: 4px;">p95 — значение, быстрее которого завершаются 95% запросов;</strong></div><div style="margin-bottom: 0; padding-left: 20px; border-left: 2px solid #14b8a6;"><strong style="color: #ffffff; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; text-transform: uppercase; display: block; margin-bottom: 4px;">p99 — показатель, помогающий обнаружить особенно медленные операции.</strong></div></div><p style="font-size: 15px; color: #94a3b8; margin: 0 0 25px 0; line-height: 1.6;">Например, если p50 почти не изменился, а p99 вырос с двух до десяти секунд, проблема может затрагивать лишь определённые запросы или возникать при отдельных условиях нагрузки. Среднее значение способно скрыть такое ухудшение.</p><p style="font-size: 15px; color: #94a3b8; margin: 0 0 35px 0; line-height: 1.6;">Перцентили сами по себе не устанавливают причину. Они показывают масштаб изменения и помогают определить, какие сценарии требуют исследования.</p></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">Восстановите последовательность изменений</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Сопоставьте время установки новой версии с изменениями конфигурации, миграциями базы данных, обновлением библиотек и системными событиями. Отдельно проверьте, не менялись ли расписание фоновых заданий и характер входящей нагрузки.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Если одновременно обновили приложение, СУБД и операционную систему, по одному временному совпадению определить виновника невозможно. Понадобится сравнение компонентов или воспроизведение проблемы в контролируемой среде.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">Проведите сравнение на одинаковых данных</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Допустим, до обновления отчёт выполнялся 18 секунд, а после — 54 секунды. Сравнение будет убедительным только в том случае, если параметры отчёта, набор данных и существенные условия выполнения сопоставимы.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Следует учитывать не только объём таблиц, но и состояние кешей, статистику базы, параллельную нагрузку, конфигурацию и версии зависимостей. Иначе различия в окружении можно ошибочно принять за эффект обновления.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Для получения устойчивых результатов операцию повторяют несколько раз. При этом нельзя механически сбрасывать кеши или запускать тяжёлые тесты на рабочей системе: такие действия способны создать искусственную нагрузку и исказить результаты.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Если старая версия доступна только в резервной копии, сравнение можно провести на восстановленном тестовом окружении. Важно документировать отличия между ним и рабочей системой.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6; font-weight: bold;">Регрессия подтверждена, когда ухудшение воспроизводится в сопоставимых условиях. Причина установлена только тогда, когда найдено конкретное изменение, объясняющее это ухудшение.</p><div style="margin: 0 0 45px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 620px; display: block; margin: 0 auto;" viewbox="0 0 620 200" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="220" y="145" width="180" height="40" rx="3" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="300" y="169" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">РЕГРЕССИЯ ДОКАЗАНА</text><path d="M 110 90 L 110 120 L 290 120 L 290 145" fill="none" stroke="#14b8a6" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow-teal)"></path><path d="M 300 90 L 300 145" fill="none" stroke="#14b8a6" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow-teal)"></path><path d="M 490 90 L 490 120 L 310 120 L 310 145" fill="none" stroke="#14b8a6" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow-teal)"></path><rect x="10" y="25" width="180" height="65" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="100" y="45" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">01. Измеримый симптом</text><text x="100" y="62" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">p50 / p95 / p99</text><text x="100" y="76" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">Фиксация сдвига метрик</text><rect x="210" y="25" width="180" height="65" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="300" y="45" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">02. Чистое сравнение</text><text x="300" y="62" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">Одинаковые данные</text><text x="300" y="76" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">Исключение внешних шумов</text><rect x="410" y="25" width="180" height="65" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="500" y="45" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">03. Суть отличий</text><text x="500" y="62" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">Техническая причина</text><text x="500" y="76" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">Изолированный дефект кода/БД</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #14b8a6; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Как найти причину: от трассировки до плана выполнения SQL</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">После подтверждения регрессии нужно понять, где именно расходуется дополнительное время. Общие графики загрузки процессора, памяти и дисков могут подсказать направление, но редко позволяют самостоятельно установить первопричину.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6; font-weight: bold;">Для этого исследуют путь выполнения конкретной операции.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">Сравните этапы одной операции</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Предположим, открытие карточки клиента раньше занимало 400 мс, а после обновления стало занимать 1,2 секунды. Трассировка показывает, что операция включает проверку прав, чтение основной записи, получение связанных документов и формирование ответа.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; margin-bottom: 15px; font-weight: bold; text-transform: uppercase;">// Условные результаты сравнения: //</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 25px; width: 100%; box-sizing: border-box;"><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 4px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 12px; text-transform: uppercase; letter-spacing: -0.3px;">Проверка прав</div><div style="display: flex; justify-content: space-between; font-size: 14px; line-height: 1.5;"><span style="color: #64748b;">До обновления:</span> <span style="color: #94a3b8; font-family: 'SF Mono', monospace;">25 мс</span></div><div style="display: flex; justify-content: space-between; font-size: 14px; line-height: 1.5; margin-top: 4px;"><span style="color: #64748b;">После обновления:</span> <span style="color: #ffffff; font-family: 'SF Mono', monospace;">30 мс</span></div></div><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 4px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 12px; text-transform: uppercase; letter-spacing: -0.3px;">Чтение основной записи</div><div style="display: flex; justify-content: space-between; font-size: 14px; line-height: 1.5;"><span style="color: #64748b;">До обновления:</span> <span style="color: #94a3b8; font-family: 'SF Mono', monospace;">45 мс</span></div><div style="display: flex; justify-content: space-between; font-size: 14px; line-height: 1.5; margin-top: 4px;"><span style="color: #64748b;">После обновления:</span> <span style="color: #ffffff; font-family: 'SF Mono', monospace;">50 мс</span></div></div><div style="background: rgba(20, 184, 166, 0.02); border: 1px solid rgba(20, 184, 166, 0.25); padding: 20px; border-radius: 4px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #14b8a6; font-weight: bold; margin-bottom: 12px; text-transform: uppercase; letter-spacing: -0.3px;">Получение связанных данных</div><div style="display: flex; justify-content: space-between; font-size: 14px; line-height: 1.5;"><span style="color: #64748b;">До обновления:</span> <span style="color: #14b8a6; font-family: 'SF Mono', monospace;">180 мс</span></div><div style="display: flex; justify-content: space-between; font-size: 14px; line-height: 1.5; margin-top: 4px;"><span style="color: #64748b;">После обновления:</span> <span style="color: #ff6b6b; font-family: 'SF Mono', monospace; font-weight: bold;">820 мс</span></div></div><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.08); padding: 20px; border-radius: 4px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 12px; text-transform: uppercase; letter-spacing: -0.3px;">Формирование ответа</div><div style="display: flex; justify-content: space-between; font-size: 14px; line-height: 1.5;"><span style="color: #64748b;">До обновления:</span> <span style="color: #94a3b8; font-family: 'SF Mono', monospace;">90 мс</span></div><div style="display: flex; justify-content: space-between; font-size: 14px; line-height: 1.5; margin-top: 4px;"><span style="color: #64748b;">После обновления:</span> <span style="color: #ffffff; font-family: 'SF Mono', monospace;">100 мс</span></div></div><div style="grid-column: 1 / -1; background: #0f172a; border: 1px dashed rgba(255,255,255,0.1); padding: 16px 20px; border-radius: 4px; display: flex; justify-content: space-between; font-size: 15px; font-weight: bold;"><span style="color: #ffffff; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase;">Сумма этапов:</span><div><span style="color: #94a3b8; font-family: 'SF Mono', monospace; margin-right: 20px;">До: 340 мс</span> <span style="color: #ff6b6b; font-family: 'SF Mono', monospace;">После: 1 000 мс</span></div></div></div><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Значения приведены для иллюстрации; в реальной трассировке вложенные интервалы нельзя без проверки складывать как независимые этапы.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Основное ухудшение приходится на получение связанных данных. Поэтому исследовать всю CRM или менять общие настройки пока не нужно. Следует выяснить, почему именно этот участок стал медленнее.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">В распределённой системе трассировка позволяет увидеть последовательность вызовов и обращения к внешним компонентам. Например, приложение могло начать выполнять несколько последовательных запросов к API вместо одного пакетного вызова.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Однако трассировка показывает, где потрачено время, а не всегда объясняет, почему изменилось поведение. Для ответа могут потребоваться профилирование кода, сравнение конфигураций и анализ изменений между версиями.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">Разберите SQL-запрос, а не только загрузку базы</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 15px 0; line-height: 1.6;">Для PostgreSQL можно начать с изучения плана выполнения:</p><div style="background: #0f172a; border-radius: 6px; padding: 20px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.05); font-family: 'SF Mono', Monaco, monospace; font-size: 14px; line-height: 1.5; color: #14b8a6;">EXPLAIN (ANALYZE, BUFFERS)<br>SELECT ...</div><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Многоточие здесь обозначает исследуемый запрос. EXPLAIN ANALYZE действительно выполняет его, поэтому запускать команду следует с учётом нагрузки и возможных последствий. Для запросов, изменяющих данные, требуется дополнительная осторожность.</p></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Сравнивать планы нужно по конкретным признакам:</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— фактическое и оценочное количество строк;</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— способ доступа к таблицам и индексам;</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— число циклов выполнения отдельных узлов;</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— объём чтения и обращения к буферам;</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— длительность отдельных операций.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Предположим, после обновления запрос стал обрабатывать 4 миллиона строк вместо ожидаемых нескольких тысяч. Это может указывать на изменение условий запроса, неудачную оценку селективности или неподходящий план.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Но нельзя делать вывод только по типу операции. Последовательное чтение большой таблицы иногда быстрее индексного доступа. Важны фактические затраты, объём возвращаемых данных и то, насколько план соответствует характеру запроса.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Отдельного внимания заслуживают расхождения между оценочным и фактическим количеством строк. Если планировщик ожидал десятки записей, а получил десятки тысяч, его выбор мог оказаться неудачным. Причиной могут быть устаревшая статистика, неравномерное распределение значений или ограничения оценок для сложных условий.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Создание нового индекса без анализа не является универсальным решением. Индекс способен ускорить чтение, но увеличить стоимость вставки, изменения и обслуживания данных. Сначала нужно понять, какая операция обходится дорого и почему.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">Отделите вычисления от ожидания</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Одинаковое время ответа может складываться из совершенно разных затрат.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">В одном случае приложение действительно выполняет тяжёлый запрос. В другом — ждёт свободное соединение. В третьем — ожидает внешний API, который отвечает медленнее обычного.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; line-height: 1.6;">Для этих случаев нужны разные измерения:</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— время выполнения SQL и объём обработанных данных;</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— время получения соединения и его удержания;</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— длительность внешних вызовов, число повторных попыток и ожидание ответа;</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— время ожидания блокировок и завершения других операций.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Допустим, увеличение пула соединений сократило время ожидания. Это ещё не означает, что проблема решена. Если соединения удерживаются долгими запросами, увеличение пула может просто перенести очередь в базу данных.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Нужно установить, какая работа создаёт задержку, и оценить последствия изменения для всей системы.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">Проверяйте конкурирующие гипотезы</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Хорошее расследование не строится вокруг единственной догадки. Если отчёт замедлился, стоит отдельно проверить изменение числа запросов, плана выполнения и времени ожидания соединений.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Каждая проверка должна давать результат, позволяющий отличить одно объяснение от другого. Если число запросов осталось прежним, гипотезу об избыточных обращениях следует отложить. Если план выполнения не изменился, нужно исследовать другие составляющие времени.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Такой подход экономит время и снижает риск случайных изменений, после которых становится невозможно понять, что именно помогло или ухудшило ситуацию.</p><div style="margin: 0 0 45px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 600px; display: block; margin: 0 auto;" viewbox="0 0 600 200" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="200" y="10" width="200" height="40" rx="3" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="300" y="34" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">ВРЕМЯ ОТВЕТА ОПЕРАЦИИ</text><path d="M 300 50 L 300 80 M 300 80 L 140 80 L 140 110" fill="none" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-teal)"></path><path d="M 300 80 L 460 80 L 460 110" fill="none" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-teal)"></path><rect x="30" y="110" width="220" height="70" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="140" y="132" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Полезная работа (Вычисления)</text><text x="140" y="150" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">Тяжелый SQL / Алгоритмы</text><text x="140" y="165" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">Процессор занят обработкой данных</text><rect x="350" y="110" width="220" height="70" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="460" y="132" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Внутренний простой (Ожидание)</text><text x="460" y="150" fill="#ff6b6b" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">Пулы соединений / Блокировки / API</text><text x="460" y="165" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">Процессор пустует, потоки заблокированы</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #14b8a6; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Почему тестирование не обнаружило проблему до выпуска</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Если новая версия прошла тесты, а в рабочей среде стала работать хуже, это не обязательно означает, что проверка была формальной. Возможно, тестировали правильные функции, но в условиях, которые не отражали реальную эксплуатацию.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">На тестовой базе не проявилась проблема с объёмом данных</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Запрос может работать быстро на 10 тысячах строк и неприемлемо медленно на 10 миллионах. Но важен не только размер таблицы. Имеют значение распределение значений, доля подходящих записей, количество связанных объектов и характер фильтрации.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Поэтому тестовый набор должен воспроизводить существенные свойства рабочей базы. Если используются обезличенные данные, важно сохранить характеристики, влияющие на выполнение запросов и бизнес-логику.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">Не проверяли одновременную работу процессов</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Импорт, отчёты и синхронизация могут проходить тесты по отдельности, но создавать проблемы при совместном запуске. Они начинают конкурировать за соединения, блокировки и вычислительные ресурсы.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Кроме того, короткий тест не всегда обнаруживает постепенное накопление очередей, рост потребления памяти или увеличение времени фоновой обработки.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Проверять нужно не только отдельные функции, но и характерные сочетания операций, включая продолжительную работу и ожидаемые пики нагрузки.</p></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">Не было измеримых критериев приёмки</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Фраза «основные функции работают» не позволяет оценить регрессию.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">До обновления следует определить, какие показатели важны для бизнеса: время проведения документа, допустимая задержка интеграции, скорость формирования отчёта, частота ошибок и пропускная способность очереди.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Для каждой критичной операции задают условия проверки и допустимые значения показателей. Если после обновления они нарушены, выпуск не должен считаться успешным только потому, что приложение запускается и отвечает на запросы.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">Не проверяли переходное состояние</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">В системах с поэтапным развёртыванием старые и новые экземпляры приложения иногда работают одновременно. Если они по-разному интерпретируют данные или сообщения, проблема может возникнуть именно в этот период.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Поэтому необходимо проверять совместимость версий при переходе, в том числе взаимодействие с общей базой данных и очередями. Новая версия, успешно работающая в изоляции, не обязательно безопасна в смешанном окружении.</p><div style="margin: 0 0 45px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 600px; display: block; margin: 0 auto;" viewbox="0 0 600 240" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="210" y="95" width="180" height="45" rx="3" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="300" y="121" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">ТЕСТОВЫЙ КОНТУР</text><path d="M 210 117 L 155 117" fill="none" stroke="#14b8a6" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow-teal)"></path><rect x="15" y="95" width="140" height="45" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="85" y="113" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Масштабирование данных</text><text x="85" y="126" fill="#ff6b6b" font-family="sans-serif" font-size="9" text-anchor="middle">Малый масштаб баз</text><path d="M 300 95 L 300 55" fill="none" stroke="#14b8a6" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow-teal)"></path><rect x="200" y="10" width="200" height="45" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="300" y="28" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Конкуренция процессов</text><text x="300" y="41" fill="#ff6b6b" font-family="sans-serif" font-size="9" text-anchor="middle">Изолированный запуск функций</text><path d="M 390 117 L 445 117" fill="none" stroke="#14b8a6" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow-teal)"></path><rect x="445" y="95" width="140" height="45" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="515" y="113" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Переходный период</text><text x="515" y="126" fill="#ff6b6b" font-family="sans-serif" font-size="9" text-anchor="middle">Смешанное окружение версий</text><path d="M 300 140 L 300 185" fill="none" stroke="#14b8a6" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow-teal)"></path><rect x="200" y="185" width="200" height="45" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="300" y="203" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Критерии приемки</text><text x="300" y="216" fill="#ff6b6b" font-family="sans-serif" font-size="9" text-anchor="middle">Отсутствие замеров p95/p99</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #14b8a6; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Безопасный откат: почему возврата старой версии может быть недостаточно</h3><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold; line-height: 1.6;">В корпоративной системе обновление затрагивает не только исполняемые файлы. Могли измениться схема базы данных, формат сообщений, состояние очередей и данные во внешних сервисах.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6; font-weight: bold;">Если эти изменения несовместимы со старой версией, возврат приложения не восстановит прежнее состояние.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">Выберите правильный способ восстановления</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">В зависимости от причины могут потребоваться разные действия:</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; margin-bottom: 35px; width: 100%; box-sizing: border-box;"><div style="background: rgba(20, 184, 166, 0.02); border: 1px solid rgba(20, 184, 166, 0.15); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #14b8a6; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">Откат приложения</div><div style="font-size: 14px; color: #94a3b8; line-height: 1.5; margin: 0;">Подходит, если прежняя версия совместима с текущей схемой данных и зависимостями.</div></div><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.08); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">Возврат конфигурации</div><div style="font-size: 14px; color: #94a3b8; line-height: 1.5; margin: 0;">Уместен, если ухудшение вызвано изменившимися параметрами и восстановление прежних значений безопасно.</div></div><div style="background: rgba(20, 184, 166, 0.02); border: 1px solid rgba(20, 184, 166, 0.15); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #14b8a6; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">Исправленный выпуск</div><div style="font-size: 14px; color: #94a3b8; line-height: 1.5; margin: 0;">Может оказаться предпочтительнее отката, если дефект локализован, а возврат создаёт дополнительные риски.</div></div><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.08); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">Восстановление базы данных</div><div style="font-size: 14px; color: #94a3b8; line-height: 1.5; margin: 0;">Необходимо при повреждении или несовместимости данных, но может привести к потере операций, выполненных после резервного копирования.</div></div></div><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Выбор должен учитывать причину инцидента, допустимое время простоя и требования к сохранности данных.</p></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">Продумайте миграции заранее</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Предположим, новая версия добавляет поле в таблицу и начинает записывать в него данные. Старая версия не знает об этом поле и не умеет обрабатывать получившееся состояние.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Если сразу вернуть старое приложение, часть операций может завершаться ошибками.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">В подобных случаях миграции нередко выполняют поэтапно: сначала добавляют совместимую структуру, затем переводят приложение на новый формат и только после проверки удаляют старые элементы.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Это позволяет сохранить возможность возврата на переходном этапе. Но не каждую миграцию можно безопасно обратить, особенно если данные были преобразованы или удалены. Поэтому план восстановления должен разрабатываться одновременно с планом обновления.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">Проверяйте восстановление на практике</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Резервная копия полезна только тогда, когда из неё можно восстановить согласованное состояние системы за приемлемое время.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Необходимо учитывать не только базу данных, но и конфигурацию, интеграции, очереди и уже выполненные внешние операции. Например, повторная обработка сообщения после отката не должна создавать дубликаты заказов или документов.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">До критичного обновления следует проверить последовательность восстановления, оценить возможную потерю данных и убедиться, что система после возврата действительно выполняет необходимые бизнес-операции.</p><div style="margin: 0 0 45px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 620px; display: block; margin: 0 auto;" viewbox="0 0 620 160" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><line x1="20" y1="65" x2="600" y2="65" stroke="rgba(20, 184, 166, 0.2)" stroke-width="1.5" stroke-dasharray="6 4"></line><g><circle cx="90" cy="65" r="16" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></circle><text x="90" y="69" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle" font-weight="bold">01</text><text x="90" y="105" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Структура</text><text x="90" y="121" fill="#94a3b8" font-family="sans-serif" font-size="9" text-anchor="middle">Добавление совместимой</text><text x="90" y="133" fill="#94a3b8" font-family="sans-serif" font-size="9" text-anchor="middle">структуры БД</text></g><path d="M 130 65 L 210 65" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><g><circle cx="250" cy="65" r="16" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></circle><text x="250" y="69" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">02</text><text x="250" y="105" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Перевод софта</text><text x="250" y="121" fill="#94a3b8" font-family="sans-serif" font-size="9" text-anchor="middle">Перевод приложения</text><text x="250" y="133" fill="#94a3b8" font-family="sans-serif" font-size="9" text-anchor="middle">на новый формат</text></g><path d="M 290 65 L 370 65" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><g><circle cx="410" cy="65" r="16" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></circle><text x="410" y="69" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">03</text><text x="410" y="105" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Очистка</text><text x="410" y="121" fill="#94a3b8" font-family="sans-serif" font-size="9" text-anchor="middle">Удаление старых</text><text x="410" y="133" fill="#94a3b8" font-family="sans-serif" font-size="9" text-anchor="middle">элементов после тестов</text></g><path d="M 370 45 Q 250 15 130 45" fill="none" stroke="#14b8a6" stroke-width="1" stroke-dasharray="3 3"></path><text x="250" y="25" fill="#14b8a6" font-family="sans-serif" font-size="10" text-anchor="middle">Возврат безопасен на переходном этапе</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #14b8a6; font-size: clamp(22px, 3.2vw, 28px); font-weight: 800; line-height: 1.2; letter-spacing: -0.6px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 35px 0; text-transform: uppercase;">Сквозной пример: отчёт ERP стал выполняться втрое дольше</h3><div style="display: flex; flex-wrap: wrap; gap: 20px; background: rgba(20, 184, 166, 0.02); border: 1px dashed rgba(20, 184, 166, 0.25); border-radius: 6px; padding: 30px; margin-bottom: 35px; align-items: center;"><div style="flex: 1; min-width: 180px; text-align: center;"><div style="font-size: clamp(48px, 6vw, 64px); font-weight: 900; color: #ff6b6b; font-family: 'SF Mono', Monaco, monospace; line-height: 1;">3X</div><div style="font-size: 11px; color: #ff6b6b; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px;">Деградация ERP</div></div><div style="flex: 3; min-width: 280px;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold; line-height: 1.6;">Рассмотрим условный случай. После обновления ERP отчёт по движению товаров стал формироваться за 60 секунд вместо 20. Остальные операции заметно не изменились.</p><p style="font-size: 14px; color: #64748b; font-family: 'SF Mono', Monaco, monospace; margin: 10px 0 0 0; text-transform: uppercase; letter-spacing: 0.5px;">// Все показатели и результаты ниже условные. Это технический пример, а не описание реального проекта LOG-AI. //</p></div></div><div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 35px; width: 100; box-sizing: border-box;"><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.05); border-left: 3px solid #14b8a6; padding: 20px; border-radius: 0 4px 4px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #14b8a6; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;">Шаг 1. Подтверждаем регрессию</div><p style="font-size: 15px; color: #ffffff; line-height: 1.6; margin: 0 0 12px 0;">Команда повторяет отчёт с одинаковыми параметрами на сопоставимом наборе данных. Ухудшение воспроизводится.</p><p style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0;">По трассировке видно, что основная задержка приходится на получение связанных записей из PostgreSQL. Это позволяет сузить поиск, но пока не объясняет причину.</p></div><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.05); border-left: 3px solid rgba(255, 255, 255, 0.2); padding: 20px; border-radius: 0 4px 4px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ffffff; font-weight: bold; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 0.5px;">Шаг 2. Формируем три гипотезы</div><p style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0 0 8px 0; padding-left: 15px; text-indent: -15px;">— Первая: приложение стало выполнять больше SQL-запросов.</p><p style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0 0 8px 0; padding-left: 15px; text-indent: -15px;">— Вторая: запросы начали использовать менее эффективные планы выполнения.</p><p style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0 0 12px 0; padding-left: 15px; text-indent: -15px;">— Третья: время уходит на ожидание свободных соединений с базой данных.</p><p style="font-size: 15px; color: #ffffff; line-height: 1.6; margin: 0;">Каждую гипотезу проверяют отдельно. Команда сравнивает количество запросов, изучает планы выполнения и проверяет метрики пула соединений.</p></div><div style="background: rgba(20, 184, 166, 0.02); border: 1px solid rgba(20, 184, 166, 0.15); border-left: 3px solid #14b8a6; padding: 20px; border-radius: 0 4px 4px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #14b8a6; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;">Шаг 3. Проверяем число запросов</div><p style="font-size: 15px; color: #ffffff; line-height: 1.6; margin: 0 0 12px 0;">Предположим, старая версия выполняла 12 запросов для получения основных данных, а новая — около 8 тысяч. Трассировка показывает, что дополнительные обращения возникают при получении связанных сведений для отдельных позиций отчёта.</p><p style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0 0 12px 0;">Теперь нужно установить, объясняет ли эта дополнительная работа основную задержку. Для этого сравнивают суммарное время запросов, количество обращений и время обработки на стороне приложения.</p><p style="font-size: 15px; color: #ffffff; line-height: 1.6; font-weight: 500; margin: 0;">Если основная часть дополнительного времени связана именно с этими запросами, гипотеза получает подтверждение.</p></div></div></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 35px; width: 100%; box-sizing: border-box;"><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.05); border-left: 3px solid rgba(255, 255, 255, 0.2); padding: 20px; border-radius: 0 4px 4px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ffffff; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;">Шаг 4. Исключаем альтернативные объяснения</div><p style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0 0 12px 0;">Команда проверяет планы выполнения основных запросов. Допустим, они не изменились существенно, а длительность отдельного обращения к базе осталась примерно прежней.</p><p style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0 0 12px 0;">Затем исследуют ожидание соединений. Оно увеличилось, но рост объясняется тем, что новая версия выполняет гораздо больше запросов и дольше занимает соединения.</p><p style="font-size: 15px; color: #ffffff; line-height: 1.6; margin: 0; font-weight: bold;">Таким образом, увеличение ожидания — не обязательно самостоятельная первопричина. Оно может быть следствием избыточной работы приложения.</p></div><div style="background: rgba(20, 184, 166, 0.02); border: 1px solid rgba(20, 184, 166, 0.15); border-left: 3px solid #14b8a6; padding: 20px; border-radius: 0 4px 4px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #14b8a6; font-weight: bold; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 0.5px;">Шаг 5. Подтверждаем исправление</div><p style="font-size: 15px; color: #ffffff; line-height: 1.6; margin: 0 0 12px 0;">На тестовом окружении проверяют исправленную реализацию, которая снова получает связанные данные пакетно.</p><p style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0 0 12px 0;">Предположим, количество запросов возвращается к прежнему порядку величины, а отчёт формируется за 22 секунды. Дополнительно проверяют корректность результата, другие отчёты и работу под параллельной нагрузкой.</p><p style="font-size: 15px; color: #ffffff; line-height: 1.6; margin: 0; font-weight: 500;">Только после этих проверок можно считать, что исправление устранило обнаруженную регрессию в проверенных условиях.</p></div></div><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.2px;">Что изменилось бы, если бы первая гипотеза не подтвердилась</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Если количество запросов осталось прежним, дальнейший поиск следовало бы направить на планы выполнения, ожидание соединений и время отдельных этапов.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Если задержка обнаружилась бы при обращении к внешнему сервису, пришлось бы исследовать последовательность вызовов, тайм-ауты и повторные попытки.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6; font-weight: bold;">Смысл расследования не в том, чтобы с первой попытки угадать виновника. Нужно получить данные, которые позволяют последовательно исключать объяснения и в итоге установить механизм ухудшения.</p><div style="margin: 0 0 45px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 620px; display: block; margin: 0 auto;" viewbox="0 0 620 180" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="20" y="67" width="140" height="50" rx="3" fill="#1e1e2e" stroke="#ff6b6b" stroke-width="1.5"></rect><text x="90" y="91" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">ОТЧЕТ ERP</text><text x="90" y="107" fill="#ff6b6b" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">60 сек (3X)</text><path d="M 160 92 L 225 92" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><g><rect x="225" y="15" width="160" height="40" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.1)" stroke-width="1"></rect><text x="305" y="34" fill="#94a3b8" font-family="sans-serif" font-size="10" text-anchor="middle">Гипотеза 2: Планы SQL</text><text x="305" y="47" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">[ ИСКЛЮЧЕНО ]</text></g><g><rect x="225" y="67" width="160" height="50" rx="2" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="305" y="88" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Гипотеза 1: Число SQL</text><text x="305" y="104" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">N+1 (12 -&gt; 8000)</text></g><g><rect x="225" y="128" width="160" height="40" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.1)" stroke-width="1"></rect><text x="305" y="147" fill="#94a3b8" font-family="sans-serif" font-size="10" text-anchor="middle">Гипотеза 3: Пул сокетов</text><text x="305" y="160" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">[ СЛЕДСТВИЕ ]</text></g><path d="M 385 92 L 455 92" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><rect x="455" y="67" width="140" height="50" rx="3" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="525" y="91" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">ПАКЕТНЫЙ МЕТОД</text><text x="525" y="107" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">22 сек (Успех)</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #14b8a6; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Как организовать обновления, чтобы не расследовать одну и ту же проблему повторно</h3><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold; line-height: 1.6;">Надёжность обновлений зависит не от осторожности конкретного инженера, а от процесса, который позволяет обнаруживать ошибки до того, как они затронут всю компанию.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Перед выпуском необходимо зафиксировать версии компонентов, изучить изменения релиза и определить, какие бизнес-операции требуют обязательной проверки. Для критичных сценариев должны быть известны исходные показатели и допустимые пределы отклонений.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; margin-bottom: 25px; width: 100%; box-sizing: border-box;"><div style="background: rgba(20, 184, 166, 0.02); border: 1px solid rgba(20, 184, 166, 0.15); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #14b8a6; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">Контроль тестового окружения</div><div style="font-size: 14px; color: #94a3b8; line-height: 1.5; margin: 0;">На тестовом окружении проверяют не только запуск приложения, но и работу с реалистичными данными, взаимодействие с зависимостями, миграции и характерную нагрузку. Если архитектура допускает постепенное развёртывание, новую версию можно сначала предоставить ограниченной группе пользователей или части экземпляров приложения.</div></div><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.08); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">Валидация фактического поведения</div><div style="font-size: 14px; color: #94a3b8; line-height: 1.5; margin: 0;">После выпуска проверяют фактическое поведение системы. Сравнивают время выполнения операций, количество ошибок, скорость обработки очередей и корректность интеграций. Если показатели выходят за согласованные пределы, развёртывание следует остановить до выяснения причин.</div></div></div></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Отдельная задача — сохранять результаты проверок. Если регрессия повторяется, необходимо менять сам процесс выпуска: добавлять сценарий, который раньше не проверялся, расширять тестовые данные или проверять совместимость переходных состояний.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Такой подход постепенно уменьшает число повторяющихся инцидентов. Команда перестаёт каждый раз начинать с общих предположений и использует накопленные знания о конкретной системе.</p><div style="margin: 0 0 35px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 600px; display: block; margin: 0 auto;" viewbox="0 0 600 200" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="220" y="10" width="160" height="40" rx="3" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="300" y="34" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">НАКОПЛЕНИЕ ЗНАНИЙ</text><path d="M 300 50 L 300 80 M 300 80 L 140 80 L 140 110" fill="none" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-teal)"></path><path d="M 300 80 L 460 80 L 460 110" fill="none" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#arrow-teal)"></path><rect x="30" y="110" width="220" height="65" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="140" y="128" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Адаптация релизов</text><text x="140" y="144" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">Новые тест-сценарии</text><text x="140" y="158" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">Исключение повторения инцидентов</text><rect x="350" y="110" width="220" height="65" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="460" y="128" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Проверка совместимости</text><text x="460" y="144" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">Переходные состояния версий</text><text x="460" y="158" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">Тестирование под реальной нагрузкой</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #14b8a6; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Когда остановить выпуск, а когда продолжать диагностику</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Не каждое ухудшение требует немедленного отката. Но и продолжать развёртывание только потому, что приложение отвечает на запросы, нельзя.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 35px;"><div style="background: rgba(255, 107, 107, 0.01); border: 1px solid rgba(255, 107, 107, 0.15); border-left: 3px solid #ff6b6b; padding: 25px; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 10px; letter-spacing: 1px;">// КРИТИЧЕСКИЙ ОТКАТ //</div><p style="font-size: 15px; color: #ffffff; margin: 0; line-height: 1.6;">Если нарушена целостность данных, перестали выполняться критичные финансовые операции или возник риск потери документов, приоритетом становится ограничение последствий и восстановление корректной работы.</p></div><div style="background: rgba(20, 184, 166, 0.01); border: 1px solid rgba(20, 184, 166, 0.15); border-left: 3px solid #14b8a6; padding: 25px; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px; letter-spacing: 1px;">// ИЗОЛЯЦИЯ И ДИАГНОСТИКА //</div><p style="font-size: 15px; color: #ffffff; margin: 0; line-height: 1.6;">Если проблема локализована в отдельном отчёте, данные остаются корректными, а остальные процессы работают штатно, может быть разумнее временно ограничить проблемную операцию и проверить исправление на тестовом окружении. Такое решение допустимо только после оценки рисков.</p></div></div></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Продолжать выпуск можно, когда критичные сценарии проходят проверку, показатели находятся в согласованных пределах и нет признаков систематического ухудшения.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Эти критерии необходимо определить заранее. Иначе во время инцидента команда будет принимать решения под давлением, не имея общего понимания допустимого риска.</p><div style="margin: 0 0 35px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 620px; display: block; margin: 0 auto;" viewbox="0 0 620 200" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><polygon points="310,15 410,50 310,85 210,50" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></polygon><text x="310" y="49" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle" font-weight="bold">ФИКСАЦИЯ СБОЯ</text><text x="310" y="60" fill="#94a3b8" font-family="sans-serif" font-size="9" text-anchor="middle">Оценка критериев</text><path d="M 210 50 L 110 50 L 110 110" fill="none" stroke="#14b8a6" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arrow-teal)"></path><path d="M 310 85 L 310 110" fill="none" stroke="#14b8a6" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arrow-teal)"></path><path d="M 410 50 L 510 50 L 510 110" fill="none" stroke="#14b8a6" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arrow-teal)"></path><rect x="10" y="110" width="190" height="65" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.1)" stroke-width="1"></rect><text x="105" y="128" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Критический риск</text><text x="105" y="144" fill="#ff6b6b" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">Финансы / Целостность</text><text x="105" y="158" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">ОТКАТ РЕЛИЗА</text><rect x="215" y="110" width="190" height="65" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.1)" stroke-width="1"></rect><text x="310" y="128" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Изолированный сбой</text><text x="310" y="144" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">Отдельный отчет / Ограничение</text><text x="310" y="158" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">ВРЕМЕННОЕ ОГРАНИЧЕНИЕ ФУНКЦИИ</text><rect x="420" y="110" width="190" height="65" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.1)" stroke-width="1"></rect><text x="515" y="128" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Нормальный допуск</text><text x="515" y="144" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">Показатели в пределах SLA</text><text x="515" y="158" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">ПРОДОЛЖЕНИЕ ВЫПУСКА</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #14b8a6; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Заключение</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">После обновления система может работать хуже из-за изменения алгоритма, плана выполнения SQL, конфигурации, зависимостей или характера фоновой обработки. Иногда причина действительно находится в новой версии. В других случаях обновление лишь выявляет ограничение, которое раньше не проявлялось.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Установить причину можно только через последовательную проверку: зафиксировать конкретное ухудшение, сравнить версии в сопоставимых условиях, исследовать проблемную операцию и подтвердить гипотезу измерениями. Если требуется восстановление, необходимо учитывать не только приложение, но и состояние базы данных, интеграций и уже выполненных операций.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">При этом важно отличать устранение симптома от исправления причины. Увеличение пула соединений может сократить ожидание, но не устранить лишние запросы. Новый индекс может ускорить одну операцию, но увеличить стоимость записи. Возврат старой версии может восстановить приложение, но оказаться несовместимым с изменённой схемой данных.</p></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Надёжное обновление — это изменение, после которого компания может подтвердить, что критичные операции работают корректно, показатели остаются в допустимых пределах, а порядок восстановления подготовлен заранее.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Для компаний, использующих CRM, ERP, документооборот и интеграции между бизнес-сервисами, это не формальность технического сопровождения. От качества обновлений зависят выполнение заказов, обработка документов, точность учёта и непрерывность ежедневных процессов.</p><div style="margin: 0 0 35px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 600px; display: block; margin: 0 auto;" viewbox="0 0 600 160" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><line x1="40" y1="65" x2="560" y2="65" stroke="rgba(20, 184, 166, 0.2)" stroke-width="1.5" stroke-dasharray="6 4"></line><g><circle cx="90" cy="65" r="22" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></circle><text x="90" y="69" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="7" text-anchor="middle">SLA / ТЕСТ</text><text x="90" y="115" fill="#94a3b8" font-family="sans-serif" font-size="11" text-anchor="middle">Контроль метрик</text><text x="90" y="130" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">Измеренный допуск</text></g><path d="M 130 65 L 205 65" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><g><circle cx="250" cy="65" r="22" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></circle><text x="250" y="69" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle" font-weight="bold">БЭКАП</text><text x="250" y="115" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">План отката</text><text x="250" y="130" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="9" text-anchor="middle">Совместимость БД</text></g><path d="M 290 65 L 365 65" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><g><circle cx="410" cy="65" r="22" fill="#1e1e2e" stroke="#14b8a6" stroke-width="2"></circle><text x="410" y="69" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">★</text><text x="410" y="115" fill="#14b8a6" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">НЕПРЕРЫВНОСТЬ</text><text x="410" y="130" fill="#ffffff" font-family="sans-serif" font-size="10" text-anchor="middle">Процессы бизнеса</text></g></svg></div></div><p> </p><div style="max-width: 1100px; margin: 60px auto 0 auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">НАВИГАЦИЯ // SUGGESTED_READING</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ИНФРАСТРУКТУРА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Как обновлять работающую систему без остановки бизнеса</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kak-obnovlyat-rabotayushchuyu-sistemu-bez-ostanovki-biznesa/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ИНФРАСТРУКТУРА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Как понять, что серверу не хватает ресурсов</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kak-ponyat-chto-serveru-ne-hvataet-resursov/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ИНФРАСТРУКТУРА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Что делать, если система работает, но пользователи жалуются на тормоза</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/chto-delat-esli-sistema-rabotaet-no-polzovateli-zhaluyutsya-na-tormoza/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div></div></div><div style="max-width: 1100px; margin: 20px auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; border-top: 1px solid #165c52; padding: 40px 0 0 0; box-sizing: border-box; width: 100%;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 40px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ EXPERTISE JOURNAL ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Все инженерные материалы и экспертные статьи</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/ekspertiza/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">перейти к каталогу ──►</a></div></div><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ CORE GLOSSARY ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Полный алфавитный справочник ИТ-терминов</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/glossariy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">открыть справочник ──►</a></div></div></div></div></div></div></article></main><footer class="footer"><div class="wrapper"><div class="footer__copyright"><p> </p><p> </p></div><button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg width="20" height="20"><use xlink:href="https://log-ai.ru/assets/svg/svg-map.svg#toparrow"/></svg></button></div></footer><script defer="defer" src="https://log-ai.ru/assets/js/scripts.min.js?v&#x3D;d0fc1030089a37f93a2d51bf6d07565c"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script><script>(() => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') !== 'monument') return;
+
+  const IMAGE_URL = 'https://log-ai.ru/media/files/Interstellar.jpeg';
+  const AUDIO_URL = 'https://log-ai.ru/media/files/interstellar.mp3';
+
+  // Защита от повторного запуска
+  if (document.getElementById('log-ai-monument')) return;
+
+  const monument = document.createElement('div');
+  monument.id = 'log-ai-monument';
+
+  const root = document.documentElement;
+  const body = document.body;
+
+  const previousRootOverflow = root.style.overflow;
+  const previousBodyOverflow = body.style.overflow;
+  const previousBodyPosition = body.style.position;
+  const previousBodyTop = body.style.top;
+  const previousBodyWidth = body.style.width;
+  const previousScrollX = window.scrollX;
+  const previousScrollY = window.scrollY;
+
+  root.style.overflow = 'hidden';
+  body.style.overflow = 'hidden';
+  body.style.position = 'fixed';
+  body.style.top = `-${previousScrollY}px`;
+  body.style.width = '100%';
+
+  monument.innerHTML = `
+    <div class="monument-universe"></div>
+    <canvas class="monument-stars"></canvas>
+    <div class="monument-shade"></div>
+
+    <div class="monument-frame">
+      <p class="monument-overline">ARCHIVUM · LOG-AI · MMXXVI</p>
+
+      <div class="monument-rule"></div>
+
+      <h1>PER ASPERA<br><span>AD ASTRA</span></h1>
+
+      <p class="monument-translation">
+        THROUGH HARDSHIP, TO THE STARS
+      </p>
+
+      <div class="monument-message">
+        <p>TO THOSE WHO BUILD BEYOND THE LIMITS OF THEIR TIME.</p>
+        <p>TO THOSE WHO CONTINUE WHEN THE OUTCOME IS UNKNOWN.</p>
+        <p>TO THOSE WHO WILL DISCOVER THIS LONG AFTER ITS CREATION.</p>
+      </div>
+
+      <p class="monument-declaration">
+        YOU WERE NOT THE FIRST TO LOOK AT THE STARS.<br>
+        BUT YOU MAY BE AMONG THOSE WHO REACH THEM.
+      </p>
+
+      <div class="monument-rule"></div>
+          
+      <p class="monument-translation">
+        A MARK LEFT IN THE MACHINE.
+      </p>   
+
+      <p class="monument-signature">
+        LOG·AI·ARCHITECTI·MMXXVI
+      </p>
+
+      <p class="monument-exit" id="monument-hint">
+        [ CLICK ANYWHERE TO RETURN ]
+      </p>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #log-ai-monument {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      background: #03040a;
+      color: #e5dfd3;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      box-sizing: border-box;
+      cursor: pointer;
+      isolation: isolate;
+      opacity: 0;
+      animation: logai-monument-appear 1.8s ease forwards;
+    }
+
+    #log-ai-monument .monument-universe {
+      position: fixed;
+      inset: -3%;
+      z-index: -3;
+      background-image: url("https://log-ai.ru/media/files/Interstellar.jpeg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transform: scale(1.02);
+      animation: logai-cosmic-drift 35s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-shade {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(0,0,0,.24) 0%,
+          rgba(0,0,0,.52) 65%,
+          rgba(0,0,0,.78) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.42),
+          rgba(0,0,0,.18) 45%,
+          rgba(0,0,0,.62)
+        );
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-frame {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', serif;
+      padding: 30px 0;
+      text-shadow: 0 2px 18px rgba(0,0,0,.9);
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-translation,
+    #log-ai-monument .monument-signature,
+    #log-ai-monument .monument-exit {
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-signature {
+      color: #c0a16a;
+    }
+
+    #log-ai-monument .monument-rule {
+      height: 1px;
+      width: 160px;
+      max-width: 60%;
+      margin: 30px auto;
+      background: linear-gradient(
+        to right,
+        transparent,
+        #a68a55,
+        transparent
+      );
+      box-shadow: 0 0 12px rgba(190,155,90,.2);
+    }
+
+    #log-ai-monument h1 {
+      margin: 35px 0 18px;
+      font-size: clamp(30px, 7vw, 58px);
+      line-height: 1.5;
+      letter-spacing: .16em;
+      font-weight: 400;
+      color: #f4f0e8;
+    }
+
+    #log-ai-monument h1 span {
+      color: #d2b77e;
+    }
+
+    #log-ai-monument .monument-translation {
+      color: #c0b8aa;
+    }
+
+    #log-ai-monument .monument-message {
+      margin: 55px auto 38px;
+      max-width: 490px;
+      color: #e0d9cd;
+      font-size: 13px;
+      line-height: 2.2;
+      letter-spacing: .035em;
+    }
+
+    #log-ai-monument .monument-message p {
+      margin: 0 0 12px;
+    }
+
+    #log-ai-monument .monument-declaration {
+      color: #e0c48a;
+      font-size: 12px;
+      line-height: 2.3;
+      letter-spacing: .08em;
+    }
+
+    #log-ai-monument .monument-exit {
+      margin-top: 36px;
+      color: #c0b8aa;
+      font-size: 9px;
+      letter-spacing: .18em;
+    }
+
+    @keyframes logai-monument-appear {
+      to { opacity: 1; }
+    }
+
+    @keyframes logai-cosmic-drift {
+      from { transform: scale(1.02); }
+      to { transform: scale(1.13); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #log-ai-monument,
+      #log-ai-monument .monument-universe {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(monument);
+
+  // Тонкие, редкие звёзды
+  const canvas = monument.querySelector('.monument-stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let frameId = null;
+  let closed = false;
+
+  function resizeStars() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(window.innerWidth * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    stars = Array.from({ length: 65 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      length: 8 + Math.random() * 25,
+      speed: 0.25 + Math.random() * 0.75,
+      alpha: 0.15 + Math.random() * 0.5,
+      delay: Math.random() * 500
+    }));
+  }
+
+  function drawStars() {
+    if (closed) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    for (const star of stars) {
+      star.delay -= 1;
+
+      if (star.delay <= 0) {
+        star.y += star.speed;
+        star.x -= star.speed * 0.35;
+
+        ctx.beginPath();
+        ctx.moveTo(star.x, star.y);
+        ctx.lineTo(star.x - star.length * 0.35,
+                   star.y - star.length);
+
+        ctx.strokeStyle = `rgba(210,220,255,${star.alpha})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+
+        if (star.y > h + 30 || star.x < -30) {
+          star.x = Math.random() * w + 30;
+          star.y = -Math.random() * h * 0.4;
+          star.delay = 30 + Math.random() * 180;
+        }
+      }
+    }
+
+    frameId = requestAnimationFrame(drawStars);
+  }
+
+  resizeStars();
+  drawStars();
+
+  window.addEventListener('resize', resizeStars);
+
+  // Музыка
+  const audio = document.createElement('audio');
+  audio.id = 'monument-audio';
+  audio.src = AUDIO_URL;
+  audio.loop = true;
+  audio.preload = 'auto';
+  audio.volume = 0.35;
+  document.body.appendChild(audio);
+
+  let playing = false;
+  let starting = false;
+
+  const hint = document.getElementById('monument-hint');
+
+  function startMusic() {
+    if (closed || starting || playing) return;
+
+    starting = true;
+
+    audio.play().then(() => {
+      starting = false;
+
+      if (closed) {
+        audio.pause();
+        return;
+      }
+
+      playing = true;
+      hint.textContent = '[ CLICK ANYWHERE TO RETURN ]';
+    }).catch((error) => {
+      starting = false;
+
+      if (closed) return;
+
+      if (error.name === 'NotAllowedError') {
+        hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+        return;
+      }
+
+      console.warn('LOG-AI audio:', error.name, error.message);
+      hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+    });
+  }
+
+  function closeMonument() {
+    if (closed) return;
+    closed = true;
+
+    cancelAnimationFrame(frameId);
+    window.removeEventListener('resize', resizeStars);
+    window.removeEventListener('keydown', onKeyDown);
+
+    audio.pause();
+    audio.remove();
+    monument.remove();
+    style.remove();
+
+    root.style.overflow = previousRootOverflow;
+    body.style.overflow = previousBodyOverflow;
+    body.style.position = previousBodyPosition;
+    body.style.top = previousBodyTop;
+    body.style.width = previousBodyWidth;
+
+    window.scrollTo(previousScrollX, previousScrollY);
+
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete('mode');
+
+    window.history.replaceState(
+      {},
+      document.title,
+      cleanUrl.pathname + cleanUrl.search + cleanUrl.hash
+    );
+  }
+
+  function onKeyDown(event) {
+    if (event.key === 'Escape') closeMonument();
+  }
+
+  monument.addEventListener('click', () => {
+    if (closed) return;
+
+    if (playing) {
+      closeMonument();
+    } else {
+      startMusic();
+    }
+  });
+
+  window.addEventListener('keydown', onKeyDown);
+
+  // Первая попытка автоматического запуска
+  startMusic();
+})();</script><script>(function () {
+    // ВНИМАНИЕ!!!!!!!!!!!!!!!!!!!!Плавный инерционный скролл только для мыши/тачпада
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    let targetY = window.scrollY;
+    let currentY = window.scrollY;
+    let animationFrame = null;
+
+    // ===== НАСТРОЙКИ =====
+    const SPEED = 0.70;       // 0.4 = медленнее, 0.65 = средне, 1.0 = быстрее
+    const SMOOTHNESS = 0.13;  // 0.08 = мягче, 0.12 = средне, 0.18 = быстрее
+    const MAX_STEP = 500;     // максимальный шаг одного движения колеса
+    // =====================
+
+    function animateScroll() {
+        currentY += (targetY - currentY) * SMOOTHNESS;
+
+        if (Math.abs(targetY - currentY) < 0.5) {
+            currentY = targetY;
+            window.scrollTo(0, currentY);
+            animationFrame = null;
+            return;
+        }
+
+        window.scrollTo(0, currentY);
+        animationFrame = requestAnimationFrame(animateScroll);
+    }
+
+    window.addEventListener('wheel', function (event) {
+
+    // Если глобус активирован кликом —
+    // колесо полностью отдаём Globe.gl для zoom.
+    const globe = event.target.closest('#globeViz');
+
+    if (globe && globe.dataset.interacting === 'true') {
+        return;
+    }
+
+    // Внутренний скролл AI-чата не трогаем
+    if (event.target.closest('#logai-window, #logai-msgs')) {
+        return;
+    }
+
+    event.preventDefault();
+
+        let delta = event.deltaY * SPEED;
+
+        // Ограничиваем слишком резкие движения
+        delta = Math.max(-MAX_STEP, Math.min(MAX_STEP, delta));
+
+        targetY += delta;
+
+        // Не даём уйти выше/ниже страницы
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        targetY = Math.max(0, Math.min(targetY, maxY));
+
+        if (!animationFrame) {
+            animationFrame = requestAnimationFrame(animateScroll);
+        }
+    }, { passive: false });
+
+    // Синхронизация, если страницу прокрутили другим способом
+    window.addEventListener('scroll', function () {
+        if (!animationFrame) {
+            targetY = window.scrollY;
+            currentY = window.scrollY;
+        }
+    }, { passive: true });
+
+})();</script><div id="logai-footer-mobile" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box;"><div style="margin: 0 auto 20px auto; padding-top: 40px; text-align: center; margin-bottom: 40px;"><a href="mailto:info@log-ai.ru" style="font-size: 24px; font-family: 'SF Mono', Monaco, monospace; color: #e5e7eb; text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: 0.3px;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#e5e7eb'">info@log-ai.ru</a><p style="color: #aaaaaa; font-size: 15px; line-height: 1.6; max-width: 750px; margin: 15px auto 0 auto;">Пришлите описание задачи, техническое задание или ссылку на существующую систему. Мы оценим задачу и определим возможные варианты реализации.</p></div><div style="max-width: 850px; margin: 0 auto 40px auto; text-align: center; background: #000000; padding: 0; box-sizing: border-box;"><p style="color: #aaaaaa; font-size: 14px; line-height: 1.6; margin: 0;"><span style="color: #4ade80; margin-right: 6px;">🔒</span> Данные и доступ к системам заказчика обрабатываются в соответствии с согласованными требованиями к безопасности и конфиденциальности. Условия доступа, хранения и обработки данных определяются архитектурой проекта и договором.</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; box-sizing: border-box; width: 100%; margin-bottom: 30px;"><p style="color: #666666; font-size: 12px; line-height: 1.6; margin: 0; width: 100%; text-align: justify;">Сайт носит исключительно информационный характер и не является публичной офертой в соответствии со статьёй 437 Гражданского кодекса РФ. Цены, состав и условия предоставления услуг уточняются при проектировании решения и фиксируются в договоре. Условия технического сопровождения и уровень сервиса могут дополнительно определяться отдельным соглашением (SLA).</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; width: 100%; box-sizing: border-box;"><div style="color: #666666; font-size: 12px; line-height: 1.5; text-align: left;">© 2026 Log-AI<br>Автоматизация бизнеса и ИИ-решения под ключ. Работаем по всей России и СНГ.<br>ИП Скопец Антон Викторович<br>ИНН 741709<span></span>260870 · ОГРНИП 326745600<span></span>204228<br>Все права защищены.</div><div style="display: flex; gap: 20px; flex-wrap: wrap; font-family: sans-serif;"><a href="/privacy-policy/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Политика конфиденциальности</a> <a href="/terms/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Пользовательское соглашение</a></div></div></div><style>@media screen and (max-width: 600px) {
+  #logai-footer-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+}</style><style>/* Анимации и точки */
+    @keyframes logai-bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+    .logai-dots { display: flex !important; flex-direction: row !important; gap: 4px !important; align-items: center !important; height: 12px !important; }
+    .logai-dots span { display: inline-block; width: 5px; height: 5px; background: #aaa !important; border-radius: 50%; animation: logai-bounce 1.4s infinite ease-in-out; }
+    .logai-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .logai-dots span:nth-child(3) { animation-delay: 0.4s; }
+    
+    #logai-msgs::-webkit-scrollbar { width: 5px; }
+    #logai-msgs::-webkit-scrollbar-thumb { background: #666; border-radius: 10px; }
+    
+    /* Сообщения и текст */
+    #logai-msgs div { white-space: pre-wrap !important; word-wrap: break-word !important; padding: 12px 16px !important; margin-bottom: 5px !important; display: flex; flex-direction: column; justify-content: center; }
+    #logai-msgs div p { margin: 0 !important; padding: 0 !important; line-height: 1.5 !important; }
+    #logai-msgs { gap: 12px !important; padding: 20px !important; }
+
+    /* Поле ввода и кнопка отправить */
+    #logai-input { flex: 1 !important; padding: 12px 18px !important; border-radius: 20px !important; background: #4a4e56 !important; border: 1px solid rgba(255,255,255,0.1) !important; outline: none !important; color: #fff !important; font-size: 15px !important; resize: none !important; max-height: 120px !important; line-height: 1.4 !important; }
+    #logai-send-btn { background-color: #007bff !important; border: none !important; width: 45px !important; height: 45px !important; border-radius: 50% !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-size: 24px !important; padding: 0 !important; flex-shrink: 0 !important; }
+
+    /* ГЛАВНЫЕ СТИЛИ (чтобы кнопка и окно не исчезали) */
+    #logai-btn {
+        position: fixed !important; bottom: 40px !important; right: 110px !important;
+        width: 65px !important; height: 65px !important; border-radius: 50% !important;
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        cursor: pointer !important; z-index: 10000 !important; box-shadow: 0 10px 25px rgba(0,123,255,0.4);
+    }
+
+    #logai-window {
+        display: none; position: fixed !important; bottom: 115px !important; right: 110px !important;
+        width: 380px !important; height: 600px !important; background: #3b3e45 !important;
+        border-radius: 24px !important; flex-direction: column; overflow: hidden;
+        z-index: 10000 !important; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.15) !important;
+    }
+
+        /* АДАПТИВ ДЛЯ МОБИЛОК: ЧАТ НА ВЕСЬ ЭКРАН */
+    @media screen and (max-width: 480px) {
+        #logai-window { 
+            right: 0 !important; 
+            left: 0 !important; 
+            bottom: 0 !important; 
+            width: 100% !important; 
+            height: 100% !important; /* Растягиваем окно на 100% экрана смартфона */
+            border-radius: 0 !important; /* Убираем скругления углов, чтобы чат сел монолитом */
+            z-index: 999999 !important; /* Перекрываем все кнопки в ноль */
+        }
+        
+        #logai-btn { 
+            bottom: 80px !important; /* Твоя родная высота кнопки, когда чат закрыт */
+            right: 22px !important;  /* Твой родной сдвиг кнопки */
+            z-index: 999998 !important; /* Когда чат открыт, кнопка останется под ним и не будет торчать */
+        }
+    }</style><div id="logai-widget" style="position: fixed; bottom: var(--widget-bottom, 20px); right: var(--widget-right, 20px); z-index: 9999;"><div id="logai-btn" onclick="toggleLogAI()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><div id="logai-window"><div style="background: #2d3035; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; align-items:center; gap:12px;"><div style="width:35px; height:35px; background:#007bff; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(0,123,255,0.5);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg></div><span style="font-weight:600; color:#fff; font-size:16px; letter-spacing: 0.5px;">AI Ассистент</span></div><span onclick="toggleLogAI()" style="cursor:pointer; color:#fff; font-size:35px; line-height: 0.7; opacity: 0.7;">&times;</span></div><div id="logai-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; background:#3b3e45;"></div><div style="padding:15px 15px 8px 15px; background:#2d3035; display:flex; flex-direction:column; border-top: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; gap:10px; align-items:flex-end; width:100%;"><textarea id="logai-input" rows="1" placeholder="Напишите..." oninput="this.style.height='';this.style.height=this.scrollHeight+'px'"></textarea> <button id="logai-send-btn" onclick="sendLogAI()">➤</button></div><div style="text-align:center; font-size:10px; color:#ffffff; opacity:0.3; margin-top:6px; font-family:sans-serif; pointer-events:none; user-select:none;">ИИ может ошибаться</div></div></div></div><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script>const API_URL = 'https://api2.log-ai.ru';
+    const MY_CLIENT_ID = 'client_arhitektor_2'; // МЕНЯТЬ ТУТ
+    const MY_BOT_PATH = 'arhitektor_2';  // МЕНЯТЬ ТУТ 
+    
+       let logSid;
+    try {
+        logSid = localStorage.getItem('logai_sid');
+        if (!logSid) {
+            logSid = 's_' + Math.random().toString(36).substr(2, 12);
+            localStorage.setItem('logai_sid', logSid);
+        }
+    } catch (e) {
+        // Если доступ к памяти закрыт (инкогнито), создаем временный ID
+        logSid = 'temp_' + Math.random().toString(36).substr(2, 12);
+    }
+
+    // Переименовали, чтобы избежать конфликтов
+    let chatIsWaiting = false;
+    let historyLoaded = false;
+    let activeMessageId = null;
+    let pollController = null;
+    let pollTimeoutId = null;
+
+
+       function toggleLogAI() {
+        const w = document.getElementById('logai-window');
+        const isOpen = (window.getComputedStyle(w).display === 'none');
+        
+        if (isOpen) {
+            w.style.display = 'flex';
+            if (!historyLoaded) {
+                loadChatHistory();
+            } 
+            // Если чат в режиме ожидания (точки), пинаем сервер сразу при открытии
+            else if (chatIsWaiting && activeMessageId) {
+                const dotsContainer = document.querySelector('.logai-dots')?.parentElement;
+                if (dotsContainer) {
+                    startPolling(activeMessageId, dotsContainer);
+                }
+            }
+        } else {
+            w.style.display = 'none';
+            // УБРАЛИ stopPolling(), чтобы ИИ докачивал ответ, даже когда окно закрыто
+        }
+    }
+
+
+    function updateInputState() {
+        const input = document.getElementById('logai-input');
+        const btn = document.getElementById('logai-send-btn');
+        if (input) {
+            input.disabled = chatIsWaiting;
+            input.style.opacity = chatIsWaiting ? '0.5' : '1';
+        }
+        if (btn) btn.style.opacity = chatIsWaiting ? '0.5' : '1';
+    }
+
+    function stopPolling() {
+        if (activeMessageId) localStorage.removeItem('poll_start_' + activeMessageId);
+        if (pollController) pollController.abort();
+        if (pollTimeoutId) clearTimeout(pollTimeoutId);
+    
+        pollController = null;
+        pollTimeoutId = null;
+        activeMessageId = null;
+        chatIsWaiting = false;
+        updateInputState();
+    }
+
+    function addLogMsg(txt, isAi) {
+        const d = document.createElement('div');
+        d.style = `padding:12px 16px; border-radius:18px; max-width:82%; font-size:14px; line-height:1.5; margin-bottom:10px; 
+                   ${isAi ? 'align-self:flex-start; background:#4a4e56; color:#dbdee1; border-bottom-left-radius:4px;' 
+                         : 'align-self:flex-end; background:#007bff; color:white; border-bottom-right-radius:4px; box-shadow:0 4px 12px rgba(0,123,255,0.25);'}`;
+
+        if (txt === 'dots') {
+   // ИСПРАВЛЕНО: Добавлен явный текст ожидания рядом с анимацией точек для лучшего UX
+   d.innerHTML = '<div style="display:flex; align-items:center; gap:8px;">' +
+                 '<span style="font-style:italic; opacity:0.8;">ИИ подбирает ответ...</span>' +
+                 '<div class="logai-dots"><span></span><span></span><span></span></div>' +
+                 '</div>';
+ } else {
+   d.innerHTML = typeof marked !== 'undefined' ? marked.parse(txt) : txt;
+ }
+
+        const box = document.getElementById('logai-msgs');
+        box.appendChild(d);
+        box.scrollTop = box.scrollHeight;
+        return d;
+    }
+
+async function loadChatHistory() {
+    const box = document.getElementById('logai-msgs');
+    try {
+        box.innerHTML = '';
+
+        const res = await fetch(`${API_URL}/history/${logSid}?platform=site&clientId=${MY_CLIENT_ID}`);
+        const data = await res.json();
+
+        if (Array.isArray(data.items) && data.items.length > 0) {
+            data.items.forEach((m, index) => {
+                // 1. Показываем сообщение пользователя
+                if (m.message) {
+                    addLogMsg(m.message, false);
+                }
+
+                // 2. Если есть готовый ответ — показываем
+                if (m.answer) {
+                    addLogMsg(m.answer, true);
+                } 
+                // 3. ИСПРАВЛЕНО: Четкое чтение m.message_id из базы данных без путаницы с регистрами
+                else if (m.message_id && index === data.items.length - 1) {
+                    chatIsWaiting = true;
+                    activeMessageId = m.message_id; // Используем m.message_id
+                    
+                    const aiMsg = addLogMsg('dots', true);
+                    startPolling(m.message_id, aiMsg); 
+                }
+            });
+        } else {
+            addLogMsg("Здравствуйте! Я ваш ИИ-ассистент. Чем могу помочь?", true);
+        }
+
+        historyLoaded = true;
+        updateInputState();
+
+    } catch (e) {
+        console.error('History error:', e);
+        addLogMsg("Не удалось загрузить историю чата", true);
+    }
+}
+
+
+async function sendLogAI() {
+    if (chatIsWaiting) return;
+
+    const input = document.getElementById('logai-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // ЖЕЛЕЗНЫЙ ДЕБАУНС: блокируем повторный клик в первую же микросекунду
+    chatIsWaiting = true;
+    updateInputState();
+
+    addLogMsg(msg, false);
+    
+    input.value = ''; 
+    input.style.height = 'auto'; 
+
+    const aiMsg = addLogMsg('dots', true);
+
+    try {
+        const res = await fetch(`${API_URL}/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sessionId: logSid,
+                message: msg,
+                clientId: MY_CLIENT_ID,
+                platform: 'site',
+                botPath: MY_BOT_PATH
+            })
+        });
+
+        // ИСПРАВЛЕНО: Обработка HTTP-ошибок. Передаем false третьим параметром, чтобы не было звука при ошибке
+        if (!res.ok) {
+            let errorMsg = "⚠️ Сервер временно недоступен";
+            if (res.status === 429) errorMsg = "🚫 Слишком много запросов. Подождите немного.";
+            else if (res.status === 403) {
+                try {
+                    const errData = await res.json();
+                    errorMsg = errData.reason || "🚫 Доступ ограничен.";
+                } catch (_) {
+                    errorMsg = "🚫 Доступ ограничен.";
+                }
+            }
+            finish(errorMsg, aiMsg, false); // false — звук НЕ играет
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data.blocked) {
+            finish(data.reason || data.message || "🚫 Сообщение заблокировано", aiMsg, false); // false — без звука
+            return;
+        }
+
+        if (data.messageId) {
+            activeMessageId = data.messageId;
+            startPolling(data.messageId, aiMsg);
+        } else {
+            finish("⚠️ Ошибка регистрации сообщения (нет messageId)", aiMsg, false);
+        }
+    } catch (e) {
+        console.error(e);
+        finish("⚠️ Ошибка связи с сервером. Проверьте интернет.", aiMsg, false);
+    }
+} // Скобка закрывает саму функцию send
+    function startPolling(messageId, aiMsg) {
+        activeMessageId = messageId;
+        pollController = new AbortController();
+        let savedTime = localStorage.getItem('poll_start_' + messageId);
+        if (!savedTime) {
+            savedTime = Date.now().toString();
+            localStorage.setItem('poll_start_' + messageId, savedTime);
+        }
+        let startTime = parseInt(savedTime, 10);
+        let statusChanged = false; // Чтобы не менять текст постоянно
+
+        const poll = async () => {
+            if (activeMessageId !== messageId) return;
+
+            const elapsed = (Date.now() - startTime) / 1000; // секунд прошло
+
+            // 1. На 40-й секунде меняем текст на "Сложный вопрос"
+            if (elapsed > 40 && !statusChanged) {
+                const dots = aiMsg.querySelector('.logai-dots');
+                aiMsg.innerHTML = '🤖 Вопрос сложный, анализирую данные...';
+                if (dots) aiMsg.appendChild(dots); 
+                statusChanged = true;
+            }
+
+            // 2. Лимит ожидания - 10 минут (600 секунд)
+            if (elapsed > 600) {
+                finish("🤖 Извините, ИИ перегружен или запрос слишком сложный. Пожалуйста, попробуйте позже.", aiMsg);
+                return;
+            }
+
+            // 3. Умный интервал: до 50 сек — каждые 3 сек, потом — каждые 10 сек
+            let nextInterval = (elapsed > 50) ? 10000 : 3000;
+
+            try {
+                // Добавили ?t=... чтобы телефон каждый раз реально спрашивал сервер, а не брал из кэша
+                const r = await fetch(`${API_URL}/get-answer/${messageId}?sessionId=${logSid}&clientId=${MY_CLIENT_ID}&t=${Date.now()}`, {
+                    signal: pollController.signal 
+                });
+                const d = await r.json();
+                const finalAnswer = d.answer || (d.status !== 'pending' ? d.answer : null);
+
+                if (finalAnswer) {
+                    finish(finalAnswer, aiMsg);
+                } else {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            } catch (e) {
+                if (e.name !== 'AbortError') {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            }
+        };
+        poll();
+    }
+
+function finish(text, msgElement, isSuccess = true) {
+    if (msgElement) {
+        msgElement.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+        
+        // Звук играет строго при успешном ответе ИИ, при ошибках или банах — тишина
+        if (isSuccess) {
+            try {
+                // ТВОЙ ОРИГИНАЛЬНЫЙ РАБОЧИЙ ПУТЬ: Кэш сбрасывается, файл проигрывается без ошибок 404
+                const audio = new Audio('https://api.log-ai.ru/notify.mp3?v=' + Date.now());
+                audio.volume = 0.4;
+                audio.play().catch(e => console.log("Нужен клик"));
+            } catch (e) {}
+        }
+    }
+    stopPolling();
+}
+
+
+    // Enter для отправки
+    document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('logai-input');
+    if (input) {
+      input.addEventListener('keypress', (e) => {
+        // ИСПРАВЛЕНО: Добавлена проверка !chatIsWaiting, чтобы клавиатура намертво блокировалась во время ожидания ИИ
+        if (e.key === 'Enter' && !e.shiftKey && !chatIsWaiting) {
+          e.preventDefault();
+          sendLogAI();
+        }
+      });
+
+      // ИСПРАВЛЕНО: Текстовое поле плавно растёт вниз до 150px, если текст длинный
+      input.addEventListener('input', function() {
+        this.style.height = 'auto'; 
+        this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+      });
+    }
+    });</script><div id="cookie-notice-wrapper" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #111111; border-top: 1px solid #222222; padding: 10px 15px; box-sizing: border-box; z-index: 99999; display: none; flex-direction: row; justify-content: space-between; align-items: center; gap: 15px; font-family: sans-serif;"><span style="color: #888888; font-size: 12px; line-height: 1.4; text-align: left;">Наш сайт использует файлы cookie для корректной работы. Подробнее — в <a href="/privacy-policy/" style="color: #bfa15f; text-decoration: underline;">Политике конфиденциальности</a>. </span><button onclick="dismissCookieNotice()" style="background: #bfa15f; color: #000000; border: none; padding: 5px 14px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Принять</button></div><style>@media (max-width: 600px) {
+        #cookie-notice-wrapper {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 10px !important;
+            padding: 12px 15px !important;
+        }
+        #cookie-notice-wrapper span {
+            text-align: center !important;
+            font-size: 11px !important;
+        }
+        #cookie-notice-wrapper button {
+            width: 100% !important;
+            padding: 8px !important;
+            font-size: 12px !important;
+        }
+    }</style><script>(function() {
+        var storageKey = 'logai_cookies_accepted';
+        if (!localStorage.getItem(storageKey)) {
+            document.getElementById('cookie-notice-wrapper').style.display = 'flex';
+        }
+    })();
+
+    function dismissCookieNotice() {
+        localStorage.setItem('logai_cookies_accepted', 'true');
+        document.getElementById('cookie-notice-wrapper').style.display = 'none';
+    }</script></body></html>

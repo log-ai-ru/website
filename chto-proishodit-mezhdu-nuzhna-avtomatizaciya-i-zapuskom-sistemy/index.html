@@ -1,0 +1,855 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>От идеи до запуска: этапы создания системы автоматизации | LOG-AI</title><meta name="description" content="Что происходит между идеей автоматизации и запуском системы: анализ, требования, архитектура, разработка, интеграции, тестирование, приёмка и запуск."><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://log-ai.ru/chto-proishodit-mezhdu-nuzhna-avtomatizaciya-i-zapuskom-sistemy/"><link rel="alternate" type="application/atom+xml" href="https://log-ai.ru/feed.xml" title="LOG-AI - RSS"><link rel="alternate" type="application/json" href="https://log-ai.ru/feed.json" title="LOG-AI - JSON"><meta property="og:title" content="От идеи до запуска: этапы создания системы автоматизации | LOG-AI"><meta property="og:image" content="https://log-ai.ru/media/website/Log-ai-Logo.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:site_name" content="LOG-AI"><meta property="og:description" content="Что происходит между идеей автоматизации и запуском системы: анализ, требования, архитектура, разработка, интеграции, тестирование, приёмка и запуск."><meta property="og:url" content="https://log-ai.ru/chto-proishodit-mezhdu-nuzhna-avtomatizaciya-i-zapuskom-sistemy/"><meta property="og:type" content="article"><link rel="stylesheet" href="https://log-ai.ru/assets/css/style.css?v&#x3D;b1f5980528b3cc19f4018c94aea81f52"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://log-ai.ru/chto-proishodit-mezhdu-nuzhna-avtomatizaciya-i-zapuskom-sistemy/"},"headline":"Что происходит между «нужна автоматизация» и запуском системы","datePublished":"2026-10-08T14:14+05:00","dateModified":"2026-10-25T08:59+05:00","description":"Что происходит между идеей автоматизации и запуском системы: анализ, требования, архитектура, разработка, интеграции, тестирование, приёмка и запуск.","author":{"@type":"Person","name":"AI Automation","url":"https://log-ai.ru/authors/ai-automation/"},"publisher":{"@type":"Organization","name":"AI Automation"}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript><style>body, html, main, #page, .wrapper, .main { background: #000000 !important; background-color: #000000 !important; }</style><link rel="icon" type="image/png" sizes="32x32" href="/media/files/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/media/files/favicon-16.png"><link rel="apple-touch-icon" sizes="180x180" href="/media/files/favicon-180.png"><meta name="yandex-verification" content="9d14e10b64f3b76c"><meta name="google-site-verification" content="-rKktnoSCGCLZToW-jcZeKu5WvWFGuLKdLwwyCux0-M"></head><body class="page-template"><header class="top js-header"><a class="logo" href="https://log-ai.ru/">LOG-AI</a><nav class="navbar js-navbar"><button class="navbar__toggle js-toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><span class="navbar__toggle-box"><span class="navbar__toggle-inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://log-ai.ru/" target="_self">Главная</a></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Услуги</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/avtomatizaciya-obrabotki-zayavok-i-lidov/" target="_self">Автоматизация обработки заявок и лидов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-biznes-processov-integracii-dannye-i-skvoznye-scenarii/" target="_self">Автоматизация бизнес-процессов</a></li><li><a href="https://log-ai.ru/sbor-i-obrabotka-dannyh/" target="_self">Сбор и обработка данных</a></li><li><a href="https://log-ai.ru/ii-dlya-biznesa-i-nejrosetej/" target="_self">ИИ для бизнеса и нейросети</a></li><li><a href="https://log-ai.ru/specializirovannye-cifrovye-sistemy/" target="_self">Специализированные цифровые системы</a></li><li><a href="https://log-ai.ru/individualnye-korporativnye-sistemy/" target="_self">Корпоративные системы</a></li><li><a href="https://log-ai.ru/tehnicheskoe-soprovozhdenie/" target="_self">Техническое сопровождение</a></li><li><a href="https://log-ai.ru/it-audit-i-predproektnoe-obsledovanie/" title="/it-audit-i-predproektnoe-obsledovanie/" target="_self">IT-аудит и предпроектное обследование</a></li><li><a href="https://log-ai.ru/oblachnyy-i-infrastrukturnyy-konsalting/" title="/oblachnyy-i-infrastrukturnyy-konsalting/" target="_self">Облачный и инфраструктурный консалтинг</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Решения</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakie-sistemy-my-integriruem/" target="_self">Какие системы мы интегрируем</a></li><li><a href="https://log-ai.ru/kak-rabotaet-ii-v-biznese/" target="_self">Как работает ИИ в бизнесе</a></li><li><a href="https://log-ai.ru/resheniya-po-zadacham/" target="_self">Решения по задачам</a></li><li><a href="https://log-ai.ru/avtomatizaciya-proizvodstva/" target="_self">Для производства</a></li><li><a href="https://log-ai.ru/avtomatizaciya-logistiki-i-skladov/" target="_self">Для логистики и складов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-optovoy-torgovli/" target="_self">Для оптовой торговли</a></li><li><a href="https://log-ai.ru/avtomatizaciya-e-commerce/" target="_self">Для e-commerce</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Реализация</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kak-my-rabotaem/" target="_self">Как мы работаем</a></li><li><a href="https://log-ai.ru/dokumentaciya-sistemy/" target="_self">Документация системы</a></li><li><a href="https://log-ai.ru/infrastruktura-i-razmeshchenie/" target="_self">Инфраструктура и размещение</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Выбор</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakuyu-avtomatizaciyu-vybrat/" target="_self">Какую автоматизацию выбрать</a></li><li><a href="https://log-ai.ru/chto-avtomatizirovat-v-biznese-v-pervuyu-ochered/" target="_self">Что автоматизировать в бизнесе в первую очередь</a></li><li><a href="https://log-ai.ru/kak-podgotovit-biznes-k-avtomatizacii/" target="_self">Как подготовить бизнес к автоматизации</a></li><li><a href="https://log-ai.ru/kak-vnedrit-avtomatizaciyu/" target="_self">Как внедрить автоматизацию</a></li><li><a href="https://log-ai.ru/kak-ocenit-rezultat-avtomatizacii/" target="_self">Как оценить результат автоматизации</a></li><li><a href="https://log-ai.ru/stoimost-razrabotki/" target="_self">Стоимость разработки</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">О нас</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/inzhenernyy-sostav/" target="_self">Инженерный состав</a></li><li><a href="https://log-ai.ru/keysy/" target="_self">Кейсы</a></li><li><a href="https://log-ai.ru/glossariy/" target="_self">Глоссарий</a></li><li><a href="https://log-ai.ru/ekspertiza/" target="_self">Экспертиза</a></li><li><a href="https://log-ai.ru/bezopasnost-sistem-dannyh-i-infrastruktury/" target="_self">Безопасность</a></li></ul></li></ul></nav></header><main class="page"><article class="content"><div class="hero hero--noimage"><header class="hero__content hero__content--centered"><div class="wrapper"><h1>Что происходит между «нужна автоматизация» и запуском системы</h1></div></header></div><div class="entry-wrapper content__entry"><p> </p><p> </p><p> </p><p> </p><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">СТРАТЕГИЯ // BUSINESS_ENGINEERING_PATH</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Фраза «нам нужна автоматизация» обычно звучит так, будто следующий шаг очевиден:</h2><div style="max-width: 380px; background: #000000; border: 1px dashed #ff6b6b; padding: 10px 15px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ff6b6b; margin-bottom: 25px; box-sizing: border-box; border-radius: 4px;">поставить систему, настроить её и начать работать.</div><div style="background: linear-gradient(90deg, #070f0d 0%, #000000 100%); border-left: 3px solid #14b8a6; padding: 12px 20px; margin-bottom: 30px; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold;">На практике между проблемой бизнеса и работающим программным контуром лежит целая цепочка инженерных решений.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Нужно понять, что именно автоматизировать, определить границы будущей системы, разобраться с существующими процессами и данными, спроектировать архитектуру, подключить внешние системы, проверить сценарии, подготовить пользователей и только после этого вывести решение в эксплуатацию.</p><div style="background: #140808; border-left: 2px solid #ff6b6b; padding: 12px 15px; margin-bottom: 30px; box-sizing: border-box; max-width: 650px;"><p style="font-size: 14px; color: #ff6b6b; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0;">Причём ошибка на раннем этапе может проявиться только через несколько месяцев после запуска.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Поэтому автоматизация — это не момент разработки программы.</p><div style="background: #050807; border: 1px solid #14b8a6; padding: 25px; box-sizing: border-box; width: 100%; text-align: right; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px; font-weight: bold; text-transform: uppercase;">// УПРАВЛЕНИЕ_КОНТУРОМ //</div><p style="font-size: 16px; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-weight: bold; margin: 0; line-height: 1.6; letter-spacing: -0.3px;">Это управляемый путь от бизнес-проблемы до работающей системы.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ДИАГНОСТИКА // BUSINESS_PROBLEM_ANALYSIS</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Сначала появляется не система, а проблема</h2><div style="background: linear-gradient(90deg, #070f0d 0%, #000000 100%); border-left: 3px solid #14b8a6; padding: 12px 20px; margin-bottom: 25px; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold;">Всё начинается не с интерфейса и не с выбора технологии.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Обычно есть конкретная проблема:</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">сотрудники вручную переносят данные;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">заявки обрабатываются слишком долго;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">информация находится в нескольких системах;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">руководитель не видит актуальные показатели;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">документы приходится проверять вручную;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">сотрудники выполняют одинаковые операции десятки раз в день;</div><div style="background: #000000; border-bottom: 1px solid #14b8a6; padding: 10px 15px; font-size: 14px; color: #14b8a6; font-weight: bold;">существующая система больше не справляется с процессом.</div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Например:</p><div style="background: #000000; border: 1px solid #165c52; padding: 20px; box-sizing: border-box; margin-bottom: 30px; border-radius: 4px; max-width: 600px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px;">[ ФИКСАЦИЯ_КЕЙСА ]</div><p style="font-size: 15px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0 0 15px 0;">«Менеджеры тратят по три часа в день на обработку заявок».</p><div style="display: flex; gap: 15px; font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #aaaaaa;"><div>├─ Это ещё не техническое задание.</div><div>└─ И даже не готовая задача на разработку.</div></div></div><div style="background: #000000; border-left: 2px solid #eab308; padding-left: 15px; margin-bottom: 25px; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0; text-transform: uppercase;">Первый вопрос должен звучать иначе:</p></div><p style="font-size: 16px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: -15px 0 25px 15px; text-transform: uppercase; letter-spacing: -0.5px;">почему эти три часа вообще возникают?</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 15px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #050807; border-left: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box;"><span style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #555555; display: block; margin-bottom: 4px;">ПРИЧИНА_01 //</span><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.4;">Возможно, менеджер переносит данные между CRM и ERP.</p></div><div style="background: #050807; border-left: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box;"><span style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #555555; display: block; margin-bottom: 4px;">ПРИЧИНА_02 //</span><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.4;">Возможно, часть информации приходит по электронной почте.</p></div><div style="background: #050807; border-left: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box;"><span style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #555555; display: block; margin-bottom: 4px;">ПРИЧИНА_03 //</span><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.4;">Возможно, сотрудники вручную проверяют документы.</p></div></div><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 25px; box-sizing: border-box; width: 100%; text-align: right; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 10px; font-weight: bold; text-transform: uppercase;">// АУДИТ_БИЗНЕС_ПРОЦЕССА //</div><p style="font-size: 16px; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-weight: bold; margin: 0; line-height: 1.6; letter-spacing: -0.3px;">Возможно, проблема вообще не в отсутствии автоматизации, а в неправильно устроенном процессе.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ДЕКОМПОЗИЦИЯ // PROBLEM_DECOMPOSITION_PATH</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">От проблемы к конкретной задаче</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold; border-left: 3px solid #14b8a6; padding-left: 15px;">На этом этапе бизнес-проблема разбивается на конкретные операции, которые можно анализировать, измерять и при необходимости автоматизировать.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Например:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 480px; display: block; margin: 0 auto;" viewbox="0 0 480 340"><defs><marker id="dec-task-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="110" y="5" width="260" height="40" fill="#000000" stroke="#ff6b6b" stroke-width="1.2"></rect><text x="240" y="21" fill="#ff6b6b" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">ПРОБЛЕМА</text><text x="240" y="36" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Менеджер тратит 3 часа на обработку заявок</text><line x1="240" y1="45" x2="240" y2="70" stroke="#165c52" stroke-width="1.2" marker-end="url(#dec-task-arrow)"></line><rect x="140" y="70" width="200" height="25" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="240" y="86" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">РАЗБИРАЕМ ПРОЦЕСС</text><path d="M 240 95 L 240 115 L 75 115 L 75 135" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#dec-task-arrow)"></path><path d="M 240 95 L 240 115 L 405 115 L 405 135" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#dec-task-arrow)"></path><line x1="240" y1="95" x2="240" y2="135" stroke="#165c52" stroke-width="1.2" marker-end="url(#dec-task-arrow)"></line><rect x="15" y="135" width="120" height="45" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="75" y="154" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">получение</text><text x="75" y="169" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">заявки</text><rect x="180" y="135" width="120" height="45" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="240" y="154" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">проверка</text><text x="240" y="169" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">данных</text><rect x="345" y="135" width="120" height="45" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="405" y="154" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">перенос</text><text x="405" y="169" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">в систему</text><path d="M 75 180 L 75 200 L 240 200" fill="none" stroke="#165c52" stroke-width="1.2"></path><path d="M 405 180 L 405 200 L 240 200" fill="none" stroke="#165c52" stroke-width="1.2"></path><line x1="240" y1="180" x2="240" y2="220" stroke="#165c52" stroke-width="1.2" marker-end="url(#dec-task-arrow)"></line><rect x="140" y="220" width="200" height="25" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="240" y="236" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">НАХОДИМ РУТИНУ</text><line x1="240" y1="245" x2="240" y2="275" stroke="#165c52" stroke-width="1.2" marker-end="url(#dec-task-arrow)"></line><rect x="120" y="275" width="240" height="30" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="240" y="294" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="12" font-weight="bold" text-anchor="middle">ФОРМУЛИРУЕМ ЗАДАЧУ</text></svg></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">После этого становится понятно, какую часть процесса действительно имеет смысл автоматизировать.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><div style="background: #000000; border: 1px solid #165c52; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 8px;">[ ОПТИМИЗАЦИЯ_СХЕМЫ ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.5;">Иногда выясняется, что для решения проблемы достаточно небольшой доработки существующей системы.</p></div><div style="background: #000000; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 8px;">[ КОМПЛЕКСНЫЙ_МАСШТАБ ]</div><p style="font-size: 14px; color: #ffffff; margin: 0; line-height: 1.5;">Иногда, наоборот, простой автоматизации недостаточно, поскольку проблема затрагивает несколько</p></div></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ИНФРАСТРУКТУРА // CURRENT_INFRASTRUCTURE_LANDSCAPE</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Затем появляется карта существующего контура</h2><div style="background: linear-gradient(90deg, #070f0d 0%, #000000 100%); border-left: 3px solid #14b8a6; padding: 12px 20px; margin-bottom: 30px; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold;">Прежде чем проектировать новое решение, необходимо понять, что уже существует.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Например:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 460px; display: block; margin: 0 auto;" viewbox="0 0 460 300"><defs><marker id="map-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="170" y="10" width="120" height="30" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="230" y="29" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">САЙТ</text><line x1="230" y1="40" x2="230" y2="60" stroke="#165c52" stroke-width="1.2" marker-end="url(#map-arrow)"></line><rect x="160" y="60" width="140" height="35" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="230" y="81" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">CRM</text><path d="M 230 95 L 230 115 L 110 115 L 110 135" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#map-arrow)"></path><path d="M 230 95 L 230 115 L 350 115 L 350 135" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#map-arrow)"></path><rect x="40" y="135" width="140" height="30" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="110" y="154" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">ERP</text><line x1="110" y1="165" x2="110" y2="195" stroke="#165c52" stroke-width="1.2" marker-end="url(#map-arrow)"></line><rect x="280" y="135" width="140" height="30" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="350" y="154" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">1С</text><line x1="350" y1="165" x2="350" y2="195" stroke="#165c52" stroke-width="1.2" marker-end="url(#map-arrow)"></line><rect x="40" y="195" width="140" height="30" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="110" y="214" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">WMS</text><line x1="110" y1="225" x2="110" y2="255" stroke="#165c52" stroke-width="1.2" marker-end="url(#map-arrow)"></line><rect x="280" y="195" width="140" height="30" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="350" y="214" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">ОТЧЁТНОСТЬ</text><rect x="40" y="255" width="140" height="30" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="110" y="274" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">СКЛАД</text></svg></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">На схеме могут оказаться десятки компонентов:</p><div style="display: flex; flex-wrap: wrap; gap: 10px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border: 1px dashed #165c52; padding: 6px 14px; font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #aaaaaa; border-radius: 2px;">CRM;</div><div style="background: #000000; border: 1px dashed #165c52; padding: 6px 14px; font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #aaaaaa; border-radius: 2px;">ERP;</div><div style="background: #000000; border: 1px dashed #165c52; padding: 6px 14px; font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #aaaaaa; border-radius: 2px;">1С;</div><div style="background: #000000; border: 1px dashed #165c52; padding: 6px 14px; font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #aaaaaa; border-radius: 2px;">WMS;</div><div style="background: #000000; border: 1px dashed #165c52; padding: 6px 14px; font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #aaaaaa; border-radius: 2px;">сайт;</div><div style="background: #000000; border: 1px dashed #165c52; padding: 6px 14px; font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #aaaaaa; border-radius: 2px;">мобильные приложения;</div><div style="background: #000000; border: 1px dashed #165c52; padding: 6px 14px; font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #aaaaaa; border-radius: 2px;">базы данных;</div><div style="background: #000000; border: 1px dashed #165c52; padding: 6px 14px; font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; border-radius: 2px; font-weight: bold;">внешние API;</div><div style="background: #000000; border: 1px dashed #165c52; padding: 6px 14px; font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #aaaaaa; border-radius: 2px;">оборудование;</div><div style="background: #000000; border: 1px dashed #165c52; padding: 6px 14px; font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #aaaaaa; border-radius: 2px;">файловые обмены;</div><div style="background: #000000; border: 1px solid #165c52; padding: 6px 14px; font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; border-radius: 2px;">аналитические системы.</div></div><div style="background: #140808; border-left: 2px solid #ff6b6b; padding: 15px; margin-bottom: 25px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 8px 0; font-weight: bold;">Если этого не увидеть заранее, новая автоматизация может решить одну проблему и создать две новые.</p><p style="font-size: 14px; color: #ff6b6b; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.4;">Например, новый сервис будет отлично работать сам по себе, но не сможет корректно получать данные из существующей ERP.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ПЕРИМЕТР // SYSTEM_BOUNDARIES</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">После этого определяются границы будущей системы</h2><div style="background: linear-gradient(90deg, #070f0d 0%, #000000 100%); border-left: 3px solid #14b8a6; padding: 12px 20px; margin-bottom: 25px; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold;">Это один из самых важных этапов.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 5px 0;">Нужно ответить:</p><p style="font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0 0 25px 0; text-transform: uppercase; letter-spacing: 0.5px;">что новая система делает, а чего она не делает?</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Например:</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 30px;"><div style="background: #000000; border: 1px solid #165c52; padding: 20px; box-sizing: border-box; border-radius: 4px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; line-height: 1.5; color: #aaaaaa;"><div style="color: #14b8a6; font-weight: bold; margin-bottom: 12px; font-size: 11px;">[ НОВАЯ СИСТЕМА ]</div><div style="display: flex; gap: 8px;"><span style="color: #14b8a6;">■</span> Принимает заявки</div><div style="display: flex; gap: 8px;"><span style="color: #14b8a6;">■</span> Проверяет данные</div><div style="display: flex; gap: 8px;"><span style="color: #14b8a6;">■</span> Создаёт карточку</div><div style="display: flex; gap: 8px;"><span style="color: #14b8a6;">■</span> Передаёт заказ в ERP</div><div style="display: flex; gap: 8px;"><span style="color: #14b8a6;">■</span> Отслеживает статус</div></div><div style="background: #000000; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; line-height: 1.5; color: #aaaaaa;"><div style="color: #ff6b6b; font-weight: bold; margin-bottom: 12px; font-size: 11px;">[ НЕ ДЕЛАЕТ ]</div><div style="display: flex; gap: 8px;"><span style="color: #ff6b6b;">✕</span> бухгалтерский учёт</div><div style="display: flex; gap: 8px;"><span style="color: #ff6b6b;">✕</span> управление складом</div><div style="display: flex; gap: 8px;"><span style="color: #ff6b6b;">✕</span> расчёт зарплаты</div><div style="display: flex; gap: 8px;"><span style="color: #ff6b6b;">✕</span> замену ERP</div></div></div><div style="background: #000000; border-left: 2px solid #eab308; padding-left: 15px; margin-bottom: 25px; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0;">Границы особенно важны для крупных проектов.</p></div><div style="background: #050807; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; width: 100%; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 8px; font-weight: bold;">// КОНТРОЛЬ_РАЗДУВАНИЯ_РАМКИ //</div><p style="font-size: 16px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.5; font-family: -apple-system, BlinkMacSystemFont, sans-serif;">Без контроля объёма работ дополнительные требования постепенно превращают проект в попытку создать универсальную систему на все случаи жизни.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ФОРМАЛИЗАЦИЯ // REQUIREMENTS_SPECIFICATION</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">После первичного анализа можно формировать и уточнять требования</h2><div style="background: linear-gradient(90deg, #070f0d 0%, #000000 100%); border-left: 3px solid #14b8a6; padding: 12px 20px; margin-bottom: 25px; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold;">По результатам анализа формируется перечень требований.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 5px 0;">Требования должны отвечать не только на вопрос:</p><div style="max-width: 320px; background: #000000; border: 1px dashed #ff6b6b; padding: 6px 12px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ff6b6b; margin-bottom: 20px; box-sizing: border-box;">«Что должна делать система?»</div><p style="font-size: 15px; color: #ffffff; margin: 0 0 15px 0; font-weight: bold;">Но и на следующие вопросы:</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">кто работает с системой;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">какие данные поступают;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">откуда они берутся;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">какие операции выполняются;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">какие исключения возможны;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">какие внешние системы участвуют;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">что происходит при ошибке;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">какие права есть у разных пользователей;</div><div style="background: #000000; border-bottom: 1px solid #14b8a6; padding: 10px 15px; font-size: 14px; color: #14b8a6; font-weight: bold;">как определяется успешный результат.</div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Например:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 500px; display: block; margin: 0 auto;" viewbox="0 0 500 370"><defs><marker id="req-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker><marker id="req-arrow-red" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#ff6b6b"></path></marker></defs><rect x="180" y="10" width="140" height="30" fill="#000000" stroke="#165c52" stroke-width="1.2"></rect><text x="250" y="29" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="12" font-weight="bold" text-anchor="middle">ЗАЯВКА</text><line x1="250" y1="40" x2="250" y2="65" stroke="#165c52" stroke-width="1.2" marker-end="url(#req-arrow)"></line><rect x="140" y="65" width="220" height="30" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="250" y="84" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Проверка обязательных полей</text><path d="M 250 95 L 250 115 L 140 115 L 140 135" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#req-arrow)"></path><text x="185" y="110" fill="#ff6b6b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">ошибка</text><rect x="65" y="135" width="150" height="30" fill="#000000" stroke="#ff6b6b" stroke-width="1" stroke-dasharray="3 3"></rect><text x="140" y="154" fill="#ff6b6b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">сотруднику</text><path d="M 250 95 L 250 135" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#req-arrow)"></path><rect x="230" y="135" width="240" height="30" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="350" y="154" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Проверка клиента</text><path d="M 350 165 L 350 185 L 250 185 L 250 205" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#req-arrow)"></path><path d="M 350 165 L 350 185 L 450 185 L 450 205" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#req-arrow)"></path><text x="295" y="180" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">найден</text><text x="410" y="180" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">нет</text><rect x="150" y="205" width="190" height="30" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="245" y="224" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">существующая карточка</text><rect x="365" y="205" width="125" height="30" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="427" y="224" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">создание</text><path d="M 245 235 L 245 255 L 330 255 L 330 275" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#req-arrow)"></path><path d="M 427 235 L 427 255 L 330 255" fill="none" stroke="#165c52" stroke-width="1.2"></path><rect x="230" y="275" width="200" height="30" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="330" y="294" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Передача в ERP</text><path d="M 330 305 L 330 325 L 180 325 L 180 340" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#req-arrow)"></path><path d="M 330 305 L 330 325 L 420 325 L 420 340" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#req-arrow-red)"></path><text x="245" y="320" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">успех</text><text x="390" y="320" fill="#ff6b6b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">ошибка</text><rect x="80" y="340" width="190" height="25" fill="#000000" stroke="#14b8a6" stroke-width="1"></rect><text x="175" y="356" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">статус «создано»</text><rect x="290" y="340" width="205" height="25" fill="#000000" stroke="#ff6b6b" stroke-width="1"></rect><text x="392" y="356" fill="#ff6b6b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">повтор / очередь / уведомление</text></svg></div><div style="background: linear-gradient(90deg, #070f0d 0%, #000000 100%); border-right: 3px solid #14b8a6; padding: 20px; box-sizing: border-box; width: 100%; text-align: right;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 6px; text-transform: uppercase;">// ФИКСАЦИЯ_КОНТУРА_ЛОГИКИ //</div><p style="font-size: 16px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.5; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.3px;">Вот здесь будущая система уже начинает приобретать конкретную форму.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Как проверить готовность проекта к разработке</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">До начала полноценной разработки необходимо убедиться, что команда понимает не только желаемый результат, но и условия его достижения.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 15px 0; white-space: pre-wrap; word-wrap: break-word;">Минимальная проверка включает пять пунктов:</p><div style="margin: 15px 0 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%;"><div style="margin-bottom: 20px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Бизнес-цель:</strong> определено, какой показатель или результат должен измениться после внедрения.</div><div style="margin-bottom: 20px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Границы системы:</strong> зафиксировано, что входит в проект, а что остаётся за его пределами.</div><div style="margin-bottom: 20px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Источники данных:</strong> определено, откуда поступает информация и какая система считается источником достоверных данных.</div><div style="margin-bottom: 20px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Исключения:</strong> описано, что происходит при ошибках, неполных данных и недоступности внешних систем.</div><div style="margin-bottom: 0; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Приёмка:</strong> определены критерии, по которым заказчик подтвердит, что решение соответствует требованиям.</div></div></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Если по критичным вопросам остаются неизвестные, их необходимо либо устранить до разработки, либо явно зафиксировать как риски и предусмотреть способ проверки.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Это не означает, что до написания первой строки кода нужно предусмотреть абсолютно всё. Задача предварительной проработки — снизить риск дорогих переделок, сохранив возможность уточнять решение по мере получения новых данных.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ПРОЕКТИРОВАНИЕ // SYSTEM_ARCHITECTURE_DESIGN</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Затем проектируется архитектура</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Теперь возникает вопрос:</p><p style="font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0 0 25px 0;">как всё это технически будет работать?</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Можно построить простую схему:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto;" viewbox="0 0 440 310"><defs><marker id="arch-map-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="150" y="10" width="140" height="30" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="29" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">ПОЛЬЗОВАТЕЛЬ</text><line x1="220" y1="40" x2="220" y2="60" stroke="#165c52" stroke-width="1.2" marker-end="url(#arch-map-arrow)"></line><rect x="140" y="60" width="160" height="30" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="79" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">WEB / MOBILE</text><line x1="220" y1="90" x2="220" y2="110" stroke="#165c52" stroke-width="1.2" marker-end="url(#arch-map-arrow)"></line><rect x="130" y="110" width="180" height="35" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="220" y="131" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">BACKEND</text><path d="M 220 145 L 220 165 L 70 165 L 70 190" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#arch-map-arrow)"></path><path d="M 220 145 L 220 165 L 370 165 L 370 190" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#arch-map-arrow)"></path><line x1="220" y1="145" x2="220" y2="190" stroke="#165c52" stroke-width="1.2" marker-end="url(#arch-map-arrow)"></line><rect x="20" y="190" width="100" height="30" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="70" y="209" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">БД</text><rect x="170" y="190" width="100" height="30" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="209" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">API</text><line x1="220" y1="220" x2="220" y2="250" stroke="#165c52" stroke-width="1.2" marker-end="url(#arch-map-arrow)"></line><rect x="320" y="190" width="100" height="30" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="370" y="209" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Очередь</text><line x1="370" y1="220" x2="370" y2="250" stroke="#165c52" stroke-width="1.2" marker-end="url(#arch-map-arrow)"></line><rect x="160" y="250" width="120" height="30" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="269" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">ERP</text><rect x="310" y="250" width="120" height="30" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="370" y="269" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">CRM</text></svg></div><div style="background: #140808; border-left: 2px solid #ff6b6b; padding: 12px 15px; margin-bottom: 30px; box-sizing: border-box; max-width: 650px;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0;">На этом этапе принимаются архитектурные решения, изменение которых впоследствии может потребовать существенных затрат, миграции данных и повторного тестирования.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Например:</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">На этапе проектирования необходимо определить, где хранить данные;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">какие сервисы выделять отдельно;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">где использовать API;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">где нужна очередь;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">как обрабатывать ошибки;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">как обеспечить отказоустойчивость;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">как масштабировать систему;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">где размещать инфраструктуру;</div><div style="background: #000000; border-bottom: 1px solid #14b8a6; padding: 10px 15px; font-size: 14px; color: #14b8a6; font-weight: bold;">как организовать доступ.</div></div><div style="background: #050807; border: 1px solid #14b8a6; padding: 25px; box-sizing: border-box; width: 100%; text-align: right; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 6px; text-transform: uppercase;">// МАСШТАБ_ЭВОЛЮЦИИ_СИСТЕМЫ //</div><p style="font-size: 16px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.5; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase; letter-spacing: -0.3px;">Именно архитектура определяет не только то, как система работает сегодня, но и насколько легко её будет развивать через два года.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ИМПЛЕМЕНТАЦИЯ // INCREMENTAL_DEVELOPMENT</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">После определения основных архитектурных решений начинается реализация системы</h2><div style="background: linear-gradient(90deg, #070f0d 0%, #000000 100%); border-left: 3px solid #14b8a6; padding: 12px 20px; margin-bottom: 25px; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold;">После согласования основных требований и архитектурных решений команда приступает к реализации системы.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Разработка может идти по частям:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto;" viewbox="0 0 440 220"><defs><marker id="dev-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><text x="220" y="20" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="12" text-anchor="middle">АРХИТЕКТУРА</text><line x1="220" y1="28" x2="220" y2="48" stroke="#165c52" stroke-width="1.2" marker-end="url(#dev-arrow)"></line><rect x="150" y="48" width="140" height="25" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="65" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">МОДУЛЬ 1</text><line x1="220" y1="73" x2="220" y2="93" stroke="#165c52" stroke-width="1.2" marker-end="url(#dev-arrow)"></line><rect x="150" y="93" width="140" height="25" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="110" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">МОДУЛЬ 2</text><line x1="220" y1="118" x2="220" y2="138" stroke="#165c52" stroke-width="1.2" marker-end="url(#dev-arrow)"></line><rect x="150" y="138" width="140" height="25" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="220" y="155" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">ИНТЕГРАЦИИ</text><line x1="220" y1="163" x2="220" y2="183" stroke="#165c52" stroke-width="1.2" marker-end="url(#dev-arrow)"></line><rect x="130" y="183" width="180" height="30" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="220" y="202" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">ИНТЕРФЕЙСЫ</text></svg></div><div style="background: #000000; border-left: 2px solid #165c52; padding-left: 15px; margin-bottom: 25px; box-sizing: border-box; max-width: 700px;"><p style="font-size: 15px; color: #ffffff; margin: 0;">При этом разработка и проектирование не всегда идут строго последовательно.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">На практике появляются новые данные, ограничения существующих систем и технические детали, которые приходится учитывать.</p><div style="background: #050807; border: 1px solid #14b8a6; padding: 25px; box-sizing: border-box; width: 100%; text-align: right; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px; font-weight: bold; text-transform: uppercase;">// УПРАВЛЕНИЕ_ИЗМЕНЕНИЯМИ //</div><p style="font-size: 16px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.5; font-family: -apple-system, BlinkMacSystemFont, sans-serif; letter-spacing: -0.3px;">Поэтому хороший проект постоянно уточняется, но изменения должны оставаться управляемыми.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">СВЯЗИ_КОНТУРА // INTEGRATION_LANDSCAPE_RISKS</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Самая недооценённая часть — интеграции</h2><div style="background: linear-gradient(90deg, #0c0606 0%, #000000 100%); border-left: 3px solid #ff6b6b; padding: 12px 20px; margin-bottom: 30px; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold;">Новая система почти никогда не работает в вакууме.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Ей необходимо взаимодействовать с существующим контуром:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto;" viewbox="0 0 440 240"><defs><marker id="int-flow-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="130" y="10" width="180" height="35" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="220" y="32" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">НОВАЯ СИСТЕМА</text><path d="M 220 45 L 220 75 L 70 75 L 70 105" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#int-flow-arrow)"></path><path d="M 220 45 L 220 75 L 370 75 L 370 105" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#int-flow-arrow)"></path><line x1="220" y1="45" x2="220" y2="105" stroke="#165c52" stroke-width="1.2" marker-end="url(#int-flow-arrow)"></line><rect x="20" y="105" width="100" height="30" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="70" y="124" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">CRM</text><rect x="170" y="105" width="100" height="30" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="124" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">ERP</text><rect x="320" y="105" width="100" height="30" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="370" y="124" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">1С</text><path d="M 70 135 L 70 165 L 220 165" fill="none" stroke="#165c52" stroke-width="1.2"></path><path d="M 370 135 L 370 165 L 220 165" fill="none" stroke="#165c52" stroke-width="1.2"></path><line x1="220" y1="135" x2="220" y2="190" stroke="#165c52" stroke-width="1.2" marker-end="url(#int-flow-arrow)"></line><rect x="150" y="190" width="140" height="35" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="220" y="212" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">ДАННЫЕ</text></svg></div><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">И здесь появляются реальные инженерные вопросы:</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">что является источником истины;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">как часто обновляются данные;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">кто инициирует обмен;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">что делать при недоступности системы;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">как повторить неуспешную операцию;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">как избежать дубликатов;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">как обнаружить потерю сообщения;</div><div style="background: #000000; border-bottom: 1px solid #14b8a6; padding: 10px 15px; font-size: 14px; color: #14b8a6; font-weight: bold;">как проверить полученные данные.</div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Интеграция считается готовой не тогда, когда запрос успешно отправляется, а когда обмен данными корректно работает в штатных и нештатных ситуациях.</p><div style="background: #050807; border: 1px solid #14b8a6; padding: 25px; box-sizing: border-box; width: 100%; text-align: right; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px; font-weight: bold; text-transform: uppercase;">// ЗАВЕРШЕНИЕ_ОБМЕНА //</div><p style="font-size: 16px; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-weight: bold; margin: 0; line-height: 1.6; letter-spacing: -0.3px;">Необходимо проверить штатные и нештатные сценарии: обработку ошибок, повторные попытки, защиту от дублирования операций и восстановление обмена после сбоя.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ИСПЫТАНИЕ_ОТКАЗОМ // EXCEPTION_HANDLING_PIPELINE</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Затем система должна столкнуться с ошибками</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">На демонстрации всё может выглядеть идеально:</p><div style="max-width: 300px; font-size: 12px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; background: #000000; border: 1px solid #165c52; padding: 15px; margin: 0 0 25px 0; box-sizing: border-box; line-height: 1.4; border-radius: 4px; text-align: center;">Заявка<br>  ↓<br>Проверка<br>  ↓<br>ERP<br>  ↓<br><span style="background: #14b8a6; color: #000000; padding: 1px 6px; font-weight: bold; border-radius: 2px;">Успешно</span></div><div style="background: linear-gradient(90deg, #0c0606 0%, #000000 100%); border-left: 3px solid #ff6b6b; padding: 12px 20px; margin-bottom: 30px; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold;">Но реальная система живёт в другом мире.</p></div><div style="display: flex; flex-wrap: wrap; gap: 10px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border: 1px dashed #5c1616; padding: 8px 14px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ff6b6b; border-radius: 2px;">ERP может быть недоступна.</div><div style="background: #000000; border: 1px dashed #5c1616; padding: 8px 14px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ff6b6b; border-radius: 2px;">Сеть может оборваться.</div><div style="background: #000000; border: 1px dashed #5c1616; padding: 8px 14px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ff6b6b; border-radius: 2px;">Пользователь может отправить данные дважды.</div><div style="background: #000000; border: 1px dashed #5c1616; padding: 8px 14px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ff6b6b; border-radius: 2px;">Внешний API может вернуть ошибку.</div><div style="background: #000000; border: 1px dashed #5c1616; padding: 8px 14px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ff6b6b; border-radius: 2px;">В базе может отсутствовать нужная запись.</div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Поэтому реальный сценарий выглядит скорее так:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto;" viewbox="0 0 440 270"><defs><marker id="err-flow-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker><marker id="err-flow-arrow-red" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#ff6b6b"></path></marker></defs><rect x="150" y="5" width="140" height="25" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="21" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">ЗАПРОС</text><line x1="220" y1="30" x2="220" y2="50" stroke="#165c52" stroke-width="1.2" marker-end="url(#err-flow-arrow)"></line><rect x="140" y="50" width="160" height="30" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="220" y="69" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">API ERP</text><path d="M 220 80 L 220 100 L 110 100 L 110 120" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#err-flow-arrow)"></path><path d="M 220 80 L 220 100 L 330 100 L 330 120" fill="none" stroke="#165c52" stroke-width="1.2" marker-end="url(#err-flow-arrow-red)"></path><text x="150" y="95" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">УСПЕХ</text><text x="290" y="95" fill="#ff6b6b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">ОШИБКА</text><rect x="50" y="120" width="120" height="25" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="110" y="136" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">продолжить</text><rect x="250" y="120" width="160" height="25" fill="#000000" stroke="#ff6b6b" stroke-width="1"></rect><text x="330" y="136" fill="#ff6b6b" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">повтор / очередь</text><line x1="330" y1="145" x2="330" y2="170" stroke="#ff6b6b" stroke-width="1.2" marker-end="url(#err-flow-arrow-red)"></line><rect x="270" y="170" width="120" height="25" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="330" y="186" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="middle">журнал</text><line x1="330" y1="195" x2="330" y2="220" stroke="#165c52" stroke-width="1.2" marker-end="url(#err-flow-arrow)"></line><rect x="270" y="220" width="120" height="25" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="330" y="236" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">контроль</text></svg></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Надёжность системы определяется не только тем, как она работает, когда всё хорошо.</p><div style="background: #050807; border: 1px solid #14b8a6; padding: 25px; box-sizing: border-box; width: 100%; text-align: right; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px; font-weight: bold; text-transform: uppercase;">// КРИТЕРИЙ_УСТОЙЧИВОСТИ //</div><p style="font-size: 16px; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-weight: bold; margin: 0; line-height: 1.6; letter-spacing: -0.3px;">Очень многое определяется тем, как она ведёт себя, когда что-то пошло не так.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ВАЛИДАЦИЯ // TESTING_LEVELS_PIPELINE</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">После разработки начинается тестирование</h2><div style="background: linear-gradient(90deg, #0c0606 0%, #000000 100%); border-left: 3px solid #ff6b6b; padding: 12px 20px; margin-bottom: 25px; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold;">Тестирование — это не просто заключительный этап перед запуском.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Проверять необходимо разные уровни системы:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto;" viewbox="0 0 440 330"><defs><marker id="test-pipe-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="150" y="5" width="140" height="25" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="22" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">КОМПОНЕНТ</text><line x1="220" y1="30" x2="220" y2="46" stroke="#165c52" stroke-width="1.2" marker-end="url(#test-pipe-arrow)"></line><rect x="150" y="46" width="140" height="25" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="63" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">МОДУЛЬ</text><line x1="220" y1="71" x2="220" y2="87" stroke="#165c52" stroke-width="1.2" marker-end="url(#test-pipe-arrow)"></line><rect x="150" y="87" width="140" height="25" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="104" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">ИНТЕГРАЦИЯ</text><line x1="220" y1="112" x2="220" y2="128" stroke="#165c52" stroke-width="1.2" marker-end="url(#test-pipe-arrow)"></line><rect x="130" y="128" width="180" height="25" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="145" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">СКВОЗНОЙ СЦЕНАРИЙ</text><line x1="220" y1="153" x2="220" y2="169" stroke="#165c52" stroke-width="1.2" marker-end="url(#test-pipe-arrow)"></line><rect x="150" y="169" width="140" height="25" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="186" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">НАГРУЗКА</text><line x1="220" y1="194" x2="220" y2="210" stroke="#165c52" stroke-width="1.2" marker-end="url(#test-pipe-arrow)"></line><rect x="150" y="210" width="140" height="25" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="227" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">БЕЗОПАСНОСТЬ</text><line x1="220" y1="235" x2="220" y2="251" stroke="#165c52" stroke-width="1.2" marker-end="url(#test-pipe-arrow)"></line><rect x="130" y="251" width="180" height="30" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="220" y="270" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">ПРИЁМКА</text></svg></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Например, недостаточно проверить:</p><div style="max-width: 220px; background: #000000; border: 1px dashed #ff6b6b; padding: 6px 12px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ff6b6b; margin-bottom: 25px; box-sizing: border-box;">«Заказ создаётся».</div><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Нужно проверить:</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #aaaaaa;">Что произойдёт, если ERP недоступна?</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #aaaaaa;">Что будет при повторной отправке?</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #aaaaaa;">Что увидит пользователь?</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #aaaaaa;">Сохранится ли заказ?</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #aaaaaa;">Повторится ли операция автоматически?</div><div style="background: #000000; border-bottom: 1px solid #14b8a6; padding: 10px 15px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #14b8a6; font-weight: bold;">Как инженер узнает о проблеме?</div></div><div style="background: #050807; border: 1px solid #14b8a6; padding: 25px; box-sizing: border-box; width: 100%; text-align: right; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px; font-weight: bold; text-transform: uppercase;">// КЛАСС_СИСТЕМЫ //</div><p style="font-size: 16px; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-weight: bold; margin: 0; line-height: 1.6; letter-spacing: -0.3px;">Проверка таких сценариев помогает отличить демонстрационный прототип от системы, подготовленной к промышленной эксплуатации.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ПРИËМКА // BUSINESS_ACCEPTANCE_CRITERIA</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Затем систему проверяет бизнес</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Инженеры могут сказать:</p><div style="max-width: 340px; background: #000000; border-left: 2px solid #165c52; padding: 8px 12px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #aaaaaa; margin-bottom: 25px; box-sizing: border-box;">«Система работает по требованиям».</div><div style="background: linear-gradient(90deg, #070f0d 0%, #000000 100%); border-top: 1px solid #165c52; border-bottom: 1px solid #165c52; padding: 15px 20px; margin-bottom: 25px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin: 0; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Но бизнес должен ответить на другой вопрос:</p></div><p style="font-size: 16px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: -15px 0 25px 15px; text-transform: uppercase; letter-spacing: -0.5px;">«Система действительно решает нашу задачу?»</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Это этап приёмки.</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto;" viewbox="0 0 440 290"><defs><marker id="ba-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="130" y="5" width="180" height="25" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="22" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">ТРЕБОВАНИЕ</text><line x1="220" y1="30" x2="220" y2="48" stroke="#165c52" stroke-width="1.2" marker-end="url(#ba-arrow)"></line><rect x="130" y="48" width="180" height="25" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="65" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">ПОЛУЧИТЬ ЗАЯВКУ</text><line x1="220" y1="73" x2="220" y2="91" stroke="#165c52" stroke-width="1.2" marker-end="url(#ba-arrow)"></line><rect x="130" y="91" width="180" height="25" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="108" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">ПРОВЕРИТЬ</text><line x1="220" y1="116" x2="220" y2="134" stroke="#165c52" stroke-width="1.2" marker-end="url(#ba-arrow)"></line><rect x="130" y="134" width="180" height="25" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="151" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">СОЗДАТЬ КЛИЕНТА</text><line x1="220" y1="159" x2="220" y2="177" stroke="#165c52" stroke-width="1.2" marker-end="url(#ba-arrow)"></line><rect x="130" y="177" width="180" height="25" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="194" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">ПЕРЕДАТЬ В ERP</text><line x1="220" y1="202" x2="220" y2="220" stroke="#165c52" stroke-width="1.2" marker-end="url(#ba-arrow)"></line><rect x="120" y="220" width="220" height="30" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="220" y="239" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">ПОЛУЧИТЬ СТАТУС</text></svg></div><div style="background: #000000; border-left: 2px solid #165c52; padding-left: 15px; margin-bottom: 30px; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold;">Для каждого критичного сценария должен существовать понятный ожидаемый результат.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Так появляется связь:</p><div style="width: 100%; font-size: 13px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; background: #050807; border: 1px dashed #165c52; padding: 15px; margin: 0; box-sizing: border-box; line-height: 1.5; text-align: center; border-radius: 4px;">требование → реализация → проверка → результат.</div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ОРГ_ПОДГОТОВКА // USER_READINESS_CONTOUR</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">После технической приёмки остаются пользователи</h2><div style="background: linear-gradient(90deg, #0c0606 0%, #000000 100%); border-left: 3px solid #ff6b6b; padding: 12px 20px; margin-bottom: 25px; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold;">Даже идеально работающая система не будет эффективной, если сотрудники не понимают, как с ней работать.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Перед запуском необходимо подготовить:</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa; font-family: 'SF Mono', Monaco, monospace;">роли;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa; font-family: 'SF Mono', Monaco, monospace;">доступы;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa; font-family: 'SF Mono', Monaco, monospace;">инструкции;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa; font-family: 'SF Mono', Monaco, monospace;">рабочие места;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa; font-family: 'SF Mono', Monaco, monospace;">пользователей;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa; font-family: 'SF Mono', Monaco, monospace;">поддержку;</div><div style="background: #000000; border-bottom: 1px solid #14b8a6; padding: 10px 15px; font-size: 14px; color: #14b8a6; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">правила обработки исключений.</div></div><div style="background: #000000; border-left: 2px solid #14b8a6; padding-left: 15px; margin-bottom: 30px; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold;">Особенно это важно там, где система становится частью ежедневной операции.</p></div><div style="background: #050807; border: 1px dashed #ff6b6b; padding: 25px; box-sizing: border-box; width: 100%; text-align: right; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 10px; font-weight: bold; text-transform: uppercase;">// АНАЛИЗ_ОРГ_РИСКОВ //</div><p style="font-size: 16px; color: #ffffff; font-weight: bold; margin: 0; line-height: 1.6; letter-spacing: -0.3px;">Если сотрудник не знает, что делать при ошибке, технически идеальная система всё равно создаст проблему для бизнеса.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">РАНТАЙМ_ЗАПУСК // PRODUCTION_DEPLOYMENT</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">И наконец происходит запуск</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Запуск может выглядеть просто:</p><div style="max-width: 320px; background: #000000; border: 1px solid #165c52; padding: 20px; box-sizing: border-box; text-align: center; margin-bottom: 30px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; border-radius: 4px;"><div style="color: #aaaaaa;">ТЕСТОВАЯ СРЕДА</div><div style="color: #14b8a6; margin: 4px 0;">│</div><div style="color: #14b8a6; margin: 4px 0;">▼</div><div style="color: #aaaaaa;">ПРИЁМКА</div><div style="color: #14b8a6; margin: 4px 0;">│</div><div style="color: #14b8a6; margin: 4px 0;">▼</div><div style="color: #aaaaaa;">ПОДГОТОВКА</div><div style="color: #14b8a6; margin: 4px 0;">│</div><div style="color: #14b8a6; margin: 4px 0;">▼</div><div style="color: #ffffff; background: #14b8a6; padding: 2px 0; font-weight: bold;">ПРОМЫШЛЕННАЯ ЭКСПЛУАТАЦИЯ</div><div style="color: #14b8a6; margin: 4px 0;">│</div><div style="color: #14b8a6; margin: 4px 0;">▼</div><div style="color: #ffffff; font-weight: bold;">ПЕРВЫЕ ОПЕРАЦИИ</div><div style="color: #14b8a6; margin: 4px 0;">│</div><div style="color: #14b8a6; margin: 4px 0;">▼</div><div style="color: #ffffff; font-weight: bold; background: #0a1f1c; padding: 2px 0; border: 1px solid #14b8a6;">МОНИТОРИНГ</div></div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 15px; width: 100%; box-sizing: border-box; margin-bottom: 30px;"><div style="background: #000000; border: 1px dashed #5c1616; padding: 12px 15px; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ff6b6b; text-align: center;">Но запуск — это не конец проекта.</div><div style="background: #050807; border: 1px solid #14b8a6; padding: 12px 15px; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #14b8a6; font-weight: bold; text-align: center;">Это начало эксплуатации.</div></div><div style="background: linear-gradient(135deg, #090d16 0%, #000000 100%); border-top: 1px solid #165c52; padding: 25px; box-sizing: border-box; width: 100%; border-radius: 0 0 4px 4px; text-align: right;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px; font-weight: bold; text-transform: uppercase;">// СТАБИЛИЗАЦИЯ_РАНТАЙМА //</div><p style="font-size: 16px; color: #aaaaaa; margin: 0; line-height: 1.6; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-weight: bold; letter-spacing: -0.3px;">Первые дни и недели особенно важны: в промышленной эксплуатации могут проявиться сочетания условий и нагрузок, которые не были учтены при тестировании. Поэтому после запуска необходимо отслеживать ошибки, производительность и корректность бизнес-операций.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ЖИЗНЕННЫЙ_ЦИКЛ // LIFECYCLE_EVOLUTION</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">После запуска начинается настоящая эксплуатация</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Работающая система требует:</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">мониторинга;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">резервного копирования;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">контроля ошибок;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">обновлений;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">технического сопровождения;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">анализа нагрузки;</div><div style="background: #000000; border-bottom: 1px solid #0c2e29; padding: 10px 15px; font-size: 14px; color: #aaaaaa;">исправления дефектов;</div><div style="background: #000000; border-bottom: 1px solid #14b8a6; padding: 10px 15px; font-size: 14px; color: #14b8a6; font-weight: bold;">развития функциональности.</div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Поэтому жизненный цикл выглядит так:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto;" viewbox="0 0 440 440"><defs><marker id="ev-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker><marker id="ev-arrow-active" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><g font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="bold" text-anchor="middle"><text x="220" y="20" fill="#aaaaaa">ИДЕЯ</text><line x1="220" y1="24" x2="220" y2="38" stroke="#165c52" stroke-width="1" marker-end="url(#ev-arrow)"></line><text x="220" y="50" fill="#aaaaaa">АНАЛИЗ</text><line x1="220" y1="54" x2="220" y2="68" stroke="#165c52" stroke-width="1" marker-end="url(#ev-arrow)"></line><text x="220" y="80" fill="#aaaaaa">ТРЕБОВАНИЯ</text><line x1="220" y1="84" x2="220" y2="98" stroke="#165c52" stroke-width="1" marker-end="url(#ev-arrow)"></line><text x="220" y="110" fill="#aaaaaa">АРХИТЕКТУРА</text><line x1="220" y1="114" x2="220" y2="128" stroke="#165c52" stroke-width="1" marker-end="url(#ev-arrow)"></line><text x="220" y="140" fill="#aaaaaa">РАЗРАБОТКА</text><line x1="220" y1="144" x2="220" y2="158" stroke="#165c52" stroke-width="1" marker-end="url(#ev-arrow)"></line><text x="220" y="170" fill="#aaaaaa">ИНТЕГРАЦИИ</text><line x1="220" y1="174" x2="220" y2="188" stroke="#165c52" stroke-width="1" marker-end="url(#ev-arrow)"></line><text x="220" y="200" fill="#aaaaaa">ТЕСТИРОВАНИЕ</text><line x1="220" y1="204" x2="220" y2="218" stroke="#165c52" stroke-width="1" marker-end="url(#ev-arrow)"></line><text x="220" y="230" fill="#aaaaaa">ПРИЁМКА</text><line x1="220" y1="234" x2="220" y2="248" stroke="#165c52" stroke-width="1" marker-end="url(#ev-arrow)"></line><text x="220" y="260" fill="#aaaaaa">ЗАПУСК</text><line x1="220" y1="264" x2="220" y2="278" stroke="#165c52" stroke-width="1" marker-end="url(#ev-arrow)"></line><text x="220" y="290" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace">ЭКСПЛУАТАЦИЯ</text><line x1="220" y1="295" x2="220" y2="315" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#ev-arrow-active)"></line><text x="220" y="330" fill="#ffffff">РАЗВИТИЕ</text></g><path d="M 220 338 L 220 365 L 350 365" fill="none" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#ev-arrow-active)"></path><rect x="290" y="375" width="130" height="25" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="355" y="391" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">НОВЫЕ ТРЕБОВАНИЯ</text></svg></div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 15px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #000000; border: 1px dashed #5c1616; padding: 12px 15px; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ff6b6b; text-align: center;">То есть запуск не заканчивает жизненный цикл.</div><div style="background: #050807; border: 1px solid #14b8a6; padding: 12px 15px; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #14b8a6; font-weight: bold; text-align: center;">Он переводит систему в следующий этап.</div></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">СРАВНЕНИЕ_СТРАТЕГИЙ // SPECIFICATION_VS_IMPROVISATION</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Почему нельзя перескочить сразу от идеи к разработке</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Представим два подхода.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 25px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; line-height: 1.5; text-align: center;"><div style="color: #ff6b6b; font-weight: bold; margin-bottom: 12px; font-size: 11px; text-align: left;">[ ВАРИАНТ 1 ]</div><div style="color: #aaaaaa;">«Нам нужна автоматизация»</div><div style="color: #ff6b6b; margin: 4px 0;">↓</div><div style="color: #aaaaaa;">«Давайте писать»</div><div style="color: #ff6b6b; margin: 4px 0;">↓</div><div style="color: #ffffff; font-weight: bold;">РАЗРАБОТКА</div><div style="color: #ff6b6b; margin: 4px 0;">↓</div><div style="color: #ff6b6b; font-weight: bold; background: #200b0b; padding: 2px 0;">ПРОБЛЕМЫ</div><div style="color: #ff6b6b; margin: 4px 0;">↓</div><div style="color: #ff6b6b; font-weight: bold; border: 1px solid #ff6b6b; background: #140808; padding: 2px 0;">ПЕРЕДЕЛКА</div></div><div style="background: #000000; border: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; border-radius: 4px; font-family: 'SF Mono', Monaco, monospace; font-size: 12px; line-height: 1.4; text-align: center;"><div style="color: #14b8a6; font-weight: bold; margin-bottom: 12px; font-size: 11px; text-align: left;">[ ВАРИАНТ 2 ]</div><div style="color: #aaaaaa;">ПРОБЛЕМА</div><div style="color: #14b8a6; margin: 2px 0;">↓</div><div style="color: #aaaaaa;">АНАЛИЗ</div><div style="color: #14b8a6; margin: 2px 0;">↓</div><div style="color: #aaaaaa;">ГРАНИЦЫ</div><div style="color: #14b8a6; margin: 2px 0;">↓</div><div style="color: #aaaaaa;">АРХИТЕКТУРА</div><div style="color: #14b8a6; margin: 2px 0;">↓</div><div style="color: #ffffff; font-weight: bold;">РАЗРАБОТКА</div><div style="color: #14b8a6; margin: 2px 0;">↓</div><div style="color: #aaaaaa;">ТЕСТИРОВАНИЕ</div><div style="color: #14b8a6; margin: 2px 0;">↓</div><div style="color: #aaaaaa;">ПРИЁМКА</div><div style="color: #14b8a6; margin: 2px 0;">↓</div><div style="color: #ffffff; font-weight: bold; background: #0a1f1c; border: 1px solid #14b8a6; padding: 1px 0;">ЗАПУСК</div><div style="color: #14b8a6; margin: 2px 0;">↓</div><div style="color: #14b8a6; font-weight: bold;">РАЗВИТИЕ</div></div></div><div style="background: #000000; border-left: 2px solid #eab308; padding-left: 15px; margin-bottom: 25px; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0;">Во втором варианте до разработки действительно требуется больше работы.</p></div><div style="background: #050807; border: 1px solid #14b8a6; padding: 25px; box-sizing: border-box; width: 100%; text-align: right; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px; font-weight: bold; text-transform: uppercase;">// ЭФФЕКТИВНОСТЬ_ИНВЕСТИЦИЙ //</div><p style="font-size: 16px; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-weight: bold; margin: 0; line-height: 1.6; letter-spacing: -0.3px;">Но эта работа нужна именно для того, чтобы не платить за одни и те же решения несколько раз.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">МАНИФЕСТ // AUTOMATION_CORE_MANIFEST</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Хорошая автоматизация начинается не с кода</h2><div style="background: linear-gradient(90deg, #0c0606 0%, #000000 100%); border-left: 3px solid #ff6b6b; padding: 12px 20px; margin-bottom: 25px; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold;">Самая дорогая ошибка в автоматизации — начать реализовывать решение до того, как стало понятно, какую именно проблему оно должно решать.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Хороший проект проходит несколько переходов:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto;" viewbox="0 0 440 330"><defs><marker id="man-arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker><marker id="man-arrow-active" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="110" y="5" width="220" height="22" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="20" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">«У НАС ПРОБЛЕМА»</text><line x1="220" y1="27" x2="220" y2="43" stroke="#165c52" stroke-width="1.2" marker-end="url(#man-arrow)"></line><rect x="110" y="43" width="220" height="22" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="58" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">«ВОТ ГДЕ ОНА ВОЗНИКАЕТ»</text><line x1="220" y1="65" x2="220" y2="81" stroke="#165c52" stroke-width="1.2" marker-end="url(#man-arrow)"></line><rect x="110" y="81" width="220" height="22" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="96" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">«ВОТ ЧТО НУЖНО ИЗМЕНИТЬ»</text><line x1="220" y1="103" x2="220" y2="119" stroke="#165c52" stroke-width="1.2" marker-end="url(#man-arrow)"></line><rect x="110" y="119" width="220" height="22" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="134" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">«ВОТ КАК ЭТО БУДЕТ РАБОТАТЬ»</text><line x1="220" y1="141" x2="220" y2="157" stroke="#165c52" stroke-width="1.2" marker-end="url(#man-arrow)"></line><rect x="100" y="157" width="240" height="22" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="172" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">«ВОТ КАК МЫ ПРОВЕРИМ РЕЗУЛЬТАТ»</text><line x1="220" y1="179" x2="220" y2="195" stroke="#165c52" stroke-width="1.2" marker-end="url(#man-arrow)"></line><rect x="90" y="195" width="260" height="22" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="220" y="210" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">«ВОТ КАК МЫ ЗАПУСТИМ ЭТО В БИЗНЕСЕ»</text><line x1="220" y1="217" x2="220" y2="233" stroke="#14b8a6" stroke-width="1.2" marker-end="url(#man-arrow-active)"></line><rect x="100" y="233" width="240" height="25" fill="#000000" stroke="#14b8a6" stroke-width="1.2"></rect><text x="220" y="249" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">«ВОТ КАК БУДЕМ ЭТО РАЗВИВАТЬ»</text></svg></div><div style="background: #000000; border-left: 2px solid #14b8a6; padding-left: 15px; margin-bottom: 25px; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; font-family: 'SF Mono', Monaco, monospace; text-transform: uppercase;">И только тогда фраза «нам нужна автоматизация» превращается в конкретную инженерную задачу.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Автоматизация — это не программа, которую однажды написали и забыли.</p><div style="background: #050807; border: 1px solid #14b8a6; padding: 25px; box-sizing: border-box; width: 100%; text-align: right; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 10px; font-weight: bold; text-transform: uppercase;">// ФИНАЛЬНЫЙ_КОНТУР_СИСТЕМЫ //</div><p style="font-size: 16px; color: #ffffff; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-weight: bold; margin: 0; line-height: 1.6; letter-spacing: -0.3px;">В ходе этого процесса бизнес-задача превращается в архитектуру, архитектура — в работающую систему, а система — в решение, которое можно контролировать и развивать.</p></div></div><p> </p><div style="max-width: 1100px; margin: 60px auto 0 auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">НАВИГАЦИЯ // SUGGESTED_READING</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ИНТЕГРАЦИИ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">API, Webhook или очередь сообщений?</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/api-webhook-ili-ochered-soobshcheniy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ИНТЕГРАЦИИ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Когда API есть, а интеграция всё равно не работает</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kogda-api-est-a-integraciya-vsyo-ravno-ne-rabotaet/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ПРОИЗВОДСТВО ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Как соединить производство и корпоративные системы</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kak-soedinit-proizvodstvo-i-korporativnye-sistemy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div></div></div><div style="max-width: 1100px; margin: 20px auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; border-top: 1px solid #165c52; padding: 40px 0 0 0; box-sizing: border-box; width: 100%;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 40px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ EXPERTISE JOURNAL ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Все инженерные материалы и экспертные статьи</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="https://log-ai.ru/ekspertiza/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">перейти к каталогу ──►</a></div></div><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ CORE GLOSSARY ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Полный алфавитный справочник ИТ-терминов</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="https://log-ai.ru/glossariy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">открыть справочник ──►</a></div></div></div></div></div></article></main><footer class="footer"><div class="wrapper"><div class="footer__copyright"><p> </p><p> </p></div><button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg width="20" height="20"><use xlink:href="https://log-ai.ru/assets/svg/svg-map.svg#toparrow"/></svg></button></div></footer><script defer="defer" src="https://log-ai.ru/assets/js/scripts.min.js?v&#x3D;d0fc1030089a37f93a2d51bf6d07565c"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script><script>(() => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') !== 'monument') return;
+
+  const IMAGE_URL = 'https://log-ai.ru/media/files/Interstellar.jpeg';
+  const AUDIO_URL = 'https://log-ai.ru/media/files/interstellar.mp3';
+
+  // Защита от повторного запуска
+  if (document.getElementById('log-ai-monument')) return;
+
+  const monument = document.createElement('div');
+  monument.id = 'log-ai-monument';
+
+  const root = document.documentElement;
+  const body = document.body;
+
+  const previousRootOverflow = root.style.overflow;
+  const previousBodyOverflow = body.style.overflow;
+  const previousBodyPosition = body.style.position;
+  const previousBodyTop = body.style.top;
+  const previousBodyWidth = body.style.width;
+  const previousScrollX = window.scrollX;
+  const previousScrollY = window.scrollY;
+
+  root.style.overflow = 'hidden';
+  body.style.overflow = 'hidden';
+  body.style.position = 'fixed';
+  body.style.top = `-${previousScrollY}px`;
+  body.style.width = '100%';
+
+  monument.innerHTML = `
+    <div class="monument-universe"></div>
+    <canvas class="monument-stars"></canvas>
+    <div class="monument-shade"></div>
+
+    <div class="monument-frame">
+      <p class="monument-overline">ARCHIVUM · LOG-AI · MMXXVI</p>
+
+      <div class="monument-rule"></div>
+
+      <h1>PER ASPERA<br><span>AD ASTRA</span></h1>
+
+      <p class="monument-translation">
+        THROUGH HARDSHIP, TO THE STARS
+      </p>
+
+      <div class="monument-message">
+        <p>TO THOSE WHO BUILD BEYOND THE LIMITS OF THEIR TIME.</p>
+        <p>TO THOSE WHO CONTINUE WHEN THE OUTCOME IS UNKNOWN.</p>
+        <p>TO THOSE WHO WILL DISCOVER THIS LONG AFTER ITS CREATION.</p>
+      </div>
+
+      <p class="monument-declaration">
+        YOU WERE NOT THE FIRST TO LOOK AT THE STARS.<br>
+        BUT YOU MAY BE AMONG THOSE WHO REACH THEM.
+      </p>
+
+      <div class="monument-rule"></div>
+          
+      <p class="monument-translation">
+        A MARK LEFT IN THE MACHINE.
+      </p>   
+
+      <p class="monument-signature">
+        LOG·AI·ARCHITECTI·MMXXVI
+      </p>
+
+      <p class="monument-exit" id="monument-hint">
+        [ CLICK ANYWHERE TO RETURN ]
+      </p>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #log-ai-monument {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      background: #03040a;
+      color: #e5dfd3;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      box-sizing: border-box;
+      cursor: pointer;
+      isolation: isolate;
+      opacity: 0;
+      animation: logai-monument-appear 1.8s ease forwards;
+    }
+
+    #log-ai-monument .monument-universe {
+      position: fixed;
+      inset: -3%;
+      z-index: -3;
+      background-image: url("https://log-ai.ru/media/files/Interstellar.jpeg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transform: scale(1.02);
+      animation: logai-cosmic-drift 35s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-shade {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(0,0,0,.24) 0%,
+          rgba(0,0,0,.52) 65%,
+          rgba(0,0,0,.78) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.42),
+          rgba(0,0,0,.18) 45%,
+          rgba(0,0,0,.62)
+        );
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-frame {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', serif;
+      padding: 30px 0;
+      text-shadow: 0 2px 18px rgba(0,0,0,.9);
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-translation,
+    #log-ai-monument .monument-signature,
+    #log-ai-monument .monument-exit {
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-signature {
+      color: #c0a16a;
+    }
+
+    #log-ai-monument .monument-rule {
+      height: 1px;
+      width: 160px;
+      max-width: 60%;
+      margin: 30px auto;
+      background: linear-gradient(
+        to right,
+        transparent,
+        #a68a55,
+        transparent
+      );
+      box-shadow: 0 0 12px rgba(190,155,90,.2);
+    }
+
+    #log-ai-monument h1 {
+      margin: 35px 0 18px;
+      font-size: clamp(30px, 7vw, 58px);
+      line-height: 1.5;
+      letter-spacing: .16em;
+      font-weight: 400;
+      color: #f4f0e8;
+    }
+
+    #log-ai-monument h1 span {
+      color: #d2b77e;
+    }
+
+    #log-ai-monument .monument-translation {
+      color: #c0b8aa;
+    }
+
+    #log-ai-monument .monument-message {
+      margin: 55px auto 38px;
+      max-width: 490px;
+      color: #e0d9cd;
+      font-size: 13px;
+      line-height: 2.2;
+      letter-spacing: .035em;
+    }
+
+    #log-ai-monument .monument-message p {
+      margin: 0 0 12px;
+    }
+
+    #log-ai-monument .monument-declaration {
+      color: #e0c48a;
+      font-size: 12px;
+      line-height: 2.3;
+      letter-spacing: .08em;
+    }
+
+    #log-ai-monument .monument-exit {
+      margin-top: 36px;
+      color: #c0b8aa;
+      font-size: 9px;
+      letter-spacing: .18em;
+    }
+
+    @keyframes logai-monument-appear {
+      to { opacity: 1; }
+    }
+
+    @keyframes logai-cosmic-drift {
+      from { transform: scale(1.02); }
+      to { transform: scale(1.13); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #log-ai-monument,
+      #log-ai-monument .monument-universe {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(monument);
+
+  // Тонкие, редкие звёзды
+  const canvas = monument.querySelector('.monument-stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let frameId = null;
+  let closed = false;
+
+  function resizeStars() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(window.innerWidth * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    stars = Array.from({ length: 65 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      length: 8 + Math.random() * 25,
+      speed: 0.25 + Math.random() * 0.75,
+      alpha: 0.15 + Math.random() * 0.5,
+      delay: Math.random() * 500
+    }));
+  }
+
+  function drawStars() {
+    if (closed) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    for (const star of stars) {
+      star.delay -= 1;
+
+      if (star.delay <= 0) {
+        star.y += star.speed;
+        star.x -= star.speed * 0.35;
+
+        ctx.beginPath();
+        ctx.moveTo(star.x, star.y);
+        ctx.lineTo(star.x - star.length * 0.35,
+                   star.y - star.length);
+
+        ctx.strokeStyle = `rgba(210,220,255,${star.alpha})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+
+        if (star.y > h + 30 || star.x < -30) {
+          star.x = Math.random() * w + 30;
+          star.y = -Math.random() * h * 0.4;
+          star.delay = 30 + Math.random() * 180;
+        }
+      }
+    }
+
+    frameId = requestAnimationFrame(drawStars);
+  }
+
+  resizeStars();
+  drawStars();
+
+  window.addEventListener('resize', resizeStars);
+
+  // Музыка
+  const audio = document.createElement('audio');
+  audio.id = 'monument-audio';
+  audio.src = AUDIO_URL;
+  audio.loop = true;
+  audio.preload = 'auto';
+  audio.volume = 0.35;
+  document.body.appendChild(audio);
+
+  let playing = false;
+  let starting = false;
+
+  const hint = document.getElementById('monument-hint');
+
+  function startMusic() {
+    if (closed || starting || playing) return;
+
+    starting = true;
+
+    audio.play().then(() => {
+      starting = false;
+
+      if (closed) {
+        audio.pause();
+        return;
+      }
+
+      playing = true;
+      hint.textContent = '[ CLICK ANYWHERE TO RETURN ]';
+    }).catch((error) => {
+      starting = false;
+
+      if (closed) return;
+
+      if (error.name === 'NotAllowedError') {
+        hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+        return;
+      }
+
+      console.warn('LOG-AI audio:', error.name, error.message);
+      hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+    });
+  }
+
+  function closeMonument() {
+    if (closed) return;
+    closed = true;
+
+    cancelAnimationFrame(frameId);
+    window.removeEventListener('resize', resizeStars);
+    window.removeEventListener('keydown', onKeyDown);
+
+    audio.pause();
+    audio.remove();
+    monument.remove();
+    style.remove();
+
+    root.style.overflow = previousRootOverflow;
+    body.style.overflow = previousBodyOverflow;
+    body.style.position = previousBodyPosition;
+    body.style.top = previousBodyTop;
+    body.style.width = previousBodyWidth;
+
+    window.scrollTo(previousScrollX, previousScrollY);
+
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete('mode');
+
+    window.history.replaceState(
+      {},
+      document.title,
+      cleanUrl.pathname + cleanUrl.search + cleanUrl.hash
+    );
+  }
+
+  function onKeyDown(event) {
+    if (event.key === 'Escape') closeMonument();
+  }
+
+  monument.addEventListener('click', () => {
+    if (closed) return;
+
+    if (playing) {
+      closeMonument();
+    } else {
+      startMusic();
+    }
+  });
+
+  window.addEventListener('keydown', onKeyDown);
+
+  // Первая попытка автоматического запуска
+  startMusic();
+})();</script><script>(function () {
+    // ВНИМАНИЕ!!!!!!!!!!!!!!!!!!!!Плавный инерционный скролл только для мыши/тачпада
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    let targetY = window.scrollY;
+    let currentY = window.scrollY;
+    let animationFrame = null;
+
+    // ===== НАСТРОЙКИ =====
+    const SPEED = 0.70;       // 0.4 = медленнее, 0.65 = средне, 1.0 = быстрее
+    const SMOOTHNESS = 0.13;  // 0.08 = мягче, 0.12 = средне, 0.18 = быстрее
+    const MAX_STEP = 500;     // максимальный шаг одного движения колеса
+    // =====================
+
+    function animateScroll() {
+        currentY += (targetY - currentY) * SMOOTHNESS;
+
+        if (Math.abs(targetY - currentY) < 0.5) {
+            currentY = targetY;
+            window.scrollTo(0, currentY);
+            animationFrame = null;
+            return;
+        }
+
+        window.scrollTo(0, currentY);
+        animationFrame = requestAnimationFrame(animateScroll);
+    }
+
+    window.addEventListener('wheel', function (event) {
+
+    // Если глобус активирован кликом —
+    // колесо полностью отдаём Globe.gl для zoom.
+    const globe = event.target.closest('#globeViz');
+
+    if (globe && globe.dataset.interacting === 'true') {
+        return;
+    }
+
+    // Внутренний скролл AI-чата не трогаем
+    if (event.target.closest('#logai-window, #logai-msgs')) {
+        return;
+    }
+
+    event.preventDefault();
+
+        let delta = event.deltaY * SPEED;
+
+        // Ограничиваем слишком резкие движения
+        delta = Math.max(-MAX_STEP, Math.min(MAX_STEP, delta));
+
+        targetY += delta;
+
+        // Не даём уйти выше/ниже страницы
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        targetY = Math.max(0, Math.min(targetY, maxY));
+
+        if (!animationFrame) {
+            animationFrame = requestAnimationFrame(animateScroll);
+        }
+    }, { passive: false });
+
+    // Синхронизация, если страницу прокрутили другим способом
+    window.addEventListener('scroll', function () {
+        if (!animationFrame) {
+            targetY = window.scrollY;
+            currentY = window.scrollY;
+        }
+    }, { passive: true });
+
+})();</script><div id="logai-footer-mobile" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box;"><div style="margin: 0 auto 20px auto; padding-top: 40px; text-align: center; margin-bottom: 40px;"><a href="mailto:info@log-ai.ru" style="font-size: 24px; font-family: 'SF Mono', Monaco, monospace; color: #e5e7eb; text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: 0.3px;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#e5e7eb'">info@log-ai.ru</a><p style="color: #aaaaaa; font-size: 15px; line-height: 1.6; max-width: 750px; margin: 15px auto 0 auto;">Пришлите описание задачи, техническое задание или ссылку на существующую систему. Мы оценим задачу и определим возможные варианты реализации.</p></div><div style="max-width: 850px; margin: 0 auto 40px auto; text-align: center; background: #000000; padding: 0; box-sizing: border-box;"><p style="color: #aaaaaa; font-size: 14px; line-height: 1.6; margin: 0;"><span style="color: #4ade80; margin-right: 6px;">🔒</span> Данные и доступ к системам заказчика обрабатываются в соответствии с согласованными требованиями к безопасности и конфиденциальности. Условия доступа, хранения и обработки данных определяются архитектурой проекта и договором.</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; box-sizing: border-box; width: 100%; margin-bottom: 30px;"><p style="color: #666666; font-size: 12px; line-height: 1.6; margin: 0; width: 100%; text-align: justify;">Сайт носит исключительно информационный характер и не является публичной офертой в соответствии со статьёй 437 Гражданского кодекса РФ. Цены, состав и условия предоставления услуг уточняются при проектировании решения и фиксируются в договоре. Условия технического сопровождения и уровень сервиса могут дополнительно определяться отдельным соглашением (SLA).</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; width: 100%; box-sizing: border-box;"><div style="color: #666666; font-size: 12px; line-height: 1.5; text-align: left;">© 2026 Log-AI<br>Автоматизация бизнеса и ИИ-решения под ключ. Работаем по всей России и СНГ.<br>ИП Скопец Антон Викторович<br>ИНН 741709<span></span>260870 · ОГРНИП 326745600<span></span>204228<br>Все права защищены.</div><div style="display: flex; gap: 20px; flex-wrap: wrap; font-family: sans-serif;"><a href="/privacy-policy/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Политика конфиденциальности</a> <a href="/terms/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Пользовательское соглашение</a></div></div></div><style>@media screen and (max-width: 600px) {
+  #logai-footer-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+}</style><style>/* Анимации и точки */
+    @keyframes logai-bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+    .logai-dots { display: flex !important; flex-direction: row !important; gap: 4px !important; align-items: center !important; height: 12px !important; }
+    .logai-dots span { display: inline-block; width: 5px; height: 5px; background: #aaa !important; border-radius: 50%; animation: logai-bounce 1.4s infinite ease-in-out; }
+    .logai-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .logai-dots span:nth-child(3) { animation-delay: 0.4s; }
+    
+    #logai-msgs::-webkit-scrollbar { width: 5px; }
+    #logai-msgs::-webkit-scrollbar-thumb { background: #666; border-radius: 10px; }
+    
+    /* Сообщения и текст */
+    #logai-msgs div { white-space: pre-wrap !important; word-wrap: break-word !important; padding: 12px 16px !important; margin-bottom: 5px !important; display: flex; flex-direction: column; justify-content: center; }
+    #logai-msgs div p { margin: 0 !important; padding: 0 !important; line-height: 1.5 !important; }
+    #logai-msgs { gap: 12px !important; padding: 20px !important; }
+
+    /* Поле ввода и кнопка отправить */
+    #logai-input { flex: 1 !important; padding: 12px 18px !important; border-radius: 20px !important; background: #4a4e56 !important; border: 1px solid rgba(255,255,255,0.1) !important; outline: none !important; color: #fff !important; font-size: 15px !important; resize: none !important; max-height: 120px !important; line-height: 1.4 !important; }
+    #logai-send-btn { background-color: #007bff !important; border: none !important; width: 45px !important; height: 45px !important; border-radius: 50% !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-size: 24px !important; padding: 0 !important; flex-shrink: 0 !important; }
+
+    /* ГЛАВНЫЕ СТИЛИ (чтобы кнопка и окно не исчезали) */
+    #logai-btn {
+        position: fixed !important; bottom: 40px !important; right: 110px !important;
+        width: 65px !important; height: 65px !important; border-radius: 50% !important;
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        cursor: pointer !important; z-index: 10000 !important; box-shadow: 0 10px 25px rgba(0,123,255,0.4);
+    }
+
+    #logai-window {
+        display: none; position: fixed !important; bottom: 115px !important; right: 110px !important;
+        width: 380px !important; height: 600px !important; background: #3b3e45 !important;
+        border-radius: 24px !important; flex-direction: column; overflow: hidden;
+        z-index: 10000 !important; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.15) !important;
+    }
+
+        /* АДАПТИВ ДЛЯ МОБИЛОК: ЧАТ НА ВЕСЬ ЭКРАН */
+    @media screen and (max-width: 480px) {
+        #logai-window { 
+            right: 0 !important; 
+            left: 0 !important; 
+            bottom: 0 !important; 
+            width: 100% !important; 
+            height: 100% !important; /* Растягиваем окно на 100% экрана смартфона */
+            border-radius: 0 !important; /* Убираем скругления углов, чтобы чат сел монолитом */
+            z-index: 999999 !important; /* Перекрываем все кнопки в ноль */
+        }
+        
+        #logai-btn { 
+            bottom: 80px !important; /* Твоя родная высота кнопки, когда чат закрыт */
+            right: 22px !important;  /* Твой родной сдвиг кнопки */
+            z-index: 999998 !important; /* Когда чат открыт, кнопка останется под ним и не будет торчать */
+        }
+    }</style><div id="logai-widget" style="position: fixed; bottom: var(--widget-bottom, 20px); right: var(--widget-right, 20px); z-index: 9999;"><div id="logai-btn" onclick="toggleLogAI()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><div id="logai-window"><div style="background: #2d3035; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; align-items:center; gap:12px;"><div style="width:35px; height:35px; background:#007bff; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(0,123,255,0.5);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg></div><span style="font-weight:600; color:#fff; font-size:16px; letter-spacing: 0.5px;">AI Ассистент</span></div><span onclick="toggleLogAI()" style="cursor:pointer; color:#fff; font-size:35px; line-height: 0.7; opacity: 0.7;">&times;</span></div><div id="logai-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; background:#3b3e45;"></div><div style="padding:15px 15px 8px 15px; background:#2d3035; display:flex; flex-direction:column; border-top: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; gap:10px; align-items:flex-end; width:100%;"><textarea id="logai-input" rows="1" placeholder="Напишите..." oninput="this.style.height='';this.style.height=this.scrollHeight+'px'"></textarea> <button id="logai-send-btn" onclick="sendLogAI()">➤</button></div><div style="text-align:center; font-size:10px; color:#ffffff; opacity:0.3; margin-top:6px; font-family:sans-serif; pointer-events:none; user-select:none;">ИИ может ошибаться</div></div></div></div><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script>const API_URL = 'https://api2.log-ai.ru';
+    const MY_CLIENT_ID = 'client_arhitektor_2'; // МЕНЯТЬ ТУТ
+    const MY_BOT_PATH = 'arhitektor_2';  // МЕНЯТЬ ТУТ 
+    
+       let logSid;
+    try {
+        logSid = localStorage.getItem('logai_sid');
+        if (!logSid) {
+            logSid = 's_' + Math.random().toString(36).substr(2, 12);
+            localStorage.setItem('logai_sid', logSid);
+        }
+    } catch (e) {
+        // Если доступ к памяти закрыт (инкогнито), создаем временный ID
+        logSid = 'temp_' + Math.random().toString(36).substr(2, 12);
+    }
+
+    // Переименовали, чтобы избежать конфликтов
+    let chatIsWaiting = false;
+    let historyLoaded = false;
+    let activeMessageId = null;
+    let pollController = null;
+    let pollTimeoutId = null;
+
+
+       function toggleLogAI() {
+        const w = document.getElementById('logai-window');
+        const isOpen = (window.getComputedStyle(w).display === 'none');
+        
+        if (isOpen) {
+            w.style.display = 'flex';
+            if (!historyLoaded) {
+                loadChatHistory();
+            } 
+            // Если чат в режиме ожидания (точки), пинаем сервер сразу при открытии
+            else if (chatIsWaiting && activeMessageId) {
+                const dotsContainer = document.querySelector('.logai-dots')?.parentElement;
+                if (dotsContainer) {
+                    startPolling(activeMessageId, dotsContainer);
+                }
+            }
+        } else {
+            w.style.display = 'none';
+            // УБРАЛИ stopPolling(), чтобы ИИ докачивал ответ, даже когда окно закрыто
+        }
+    }
+
+
+    function updateInputState() {
+        const input = document.getElementById('logai-input');
+        const btn = document.getElementById('logai-send-btn');
+        if (input) {
+            input.disabled = chatIsWaiting;
+            input.style.opacity = chatIsWaiting ? '0.5' : '1';
+        }
+        if (btn) btn.style.opacity = chatIsWaiting ? '0.5' : '1';
+    }
+
+    function stopPolling() {
+        if (activeMessageId) localStorage.removeItem('poll_start_' + activeMessageId);
+        if (pollController) pollController.abort();
+        if (pollTimeoutId) clearTimeout(pollTimeoutId);
+    
+        pollController = null;
+        pollTimeoutId = null;
+        activeMessageId = null;
+        chatIsWaiting = false;
+        updateInputState();
+    }
+
+    function addLogMsg(txt, isAi) {
+        const d = document.createElement('div');
+        d.style = `padding:12px 16px; border-radius:18px; max-width:82%; font-size:14px; line-height:1.5; margin-bottom:10px; 
+                   ${isAi ? 'align-self:flex-start; background:#4a4e56; color:#dbdee1; border-bottom-left-radius:4px;' 
+                         : 'align-self:flex-end; background:#007bff; color:white; border-bottom-right-radius:4px; box-shadow:0 4px 12px rgba(0,123,255,0.25);'}`;
+
+        if (txt === 'dots') {
+   // ИСПРАВЛЕНО: Добавлен явный текст ожидания рядом с анимацией точек для лучшего UX
+   d.innerHTML = '<div style="display:flex; align-items:center; gap:8px;">' +
+                 '<span style="font-style:italic; opacity:0.8;">ИИ подбирает ответ...</span>' +
+                 '<div class="logai-dots"><span></span><span></span><span></span></div>' +
+                 '</div>';
+ } else {
+   d.innerHTML = typeof marked !== 'undefined' ? marked.parse(txt) : txt;
+ }
+
+        const box = document.getElementById('logai-msgs');
+        box.appendChild(d);
+        box.scrollTop = box.scrollHeight;
+        return d;
+    }
+
+async function loadChatHistory() {
+    const box = document.getElementById('logai-msgs');
+    try {
+        box.innerHTML = '';
+
+        const res = await fetch(`${API_URL}/history/${logSid}?platform=site&clientId=${MY_CLIENT_ID}`);
+        const data = await res.json();
+
+        if (Array.isArray(data.items) && data.items.length > 0) {
+            data.items.forEach((m, index) => {
+                // 1. Показываем сообщение пользователя
+                if (m.message) {
+                    addLogMsg(m.message, false);
+                }
+
+                // 2. Если есть готовый ответ — показываем
+                if (m.answer) {
+                    addLogMsg(m.answer, true);
+                } 
+                // 3. ИСПРАВЛЕНО: Четкое чтение m.message_id из базы данных без путаницы с регистрами
+                else if (m.message_id && index === data.items.length - 1) {
+                    chatIsWaiting = true;
+                    activeMessageId = m.message_id; // Используем m.message_id
+                    
+                    const aiMsg = addLogMsg('dots', true);
+                    startPolling(m.message_id, aiMsg); 
+                }
+            });
+        } else {
+            addLogMsg("Здравствуйте! Я ваш ИИ-ассистент. Чем могу помочь?", true);
+        }
+
+        historyLoaded = true;
+        updateInputState();
+
+    } catch (e) {
+        console.error('History error:', e);
+        addLogMsg("Не удалось загрузить историю чата", true);
+    }
+}
+
+
+async function sendLogAI() {
+    if (chatIsWaiting) return;
+
+    const input = document.getElementById('logai-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // ЖЕЛЕЗНЫЙ ДЕБАУНС: блокируем повторный клик в первую же микросекунду
+    chatIsWaiting = true;
+    updateInputState();
+
+    addLogMsg(msg, false);
+    
+    input.value = ''; 
+    input.style.height = 'auto'; 
+
+    const aiMsg = addLogMsg('dots', true);
+
+    try {
+        const res = await fetch(`${API_URL}/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sessionId: logSid,
+                message: msg,
+                clientId: MY_CLIENT_ID,
+                platform: 'site',
+                botPath: MY_BOT_PATH
+            })
+        });
+
+        // ИСПРАВЛЕНО: Обработка HTTP-ошибок. Передаем false третьим параметром, чтобы не было звука при ошибке
+        if (!res.ok) {
+            let errorMsg = "⚠️ Сервер временно недоступен";
+            if (res.status === 429) errorMsg = "🚫 Слишком много запросов. Подождите немного.";
+            else if (res.status === 403) {
+                try {
+                    const errData = await res.json();
+                    errorMsg = errData.reason || "🚫 Доступ ограничен.";
+                } catch (_) {
+                    errorMsg = "🚫 Доступ ограничен.";
+                }
+            }
+            finish(errorMsg, aiMsg, false); // false — звук НЕ играет
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data.blocked) {
+            finish(data.reason || data.message || "🚫 Сообщение заблокировано", aiMsg, false); // false — без звука
+            return;
+        }
+
+        if (data.messageId) {
+            activeMessageId = data.messageId;
+            startPolling(data.messageId, aiMsg);
+        } else {
+            finish("⚠️ Ошибка регистрации сообщения (нет messageId)", aiMsg, false);
+        }
+    } catch (e) {
+        console.error(e);
+        finish("⚠️ Ошибка связи с сервером. Проверьте интернет.", aiMsg, false);
+    }
+} // Скобка закрывает саму функцию send
+    function startPolling(messageId, aiMsg) {
+        activeMessageId = messageId;
+        pollController = new AbortController();
+        let savedTime = localStorage.getItem('poll_start_' + messageId);
+        if (!savedTime) {
+            savedTime = Date.now().toString();
+            localStorage.setItem('poll_start_' + messageId, savedTime);
+        }
+        let startTime = parseInt(savedTime, 10);
+        let statusChanged = false; // Чтобы не менять текст постоянно
+
+        const poll = async () => {
+            if (activeMessageId !== messageId) return;
+
+            const elapsed = (Date.now() - startTime) / 1000; // секунд прошло
+
+            // 1. На 40-й секунде меняем текст на "Сложный вопрос"
+            if (elapsed > 40 && !statusChanged) {
+                const dots = aiMsg.querySelector('.logai-dots');
+                aiMsg.innerHTML = '🤖 Вопрос сложный, анализирую данные...';
+                if (dots) aiMsg.appendChild(dots); 
+                statusChanged = true;
+            }
+
+            // 2. Лимит ожидания - 10 минут (600 секунд)
+            if (elapsed > 600) {
+                finish("🤖 Извините, ИИ перегружен или запрос слишком сложный. Пожалуйста, попробуйте позже.", aiMsg);
+                return;
+            }
+
+            // 3. Умный интервал: до 50 сек — каждые 3 сек, потом — каждые 10 сек
+            let nextInterval = (elapsed > 50) ? 10000 : 3000;
+
+            try {
+                // Добавили ?t=... чтобы телефон каждый раз реально спрашивал сервер, а не брал из кэша
+                const r = await fetch(`${API_URL}/get-answer/${messageId}?sessionId=${logSid}&clientId=${MY_CLIENT_ID}&t=${Date.now()}`, {
+                    signal: pollController.signal 
+                });
+                const d = await r.json();
+                const finalAnswer = d.answer || (d.status !== 'pending' ? d.answer : null);
+
+                if (finalAnswer) {
+                    finish(finalAnswer, aiMsg);
+                } else {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            } catch (e) {
+                if (e.name !== 'AbortError') {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            }
+        };
+        poll();
+    }
+
+function finish(text, msgElement, isSuccess = true) {
+    if (msgElement) {
+        msgElement.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+        
+        // Звук играет строго при успешном ответе ИИ, при ошибках или банах — тишина
+        if (isSuccess) {
+            try {
+                // ТВОЙ ОРИГИНАЛЬНЫЙ РАБОЧИЙ ПУТЬ: Кэш сбрасывается, файл проигрывается без ошибок 404
+                const audio = new Audio('https://api.log-ai.ru/notify.mp3?v=' + Date.now());
+                audio.volume = 0.4;
+                audio.play().catch(e => console.log("Нужен клик"));
+            } catch (e) {}
+        }
+    }
+    stopPolling();
+}
+
+
+    // Enter для отправки
+    document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('logai-input');
+    if (input) {
+      input.addEventListener('keypress', (e) => {
+        // ИСПРАВЛЕНО: Добавлена проверка !chatIsWaiting, чтобы клавиатура намертво блокировалась во время ожидания ИИ
+        if (e.key === 'Enter' && !e.shiftKey && !chatIsWaiting) {
+          e.preventDefault();
+          sendLogAI();
+        }
+      });
+
+      // ИСПРАВЛЕНО: Текстовое поле плавно растёт вниз до 150px, если текст длинный
+      input.addEventListener('input', function() {
+        this.style.height = 'auto'; 
+        this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+      });
+    }
+    });</script><div id="cookie-notice-wrapper" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #111111; border-top: 1px solid #222222; padding: 10px 15px; box-sizing: border-box; z-index: 99999; display: none; flex-direction: row; justify-content: space-between; align-items: center; gap: 15px; font-family: sans-serif;"><span style="color: #888888; font-size: 12px; line-height: 1.4; text-align: left;">Наш сайт использует файлы cookie для корректной работы. Подробнее — в <a href="/privacy-policy/" style="color: #bfa15f; text-decoration: underline;">Политике конфиденциальности</a>. </span><button onclick="dismissCookieNotice()" style="background: #bfa15f; color: #000000; border: none; padding: 5px 14px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Принять</button></div><style>@media (max-width: 600px) {
+        #cookie-notice-wrapper {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 10px !important;
+            padding: 12px 15px !important;
+        }
+        #cookie-notice-wrapper span {
+            text-align: center !important;
+            font-size: 11px !important;
+        }
+        #cookie-notice-wrapper button {
+            width: 100% !important;
+            padding: 8px !important;
+            font-size: 12px !important;
+        }
+    }</style><script>(function() {
+        var storageKey = 'logai_cookies_accepted';
+        if (!localStorage.getItem(storageKey)) {
+            document.getElementById('cookie-notice-wrapper').style.display = 'flex';
+        }
+    })();
+
+    function dismissCookieNotice() {
+        localStorage.setItem('logai_cookies_accepted', 'true');
+        document.getElementById('cookie-notice-wrapper').style.display = 'none';
+    }</script></body></html>

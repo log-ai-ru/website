@@ -1,0 +1,898 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SBOM: состав ПО, уязвимости и лицензии компонентов | LOG-AI</title><meta name="description" content="Как проверить состав корпоративного ПО с помощью SBOM: выявить уязвимые зависимости, проверить лицензии библиотек и организовать контроль компонентов. LOG-AI."><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://log-ai.ru/sbom-kak-proverit-sostav-korporativnogo-programmnogo-obespecheniya/"><link rel="alternate" type="application/atom+xml" href="https://log-ai.ru/feed.xml" title="LOG-AI - RSS"><link rel="alternate" type="application/json" href="https://log-ai.ru/feed.json" title="LOG-AI - JSON"><meta property="og:title" content="SBOM: состав ПО, уязвимости и лицензии компонентов | LOG-AI"><meta property="og:image" content="https://log-ai.ru/media/website/Log-ai-Logo.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:site_name" content="LOG-AI"><meta property="og:description" content="Как проверить состав корпоративного ПО с помощью SBOM: выявить уязвимые зависимости, проверить лицензии библиотек и организовать контроль компонентов. LOG-AI."><meta property="og:url" content="https://log-ai.ru/sbom-kak-proverit-sostav-korporativnogo-programmnogo-obespecheniya/"><meta property="og:type" content="article"><link rel="stylesheet" href="https://log-ai.ru/assets/css/style.css?v&#x3D;b1f5980528b3cc19f4018c94aea81f52"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://log-ai.ru/sbom-kak-proverit-sostav-korporativnogo-programmnogo-obespecheniya/"},"headline":"SBOM: как проверить состав корпоративного программного обеспечения","datePublished":"2026-10-12T14:44+05:00","dateModified":"2026-10-22T07:36+05:00","description":"Как проверить состав корпоративного ПО с помощью SBOM: выявить уязвимые зависимости, проверить лицензии библиотек и организовать контроль компонентов. LOG-AI.","author":{"@type":"Person","name":"AI Automation","url":"https://log-ai.ru/authors/ai-automation/"},"publisher":{"@type":"Organization","name":"AI Automation"}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript><style>body, html, main, #page, .wrapper, .main { background: #000000 !important; background-color: #000000 !important; }</style><link rel="icon" type="image/png" sizes="32x32" href="/media/files/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/media/files/favicon-16.png"><link rel="apple-touch-icon" sizes="180x180" href="/media/files/favicon-180.png"><meta name="yandex-verification" content="9d14e10b64f3b76c"><meta name="google-site-verification" content="-rKktnoSCGCLZToW-jcZeKu5WvWFGuLKdLwwyCux0-M"></head><body class="page-template"><header class="top js-header"><a class="logo" href="https://log-ai.ru/">LOG-AI</a><nav class="navbar js-navbar"><button class="navbar__toggle js-toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><span class="navbar__toggle-box"><span class="navbar__toggle-inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://log-ai.ru/" target="_self">Главная</a></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Услуги</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/avtomatizaciya-obrabotki-zayavok-i-lidov/" target="_self">Автоматизация обработки заявок и лидов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-biznes-processov-integracii-dannye-i-skvoznye-scenarii/" target="_self">Автоматизация бизнес-процессов</a></li><li><a href="https://log-ai.ru/sbor-i-obrabotka-dannyh/" target="_self">Сбор и обработка данных</a></li><li><a href="https://log-ai.ru/ii-dlya-biznesa-i-nejrosetej/" target="_self">ИИ для бизнеса и нейросети</a></li><li><a href="https://log-ai.ru/specializirovannye-cifrovye-sistemy/" target="_self">Специализированные цифровые системы</a></li><li><a href="https://log-ai.ru/individualnye-korporativnye-sistemy/" target="_self">Корпоративные системы</a></li><li><a href="https://log-ai.ru/tehnicheskoe-soprovozhdenie/" target="_self">Техническое сопровождение</a></li><li><a href="https://log-ai.ru/it-audit-i-predproektnoe-obsledovanie/" title="/it-audit-i-predproektnoe-obsledovanie/" target="_self">IT-аудит и предпроектное обследование</a></li><li><a href="https://log-ai.ru/oblachnyy-i-infrastrukturnyy-konsalting/" title="/oblachnyy-i-infrastrukturnyy-konsalting/" target="_self">Облачный и инфраструктурный консалтинг</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Решения</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakie-sistemy-my-integriruem/" target="_self">Какие системы мы интегрируем</a></li><li><a href="https://log-ai.ru/kak-rabotaet-ii-v-biznese/" target="_self">Как работает ИИ в бизнесе</a></li><li><a href="https://log-ai.ru/resheniya-po-zadacham/" target="_self">Решения по задачам</a></li><li><a href="https://log-ai.ru/avtomatizaciya-proizvodstva/" target="_self">Для производства</a></li><li><a href="https://log-ai.ru/avtomatizaciya-logistiki-i-skladov/" target="_self">Для логистики и складов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-optovoy-torgovli/" target="_self">Для оптовой торговли</a></li><li><a href="https://log-ai.ru/avtomatizaciya-e-commerce/" target="_self">Для e-commerce</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Реализация</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kak-my-rabotaem/" target="_self">Как мы работаем</a></li><li><a href="https://log-ai.ru/dokumentaciya-sistemy/" target="_self">Документация системы</a></li><li><a href="https://log-ai.ru/infrastruktura-i-razmeshchenie/" target="_self">Инфраструктура и размещение</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Выбор</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakuyu-avtomatizaciyu-vybrat/" target="_self">Какую автоматизацию выбрать</a></li><li><a href="https://log-ai.ru/chto-avtomatizirovat-v-biznese-v-pervuyu-ochered/" target="_self">Что автоматизировать в бизнесе в первую очередь</a></li><li><a href="https://log-ai.ru/kak-podgotovit-biznes-k-avtomatizacii/" target="_self">Как подготовить бизнес к автоматизации</a></li><li><a href="https://log-ai.ru/kak-vnedrit-avtomatizaciyu/" target="_self">Как внедрить автоматизацию</a></li><li><a href="https://log-ai.ru/kak-ocenit-rezultat-avtomatizacii/" target="_self">Как оценить результат автоматизации</a></li><li><a href="https://log-ai.ru/stoimost-razrabotki/" target="_self">Стоимость разработки</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">О нас</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/inzhenernyy-sostav/" target="_self">Инженерный состав</a></li><li><a href="https://log-ai.ru/keysy/" target="_self">Кейсы</a></li><li><a href="https://log-ai.ru/glossariy/" target="_self">Глоссарий</a></li><li><a href="https://log-ai.ru/ekspertiza/" target="_self">Экспертиза</a></li><li><a href="https://log-ai.ru/bezopasnost-sistem-dannyh-i-infrastruktury/" target="_self">Безопасность</a></li></ul></li></ul></nav></header><main class="page"><article class="content"><div class="hero hero--noimage"><header class="hero__content hero__content--centered"><div class="wrapper"><h1>SBOM: как проверить состав корпоративного программного обеспечения</h1></div></header></div><div class="entry-wrapper content__entry"><p> </p><p> </p><p> </p><p> </p><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 01. СКРЫТЫЙ СОСТАВ ПО</div><h1 style="font-family: 'SF Mono', Monaco, monospace; font-size: 24px; font-weight: bold; margin: 0 0 10px 0; color: #ffffff; line-height: 1.3; white-space: pre-wrap; word-wrap: break-word;">Что на самом деле поставляет производитель программного обеспечения</h1><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #aaaaaa; margin-bottom: 35px; border-left: 2px solid #14b8a6; padding-left: 15px; white-space: pre-wrap; word-wrap: break-word;">Корпоративное ПО может годами работать без заметных проблем, хотя внутри него остаются устаревшие библиотеки, уязвимые зависимости и компоненты с невыясненными условиями использования. Обнаружить их непросто: готовая система нередко включает сотни сторонних пакетов, часть которых попала в продукт через цепочку зависимостей и никогда не фигурировала в документации заказчика. SBOM позволяет установить, из каких программных компонентов состоит продукт, связать их с известными уязвимостями и проверить лицензионные сведения. Но наличие такого документа ещё не означает, что состав описан полностью, все риски выявлены, а использование каждой библиотеки юридически корректно.</div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Представим предприятие «Вектор». На его серверах работает система управления производственными заказами, складскими остатками и движением материалов. Продукт внедрён, интеграции настроены, сотрудники прошли обучение. Система выполняет свои функции, а серьёзных инцидентов за время эксплуатации не происходило.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">При этом у предприятия есть только эксплуатационная документация, описание конфигурации и номер версии продукта. Сведений о составе сторонних библиотек практически нет.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Однажды служба информационной безопасности получает сообщение об уязвимости в популярном компоненте для обработки архивов. Библиотека используется в разных программных продуктах, поэтому её наличие в корпоративной системе нельзя исключать.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word; font-style: italic;">Администратор проверяет установленные программы. Совпадений нет. Разработчик подтверждает, что его команда не подключает эту библиотеку непосредственно. На первый взгляд проблема отсутствует.</p><div style="padding: 15px 20px; margin: 25px 0; background: #1a0f0f; border-left: 3px solid #ef4444; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Но модуль обработки документов использует сторонний пакет. Этот пакет зависит от библиотеки работы с архивами. Та, в свою очередь, может включать вспомогательные компоненты. Один из них и оказывается затронутым уязвимостью.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">В результате библиотека присутствует в составе приложения, хотя разработчики бизнес-логики не добавляли её напрямую.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Подобные ситуации возникают из-за устройства современной разработки. Программный продукт редко представляет собой один исполняемый файл, написанный с нуля. Обычно это собственный код, сторонние библиотеки, пакеты из репозиториев, компоненты среды выполнения и вспомогательные модули.</p><p style="font-size: 15px; color: #ef4444; font-weight: bold; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Часть зависимостей включается непосредственно, часть приходит через другие пакеты. Некоторые компоненты объединяются с приложением при сборке, поэтому их не всегда можно обнаружить по списку установленных программ.</p><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0 0 25px 0; white-space: pre-wrap; word-wrap: break-word;">На практике предприятие сталкивается с проблемой: оно отвечает за безопасную эксплуатацию системы, но не всегда располагает сведениями, необходимыми для быстрой оценки её внутреннего состава.</p></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">SBOM (Software Bill of Materials) — это структурированный перечень программных компонентов определённого продукта с описанием их характеристик и, в зависимости от формата и полноты документа, связей между ними.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word; font-style: italic;">SBOM позволяет анализировать состав ПО, автоматически сопоставлять компоненты с данными об уязвимостях и контролировать изменения.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 15px 0; white-space: pre-wrap; word-wrap: break-word;">SBOM помогает ответить на вопросы:</p><div style="margin: 15px 0 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7; list-style-type: square;"><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Какие компоненты входят в конкретную версию продукта?</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Какие из них разработаны поставщиком, а какие получены из сторонних источников?</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Какие зависимости используются непосредственно, а какие подключаются через другие пакеты?</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Есть ли среди компонентов версии с известными уязвимостями?</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Какие сведения о лицензиях доступны и что требует дополнительной проверки?</li><li style="margin-bottom: 0; white-space: pre-wrap; word-wrap: break-word;">Что изменилось после обновления системы?</li></ul></div><p style="font-size: 15px; color: #ef4444; font-weight: bold; margin: 25px 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Но у этого инструмента есть граница применимости. SBOM описывает заявленный или обнаруженный состав, а не доказывает безопасность программы. Если компонент пропущен при формировании перечня, он не появится в результатах анализа только потому, что предприятие использует правильный формат.</p><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0 0 35px 0; white-space: pre-wrap; word-wrap: break-word;">Поэтому проверять необходимо не только содержание документа, но и то, насколько он соответствует реально поставленному программному обеспечению.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // TRANSITIVE_DEPENDENCY_CHAIN ]</div><svg viewbox="0 0 620 230" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><line x1="110" y1="90" x2="510" y2="90" stroke="#333333" stroke-width="1.5"></line><line x1="110" y1="90" x2="510" y2="90" stroke="#14b8a6" stroke-width="1.2" stroke-dasharray="4 4"></line><polygon points="210,90 204,86 204,94" fill="#14b8a6"></polygon><polygon points="410,90 404,86 404,94" fill="#14b8a6"></polygon><circle cx="110" cy="90" r="5" fill="#14b8a6"></circle><rect x="25" y="115" width="170" height="60" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="35" y="136" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold">01. СОБСТВЕННЫЙ КОД</text><text x="35" y="154" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Бизнес-логика системы</text><text x="35" y="165" fill="#14b8a6" font-family="-apple-system, sans-serif" font-size="9">Видимый слой контура</text><circle cx="310" cy="90" r="5" fill="#ffffff"></circle><rect x="225" y="115" width="170" height="60" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="235" y="136" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold">02. ПРЯМОЙ ПАКЕТ</text><text x="235" y="154" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Сторонняя библиотека</text><text x="235" y="165" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9">обработки документов</text><circle cx="510" cy="90" r="5" fill="#ef4444"></circle><rect x="425" y="115" width="170" height="60" rx="3" fill="#111111" stroke="#ef4444" stroke-width="1.2"></rect><text x="435" y="136" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold">03. СКРЫТЫЙ КОМПОНЕНТ</text><text x="435" y="154" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">Библиотека архивации</text><text x="435" y="165" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="9" font-weight="bold">⚠️ Теневая уязвимость</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 02. ГРАФ ЗАВИСИМОСТЕЙ</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Почему списка библиотек недостаточно</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Чтобы понять устройство приложения, необходимо рассматривать не только компоненты, но и отношения между ними.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 15px 0; white-space: pre-wrap; word-wrap: break-word;">Допустим, в системе «Вектора» используется следующая структура:</p><div style="margin: 15px 0 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #aaaaaa; line-height: 1.5; box-sizing: border-box; width: 100%;">Корпоративная система<br>├── Модуль обработки документов<br>│ ├── Библиотека разбора XML<br>│ │ └── Общий вспомогательный пакет<br>│ └── Библиотека работы с архивами<br>├── Модуль интеграции<br>│ ├── HTTP-клиент<br>│ │ └── Библиотека обработки сетевых ответов<br>│ └── Библиотека сериализации данных<br>└── Среда выполнения</div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word; font-style: italic;">Это упрощённая схема, но она показывает важный момент.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Если приложение непосредственно использует HTTP-клиент, это прямая зависимость. Если клиент использует другую библиотеку, а она — ещё один пакет, такие компоненты являются транзитивными зависимостями относительно исходного приложения.</p><div style="padding: 15px 20px; margin: 25px 0; background: #1a0f0f; border-left: 3px solid #ef4444; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Именно транзитивные зависимости часто создают пробелы в учёте. Разработчик может знать, какие пакеты он подключил сам, но не проверять каждую библиотеку, которая попала в продукт через сторонние модули.</p></div><p style="font-size: 15px; color: #ef4444; font-weight: bold; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Для поиска уязвимостей это имеет прямое значение. Опасный компонент может присутствовать в поставке, даже если его название никогда не встречалось в исходном коде бизнес-логики.</p></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Однако и здесь необходима точность: наличие зависимости в графе ещё не доказывает, что соответствующий код попал в конечную сборку или доступен для эксплуатации. Состав пакетов на этапе разработки и фактический состав поставляемого продукта могут различаться.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word; font-style: italic;">Например, пакет может использоваться только при тестировании, исключаться при сборке или заменяться другой реализацией. Возможна и обратная ситуация: часть кода встроена в бинарный файл, поэтому её трудно обнаружить обычным анализом зависимостей.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 15px 0; white-space: pre-wrap; word-wrap: break-word;">Поэтому при проверке корпоративного ПО полезно различать три объекта:</p><div style="margin: 15px 0 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7; list-style-type: square;"><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Дерево зависимостей проекта</strong> — показывает, какие пакеты объявлены и разрешены инструментами сборки.</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">SBOM сборки</strong> — описывает компоненты, относящиеся к определённому результату сборки, в пределах охвата использованного метода.</li><li style="margin-bottom: 0; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Состав установленной поставки</strong> — то, что фактически передано заказчику и развёрнуто в его инфраструктуре.</li></ul></div><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #ef4444; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Эти представления связаны, но не тождественны. Если предприятие проверило только файл зависимостей разработчика, оно ещё не подтвердило состав установленной версии. Если поставщик передал SBOM, сформированный для другой сборки, документ также не решает задачу автоматически.</p></div><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0 0 35px 0; white-space: pre-wrap; word-wrap: break-word;">Для критичных систем необходимо установить, какой именно объект проверяется, и сохранить связь между результатами анализа и конкретной версией продукта.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // SOFTWARE_COMPOSITION_LEVELS ]</div><svg viewbox="0 0 620 230" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><line x1="110" y1="90" x2="510" y2="90" stroke="#222222" stroke-width="2"></line><line x1="110" y1="90" x2="510" y2="90" stroke="#14b8a6" stroke-width="1.2" stroke-dasharray="4 4"></line><polygon points="210,90 204,86 204,94" fill="#14b8a6"></polygon><polygon points="410,90 404,86 404,94" fill="#14b8a6"></polygon><circle cx="110" cy="90" r="5" fill="#14b8a6"></circle><rect x="25" y="115" width="170" height="60" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="35" y="136" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">01. ДЕРЕВО ПРОЕКТА</text><text x="35" y="154" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Объявленные пакеты</text><text x="35" y="165" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">в репозитории исходников</text><circle cx="310" cy="90" r="5" fill="#14b8a6"></circle><rect x="225" y="115" width="170" height="60" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="235" y="136" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">02. SBOM СБОРКИ</text><text x="235" y="154" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Компоненты на этапе</text><text x="235" y="165" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">компиляции пакета</text><circle cx="510" cy="90" r="5" fill="#ffffff"></circle><rect x="425" y="115" width="170" height="60" rx="3" fill="#111111" stroke="#14b8a6" stroke-width="1.2"></rect><text x="435" y="136" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">03. РЕАЛЬНЫЙ ФАКТ</text><text x="435" y="149" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">Что фактически развернуто</text><text x="435" y="161" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">на серверах «Вектора»</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 03. СОДЕРЖАНИЕ КАЧЕСТВЕННОГО SBOM</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Какие данные необходимы для проверки</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">SBOM должен быть не просто перечнем названий, а пригодным для сопоставления набором сведений.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0; white-space: pre-wrap; word-wrap: break-word;">Представим, что в документе указано:</p><div style="margin: 10px 0 20px 0; padding: 12px 15px; background: #0b0b0b; border: 1px solid #1a1a1a; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ef4444; width: 100%; box-sizing: border-box;">archive-parser</div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Этого недостаточно, чтобы уверенно определить компонент. Неизвестны поставщик, версия, экосистема пакета и его точное происхождение. Одно и то же или похожее название может встречаться у разных проектов.</p><p style="font-size: 15px; color: #ef4444; font-weight: bold; margin: 0 0 25px 0; white-space: pre-wrap; word-wrap: break-word;">Если инструмент сопоставит такой компонент с базой уязвимостей только по названию, результат может оказаться ошибочным.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 15px 0; white-space: pre-wrap; word-wrap: break-word;">Для практической работы желательно иметь следующие сведения:</p><div style="display: flex; flex-wrap: wrap; gap: 15px; margin: 20px 0 25px 0; width: 100%;"><div style="flex: 1 1 300px; background: #0b0b0b; border: 1px solid #1a1a1a; padding: 15px; box-sizing: border-box;"><div style="font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Название компонента</div><div style="font-size: 13px; color: #aaaaaa; border-top: 1px solid #151515; padding-top: 8px; white-space: pre-wrap; word-wrap: break-word;">Первичная идентификация</div></div><div style="flex: 1 1 300px; background: #0b0b0b; border: 1px solid #1a1a1a; padding: 15px; box-sizing: border-box;"><div style="font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Версия</div><div style="font-size: 13px; color: #aaaaaa; border-top: 1px solid #151515; padding-top: 8px; white-space: pre-wrap; word-wrap: break-word;">Сопоставление версии с данными об уязвимостях и поиск доступных исправлений</div></div><div style="flex: 1 1 300px; background: #0b0b0b; border: 1px solid #1a1a1a; padding: 15px; box-sizing: border-box;"><div style="font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Поставщик или автор</div><div style="font-size: 13px; color: #aaaaaa; border-top: 1px solid #151515; padding-top: 8px; white-space: pre-wrap; word-wrap: break-word;">Уточнение происхождения</div></div><div style="flex: 1 1 300px; background: #0b0b0b; border: 1px solid #1a1a1a; padding: 15px; box-sizing: border-box;"><div style="font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Уникальный идентификатор</div><div style="font-size: 13px; color: #aaaaaa; border-top: 1px solid #151515; padding-top: 8px; white-space: pre-wrap; word-wrap: break-word;">Более надёжное сопоставление компонента</div></div><div style="flex: 1 1 300px; background: #0b0b0b; border: 1px solid #1a1a1a; padding: 15px; box-sizing: border-box;"><div style="font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Прямые и транзитивные зависимости</div><div style="font-size: 13px; color: #aaaaaa; border-top: 1px solid #151515; padding-top: 8px; white-space: pre-wrap; word-wrap: break-word;">Понимание пути включения в продукт</div></div><div style="flex: 1 1 300px; background: #0b0b0b; border: 1px solid #1a1a1a; padding: 15px; box-sizing: border-box;"><div style="font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Лицензионные сведения</div><div style="font-size: 13px; color: #aaaaaa; border-top: 1px solid #151515; padding-top: 8px; white-space: pre-wrap; word-wrap: break-word;">Первичная оценка условий использования</div></div><div style="flex: 1 1 300px; background: #0b0b0b; border: 1px solid #1a1a1a; padding: 15px; box-sizing: border-box;"><div style="font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Идентификатор продукта и сборки</div><div style="font-size: 13px; color: #aaaaaa; border-top: 1px solid #151515; padding-top: 8px; white-space: pre-wrap; word-wrap: break-word;">Привязка документа к конкретной поставке</div></div><div style="flex: 1 1 300px; background: #0b0b0b; border: 1px solid #1a1a1a; padding: 15px; box-sizing: border-box;"><div style="font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Данные о формировании SBOM</div><div style="font-size: 13px; color: #aaaaaa; border-top: 1px solid #151515; padding-top: 8px; white-space: pre-wrap; word-wrap: break-word;">Понимание метода, инструмента и ограничений</div></div><div style="flex: 1 1 300px; background: #0b0b0b; border: 1px solid #1a1a1a; padding: 15px; box-sizing: border-box;"><div style="font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Контрольная сумма, если применима</div><div style="font-size: 13px; color: #aaaaaa; border-top: 1px solid #151515; padding-top: 8px; white-space: pre-wrap; word-wrap: break-word;">Проверка идентичности конкретного артефакта</div></div></div></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word; font-style: italic;">В зависимости от формата и профиля документа состав полей может различаться. Поэтому требования к поставщику следует формулировать не как абстрактное «предоставить SBOM», а как перечень обязательных сведений и условий их качества.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Особое значение имеют идентификаторы компонентов.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Например, PURL (Package URL) позволяет структурированно указать тип пакета, пространство имён, название и версию. CPE (Common Platform Enumeration) используется для идентификации программных продуктов в соответствующих системах учёта и базах уязвимостей.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Это не взаимозаменяемые идентификаторы: каждый применяется в подходящем контексте. Если инструмент располагает только названием библиотеки, а достоверной версии или идентификатора нет, результат сопоставления необходимо проверять дополнительно.</p></div><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Что изменилось в требованиях к SBOM в 2026 году:</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">В июле 2026 года CISA и международные партнёры обновили рекомендации по минимальному составу SBOM. Среди изменений — требования к подписи автора и версии документа, контрольным суммам компонентов, лицензионным сведениям, инструменту формирования и контексту создания SBOM. Также уточнены требования к идентификации компонентов, описанию зависимостей и полноте охвата программного обеспечения.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Для заказчика это означает, что при приёмке недостаточно получить перечень библиотек. Важно понимать, кто сформировал документ, к какой версии продукта он относится, каким способом определён состав и какие ограничения остались у проверки.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Эти рекомендации можно использовать при формировании требований к поставщику. Их применимость и обязательность определяются требованиями конкретного проекта и применимыми нормами.</p><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Как выглядит компонент в машиночитаемом документе</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0; white-space: pre-wrap; word-wrap: break-word;">Ниже приведён иллюстративный фрагмент JSON в стиле CycloneDX. Это сокращённый пример структуры данных, а не полный SBOM, предназначенный для автоматической загрузки в сканер.</p><div style="margin: 15px 0 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%;"><pre style="margin: 0; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #14b8a6; line-height: 1.5; white-space: pre-wrap; word-wrap: break-word; word-break: break-all;">{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.7",
+  "serialNumber": "urn:uuid:3e671687-395b-41f5-a30f-a58921a69b79",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-10-15T12:00:00Z",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "name": "sbom-generator",
+          "version": "1.0.0"
+        }
+      ]
+    },
+    "lifecycles": [
+      {
+        "phase": "build"
+      }
+    ],
+    "component": {
+      "type": "application",
+      "name": "vector-production-system",
+      "version": "4.2.7"
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "name": "archive-parser",
+      "version": "2.4.1",
+      "purl": "pkg:generic/archive-parser@2.4.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ]
+    }
+  ]
+}
+</pre></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Пример показывает формат и версию спецификации, идентификатор документа, сведения о времени и инструменте формирования, этап жизненного цикла и один программный компонент. Название инструмента и данные приложения условные. В рабочем SBOM сведения должны соответствовать фактической сборке. Для проверки полноты дополнительно оцениваются состав компонентов, их идентификаторы, контрольные суммы, лицензии и отношения зависимостей.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word; font-style: italic;">Для реального документа необходимо дополнительно обеспечить корректную структуру, подходящую идентификацию пакетов, описание зависимостей, соответствующие метаданные и другие сведения, предусмотренные выбранным форматом и требованиями предприятия.</p><p style="font-size: 15px; color: #ef4444; font-weight: bold; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Обратите внимание на ещё одну тонкость: MIT в этом примере — заявленное значение, а не результат юридической проверки. Оно не доказывает, что библиотека действительно распространяется только на этих условиях, что в комплекте нет дополнительных лицензионных файлов или что все обязательства выполнены.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">То же относится к версии. Она помогает определить возможный диапазон уязвимости, но сама по себе не подтверждает, что конкретная сборка содержит неизменённый исходный компонент.</p><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0 0 35px 0; white-space: pre-wrap; word-wrap: break-word;">Качество SBOM определяется не количеством строк, а тем, насколько надёжно он описывает нужный продукт и позволяет проверить каждую существенную находку.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // SBOM_DATA_FIELDS_STRUCTURE ]</div><svg viewbox="0 0 620 250" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><rect x="220" y="15" width="180" height="50" rx="4" fill="#111111" stroke="#14b8a6" stroke-width="1.5"></rect><text x="310" y="38" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">ФАЙЛ SBOM (JSON)</text><text x="310" y="54" fill="#14b8a6" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Формат CycloneDX / SPDX</text><path d="M 310 65 L 310 135" stroke="#333333" stroke-width="1.5"></path><path d="M 310 85 L 125 85 L 125 135" stroke="#333333" stroke-width="1.2"></path><path d="M 310 85 L 495 85 L 495 135" stroke="#333333" stroke-width="1.2"></path><polygon points="125,135 121,129 129,129" fill="#14b8a6"></polygon><polygon points="310,135 306,129 314,129" fill="#14b8a6"></polygon><polygon points="495,135 491,129 499,129" fill="#14b8a6"></polygon><rect x="25" y="135" width="180" height="75" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="35" y="156" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">01. МЕТАДАННЫЕ</text><text x="35" y="174" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Идентификатор сборки, дата,</text><text x="35" y="186" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">инструмент генерации и</text><text x="35" y="198" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">исходные ограничения метода</text><rect x="220" y="135" width="180" height="75" rx="3" fill="#111111" stroke="#14b8a6" stroke-width="1"></rect><text x="230" y="156" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">02. ВЕРИФИКАЦИЯ</text><text x="230" y="174" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">Валидные PURL и CPE,</text><text x="230" y="186" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">точные номера версий и</text><text x="230" y="198" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">контрольные суммы архивов</text><rect x="415" y="135" width="180" height="75" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="425" y="156" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">03. ГРАФ СВЯЗЕЙ</text><text x="425" y="174" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Прямые и транзитивные</text><text x="425" y="186" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">зависимости, заявленные</text><text x="425" y="198" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">лицензионные условия пакетов</text></svg></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 04. ФОРМИРОВАНИЕ И ВЕРИФИКАЦИЯ</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Как получить достоверный перечень</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Метод формирования зависит от того, кто контролирует разработку и какие материалы доступны.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Если предприятие разрабатывает ПО самостоятельно, SBOM можно формировать на основе зависимостей проекта и результатов сборки. Если система поставляется подрядчиком, исходным документом обычно становится SBOM производителя. Если ПО давно установлено, а документация неполна, может потребоваться анализ готовых артефактов.</p><div style="padding: 15px 20px; margin: 25px 0; background: #1a0f0f; border-left: 3px solid #ef4444; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Ни один из этих методов не гарантирует абсолютной полноты сам по себе.</p></div><div style="margin: 25px 0; max-width: 850px; width: 100%;"><div style="margin-bottom: 20px; padding: 15px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">Если предприятие контролирует разработку</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;">Разработчик использует менеджер пакетов, файлы описания зависимостей и систему сборки. На основе этих данных можно получить перечень используемых компонентов и их версий. Затем SBOM формируется для конкретного выпуска продукта. Важно учитывать, что некоторые зависимости относятся только к инструментам разработки и тестирования, а некоторые компоненты включаются в поставку косвенно. Поэтому перечень всех пакетов проекта не всегда соответствует составу конечного приложения. Практически разумный подход — сформировать SBOM из данных сборки, а затем проверить, соответствует ли он выпускаемому артефакту. Если в процессе используются контейнеры, необходимо определить, описывает ли документ только приложение или также базовый образ и другие включённые компоненты. Для полной картины могут потребоваться отдельные перечни, связанные с соответствующими объектами.</p></div><div style="padding: 15px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">Если продукт поставляет подрядчик</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;">Предприятие запрашивает SBOM для фактически передаваемой версии. Затем проверяет: совпадают ли идентификаторы продукта и сборки; указан ли используемый формат и его версия; присутствуют ли версии и идентификаторы компонентов; описаны ли зависимости в необходимом объёме; обозначены ли ограничения полноты; есть ли сведения о происхождении и формировании документа. Если подрядчик передал SBOM для версии 4.2, а установлена сборка 4.2.7 с дополнительными модулями, необходимо выяснить, распространяется ли документ на эту сборку. Нельзя автоматически считать его актуальным только потому, что номера версий похожи. Если поставщик не раскрывает часть состава по коммерческим или техническим причинам, следует согласовать альтернативный способ проверки. Это может быть независимый анализ, подтверждение определённых характеристик поставщиком или предоставление ограниченного набора сведений в договорном порядке. При этом отсутствие доступа к исходному коду не отменяет необходимости управлять риском. Оно лишь ограничивает способы, которыми заказчик может независимо проверить внутреннее устройство продукта.</p></div></div></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Если система уже работает</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Когда исходники недоступны, можно исследовать пакеты, контейнерные образы, библиотеки и другие артефакты, доступные в установленной поставке. Инструменты могут извлекать метаданные, определять версии пакетов, искать известные сигнатуры компонентов и анализировать файловую систему.</p><p style="font-size: 15px; color: #ef4444; font-weight: bold; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Но бинарный анализ имеет ограничения. Версия может быть скрыта, библиотека может быть встроена в исполняемый файл, а код — изменён или объединён с другими модулями.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word; font-style: italic;">Поэтому важно различать подтверждённое обнаружение компонента и предположение инструмента. Неопределённые результаты необходимо либо уточнять дополнительными методами, либо явно отмечать как ограничение анализа.</p><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Сверка двух источников</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">В этом случае следует получить SBOM поставщика и независимо проверить доступные артефакты установленной сборки.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Допустим, в перечне производителя указаны 840 компонентов. Инструмент анализа поставки обнаружил 867 записей, из которых часть относится к дополнительным модулям, а часть может дублировать компоненты под другими идентификаторами.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Нельзя заключить, что поставщик скрыл 27 библиотек. Количество строк ещё не показывает количество уникальных компонентов, а методы анализа могли охватывать разные объекты. Нужно нормализовать идентификаторы, сопоставить версии и проверить расхождения.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Для каждой существенной разницы устанавливается причина: дополнительный модуль, изменение сборки, различие методов обнаружения, неполный SBOM или ошибочное сопоставление.</p><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0 0 35px 0; white-space: pre-wrap; word-wrap: break-word;">Результат такой проверки — не обязательно один идеально полный файл. Важнее получить перечень подтверждённых компонентов, описать известные ограничения и зафиксировать неразрешённые вопросы.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // SBOM_CROSS_VALIDATION_DIFFERENTIAL ]</div><svg viewbox="0 0 620 240" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><rect x="15" y="30" width="180" height="60" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="25" y="51" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold">А. SBOM ВЕНДОРА</text><text x="25" y="69" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">840 заявленных пакетов</text><text x="25" y="81" fill="#14b8a6" font-family="-apple-system, sans-serif" font-size="9">Декларативный граф</text><path d="M 195 60 L 310 60 L 310 110" stroke="#333333" stroke-width="1.2"></path><path d="M 425 60 L 310 60 L 310 110" stroke="#333333" stroke-width="1.2"></path><polygon points="310,110 306,104 314,104" fill="#14b8a6"></polygon><rect x="425" y="30" width="180" height="60" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="435" y="51" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold">Б. БИНАРНЫЙ СКАН</text><text x="435" y="69" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">867 найденных сигнатур</text><text x="435" y="81" fill="#14b8a6" font-family="-apple-system, sans-serif" font-size="9">Фактический ИТ-контур</text><rect x="190" y="110" width="240" height="50" rx="3" fill="#165c52" fill-opacity="0.15" stroke="#14b8a6" stroke-width="1"></rect><text x="310" y="131" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">МОДУЛЬ ДИФФ-СВЕРКИ</text><text x="310" y="146" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10" text-anchor="middle">Нормализация ID и разбор +27 дельт</text><path d="M 310 160 L 310 195" stroke="#14b8a6" stroke-width="1.5"></path><polygon points="310,195 306,189 314,189" fill="#14b8a6"></polygon><rect x="170" y="195" width="280" height="35" rx="2" fill="#111111" stroke="#14b8a6" stroke-width="1.2"></rect><text x="310" y="216" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="9" font-weight="bold" text-anchor="middle">РЕЗУЛЬТАТ: ВЕРИФИЦИРОВАННЫЙ РЕЕСТР БЕЗОПАСНОСТИ</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 05. АНАЛИЗ УЯЗВИМОСТЕЙ</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Как отличить реальную проблему от ошибочного совпадения</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">После проверки состава можно переходить к поиску уязвимостей.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Инструмент сопоставляет компоненты с базами уязвимостей и сведениями производителей. В зависимости от доступных данных анализируются идентификаторы пакетов, версии, диапазоны затронутых выпусков и другие признаки.</p><div style="padding: 15px 20px; margin: 25px 0; background: #1a0f0f; border-left: 3px solid #ef4444; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Но автоматическое совпадение — ещё не доказательство того, что установленный продукт уязвим.</p></div><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 15px 0; white-space: pre-wrap; word-wrap: break-word;">Ошибки возникают по нескольким причинам:</p><div style="margin: 15px 0 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7; list-style-type: square;"><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">компонент определён неправильно;</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">версия неизвестна или извлечена неточно;</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">уязвимость относится к другой ветке разработки;</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">производитель использовал исправление без изменения исходного номера версии;</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">в продукте отсутствует затронутый функционал;</li><li style="margin-bottom: 0; white-space: pre-wrap; word-wrap: break-word;">информация в источниках обновилась, а данные сканера устарели.</li></ul></div><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0 0 25px 0; white-space: pre-wrap; word-wrap: break-word;">Поэтому задача специалиста — проверить применимость находки, а не просто переписать её название в отчёт.</p><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Сквозное расследование: уязвимость в библиотеке архивов</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Система анализа безопасности предприятия „Вектор“ обнаружила компонент archive-parser версии 2.4.1. Сканер связал его с опубликованной уязвимостью и присвоил находке высокий приоритет.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 15px 0; white-space: pre-wrap; word-wrap: break-word;">На этом этапе известно только то, что существует потенциальное совпадение. Чтобы принять решение, необходимо пройти несколько проверок:</p><div style="margin: 15px 0 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7;"><li style="margin-bottom: 12px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Первое — идентификация.</strong><br>Подтверждаем, что найден именно тот проект и пакет, к которому относится уведомление. Проверяем версию, происхождение и доступные идентификаторы. Если название совпадает, а экосистема и версия неизвестны, находка пока не считается подтверждённой.</li><li style="margin-bottom: 12px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Второе — диапазон версий.</strong><br>Изучаем описание уязвимости и сведения производителя. Проверяем, входит ли версия компонента в затронутый диапазон и существует ли исправление. Нельзя ограничиваться общим сообщением о том, что «библиотека уязвима»: необходимо установить, к каким версиям относится утверждение.</li><li style="margin-bottom: 0; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Третье — путь зависимости.</strong><br>Выясняем, какой модуль корпоративной системы использует компонент. Для этого изучаем граф зависимостей и доступные сведения о сборке. Если библиотека пришла через модуль обработки документов, это указывает направление дальнейшей проверки. Но сам граф ещё не доказывает возможность эксплуатации.</li></ul></div></div><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><div style="margin: 0 0 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7;"><li style="margin-bottom: 12px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Четвёртое — условия использования.</strong><br>Проверяем, обрабатывает ли модуль архивы, поступающие от внешних пользователей или из других недоверенных источников. Уточняем, какие проверки выполняются до передачи файла библиотеке. Если проблемный код обрабатывает специально сформированные данные, потенциальный сценарий эксплуатации может быть существенно опаснее, чем в случае обработки строго контролируемых файлов. Однако утверждение, что уязвимый функционал не используется, должно подтверждаться анализом кода, конфигурации или испытаниями. Одного предположения разработчика недостаточно.</li><li style="margin-bottom: 12px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Пятое — последствия.</strong><br>Оцениваем, что может произойти при эксплуатации: нарушение доступности, чтение данных, выполнение кода или другой эффект, предусмотренный конкретной уязвимостью. Значение имеют права процесса, сетевые ограничения, доступ к данным и критичность затронутого сервиса.</li><li style="margin-bottom: 0; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Шестое — решение.</strong><br>Если уязвимость подтверждена и применима, определяем способ устранения. Если совпадение ошибочное или проблема не затрагивает конкретную конфигурацию, документируем доказательства и основания вывода. Если данных недостаточно, находка остаётся открытой до получения необходимой информации.</li></ul></div><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Такой порядок позволяет отличить три совершенно разные ситуации: ошибку идентификации, подтверждённую уязвимость с ограниченной применимостью и реальный риск, требующий срочного вмешательства.</p><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Почему нельзя ориентироваться только на CVSS</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">CVSS помогает описать техническую серьёзность уязвимости по стандартизированной методике. Но его оценка не заменяет анализ риска для конкретной системы. Для предприятия важно учитывать доступность компонента, условия эксплуатации, наличие исправления, известные случаи эксплуатации и последствия для бизнес-процесса.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word; font-style: italic;">Например, одинаковая библиотека может использоваться в двух продуктах. В первом она обрабатывает недоверенные файлы на доступном извне сервере. Во втором соответствующая функция недоступна, а компонент используется в существенно иной конфигурации. Это не означает, что второй продукт автоматически безопасен. Но основания для приоритизации и необходимые меры могут различаться.</p></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><div style="padding: 15px 20px; margin: 25px 0; background: #1a0f0f; border-left: 3px solid #ef4444; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Особенно важно учитывать подтверждённые случаи эксплуатации уязвимости и доступность уязвимого компонента из недоверенной среды. В таких случаях требуется оперативная оценка даже до завершения всех второстепенных проверок.</p></div><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Как закрывать находки обоснованно</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0; white-space: pre-wrap; word-wrap: break-word;">Для каждой существенной уязвимости нужно сохранить:</p><div style="margin: 15px 0 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7; list-style-type: square;"><li style="margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">идентификатор и описание проблемы;</li><li style="margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">идентификацию компонента и версии;</li><li style="margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">продукт и сборку, в которых компонент обнаружен;</li><li style="margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">источник сведений об уязвимости;</li><li style="margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">подтверждение применимости или неприменимости;</li><li style="margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">сведения о доступном исправлении;</li><li style="margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">принятое решение и его обоснование;</li><li style="margin-bottom: 0; white-space: pre-wrap; word-wrap: break-word;">ответственного и условия повторной проверки.</li></ul></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Если уязвимость признана неприменимой, необходимо объяснить почему. Например, подтверждено отсутствие затронутого кода в конкретной сборке или установлено, что версия не входит в затронутый диапазон.</p><p style="font-size: 15px; color: #ef4444; font-weight: bold; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Формулировка «ложное срабатывание» без доказательств не решает задачу: она лишь скрывает неопределённость.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 35px 0; white-space: pre-wrap; word-wrap: break-word;">Если проблема подтверждена, но исправление пока недоступно, можно применять временные меры — ограничивать доступ, отключать затронутую функцию, менять правила обработки входных данных или усиливать мониторинг. Такие меры снижают риск, но не обязательно устраняют уязвимость. Поэтому для них необходимо назначать ответственного, срок действия и условия пересмотра.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // VULNERABILITY_INVESTIGATION_PIPELINE ]</div><svg viewbox="0 0 620 250" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><line x1="35" y1="90" x2="585" y2="90" stroke="#222222" stroke-width="2"></line><line x1="35" y1="90" x2="585" y2="90" stroke="#14b8a6" stroke-width="1.2" stroke-dasharray="3 3"></line><polygon points="195,90 189,86 189,94" fill="#14b8a6"></polygon><polygon points="390,90 384,86 384,94" fill="#14b8a6"></polygon><circle cx="95" cy="90" r="5" fill="#14b8a6"></circle><rect x="15" y="115" width="160" height="75" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="25" y="136" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold">ВХОДНОЙ АНАЛИЗ</text><text x="25" y="154" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">1. Сверка PURL / CPE</text><text x="25" y="166" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">2. Проверка ветки</text><text x="25" y="178" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">3. Диапазон версий</text><circle cx="310" cy="90" r="5" fill="#ffffff"></circle><rect x="220" y="115" width="180" height="75" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="230" y="136" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold">ДОСТИЖИМОСТЬ КОДА</text><text x="230" y="154" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">4. Путь в графе сборки</text><text x="230" y="166" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">5. Оценка недоверенной</text><text x="230" y="178" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">входной среды</text><circle cx="525" cy="90" r="5" fill="#14b8a6"></circle><rect x="435" y="115" width="170" height="75" rx="3" fill="#111111" stroke="#14b8a6" stroke-width="1.2"></rect><text x="445" y="136" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold">ВЕРДИКТ И МЕРЫ</text><text x="445" y="154" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">6. Расчет бизнес-риска</text><text x="445" y="166" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">7. Фиксация патча или</text><text x="445" y="178" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">компенсирующих мер ✔</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 06. VEX: оценка применимости уязвимостей</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Когда компонент есть, а уязвимость не затрагивает продукт</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">В процессе проверки предприятие может обнаружить библиотеку, которая фигурирует в уведомлении об уязвимости, но после анализа выяснить, что проблема не применима к конкретному продукту.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Для структурированного обмена подобными заключениями существует VEX — Vulnerability Exploitability eXchange.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word; font-style: italic;">VEX позволяет представить сведения о применимости уязвимости к определённому продукту или компоненту. В зависимости от используемого формата и профиля документ может содержать статус, обоснование и дополнительные сведения, необходимые для интерпретации.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Например, производитель подтверждает, что уязвимость не затрагивает конкретную сборку, поскольку в ней отсутствует уязвимый компонент или используется исправленный код.</p></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><div style="padding: 15px 20px; margin: 25px 0; background: #1a0f0f; border-left: 3px solid #ef4444; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Но заключение должно относиться именно к проверяемому продукту и версии. Если производитель анализировал другую сборку, переносить вывод на установленную систему без проверки нельзя.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word; font-style: italic;">Кроме того, статус неприменимости не должен превращаться в бессрочное исключение. После изменения состава, обновления конфигурации или появления новых сведений вывод может потребовать пересмотра.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">VEX полезен, когда сканер обнаружил совпадение, а производитель располагает более точной информацией о внутреннем устройстве продукта.</p><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0 0 35px 0; white-space: pre-wrap; word-wrap: break-word;">Однако доверять такому заключению следует с учётом его происхождения и обоснования. Если подтверждающих данных недостаточно, предприятие должно сохранять неопределённость и продолжать анализ.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // VEX_CONTEXT_EXPLOITABILITY_FILTER ]</div><svg viewbox="0 0 620 240" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><rect x="15" y="35" width="180" height="60" rx="3" fill="#111111" stroke="#ef4444" stroke-width="1"></rect><text x="25" y="56" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">СОВПАДЕНИЯ СКАНЕРА</text><text x="25" y="74" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Потенциальные CVE по</text><text x="25" y="86" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">имени и версии пакета</text><path d="M 195 65 L 245 65" stroke="#ef4444" stroke-width="1.5"></path><polygon points="245,65 239,61 239,69" fill="#ef4444"></polygon><rect x="245" y="35" width="140" height="90" rx="4" fill="#111111" stroke="#14b8a6" stroke-width="1.5"></rect><text x="315" y="60" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="12" font-weight="bold" text-anchor="middle">ШЛЮЗ VEX</text><text x="315" y="82" fill="#14b8a6" font-family="-apple-system, sans-serif" font-size="10" text-anchor="middle">Анализ контекста</text><text x="315" y="96" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">и кода вендором</text><path d="M 385 65 L 435 65" stroke="#14b8a6" stroke-width="1.5"></path><polygon points="435,65 429,61 429,69" fill="#14b8a6"></polygon><rect x="435" y="35" width="170" height="60" rx="3" fill="#111111" stroke="#14b8a6" stroke-width="1"></rect><text x="445" y="56" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold">NOT_AFFECTED ✔</text><text x="445" y="74" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9">Код недостижим или</text><text x="445" y="86" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9">уже применён патч</text><path d="M 315 125 L 315 155 L 435 155" stroke="#ef4444" stroke-width="1.2" stroke-dasharray="3 3" fill="none"></path><polygon points="435,155 429,151 429,159" fill="#ef4444"></polygon><rect x="435" y="125" width="170" height="60" rx="3" fill="#111111" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"></rect><text x="445" y="146" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold">AFFECTED ⚠️</text><text x="445" y="164" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9">Требуется срочный патч</text><text x="445" y="176" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9">или компенсирующие меры</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 07. ЛИЦЕНЗИОННЫЙ КОНТРОЛЬ</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Почему состав ПО необходимо проверять юридически</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">У SBOM есть ещё одна важная область применения — учёт лицензий сторонних компонентов.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Открытый исходный код не означает отсутствия условий использования. Разные лицензии могут устанавливать требования к сохранению уведомлений, предоставлению текста лицензии, раскрытию исходных материалов в определённых обстоятельствах и другим действиям.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word; font-style: italic;">Конкретные обязательства зависят от текста лицензии, способа включения компонента в продукт, характера распространения и применимого права.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Поэтому обнаружение библиотеки с определённой лицензией — основание для проверки, а не автоматический вывод о законности или незаконности использования.</p></div><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Пример: библиотека, не отражённая в документации</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">При проверке системы «Вектора» обнаруживается сторонний компонент, сведения о лицензии которого отсутствуют в переданных документах.</p><p style="font-size: 15px; color: #ef4444; font-weight: bold; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Сам по себе этот факт не доказывает нарушение. Возможно, необходимые уведомления уже включены в поставку. Возможно, применяются дополнительные условия или исключения. Но пока это не подтверждено, вопрос нельзя считать закрытым.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Техническая команда должна установить происхождение компонента, точную версию и доступные лицензионные сведения. Затем юридическая служба оценивает условия использования с учётом фактической модели поставки.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 25px 0 15px 0; white-space: pre-wrap; word-wrap: break-word;">Здесь важно не смешивать три разных утверждения:</p><div style="margin: 15px 0 25px 0; padding: 20px; background: #1a0f0f; border: 1px solid #ef4444; box-sizing: border-box; width: 100%;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7; list-style-type: square;"><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">инструмент обнаружил лицензионную метку;</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">установлено, какая лицензия относится к компоненту;</li><li style="margin-bottom: 0; white-space: pre-wrap; word-wrap: break-word;">подтверждено выполнение всех применимых обязательств.</li></ul></div><p style="font-size: 13px; color: #555555; font-family: 'SF Mono', Monaco, monospace; margin: -15px 0 25px 0; white-space: pre-wrap; word-wrap: break-word;">Первое не доказывает второе, а второе не гарантирует третье.</p></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Какие лицензии требуют особого внимания</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0; white-space: pre-wrap; word-wrap: break-word;">Для первичного анализа полезно различать несколько групп.</p><div style="margin: 15px 0 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7; list-style-type: square;"><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Разрешительные лицензии.</strong> Обычно допускают широкое использование и распространение при соблюдении определённых условий, например сохранении уведомлений об авторских правах и текста лицензии.</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Лицензии с условиями взаимного предоставления исходного кода.</strong> В зависимости от конкретной лицензии и обстоятельств распространения могут возникать обязательства, связанные с предоставлением исходного кода или соблюдением других условий.</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Лицензии с дополнительными ограничениями.</strong> Могут содержать положения, требующие отдельной оценки совместимости с моделью использования продукта.</li><li style="margin-bottom: 0; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Проприетарные лицензии.</strong> Определяются соответствующими договорами и соглашениями. Необходимо проверять разрешённые способы использования, ограничения по числу пользователей, средам и распространению.</li></ul></div><p style="font-size: 13px; color: #555555; font-family: 'SF Mono', Monaco, monospace; margin: -15px 0 25px 0; white-space: pre-wrap; word-wrap: break-word;">Это не юридическая классификация для принятия окончательного решения. Даже внутри одной группы условия могут существенно различаться. Для вывода необходимо изучить конкретный текст лицензии и фактические обстоятельства использования.</p><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Почему автоматический сканер не заменяет юриста</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Инструмент может извлекать сведения из метаданных пакета, искать файлы лицензий и сопоставлять текст с известными шаблонами. Но источники иногда расходятся. В метаданных указана одна лицензия, а в комплекте присутствует дополнительный файл с другими условиями. Некоторые компоненты распространяются с исключениями или дополнительными уведомлениями. Встречаются и ошибки в метаданных.</p><p style="font-size: 15px; color: #ef4444; font-weight: bold; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Поэтому результаты нужно рассматривать как исходные сведения для проверки.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 15px 0; white-space: pre-wrap; word-wrap: break-word;">Для каждого существенного компонента следует установить:</p><div style="margin: 15px 0 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7; list-style-type: decimal;"><li style="margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">Название, версию и происхождение.</li><li style="margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">Заявленную лицензию и доступный текст условий.</li><li style="margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">Наличие дополнительных уведомлений или исключений.</li><li style="margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">Способ включения компонента в корпоративный продукт.</li><li style="margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">Условия поставки и распространения конечного продукта.</li><li style="margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">Обязательства, которые могут возникать в конкретном случае.</li><li style="margin-bottom: 0; white-space: pre-wrap; word-wrap: break-word;">Доказательства выполнения этих обязательств.</li></ul></div><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Результатом должна быть понятная позиция: какие действия необходимы, какие документы должны сопровождать поставку и какие вопросы требуют дополнительного согласования.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word; font-style: italic;">Если происхождение компонента неизвестно или условия нельзя подтвердить, это основание для дополнительной проверки.</p><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0 0 35px 0; white-space: pre-wrap; word-wrap: break-word;">Если выявлено потенциальное противоречие между условиями лицензии и моделью распространения продукта, решение следует принимать после юридической оценки, а не по одному предупреждению сканера.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // LICENSE_COMPLIANCE_SIEVE ]</div><svg viewbox="0 0 620 250" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><line x1="310" y1="25" x2="310" y2="165" stroke="#222222" stroke-width="2"></line><line x1="310" y1="25" x2="310" y2="165" stroke="#14b8a6" stroke-width="1.2" stroke-dasharray="4 4"></line><rect x="35" y="15" width="550" height="45" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="55" y="36" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">01. ОБНАРУЖЕНИЕ МЕТКИ (СКАНЕР)</text><text x="55" y="50" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Автоматический парсинг метаданных и файлов лицензий в пакете</text><rect x="35" y="90" width="550" height="45" rx="3" fill="#111111" stroke="#ef4444" stroke-width="1"></rect><text x="55" y="111" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">02. ЮРИДИЧЕСКАЯ ИДЕНТИФИКАЦИЯ</text><text x="55" y="125" fill="#ef4444" font-family="-apple-system, sans-serif" font-size="10">⚠️ Риск расхождений: сверка текста условий, исключений и скрытых доработок</text><rect x="35" y="165" width="550" height="45" rx="3" fill="#111111" stroke="#14b8a6" stroke-width="1.2"></rect><text x="55" y="186" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">03. ПОДТВЕРЖДЕНИЕ ВЫПОЛНЕНИЯ ОБЯЗАТЕЛЬСТВ</text><text x="55" y="200" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">Сбор документов, сохранение уведомлений автора и условий фактической поставки ✔</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 08. ОГРАНИЧЕНИЯ SBOM</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Чего этот документ не способен доказать</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">SBOM помогает понять состав программного обеспечения, но не даёт полной картины безопасности системы.</p><p style="font-size: 15px; color: #ef4444; font-weight: bold; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Он не заменяет анализ исходного кода, тестирование защищённости, проверку архитектуры, оценку конфигурации и контроль доступа.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word; font-style: italic;">Даже полный перечень сторонних компонентов не гарантирует, что в собственном коде производителя нет уязвимостей.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Кроме того, документ сам по себе не доказывает происхождение каждого файла и не подтверждает, что продукт собран именно из заявленных материалов. Для этого могут потребоваться дополнительные сведения о процессе сборки, контрольные суммы, подписанные аттестации и другие доказательства.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Важно также не смешивать состав программного продукта и состав всей инфраструктуры. SBOM приложения может не описывать операционную систему, отдельную СУБД, внешние службы или другие независимо поставляемые компоненты.</p><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0 0 25px 0; white-space: pre-wrap; word-wrap: break-word;">Для оценки системы в целом эти сведения необходимо связать, сохраняя при этом границы каждого объекта.</p></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Из этого следуют четыре практических правила</h3><div style="margin: 15px 0 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7; list-style-type: square;"><li style="margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Отсутствие находок не означает отсутствия уязвимостей.</strong> Возможно, компонент не обнаружен или версия определена неверно.</li><li style="margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Наличие находки не означает автоматически подтверждённый риск.</strong> Необходимо проверить идентификацию, диапазон версий и условия эксплуатации.</li><li style="margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Наличие лицензии в документе не означает выполнения обязательств.</strong> Требуется проверка конкретных условий.</li><li style="margin-bottom: 0; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Однократное формирование SBOM не обеспечивает постоянный контроль.</strong> После изменения состава результаты необходимо обновлять.</li></ul></div><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Эти ограничения не уменьшают ценность SBOM. Они определяют, как использовать его правильно.</p></div><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // SBOM_BOUNDARIES_AND_SECURITY_CONTOUR ]</div><svg viewbox="0 0 620 240" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><rect x="15" y="15" width="590" height="210" rx="4" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="30" y="32" fill="#555555" font-family="SF Mono, Monaco, monospace" font-size="9" font-weight="bold">ПОЛНЫЙ КОНТУР ИБ ПРЕДПРИЯТИЯ</text><rect x="35" y="55" width="230" height="150" rx="3" fill="#151515" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"></rect><text x="45" y="75" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold">ВНЕ ЗОНЫ ДЕЙСТВИЯ SBOM</text><text x="45" y="95" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">• Уязвимости в коде вендора</text><text x="45" y="115" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">• Ошибки конфигурации среды</text><text x="45" y="135" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">• Права доступа СУБД и ОС</text><text x="45" y="155" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">• Архитектурные дыры обмена</text><path d="M 265 130 L 355 130" stroke="#333333" stroke-width="1.2"></path><polygon points="355,130 349,126 349,134" fill="#14b8a6"></polygon><rect x="355" y="55" width="230" height="150" rx="3" fill="#111111" stroke="#14b8a6" stroke-width="1.2"></rect><text x="365" y="75" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold">ФОКУС ВИДИМОСТИ SBOM</text><text x="365" y="95" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">✔ Сторонние библиотеки</text><text x="365" y="115" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">✔ Транзитивные зависимости</text><text x="365" y="135" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">✔ Лицензионные метки пакетов</text><text x="365" y="155" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">✔ Карта версий сборки</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 09. НЕПРЕРЫВНЫЙ КОНТРОЛЬ</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Как встроить SBOM в жизненный цикл корпоративной системы</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Важно не просто получить перечень при внедрении, а поддерживать его актуальность в процессе эксплуатации.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Каждое обновление может изменить набор компонентов. Производитель способен заменить библиотеку, добавить новый модуль или обновить транзитивную зависимость. Одновременно могут измениться сведения об уязвимостях и лицензионные условия, требующие внимания.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Поэтому контроль должен быть связан с жизненным циклом продукта.</p></div><div style="margin: 25px 0; max-width: 850px; width: 100%;"><div style="margin-bottom: 20px; padding: 15px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">При закупке</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;">В требованиях к поставщику необходимо определить формат SBOM, минимальный набор полей, привязку к версии и сборке, правила обновления документа и порядок уведомления о существенных уязвимостях. Для критичных систем полезно согласовать сроки предоставления информации, порядок расследования расхождений и способы подтверждения состава, если часть сведений нельзя раскрыть напрямую. Требования должны быть соразмерны риску. Для небольшой вспомогательной программы и системы, управляющей важным производственным процессом, уровень необходимой прозрачности может различаться.</p></div><div style="padding: 15px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">При выпуске новой версии</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;">Для каждой новой сборки формируется актуальный SBOM. Затем его сравнивают с предыдущим. Сравнение должно выявлять не только добавленные и удалённые компоненты, но и изменение версий, идентификаторов и связей зависимостей. Если обновилась библиотека, по которой ранее было принято решение о риске, необходимо проверить, сохраняется ли это решение для новой версии. Если добавлен новый компонент, его следует включить в анализ уязвимостей и лицензионных сведений.</p></div></div></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><div style="margin: 0 0 25px 0; max-width: 850px; width: 100%;"><div style="margin-bottom: 20px; padding: 15px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">При появлении новой уязвимости</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;">Актуальный SBOM позволяет быстро найти продукты, в которых потенциально присутствует затронутый компонент. Дальше запускается процедура проверки применимости. Сопоставляются версии, анализируются условия эксплуатации и определяется срочность реакции. Если компонент используется в нескольких системах, каждую из них следует оценивать отдельно. Одинаковая библиотека может иметь разный уровень риска в зависимости от конфигурации и назначения приложения.</p></div><div style="padding: 15px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; font-weight: bold; color: #ffffff; margin-bottom: 6px; white-space: pre-wrap; word-wrap: break-word;">При эксплуатации и завершении жизненного цикла</div><p style="font-size: 14px; color: #aaaaaa; margin: 0; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word;">Во время эксплуатации необходимо сохранять историю состава и результатов проверок. Это помогает восстановить, какие компоненты присутствовали в конкретной версии на момент инцидента. При выводе продукта из эксплуатации перечень полезен для определения связанных модулей и зависимостей, которые могут использоваться другими системами.</p></div></div><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Такой подход превращает SBOM из разового документа в часть процесса управления программными активами и рисками.</p></div><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // SBOM_CONTINUOUS_CONTROL_LIFECYCLE ]</div><svg viewbox="0 0 620 250" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><path d="M 115 80 L 505 80 L 505 180 L 115 180 Z" stroke="#222222" stroke-width="2" fill="none"></path><path d="M 115 80 L 505 80 L 505 180 L 115 180" stroke="#14b8a6" stroke-width="1.2" stroke-dasharray="4 4" fill="none"></path><rect x="25" y="45" width="180" height="65" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="35" y="66" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">01. ЗАКУПКА СИСТЕМЫ</text><text x="35" y="86" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Фиксация SLA, формата</text><text x="35" y="98" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">и минимальных полей</text><rect x="415" y="45" width="180" height="65" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="425" y="66" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">02. НОВЫЕ ВЕРСИИ</text><text x="425" y="86" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Дифф-анализ графа,</text><text x="425" y="98" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">проверка новых пакетов</text><rect x="415" y="145" width="180" height="65" rx="3" fill="#111111" stroke="#ef4444" stroke-width="1"></rect><text x="425" y="166" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">03. ПОЯВЛЕНИЕ CVE</text><text x="425" y="186" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Оперативный поиск пакета,</text><text x="425" y="198" fill="#ef4444" font-family="SF Mono, Monaco, monospace" font-size="9" font-weight="bold">⚠️ Экспресс-верификация</text><rect x="25" y="145" width="180" height="65" rx="3" fill="#111111" stroke="#14b8a6" stroke-width="1.2"></rect><text x="35" y="166" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold">04. ВЫВОД ИЗ СТРОЯ</text><text x="35" y="186" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">Анализ зависимостей,</text><text x="35" y="198" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">сохранение истории логов</text><polygon points="295,80 289,76 289,84" fill="#14b8a6"></polygon><polygon points="505,125 501,119 509,119" fill="#14b8a6"></polygon><polygon points="295,180 301,176 301,184" fill="#14b8a6"></polygon></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 10. КРИТЕРИИ ПРИËМКИ</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Как проверить качество SBOM при приёмке</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Предположим, поставщик передал «Вектору» файл bom.json. Документ открывается, структура выглядит корректной, а в нём перечислены сотни компонентов.</p><p style="font-size: 15px; color: #ef4444; font-weight: bold; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Можно ли считать задачу выполненной? Нет.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 25px 0; white-space: pre-wrap; word-wrap: break-word; font-style: italic;">Техническая приёмка должна подтвердить не только наличие файла, но и пригодность содержащихся в нём данных.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0; white-space: pre-wrap; word-wrap: break-word;">Для этого можно использовать следующий алгоритм:</p><div style="margin: 15px 0 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%;"><ol style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7;"><li style="margin-bottom: 12px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Проверить идентификацию поставки.</strong><br>Убедиться, что документ относится к нужному продукту, версии и сборке. При необходимости сверить идентификаторы и контрольные суммы доступных артефактов.</li><li style="margin-bottom: 12px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Проверить структуру.</strong><br>Установить, соответствует ли файл заявленной версии спецификации и проходит ли проверку формата. Успешная проверка структуры необходима, но не доказывает полноту состава.</li><li style="margin-bottom: 12px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Оценить идентификацию компонентов.</strong><br>Проверить, сколько существенных компонентов имеют версии и идентификаторы, достаточные для надёжного сопоставления. Неоднозначные записи вынести в отдельный перечень.</li><li style="margin-bottom: 12px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Проверить зависимости.</strong><br>Убедиться, что документ позволяет проследить связи в объёме, необходимом для задачи. Если зависимости представлены неполно, это следует явно зафиксировать.</li><li style="margin-bottom: 12px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Сопоставить SBOM с поставкой.</strong><br>По возможности провести независимый анализ доступных пакетов и артефактов. Выявленные расхождения объяснить или зарегистрировать как ограничения.</li><li style="margin-bottom: 12px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Выполнить анализ уязвимостей.</strong><br>Проверить существенные находки, подтвердить версии и определить применимость. Не закрывать проблемы только на основании статуса сканера.</li><li style="margin-bottom: 12px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Проверить лицензионные сведения.</strong><br>Выявить компоненты с отсутствующими или неоднозначными данными и определить, какие вопросы требуют юридической оценки.</li><li style="margin-bottom: 0; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Зафиксировать остаточную неопределённость.</strong><br>Составить список компонентов и вопросов, по которым получить достаточные подтверждения не удалось. Для каждого определить влияние на риск и дальнейшие действия.</li></ol></div></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><h3 style="font-family: 'SF Mono', Monaco, monospace; font-size: 18px; font-weight: bold; margin: 30px 0 15px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Что считать результатом приёмки</h3><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 15px 0; white-space: pre-wrap; word-wrap: break-word;">Результат должен позволять ответить на конкретные вопросы:</p><div style="margin: 15px 0 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7; list-style-type: square;"><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">К какой поставке относится документ?</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Какие компоненты удалось надёжно идентифицировать?</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Насколько полно охвачена система?</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Какие существенные расхождения обнаружены?</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Какие уязвимости подтверждены и каков их статус?</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Какие лицензионные вопросы остаются открытыми?</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">Какие ограничения не удалось устранить?</li><li style="margin-bottom: 0; white-space: pre-wrap; word-wrap: break-word;">Кто отвечает за дальнейшую проверку и когда она должна состояться?</li></ul></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word; font-style: italic;">Для отдельных показателей можно установить внутренние критерии полноты, но их нельзя выдавать за универсальные нормативы. Допустимый уровень зависит от критичности продукта и доступных способов анализа.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Если существенные части состава остаются неизвестными, корректный результат — не формальное «SBOM принят», а зафиксированное ограничение с оценкой последствий и планом действий.</p></div><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // SBOM_QUALITY_GATES_MATRIX ]</div><svg viewbox="0 0 620 250" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><line x1="35" y1="90" x2="585" y2="90" stroke="#222222" stroke-width="2"></line><line x1="35" y1="90" x2="585" y2="90" stroke="#14b8a6" stroke-width="1.2" stroke-dasharray="3 3"></line><polygon points="195,90 189,86 189,94" fill="#14b8a6"></polygon><polygon points="390,90 384,86 384,94" fill="#14b8a6"></polygon><circle cx="95" cy="90" r="5" fill="#14b8a6"></circle><rect x="15" y="115" width="160" height="75" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="25" y="136" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold">01. СТРУКТУРНЫЙ ТЕСТ</text><text x="25" y="154" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Шаг 1. Идентификация</text><text x="25" y="166" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Шаг 2. Валидация схемы</text><text x="25" y="178" fill="#14b8a6" font-family="-apple-system, sans-serif" font-size="9">Формат JSON проверен ✔</text><circle cx="310" cy="90" r="5" fill="#ffffff"></circle><rect x="215" y="115" width="190" height="75" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="225" y="136" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold">02. ВЕРИФИКАЦИЯ ФАКТА</text><text x="225" y="154" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Шаг 3. Анализ PURL / CPE</text><text x="225" y="166" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Шаг 4. Граф зависимостей</text><text x="225" y="178" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="10">Шаг 5. Сверка с поставкой</text><circle cx="525" cy="90" r="5" fill="#14b8a6"></circle><rect x="435" y="115" width="170" height="75" rx="3" fill="#111111" stroke="#14b8a6" stroke-width="1.2"></rect><text x="445" y="136" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold">03. РЕЗУЛЬТАТ АУДИТА</text><text x="445" y="154" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">Шаг 6. Проверка CVE</text><text x="445" y="166" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">Шаг 7. Лицензионный аудит</text><text x="445" y="178" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10">Шаг 8. Карта ограничений</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 11. ТРЕБОВАНИЯ К ПОСТАВЩИКУ</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Как превратить SBOM в рабочее требование к поставщику</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Требование предоставить перечень компонентов полезно только тогда, когда определено, каким должен быть результат.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 15px 0; white-space: pre-wrap; word-wrap: break-word;">В договоре, техническом задании или регламенте приёмки целесообразно закрепить следующие положения:</p><div style="margin: 15px 0 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7; list-style-type: square;"><li style="margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Привязка к сборке.</strong> Документ относится к конкретной версии продукта, а не к неопределённой линейке выпусков.</li><li style="margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Формат и структура.</strong> Используется согласованный машиночитаемый формат, например SPDX или CycloneDX, с указанием версии спецификации.</li><li style="margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Идентификация компонентов.</strong> Предоставляются названия, версии, поставщики и доступные идентификаторы.</li><li style="margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Описание зависимостей.</strong> Связи между компонентами отражаются в объёме, необходимом для оценки рисков.</li><li style="margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Сведения о полноте.</strong> Поставщик сообщает об известных ограничениях формирования SBOM и неопределённых компонентах.</li><li style="margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Лицензионные данные.</strong> Передаются сведения, необходимые для первичной проверки условий использования, включая доступные уведомления и лицензионные документы.</li><li style="margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Обновление перечня.</strong> При выпуске новой версии предоставляется актуальный документ, а существенные изменения состава поддаются анализу.</li><li style="margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Реагирование на уязвимости.</strong> Определяются каналы уведомления, ответственные стороны и порядок предоставления исправлений или обоснований неприменимости.</li><li style="margin-bottom: 10px; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Разрешение расхождений.</strong> Устанавливается процедура, по которой заказчик и поставщик проверяют компоненты, обнаруженные независимо от переданного SBOM.</li><li style="margin-bottom: 0; white-space: pre-wrap; word-wrap: break-word;"><strong style="color: #ffffff;">Ответственность сторон.</strong> Фиксируются обязательства по предоставлению информации и действиям в пределах согласованной модели поддержки.</li></ul></div></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><p style="font-size: 15px; color: #aaaaaa; margin: 20px 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Для критичных систем можно предусмотреть дополнительные проверки: независимый анализ отдельных сборок, подтверждение происхождения артефактов или предоставление технических доказательств процесса сборки.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">При этом не следует требовать раскрытия исходного кода автоматически во всех случаях. Сначала необходимо определить, какие сведения действительно нужны для управления риском и каким способом их можно получить.</p></div><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0 0 35px 0; white-space: pre-wrap; word-wrap: break-word;">Цель требований — не увеличить объём документации, а обеспечить возможность своевременно оценивать состав поставленного ПО.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // VENDOR_SBOM_CONTRACTUAL_MATRIX ]</div><svg viewbox="0 0 620 250" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><path d="M 310 100 L 310 50" stroke="#333333" stroke-width="1.2"></path><path d="M 210 125 L 145 125" stroke="#333333" stroke-width="1.2"></path><path d="M 410 125 L 475 125" stroke="#333333" stroke-width="1.2"></path><polygon points="310,50 306,56 314,56" fill="#14b8a6"></polygon><polygon points="145,125 151,121 151,129" fill="#14b8a6"></polygon><polygon points="475,125 469,121 469,129" fill="#14b8a6"></polygon><rect x="210" y="100" width="200" height="50" rx="4" fill="#111111" stroke="#14b8a6" stroke-width="1.5"></rect><text x="310" y="123" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="11" font-weight="bold" text-anchor="middle">ЮРИДИЧЕСКИЙ КОНТУР ТЗ</text><text x="310" y="139" fill="#14b8a6" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Регламент договорных требований</text><rect x="180" y="15" width="260" height="35" rx="2" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="310" y="29" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="10" text-anchor="middle">01. МАШИНОЧИТАЕМЫЙ АТРИБУТ</text><text x="310" y="39" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Формат SPDX/CycloneDX, привязка к хэшу сборки, валидный PURL</text><rect x="15" y="105" width="130" height="40" rx="2" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="80" y="121" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="9" text-anchor="middle">02. ЖИЗНЕННЫЙ ЦИКЛ</text><text x="80" y="134" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Перегенерация при патчах</text><rect x="475" y="105" width="130" height="40" rx="2" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="540" y="118" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="8.5" text-anchor="middle">03. РЕАКЦИЯ НА</text><text x="540" y="128" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="8.5" text-anchor="middle">РАСХОЖДЕНИЯ</text><text x="540" y="139" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="7.5" text-anchor="middle">Разбор дельт и логов</text></svg></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ 12. ИНЖЕНЕРНОЕ РЕШЕНИЕ</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Что должна получить компания в итоге</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Вернёмся к предприятию «Вектор».</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">В начале расследования у него было только название корпоративной системы и уведомление об уязвимости. Команда не знала, присутствует ли проблемная библиотека, а документация не позволяла уверенно ответить на вопрос.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 15px 0; white-space: pre-wrap; word-wrap: break-word;">После проверки появились конкретные результаты:</p><div style="margin: 15px 0 25px 0; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box; width: 100%;"><ul style="margin: 0; padding-left: 20px; color: #aaaaaa; font-size: 15px; line-height: 1.7; list-style-type: square;"><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">определена версия анализируемой поставки;</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">получен и проверен SBOM;</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">выявлены расхождения между документом поставщика и доступными артефактами;</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">установлена связь подозрительного компонента с модулем обработки документов;</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">проверены сведения об уязвимости и условия её применимости;</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">определён способ устранения или снижения риска;</li><li style="margin-bottom: 8px; white-space: pre-wrap; word-wrap: break-word;">лицензионные вопросы вынесены на отдельную проверку;</li><li style="margin-bottom: 0; white-space: pre-wrap; word-wrap: break-word;">сохранены основания принятого решения.</li></ul></div></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">Не все вопросы обязательно будут закрыты сразу. Иногда для этого требуется информация производителя, а иногда — дополнительный анализ недоступных бинарных компонентов.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Но теперь предприятие понимает, какие сведения подтверждены, какие остаются неизвестными и что необходимо сделать дальше.</p></div><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0 0 35px 0; white-space: pre-wrap; word-wrap: break-word;">Именно это является практическим результатом работы с SBOM.</p><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // VERIFIED_KNOWLEDGE_SYNERGY ]</div><svg viewbox="-40 0 780 280" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><line x1="370" y1="185" x2="370" y2="50" stroke="#333333" stroke-width="1.2"></line><line x1="370" y1="185" x2="290" y2="185" stroke="#333333" stroke-width="1.2"></line><line x1="370" y1="185" x2="450" y2="185" stroke="#333333" stroke-width="1.2"></line><polygon points="370,50 366,56 374,56" fill="#14b8a6"></polygon><polygon points="290,185 296,181 296,189" fill="#14b8a6"></polygon><polygon points="450,185 444,181 444,189" fill="#14b8a6"></polygon><circle cx="370" cy="185" r="4" fill="#ffffff"></circle><rect x="220" y="10" width="300" height="40" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="370" y="24" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold" text-anchor="middle">01. ВЕРИФИКАЦИЯ СОСТАВА</text><text x="370" y="35" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Проверенный SBOM, нормализованные ID версий и граф зависимостей</text><rect x="-30" y="160" width="320" height="50" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="130" y="179" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold" text-anchor="middle">02. АНАЛИЗ УЯЗВИМОСТЕЙ И CVE</text><text x="130" y="194" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Проверка применимости, VEX-статусы, компенсирующие меры</text><rect x="450" y="160" width="280" height="50" rx="3" fill="#111111" stroke="#14b8a6" stroke-width="1.2"></rect><text x="590" y="179" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold" text-anchor="middle">03. УПРАВЛЯЕМЫЙ ИТ-КОНТУР</text><text x="590" y="194" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Понимание остаточных рисков, фиксация базы решений</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;">/ ЗАКЛЮЧЕНИЕ</div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; white-space: pre-wrap; word-wrap: break-word;">Итоги инженерного контроля состава программного обеспечения</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">SBOM нужен не ради ещё одного документа в комплекте корпоративного ПО. Его задача — сделать состав программной системы проверяемым и пригодным для управления.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">При грамотном использовании перечень компонентов помогает быстрее находить потенциально уязвимые зависимости, оценивать изменения между версиями, организовывать лицензионную проверку и сокращать время расследования инцидентов.</p><p style="font-size: 15px; color: #ef4444; font-weight: bold; margin: 0 0 20px 0; white-space: pre-wrap; word-wrap: break-word; font-style: italic;">Но ценность SBOM зависит от качества идентификации, полноты охвата, привязки к конкретной сборке и того, насколько последовательно предприятие проверяет полученные результаты.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border: 1px solid #222222; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ LOG-AI // COMPLIANCE_SBOM_MINDSET ]</div><p style="font-size: 15px; color: #ffffff; margin: 0; line-height: 1.7; white-space: pre-wrap; word-wrap: break-word;">В LOG-AI мы рассматриваем инвентаризацию программных компонентов как часть инженерного контроля системы. Важен не только перечень библиотек, но и возможность подтвердить его соответствие поставке, установить применимость уязвимостей, определить лицензионные вопросы и проследить изменения после обновления.</p></div></div><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; width: 100%; box-sizing: border-box;"><p style="font-size: 15px; color: #aaaaaa; margin: 20px 0 20px 0; white-space: pre-wrap; word-wrap: break-word;">При этом SBOM не заменяет анализ архитектуры, проверку безопасности или юридическую экспертизу. Он даёт основу для этих действий, позволяя опираться на структурированные сведения о составе программного обеспечения.</p><div style="padding: 15px 20px; margin: 25px 0; background: #111111; border-left: 3px solid #14b8a6; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; white-space: pre-wrap; word-wrap: break-word;">Главный критерий качества SBOM прост: предприятие должно понимать, из чего состоит используемая система, какие риски действительно относятся к ней и на основании каких данных принято решение. Если этого добиться нельзя, наличие файла само по себе проблему не решает.</p></div><div style="margin: 40px auto; max-width: 650px; width: 100%; text-align: center; background: #000000; padding: 25px; box-sizing: border-box; border: 1px solid #111111;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; margin-bottom: 25px; text-transform: uppercase; text-align: left;">[ DIAGRAM // LOG_AI_SBOM_CONTROL_TRIAD ]</div><svg viewbox="0 0 840 280" fill="none" xmlns="http://w3.org" style="width: 100%; height: auto; display: block;"><line x1="420" y1="185" x2="420" y2="50" stroke="#333333" stroke-width="1.2"></line><line x1="420" y1="185" x2="350" y2="185" stroke="#333333" stroke-width="1.2"></line><line x1="420" y1="185" x2="490" y2="185" stroke="#333333" stroke-width="1.2"></line><polygon points="420,50 416,56 424,56" fill="#14b8a6"></polygon><polygon points="350,185 356,181 356,189" fill="#14b8a6"></polygon><polygon points="490,185 484,181 484,189" fill="#14b8a6"></polygon><circle cx="420" cy="185" r="4" fill="#ffffff"></circle><rect x="250" y="10" width="340" height="40" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="420" y="24" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold" text-anchor="middle">01. СОПОСТАВЛЕНИЕ С ПОСТАВКОЙ</text><text x="420" y="35" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Перекрёстная верификация декларативного SBOM и бинарного состава</text><rect x="20" y="160" width="330" height="50" rx="3" fill="#111111" stroke="#333333" stroke-width="1"></rect><text x="185" y="179" fill="#ffffff" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold" text-anchor="middle">02. ВЕРИФИКАЦИЯ CVE И VEX</text><text x="185" y="194" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Определение достижимости уязвимого кода в ИТ-среде</text><rect x="490" y="160" width="330" height="50" rx="3" fill="#111111" stroke="#14b8a6" stroke-width="1.2"></rect><text x="655" y="179" fill="#14b8a6" font-family="SF Mono, Monaco, monospace" font-size="10" font-weight="bold" text-anchor="middle">03. АУДИТ БЕЗОПАСНОСТИ</text><text x="655" y="194" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Юридическая проверка выполнения условий и ограничений пакетов</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 60px auto 0 auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">НАВИГАЦИЯ // SUGGESTED_READING</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // БЕЗОПАСНОСТЬ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Где хранить API-ключи, токены и сервисные учётные данные</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/gde-hranit-api-klyuchi-tokeny-i-servisnye-uchyotnye-dannye/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // БЕЗОПАСНОСТЬ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Реестр российского ПО: что нужно проверить перед внедрением</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/reestr-rossiyskogo-po-chto-nuzhno-proverit-pered-vnedreniem/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // БЕЗОПАСНОСТЬ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">152-ФЗ: как проверить корпоративную систему на соответствие требованиям</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/152-fz-kak-proverit-korporativnuyu-sistemu-na-sootvetstvie-trebovaniyam/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div></div></div><div style="max-width: 1100px; margin: 20px auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; border-top: 1px solid #165c52; padding: 40px 0 0 0; box-sizing: border-box; width: 100%;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 40px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ EXPERTISE JOURNAL ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Все инженерные материалы и экспертные статьи</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/ekspertiza/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">перейти к каталогу ──►</a></div></div><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ CORE GLOSSARY ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Полный алфавитный справочник ИТ-терминов</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/glossariy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">открыть справочник ──►</a></div></div></div></div></div></div></div></article></main><footer class="footer"><div class="wrapper"><div class="footer__copyright"><p> </p><p> </p></div><button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg width="20" height="20"><use xlink:href="https://log-ai.ru/assets/svg/svg-map.svg#toparrow"/></svg></button></div></footer><script defer="defer" src="https://log-ai.ru/assets/js/scripts.min.js?v&#x3D;d0fc1030089a37f93a2d51bf6d07565c"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script><script>(() => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') !== 'monument') return;
+
+  const IMAGE_URL = 'https://log-ai.ru/media/files/Interstellar.jpeg';
+  const AUDIO_URL = 'https://log-ai.ru/media/files/interstellar.mp3';
+
+  // Защита от повторного запуска
+  if (document.getElementById('log-ai-monument')) return;
+
+  const monument = document.createElement('div');
+  monument.id = 'log-ai-monument';
+
+  const root = document.documentElement;
+  const body = document.body;
+
+  const previousRootOverflow = root.style.overflow;
+  const previousBodyOverflow = body.style.overflow;
+  const previousBodyPosition = body.style.position;
+  const previousBodyTop = body.style.top;
+  const previousBodyWidth = body.style.width;
+  const previousScrollX = window.scrollX;
+  const previousScrollY = window.scrollY;
+
+  root.style.overflow = 'hidden';
+  body.style.overflow = 'hidden';
+  body.style.position = 'fixed';
+  body.style.top = `-${previousScrollY}px`;
+  body.style.width = '100%';
+
+  monument.innerHTML = `
+    <div class="monument-universe"></div>
+    <canvas class="monument-stars"></canvas>
+    <div class="monument-shade"></div>
+
+    <div class="monument-frame">
+      <p class="monument-overline">ARCHIVUM · LOG-AI · MMXXVI</p>
+
+      <div class="monument-rule"></div>
+
+      <h1>PER ASPERA<br><span>AD ASTRA</span></h1>
+
+      <p class="monument-translation">
+        THROUGH HARDSHIP, TO THE STARS
+      </p>
+
+      <div class="monument-message">
+        <p>TO THOSE WHO BUILD BEYOND THE LIMITS OF THEIR TIME.</p>
+        <p>TO THOSE WHO CONTINUE WHEN THE OUTCOME IS UNKNOWN.</p>
+        <p>TO THOSE WHO WILL DISCOVER THIS LONG AFTER ITS CREATION.</p>
+      </div>
+
+      <p class="monument-declaration">
+        YOU WERE NOT THE FIRST TO LOOK AT THE STARS.<br>
+        BUT YOU MAY BE AMONG THOSE WHO REACH THEM.
+      </p>
+
+      <div class="monument-rule"></div>
+          
+      <p class="monument-translation">
+        A MARK LEFT IN THE MACHINE.
+      </p>   
+
+      <p class="monument-signature">
+        LOG·AI·ARCHITECTI·MMXXVI
+      </p>
+
+      <p class="monument-exit" id="monument-hint">
+        [ CLICK ANYWHERE TO RETURN ]
+      </p>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #log-ai-monument {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      background: #03040a;
+      color: #e5dfd3;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      box-sizing: border-box;
+      cursor: pointer;
+      isolation: isolate;
+      opacity: 0;
+      animation: logai-monument-appear 1.8s ease forwards;
+    }
+
+    #log-ai-monument .monument-universe {
+      position: fixed;
+      inset: -3%;
+      z-index: -3;
+      background-image: url("https://log-ai.ru/media/files/Interstellar.jpeg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transform: scale(1.02);
+      animation: logai-cosmic-drift 35s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-shade {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(0,0,0,.24) 0%,
+          rgba(0,0,0,.52) 65%,
+          rgba(0,0,0,.78) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.42),
+          rgba(0,0,0,.18) 45%,
+          rgba(0,0,0,.62)
+        );
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-frame {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', serif;
+      padding: 30px 0;
+      text-shadow: 0 2px 18px rgba(0,0,0,.9);
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-translation,
+    #log-ai-monument .monument-signature,
+    #log-ai-monument .monument-exit {
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-signature {
+      color: #c0a16a;
+    }
+
+    #log-ai-monument .monument-rule {
+      height: 1px;
+      width: 160px;
+      max-width: 60%;
+      margin: 30px auto;
+      background: linear-gradient(
+        to right,
+        transparent,
+        #a68a55,
+        transparent
+      );
+      box-shadow: 0 0 12px rgba(190,155,90,.2);
+    }
+
+    #log-ai-monument h1 {
+      margin: 35px 0 18px;
+      font-size: clamp(30px, 7vw, 58px);
+      line-height: 1.5;
+      letter-spacing: .16em;
+      font-weight: 400;
+      color: #f4f0e8;
+    }
+
+    #log-ai-monument h1 span {
+      color: #d2b77e;
+    }
+
+    #log-ai-monument .monument-translation {
+      color: #c0b8aa;
+    }
+
+    #log-ai-monument .monument-message {
+      margin: 55px auto 38px;
+      max-width: 490px;
+      color: #e0d9cd;
+      font-size: 13px;
+      line-height: 2.2;
+      letter-spacing: .035em;
+    }
+
+    #log-ai-monument .monument-message p {
+      margin: 0 0 12px;
+    }
+
+    #log-ai-monument .monument-declaration {
+      color: #e0c48a;
+      font-size: 12px;
+      line-height: 2.3;
+      letter-spacing: .08em;
+    }
+
+    #log-ai-monument .monument-exit {
+      margin-top: 36px;
+      color: #c0b8aa;
+      font-size: 9px;
+      letter-spacing: .18em;
+    }
+
+    @keyframes logai-monument-appear {
+      to { opacity: 1; }
+    }
+
+    @keyframes logai-cosmic-drift {
+      from { transform: scale(1.02); }
+      to { transform: scale(1.13); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #log-ai-monument,
+      #log-ai-monument .monument-universe {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(monument);
+
+  // Тонкие, редкие звёзды
+  const canvas = monument.querySelector('.monument-stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let frameId = null;
+  let closed = false;
+
+  function resizeStars() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(window.innerWidth * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    stars = Array.from({ length: 65 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      length: 8 + Math.random() * 25,
+      speed: 0.25 + Math.random() * 0.75,
+      alpha: 0.15 + Math.random() * 0.5,
+      delay: Math.random() * 500
+    }));
+  }
+
+  function drawStars() {
+    if (closed) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    for (const star of stars) {
+      star.delay -= 1;
+
+      if (star.delay <= 0) {
+        star.y += star.speed;
+        star.x -= star.speed * 0.35;
+
+        ctx.beginPath();
+        ctx.moveTo(star.x, star.y);
+        ctx.lineTo(star.x - star.length * 0.35,
+                   star.y - star.length);
+
+        ctx.strokeStyle = `rgba(210,220,255,${star.alpha})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+
+        if (star.y > h + 30 || star.x < -30) {
+          star.x = Math.random() * w + 30;
+          star.y = -Math.random() * h * 0.4;
+          star.delay = 30 + Math.random() * 180;
+        }
+      }
+    }
+
+    frameId = requestAnimationFrame(drawStars);
+  }
+
+  resizeStars();
+  drawStars();
+
+  window.addEventListener('resize', resizeStars);
+
+  // Музыка
+  const audio = document.createElement('audio');
+  audio.id = 'monument-audio';
+  audio.src = AUDIO_URL;
+  audio.loop = true;
+  audio.preload = 'auto';
+  audio.volume = 0.35;
+  document.body.appendChild(audio);
+
+  let playing = false;
+  let starting = false;
+
+  const hint = document.getElementById('monument-hint');
+
+  function startMusic() {
+    if (closed || starting || playing) return;
+
+    starting = true;
+
+    audio.play().then(() => {
+      starting = false;
+
+      if (closed) {
+        audio.pause();
+        return;
+      }
+
+      playing = true;
+      hint.textContent = '[ CLICK ANYWHERE TO RETURN ]';
+    }).catch((error) => {
+      starting = false;
+
+      if (closed) return;
+
+      if (error.name === 'NotAllowedError') {
+        hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+        return;
+      }
+
+      console.warn('LOG-AI audio:', error.name, error.message);
+      hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+    });
+  }
+
+  function closeMonument() {
+    if (closed) return;
+    closed = true;
+
+    cancelAnimationFrame(frameId);
+    window.removeEventListener('resize', resizeStars);
+    window.removeEventListener('keydown', onKeyDown);
+
+    audio.pause();
+    audio.remove();
+    monument.remove();
+    style.remove();
+
+    root.style.overflow = previousRootOverflow;
+    body.style.overflow = previousBodyOverflow;
+    body.style.position = previousBodyPosition;
+    body.style.top = previousBodyTop;
+    body.style.width = previousBodyWidth;
+
+    window.scrollTo(previousScrollX, previousScrollY);
+
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete('mode');
+
+    window.history.replaceState(
+      {},
+      document.title,
+      cleanUrl.pathname + cleanUrl.search + cleanUrl.hash
+    );
+  }
+
+  function onKeyDown(event) {
+    if (event.key === 'Escape') closeMonument();
+  }
+
+  monument.addEventListener('click', () => {
+    if (closed) return;
+
+    if (playing) {
+      closeMonument();
+    } else {
+      startMusic();
+    }
+  });
+
+  window.addEventListener('keydown', onKeyDown);
+
+  // Первая попытка автоматического запуска
+  startMusic();
+})();</script><script>(function () {
+    // ВНИМАНИЕ!!!!!!!!!!!!!!!!!!!!Плавный инерционный скролл только для мыши/тачпада
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    let targetY = window.scrollY;
+    let currentY = window.scrollY;
+    let animationFrame = null;
+
+    // ===== НАСТРОЙКИ =====
+    const SPEED = 0.70;       // 0.4 = медленнее, 0.65 = средне, 1.0 = быстрее
+    const SMOOTHNESS = 0.13;  // 0.08 = мягче, 0.12 = средне, 0.18 = быстрее
+    const MAX_STEP = 500;     // максимальный шаг одного движения колеса
+    // =====================
+
+    function animateScroll() {
+        currentY += (targetY - currentY) * SMOOTHNESS;
+
+        if (Math.abs(targetY - currentY) < 0.5) {
+            currentY = targetY;
+            window.scrollTo(0, currentY);
+            animationFrame = null;
+            return;
+        }
+
+        window.scrollTo(0, currentY);
+        animationFrame = requestAnimationFrame(animateScroll);
+    }
+
+    window.addEventListener('wheel', function (event) {
+
+    // Если глобус активирован кликом —
+    // колесо полностью отдаём Globe.gl для zoom.
+    const globe = event.target.closest('#globeViz');
+
+    if (globe && globe.dataset.interacting === 'true') {
+        return;
+    }
+
+    // Внутренний скролл AI-чата не трогаем
+    if (event.target.closest('#logai-window, #logai-msgs')) {
+        return;
+    }
+
+    event.preventDefault();
+
+        let delta = event.deltaY * SPEED;
+
+        // Ограничиваем слишком резкие движения
+        delta = Math.max(-MAX_STEP, Math.min(MAX_STEP, delta));
+
+        targetY += delta;
+
+        // Не даём уйти выше/ниже страницы
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        targetY = Math.max(0, Math.min(targetY, maxY));
+
+        if (!animationFrame) {
+            animationFrame = requestAnimationFrame(animateScroll);
+        }
+    }, { passive: false });
+
+    // Синхронизация, если страницу прокрутили другим способом
+    window.addEventListener('scroll', function () {
+        if (!animationFrame) {
+            targetY = window.scrollY;
+            currentY = window.scrollY;
+        }
+    }, { passive: true });
+
+})();</script><div id="logai-footer-mobile" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box;"><div style="margin: 0 auto 20px auto; padding-top: 40px; text-align: center; margin-bottom: 40px;"><a href="mailto:info@log-ai.ru" style="font-size: 24px; font-family: 'SF Mono', Monaco, monospace; color: #e5e7eb; text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: 0.3px;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#e5e7eb'">info@log-ai.ru</a><p style="color: #aaaaaa; font-size: 15px; line-height: 1.6; max-width: 750px; margin: 15px auto 0 auto;">Пришлите описание задачи, техническое задание или ссылку на существующую систему. Мы оценим задачу и определим возможные варианты реализации.</p></div><div style="max-width: 850px; margin: 0 auto 40px auto; text-align: center; background: #000000; padding: 0; box-sizing: border-box;"><p style="color: #aaaaaa; font-size: 14px; line-height: 1.6; margin: 0;"><span style="color: #4ade80; margin-right: 6px;">🔒</span> Данные и доступ к системам заказчика обрабатываются в соответствии с согласованными требованиями к безопасности и конфиденциальности. Условия доступа, хранения и обработки данных определяются архитектурой проекта и договором.</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; box-sizing: border-box; width: 100%; margin-bottom: 30px;"><p style="color: #666666; font-size: 12px; line-height: 1.6; margin: 0; width: 100%; text-align: justify;">Сайт носит исключительно информационный характер и не является публичной офертой в соответствии со статьёй 437 Гражданского кодекса РФ. Цены, состав и условия предоставления услуг уточняются при проектировании решения и фиксируются в договоре. Условия технического сопровождения и уровень сервиса могут дополнительно определяться отдельным соглашением (SLA).</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; width: 100%; box-sizing: border-box;"><div style="color: #666666; font-size: 12px; line-height: 1.5; text-align: left;">© 2026 Log-AI<br>Автоматизация бизнеса и ИИ-решения под ключ. Работаем по всей России и СНГ.<br>ИП Скопец Антон Викторович<br>ИНН 741709<span></span>260870 · ОГРНИП 326745600<span></span>204228<br>Все права защищены.</div><div style="display: flex; gap: 20px; flex-wrap: wrap; font-family: sans-serif;"><a href="/privacy-policy/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Политика конфиденциальности</a> <a href="/terms/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Пользовательское соглашение</a></div></div></div><style>@media screen and (max-width: 600px) {
+  #logai-footer-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+}</style><style>/* Анимации и точки */
+    @keyframes logai-bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+    .logai-dots { display: flex !important; flex-direction: row !important; gap: 4px !important; align-items: center !important; height: 12px !important; }
+    .logai-dots span { display: inline-block; width: 5px; height: 5px; background: #aaa !important; border-radius: 50%; animation: logai-bounce 1.4s infinite ease-in-out; }
+    .logai-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .logai-dots span:nth-child(3) { animation-delay: 0.4s; }
+    
+    #logai-msgs::-webkit-scrollbar { width: 5px; }
+    #logai-msgs::-webkit-scrollbar-thumb { background: #666; border-radius: 10px; }
+    
+    /* Сообщения и текст */
+    #logai-msgs div { white-space: pre-wrap !important; word-wrap: break-word !important; padding: 12px 16px !important; margin-bottom: 5px !important; display: flex; flex-direction: column; justify-content: center; }
+    #logai-msgs div p { margin: 0 !important; padding: 0 !important; line-height: 1.5 !important; }
+    #logai-msgs { gap: 12px !important; padding: 20px !important; }
+
+    /* Поле ввода и кнопка отправить */
+    #logai-input { flex: 1 !important; padding: 12px 18px !important; border-radius: 20px !important; background: #4a4e56 !important; border: 1px solid rgba(255,255,255,0.1) !important; outline: none !important; color: #fff !important; font-size: 15px !important; resize: none !important; max-height: 120px !important; line-height: 1.4 !important; }
+    #logai-send-btn { background-color: #007bff !important; border: none !important; width: 45px !important; height: 45px !important; border-radius: 50% !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-size: 24px !important; padding: 0 !important; flex-shrink: 0 !important; }
+
+    /* ГЛАВНЫЕ СТИЛИ (чтобы кнопка и окно не исчезали) */
+    #logai-btn {
+        position: fixed !important; bottom: 40px !important; right: 110px !important;
+        width: 65px !important; height: 65px !important; border-radius: 50% !important;
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        cursor: pointer !important; z-index: 10000 !important; box-shadow: 0 10px 25px rgba(0,123,255,0.4);
+    }
+
+    #logai-window {
+        display: none; position: fixed !important; bottom: 115px !important; right: 110px !important;
+        width: 380px !important; height: 600px !important; background: #3b3e45 !important;
+        border-radius: 24px !important; flex-direction: column; overflow: hidden;
+        z-index: 10000 !important; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.15) !important;
+    }
+
+        /* АДАПТИВ ДЛЯ МОБИЛОК: ЧАТ НА ВЕСЬ ЭКРАН */
+    @media screen and (max-width: 480px) {
+        #logai-window { 
+            right: 0 !important; 
+            left: 0 !important; 
+            bottom: 0 !important; 
+            width: 100% !important; 
+            height: 100% !important; /* Растягиваем окно на 100% экрана смартфона */
+            border-radius: 0 !important; /* Убираем скругления углов, чтобы чат сел монолитом */
+            z-index: 999999 !important; /* Перекрываем все кнопки в ноль */
+        }
+        
+        #logai-btn { 
+            bottom: 80px !important; /* Твоя родная высота кнопки, когда чат закрыт */
+            right: 22px !important;  /* Твой родной сдвиг кнопки */
+            z-index: 999998 !important; /* Когда чат открыт, кнопка останется под ним и не будет торчать */
+        }
+    }</style><div id="logai-widget" style="position: fixed; bottom: var(--widget-bottom, 20px); right: var(--widget-right, 20px); z-index: 9999;"><div id="logai-btn" onclick="toggleLogAI()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><div id="logai-window"><div style="background: #2d3035; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; align-items:center; gap:12px;"><div style="width:35px; height:35px; background:#007bff; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(0,123,255,0.5);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg></div><span style="font-weight:600; color:#fff; font-size:16px; letter-spacing: 0.5px;">AI Ассистент</span></div><span onclick="toggleLogAI()" style="cursor:pointer; color:#fff; font-size:35px; line-height: 0.7; opacity: 0.7;">&times;</span></div><div id="logai-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; background:#3b3e45;"></div><div style="padding:15px 15px 8px 15px; background:#2d3035; display:flex; flex-direction:column; border-top: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; gap:10px; align-items:flex-end; width:100%;"><textarea id="logai-input" rows="1" placeholder="Напишите..." oninput="this.style.height='';this.style.height=this.scrollHeight+'px'"></textarea> <button id="logai-send-btn" onclick="sendLogAI()">➤</button></div><div style="text-align:center; font-size:10px; color:#ffffff; opacity:0.3; margin-top:6px; font-family:sans-serif; pointer-events:none; user-select:none;">ИИ может ошибаться</div></div></div></div><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script>const API_URL = 'https://api2.log-ai.ru';
+    const MY_CLIENT_ID = 'client_arhitektor_2'; // МЕНЯТЬ ТУТ
+    const MY_BOT_PATH = 'arhitektor_2';  // МЕНЯТЬ ТУТ 
+    
+       let logSid;
+    try {
+        logSid = localStorage.getItem('logai_sid');
+        if (!logSid) {
+            logSid = 's_' + Math.random().toString(36).substr(2, 12);
+            localStorage.setItem('logai_sid', logSid);
+        }
+    } catch (e) {
+        // Если доступ к памяти закрыт (инкогнито), создаем временный ID
+        logSid = 'temp_' + Math.random().toString(36).substr(2, 12);
+    }
+
+    // Переименовали, чтобы избежать конфликтов
+    let chatIsWaiting = false;
+    let historyLoaded = false;
+    let activeMessageId = null;
+    let pollController = null;
+    let pollTimeoutId = null;
+
+
+       function toggleLogAI() {
+        const w = document.getElementById('logai-window');
+        const isOpen = (window.getComputedStyle(w).display === 'none');
+        
+        if (isOpen) {
+            w.style.display = 'flex';
+            if (!historyLoaded) {
+                loadChatHistory();
+            } 
+            // Если чат в режиме ожидания (точки), пинаем сервер сразу при открытии
+            else if (chatIsWaiting && activeMessageId) {
+                const dotsContainer = document.querySelector('.logai-dots')?.parentElement;
+                if (dotsContainer) {
+                    startPolling(activeMessageId, dotsContainer);
+                }
+            }
+        } else {
+            w.style.display = 'none';
+            // УБРАЛИ stopPolling(), чтобы ИИ докачивал ответ, даже когда окно закрыто
+        }
+    }
+
+
+    function updateInputState() {
+        const input = document.getElementById('logai-input');
+        const btn = document.getElementById('logai-send-btn');
+        if (input) {
+            input.disabled = chatIsWaiting;
+            input.style.opacity = chatIsWaiting ? '0.5' : '1';
+        }
+        if (btn) btn.style.opacity = chatIsWaiting ? '0.5' : '1';
+    }
+
+    function stopPolling() {
+        if (activeMessageId) localStorage.removeItem('poll_start_' + activeMessageId);
+        if (pollController) pollController.abort();
+        if (pollTimeoutId) clearTimeout(pollTimeoutId);
+    
+        pollController = null;
+        pollTimeoutId = null;
+        activeMessageId = null;
+        chatIsWaiting = false;
+        updateInputState();
+    }
+
+    function addLogMsg(txt, isAi) {
+        const d = document.createElement('div');
+        d.style = `padding:12px 16px; border-radius:18px; max-width:82%; font-size:14px; line-height:1.5; margin-bottom:10px; 
+                   ${isAi ? 'align-self:flex-start; background:#4a4e56; color:#dbdee1; border-bottom-left-radius:4px;' 
+                         : 'align-self:flex-end; background:#007bff; color:white; border-bottom-right-radius:4px; box-shadow:0 4px 12px rgba(0,123,255,0.25);'}`;
+
+        if (txt === 'dots') {
+   // ИСПРАВЛЕНО: Добавлен явный текст ожидания рядом с анимацией точек для лучшего UX
+   d.innerHTML = '<div style="display:flex; align-items:center; gap:8px;">' +
+                 '<span style="font-style:italic; opacity:0.8;">ИИ подбирает ответ...</span>' +
+                 '<div class="logai-dots"><span></span><span></span><span></span></div>' +
+                 '</div>';
+ } else {
+   d.innerHTML = typeof marked !== 'undefined' ? marked.parse(txt) : txt;
+ }
+
+        const box = document.getElementById('logai-msgs');
+        box.appendChild(d);
+        box.scrollTop = box.scrollHeight;
+        return d;
+    }
+
+async function loadChatHistory() {
+    const box = document.getElementById('logai-msgs');
+    try {
+        box.innerHTML = '';
+
+        const res = await fetch(`${API_URL}/history/${logSid}?platform=site&clientId=${MY_CLIENT_ID}`);
+        const data = await res.json();
+
+        if (Array.isArray(data.items) && data.items.length > 0) {
+            data.items.forEach((m, index) => {
+                // 1. Показываем сообщение пользователя
+                if (m.message) {
+                    addLogMsg(m.message, false);
+                }
+
+                // 2. Если есть готовый ответ — показываем
+                if (m.answer) {
+                    addLogMsg(m.answer, true);
+                } 
+                // 3. ИСПРАВЛЕНО: Четкое чтение m.message_id из базы данных без путаницы с регистрами
+                else if (m.message_id && index === data.items.length - 1) {
+                    chatIsWaiting = true;
+                    activeMessageId = m.message_id; // Используем m.message_id
+                    
+                    const aiMsg = addLogMsg('dots', true);
+                    startPolling(m.message_id, aiMsg); 
+                }
+            });
+        } else {
+            addLogMsg("Здравствуйте! Я ваш ИИ-ассистент. Чем могу помочь?", true);
+        }
+
+        historyLoaded = true;
+        updateInputState();
+
+    } catch (e) {
+        console.error('History error:', e);
+        addLogMsg("Не удалось загрузить историю чата", true);
+    }
+}
+
+
+async function sendLogAI() {
+    if (chatIsWaiting) return;
+
+    const input = document.getElementById('logai-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // ЖЕЛЕЗНЫЙ ДЕБАУНС: блокируем повторный клик в первую же микросекунду
+    chatIsWaiting = true;
+    updateInputState();
+
+    addLogMsg(msg, false);
+    
+    input.value = ''; 
+    input.style.height = 'auto'; 
+
+    const aiMsg = addLogMsg('dots', true);
+
+    try {
+        const res = await fetch(`${API_URL}/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sessionId: logSid,
+                message: msg,
+                clientId: MY_CLIENT_ID,
+                platform: 'site',
+                botPath: MY_BOT_PATH
+            })
+        });
+
+        // ИСПРАВЛЕНО: Обработка HTTP-ошибок. Передаем false третьим параметром, чтобы не было звука при ошибке
+        if (!res.ok) {
+            let errorMsg = "⚠️ Сервер временно недоступен";
+            if (res.status === 429) errorMsg = "🚫 Слишком много запросов. Подождите немного.";
+            else if (res.status === 403) {
+                try {
+                    const errData = await res.json();
+                    errorMsg = errData.reason || "🚫 Доступ ограничен.";
+                } catch (_) {
+                    errorMsg = "🚫 Доступ ограничен.";
+                }
+            }
+            finish(errorMsg, aiMsg, false); // false — звук НЕ играет
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data.blocked) {
+            finish(data.reason || data.message || "🚫 Сообщение заблокировано", aiMsg, false); // false — без звука
+            return;
+        }
+
+        if (data.messageId) {
+            activeMessageId = data.messageId;
+            startPolling(data.messageId, aiMsg);
+        } else {
+            finish("⚠️ Ошибка регистрации сообщения (нет messageId)", aiMsg, false);
+        }
+    } catch (e) {
+        console.error(e);
+        finish("⚠️ Ошибка связи с сервером. Проверьте интернет.", aiMsg, false);
+    }
+} // Скобка закрывает саму функцию send
+    function startPolling(messageId, aiMsg) {
+        activeMessageId = messageId;
+        pollController = new AbortController();
+        let savedTime = localStorage.getItem('poll_start_' + messageId);
+        if (!savedTime) {
+            savedTime = Date.now().toString();
+            localStorage.setItem('poll_start_' + messageId, savedTime);
+        }
+        let startTime = parseInt(savedTime, 10);
+        let statusChanged = false; // Чтобы не менять текст постоянно
+
+        const poll = async () => {
+            if (activeMessageId !== messageId) return;
+
+            const elapsed = (Date.now() - startTime) / 1000; // секунд прошло
+
+            // 1. На 40-й секунде меняем текст на "Сложный вопрос"
+            if (elapsed > 40 && !statusChanged) {
+                const dots = aiMsg.querySelector('.logai-dots');
+                aiMsg.innerHTML = '🤖 Вопрос сложный, анализирую данные...';
+                if (dots) aiMsg.appendChild(dots); 
+                statusChanged = true;
+            }
+
+            // 2. Лимит ожидания - 10 минут (600 секунд)
+            if (elapsed > 600) {
+                finish("🤖 Извините, ИИ перегружен или запрос слишком сложный. Пожалуйста, попробуйте позже.", aiMsg);
+                return;
+            }
+
+            // 3. Умный интервал: до 50 сек — каждые 3 сек, потом — каждые 10 сек
+            let nextInterval = (elapsed > 50) ? 10000 : 3000;
+
+            try {
+                // Добавили ?t=... чтобы телефон каждый раз реально спрашивал сервер, а не брал из кэша
+                const r = await fetch(`${API_URL}/get-answer/${messageId}?sessionId=${logSid}&clientId=${MY_CLIENT_ID}&t=${Date.now()}`, {
+                    signal: pollController.signal 
+                });
+                const d = await r.json();
+                const finalAnswer = d.answer || (d.status !== 'pending' ? d.answer : null);
+
+                if (finalAnswer) {
+                    finish(finalAnswer, aiMsg);
+                } else {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            } catch (e) {
+                if (e.name !== 'AbortError') {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            }
+        };
+        poll();
+    }
+
+function finish(text, msgElement, isSuccess = true) {
+    if (msgElement) {
+        msgElement.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+        
+        // Звук играет строго при успешном ответе ИИ, при ошибках или банах — тишина
+        if (isSuccess) {
+            try {
+                // ТВОЙ ОРИГИНАЛЬНЫЙ РАБОЧИЙ ПУТЬ: Кэш сбрасывается, файл проигрывается без ошибок 404
+                const audio = new Audio('https://api.log-ai.ru/notify.mp3?v=' + Date.now());
+                audio.volume = 0.4;
+                audio.play().catch(e => console.log("Нужен клик"));
+            } catch (e) {}
+        }
+    }
+    stopPolling();
+}
+
+
+    // Enter для отправки
+    document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('logai-input');
+    if (input) {
+      input.addEventListener('keypress', (e) => {
+        // ИСПРАВЛЕНО: Добавлена проверка !chatIsWaiting, чтобы клавиатура намертво блокировалась во время ожидания ИИ
+        if (e.key === 'Enter' && !e.shiftKey && !chatIsWaiting) {
+          e.preventDefault();
+          sendLogAI();
+        }
+      });
+
+      // ИСПРАВЛЕНО: Текстовое поле плавно растёт вниз до 150px, если текст длинный
+      input.addEventListener('input', function() {
+        this.style.height = 'auto'; 
+        this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+      });
+    }
+    });</script><div id="cookie-notice-wrapper" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #111111; border-top: 1px solid #222222; padding: 10px 15px; box-sizing: border-box; z-index: 99999; display: none; flex-direction: row; justify-content: space-between; align-items: center; gap: 15px; font-family: sans-serif;"><span style="color: #888888; font-size: 12px; line-height: 1.4; text-align: left;">Наш сайт использует файлы cookie для корректной работы. Подробнее — в <a href="/privacy-policy/" style="color: #bfa15f; text-decoration: underline;">Политике конфиденциальности</a>. </span><button onclick="dismissCookieNotice()" style="background: #bfa15f; color: #000000; border: none; padding: 5px 14px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Принять</button></div><style>@media (max-width: 600px) {
+        #cookie-notice-wrapper {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 10px !important;
+            padding: 12px 15px !important;
+        }
+        #cookie-notice-wrapper span {
+            text-align: center !important;
+            font-size: 11px !important;
+        }
+        #cookie-notice-wrapper button {
+            width: 100% !important;
+            padding: 8px !important;
+            font-size: 12px !important;
+        }
+    }</style><script>(function() {
+        var storageKey = 'logai_cookies_accepted';
+        if (!localStorage.getItem(storageKey)) {
+            document.getElementById('cookie-notice-wrapper').style.display = 'flex';
+        }
+    })();
+
+    function dismissCookieNotice() {
+        localStorage.setItem('logai_cookies_accepted', 'true');
+        document.getElementById('cookie-notice-wrapper').style.display = 'none';
+    }</script></body></html>

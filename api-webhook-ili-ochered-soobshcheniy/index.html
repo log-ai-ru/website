@@ -1,0 +1,855 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>API, Webhook или очередь сообщений: что выбрать | интеграция | LOG-AI</title><meta name="description" content="Чем отличаются API, webhook и очереди сообщений? Разбираем, где применять каждый подход и как выбрать архитектуру обмена данными между системами."><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://log-ai.ru/api-webhook-ili-ochered-soobshcheniy/"><link rel="alternate" type="application/atom+xml" href="https://log-ai.ru/feed.xml" title="LOG-AI - RSS"><link rel="alternate" type="application/json" href="https://log-ai.ru/feed.json" title="LOG-AI - JSON"><meta property="og:title" content="API, Webhook или очередь сообщений: что выбрать | интеграция | LOG-AI"><meta property="og:image" content="https://log-ai.ru/media/website/Log-ai-Logo.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:site_name" content="LOG-AI"><meta property="og:description" content="Чем отличаются API, webhook и очереди сообщений? Разбираем, где применять каждый подход и как выбрать архитектуру обмена данными между системами."><meta property="og:url" content="https://log-ai.ru/api-webhook-ili-ochered-soobshcheniy/"><meta property="og:type" content="article"><link rel="stylesheet" href="https://log-ai.ru/assets/css/style.css?v&#x3D;b1f5980528b3cc19f4018c94aea81f52"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://log-ai.ru/api-webhook-ili-ochered-soobshcheniy/"},"headline":"Api, webhook или очередь сообщений?","datePublished":"2026-10-03T15:44+05:00","dateModified":"2026-10-26T08:32+05:00","description":"Чем отличаются API, webhook и очереди сообщений? Разбираем, где применять каждый подход и как выбрать архитектуру обмена данными между системами.","author":{"@type":"Person","name":"AI Automation","url":"https://log-ai.ru/authors/ai-automation/"},"publisher":{"@type":"Organization","name":"AI Automation"}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript><style>body, html, main, #page, .wrapper, .main { background: #000000 !important; background-color: #000000 !important; }</style><link rel="icon" type="image/png" sizes="32x32" href="/media/files/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/media/files/favicon-16.png"><link rel="apple-touch-icon" sizes="180x180" href="/media/files/favicon-180.png"><meta name="yandex-verification" content="9d14e10b64f3b76c"><meta name="google-site-verification" content="-rKktnoSCGCLZToW-jcZeKu5WvWFGuLKdLwwyCux0-M"></head><body class="page-template"><header class="top js-header"><a class="logo" href="https://log-ai.ru/">LOG-AI</a><nav class="navbar js-navbar"><button class="navbar__toggle js-toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><span class="navbar__toggle-box"><span class="navbar__toggle-inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://log-ai.ru/" target="_self">Главная</a></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Услуги</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/avtomatizaciya-obrabotki-zayavok-i-lidov/" target="_self">Автоматизация обработки заявок и лидов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-biznes-processov-integracii-dannye-i-skvoznye-scenarii/" target="_self">Автоматизация бизнес-процессов</a></li><li><a href="https://log-ai.ru/sbor-i-obrabotka-dannyh/" target="_self">Сбор и обработка данных</a></li><li><a href="https://log-ai.ru/ii-dlya-biznesa-i-nejrosetej/" target="_self">ИИ для бизнеса и нейросети</a></li><li><a href="https://log-ai.ru/specializirovannye-cifrovye-sistemy/" target="_self">Специализированные цифровые системы</a></li><li><a href="https://log-ai.ru/individualnye-korporativnye-sistemy/" target="_self">Корпоративные системы</a></li><li><a href="https://log-ai.ru/tehnicheskoe-soprovozhdenie/" target="_self">Техническое сопровождение</a></li><li><a href="https://log-ai.ru/it-audit-i-predproektnoe-obsledovanie/" title="/it-audit-i-predproektnoe-obsledovanie/" target="_self">IT-аудит и предпроектное обследование</a></li><li><a href="https://log-ai.ru/oblachnyy-i-infrastrukturnyy-konsalting/" title="/oblachnyy-i-infrastrukturnyy-konsalting/" target="_self">Облачный и инфраструктурный консалтинг</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Решения</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakie-sistemy-my-integriruem/" target="_self">Какие системы мы интегрируем</a></li><li><a href="https://log-ai.ru/kak-rabotaet-ii-v-biznese/" target="_self">Как работает ИИ в бизнесе</a></li><li><a href="https://log-ai.ru/resheniya-po-zadacham/" target="_self">Решения по задачам</a></li><li><a href="https://log-ai.ru/avtomatizaciya-proizvodstva/" target="_self">Для производства</a></li><li><a href="https://log-ai.ru/avtomatizaciya-logistiki-i-skladov/" target="_self">Для логистики и складов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-optovoy-torgovli/" target="_self">Для оптовой торговли</a></li><li><a href="https://log-ai.ru/avtomatizaciya-e-commerce/" target="_self">Для e-commerce</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Реализация</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kak-my-rabotaem/" target="_self">Как мы работаем</a></li><li><a href="https://log-ai.ru/dokumentaciya-sistemy/" target="_self">Документация системы</a></li><li><a href="https://log-ai.ru/infrastruktura-i-razmeshchenie/" target="_self">Инфраструктура и размещение</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Выбор</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakuyu-avtomatizaciyu-vybrat/" target="_self">Какую автоматизацию выбрать</a></li><li><a href="https://log-ai.ru/chto-avtomatizirovat-v-biznese-v-pervuyu-ochered/" target="_self">Что автоматизировать в бизнесе в первую очередь</a></li><li><a href="https://log-ai.ru/kak-podgotovit-biznes-k-avtomatizacii/" target="_self">Как подготовить бизнес к автоматизации</a></li><li><a href="https://log-ai.ru/kak-vnedrit-avtomatizaciyu/" target="_self">Как внедрить автоматизацию</a></li><li><a href="https://log-ai.ru/kak-ocenit-rezultat-avtomatizacii/" target="_self">Как оценить результат автоматизации</a></li><li><a href="https://log-ai.ru/stoimost-razrabotki/" target="_self">Стоимость разработки</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">О нас</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/inzhenernyy-sostav/" target="_self">Инженерный состав</a></li><li><a href="https://log-ai.ru/keysy/" target="_self">Кейсы</a></li><li><a href="https://log-ai.ru/glossariy/" target="_self">Глоссарий</a></li><li><a href="https://log-ai.ru/ekspertiza/" target="_self">Экспертиза</a></li><li><a href="https://log-ai.ru/bezopasnost-sistem-dannyh-i-infrastruktury/" target="_self">Безопасность</a></li></ul></li></ul></nav></header><main class="page"><article class="content"><div class="hero hero--noimage"><header class="hero__content hero__content--centered"><div class="wrapper"><h1>Api, webhook или очередь сообщений?</h1></div></header></div><div class="entry-wrapper content__entry"><p> </p><p> </p><p> </p><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ARCHITECTURE // DATA_EXCHANGE_STRATEGY</div><h2 style="color: #ffffff; font-size: clamp(26px, 3.5vw, 32px); font-weight: 800; line-height: 1.15; letter-spacing: -0.7px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0;">Что выбрать для обмена данными между системами</h2><p style="font-size: 18px; color: #ffffff; line-height: 1.5; margin: 0 0 20px 0; font-weight: 500;">Когда в компании появляется несколько информационных систем, возникает необходимость наладить обмен данными между ними.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">CRM должна передавать заявку в ERP. Сайт — отправлять заказ в учётную систему. Складская система — сообщать о движении товара. Внешний сервис — уведомлять внутреннюю систему об изменении статуса.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 30px 0;">На этом этапе возникает вопрос: использовать API, webhook или очередь сообщений?</p><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0 0 40px 0; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold;">Эти три механизма нередко сравнивают так, будто они конкурируют друг с другом. На практике они решают разные задачи.</p></div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 40px;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1.5px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">[ 01 // API ]</div><p style="font-size: 15px; color: #ffffff; line-height: 1.6; margin: 0;">«Как одна система может запросить данные или выполнить операцию в другой системе?»</p></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1.5px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">[ 02 // WEBHOOK ]</div><p style="font-size: 15px; color: #ffffff; line-height: 1.6; margin: 0;">«Как система может сама сообщить другой системе, что что-то произошло?»</p></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1.5px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">[ 03 // QUEUE ]</div><p style="font-size: 15px; color: #ffffff; line-height: 1.6; margin: 0;">«Как передать событие или задачу, чтобы её можно было обработать независимо от отправителя?»</p></div></div><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold;">По мере усложнения архитектуры важно определить, как именно системы должны обмениваться данными, и только после этого выбирать технологии.</p></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ARCHITECTURE // HYBRID_INTEGRATION_MAP</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 14px 0;">API, webhook и очередь сообщений можно использовать вместе</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">В проектах эти механизмы часто используют одновременно.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 35px 0;">Например, интернет-магазин может работать примерно так:</p><div style="max-width: 1100px; margin: 0 auto 45px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 440px; display: block; margin: 0 auto; z-index: 1;" viewbox="0 0 440 354"><defs><marker id="arrow" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker><marker id="arrow-cyan" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><line x1="220" y1="44" x2="220" y2="76" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow)"></line><text x="230" y="65" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" font-weight="bold" letter-spacing="1">API</text><line x1="220" y1="124" x2="220" y2="156" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow)"></line><text x="230" y="145" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="10">событие</text><path d="M 220,208 L 220,225 M 70,225 L 370,225 M 70,225 L 70,242 M 370,225 L 370,242" stroke="#165c52" stroke-width="1.5" fill="none"></path><path d="M 70,240 L 70,244" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow)"></path><path d="M 370,240 L 370,244" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow)"></path><line x1="70" y1="306" x2="70" y2="292" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow-cyan)"></line><text x="82" y="303" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" font-weight="bold" letter-spacing="0.5">webhook</text><rect x="130" y="0" width="180" height="44" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="24" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" letter-spacing="0.5">ИНТЕРНЕТ-МАГАЗИН</text><rect x="130" y="80" width="180" height="44" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="220" y="104" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" letter-spacing="0.5">BACKEND</text><rect x="120" y="160" width="200" height="48" fill="#000000" stroke="#14b8a6" stroke-width="1"></rect><text x="220" y="186" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" letter-spacing="1">QUEUE</text><rect x="10" y="244" width="120" height="44" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="70" y="268" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" letter-spacing="0.5">ERP</text><rect x="310" y="244" width="120" height="44" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="370" y="268" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" letter-spacing="0.5">СКЛАД</text><rect x="10" y="306" width="120" height="44" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="70" y="330" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" letter-spacing="0.5">ВНЕШНИЙ СЕРВИС</text></svg></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">API, webhook и очередь сообщений здесь выполняют разные задачи в рамках одной интеграции.</p><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold;">Поэтому вопрос «API или webhook?» не всегда корректен: эти механизмы могут дополнять друг друга.</p></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ARCHITECTURE // API_REQUEST_PATTERN</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 14px 0;">API: когда системе нужно обратиться к другой системе</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">API позволяет одной системе обращаться к другой за данными или для выполнения операции.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 35px 0;">Одна система делает запрос другой:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center; overflow-x: auto; -webkit-overflow-scrolling: touch;"><div style="display: inline-block; min-width: 320px; padding: 10px; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace;"><div style="display: flex; flex-direction: column; align-items: center; width: 100%;"><div style="width: 150px; height: 38px; border: 1px solid #165c52; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 11px; background: #000000; box-sizing: border-box; font-weight: bold; letter-spacing: 0.5px;">Система A</div><div style="width: 1px; height: 45px; background: #165c52; position: relative; margin: 2px 0;"><div style="position: absolute; top: 50%; left: 10px; color: #14b8a6; font-size: 11px; font-weight: bold; white-space: nowrap; transform: translateY(-50%);">GET /orders/123</div><div style="position: absolute; bottom: 0; left: -3px; width: 0; height: 0; border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 5px solid #165c52;"> </div></div><div style="width: 150px; height: 38px; border: 1px solid #14b8a6; display: flex; align-items: center; justify-content: center; color: #14b8a6; font-size: 11px; background: #000000; box-sizing: border-box; font-weight: bold; letter-spacing: 0.5px;">Система B</div><div style="width: 1px; height: 45px; background: #165c52; position: relative; margin: 2px 0;"><div style="position: absolute; top: 50%; left: 10px; color: #aaaaaa; font-size: 11px; white-space: nowrap; transform: translateY(-50%);">данные заказа</div><div style="position: absolute; bottom: 0; left: -3px; width: 0; height: 0; border-left: 3px solid transparent; border-right: 3px solid transparent; border-top: 5px solid #165c52;"> </div></div><div style="width: 150px; height: 38px; border: 1px solid #165c52; display: flex; align-items: center; justify-content: center; color: #ffffff; font-size: 11px; background: #000000; box-sizing: border-box; font-weight: bold; letter-spacing: 0.5px;">Система A</div></div></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Например, внутренняя система хочет узнать текущий статус заказа.</p><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0 0 30px 0; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; line-height: 1.7;"><p style="margin: 0 0 8px 0; color: #aaaaaa;">Она отправляет запрос: <span style="color: #ffffff; font-weight: bold;">«Дай мне заказ № 123»</span>.</p><p style="margin: 0; color: #aaaaaa;">Вторая система отвечает: <span style="color: #14b8a6; font-weight: bold;">«Заказ № 123 имеет статус „Отгружен“»</span>.</p></div><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; font-weight: bold;">Такой подход подходит, когда вызывающей системе нужен ответ на запрос.</p><p style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">[ API_USE_CASES ]</p><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa;"><li style="margin-bottom: 10px; padding-left: 20px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> получения данных;</li><li style="margin-bottom: 10px; padding-left: 20px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> создания объектов;</li><li style="margin-bottom: 10px; padding-left: 20px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> изменения объектов;</li><li style="margin-bottom: 10px; padding-left: 20px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> проверки состояния;</li><li style="margin-bottom: 10px; padding-left: 20px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> выполнения конкретных операций;</li><li style="margin-bottom: 0; padding-left: 20px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> синхронного взаимодействия между системами.</li></ul><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Например, при открытии карточки клиента интерфейс может запросить актуальные данные через API. Отправлять такой запрос в очередь нет смысла, если пользователь должен сразу увидеть ответ.</p></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ARCHITECTURE // API_DEPENDENCY_CHAIN</div><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 14px 0; font-family: 'SF Mono', Monaco, monospace;">Что происходит, если другая система недоступна</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">При синхронном вызове системе A нужен ответ от системы B, поэтому недоступность B может помешать выполнению операции.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Если A делает запрос к B, а B недоступна, A получает ошибку или вынуждена ждать. Для простой интеграции это обычно не проблема. Сложности возникают, когда для выполнения одной операции требуется последовательный ответ от нескольких систем.</p><div style="max-width: 1100px; margin: 0 auto 30px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><div style="display: inline-block; width: 100%; max-width: 600px; padding: 10px; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace;"><div style="display: flex; align-items: center; justify-content: center; gap: 8px 12px; color: #aaaaaa; font-size: 11px; flex-wrap: wrap; line-height: 2;"><div style="padding: 6px 12px; border: 1px solid #165c52; background: #000000; color: #ffffff; display: inline-block; white-space: nowrap; box-sizing: border-box;">Заказ</div><span style="color: #165c52;">→</span><div style="padding: 6px 12px; border: 1px solid #165c52; background: #000000; color: #ffffff; display: inline-block; white-space: nowrap; box-sizing: border-box;">CRM</div><span style="color: #165c52;">→</span><div style="padding: 6px 12px; border: 1px solid #165c52; background: #000000; color: #ffffff; display: inline-block; white-space: nowrap; box-sizing: border-box;">ERP</div><span style="color: #165c52;">→</span><div style="padding: 6px 12px; border: 1px solid #165c52; background: #000000; color: #ffffff; display: inline-block; white-space: nowrap; box-sizing: border-box;">Склад</div><span style="color: #165c52;">→</span><div style="padding: 6px 12px; border: 1px solid #165c52; background: #000000; color: #ffffff; display: inline-block; white-space: nowrap; box-sizing: border-box;">Доставка</div><span style="color: #14b8a6; font-weight: bold;">→</span><div style="padding: 6px 12px; border: 1px solid #14b8a6; background: #000000; color: #14b8a6; font-weight: bold; display: inline-block; white-space: nowrap; box-sizing: border-box;">Уведомления</div></div></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 40px 0;">Если каждая операция ждёт следующую, временная проблема одного сервиса начинает распространяться дальше по цепочке. В таких случаях стоит рассмотреть асинхронную обработку отдельных этапов.</p><p> </p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">[ ARCHITECTURE // WEBHOOK_EVENT_DRIVEN ]</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 14px 0;">Webhook: уведомление о событии без постоянных запросов</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 30px 0; font-weight: bold;">Webhook работает наоборот.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; padding: 25px 25px 25px 20px; box-sizing: border-box; border-left: 1px solid #165c52;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; font-weight: bold; margin-bottom: 15px; text-transform: uppercase;">[ ПЛОХОЙ ВАРИАНТ ДЛЯ МНОГИХ СЦЕНАРИЕВ ]</div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #aaaaaa; line-height: 1.7;">A → B: Что-нибудь изменилось?<br>A → B: А сейчас?<br>A → B: А теперь?<br>A → B: А сейчас?<br>A → B: А теперь?</div></div><div style="background: #000000; padding: 25px 25px 25px 20px; box-sizing: border-box; border-left: 1px solid #14b8a6;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; font-weight: bold; margin-bottom: 15px; text-transform: uppercase;">[ Webhook ]</div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; line-height: 1.7;">B → A: <span style="color: #14b8a6; font-weight: bold;">Произошло событие.</span></div></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 35px 0;">Допустим, платёжный сервис изменил статус платежа. Вместо периодических запросов о статусе заказа платёжный сервис может отправить webhook, когда статус изменится.</p><p style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">[ ПРИМЕНЕНИЕ WEBHOOK ДЛЯ СОБЫТИЙ ]</p><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 10px 20px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> заказ создан;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> платёж подтверждён;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> документ изменён;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> клиент зарегистрирован;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> задача завершена;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> статус доставки изменился;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> файл готов;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> операция завершилась.</li></ul><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Webhook — это уведомление о событии, которое обычно передаётся HTTP-запросом. Для надёжной доставки нужно предусмотреть повторные попытки, обработку тайм-аутов, проверку подлинности запроса, защиту от дубликатов и контроль ошибок доставки.</p><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold;">И здесь важно не путать webhook с полноценной очередью сообщений.</p></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ARCHITECTURE // WEBHOOK_RELIABILITY_ANTI_PATTERN</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 14px 0;">Почему webhook сам по себе не гарантирует надёжность</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Это одна из распространённых ошибок проектирования.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Разработчик принимает webhook через метод <span style="font-family: 'SF Mono', Monaco, monospace; color: #14b8a6; font-weight: bold;">POST /webhook</span> и сразу внутри этого HTTP-запроса начинает выполнять тяжёлые операции:</p><ul style="list-style: none; padding: 0; margin: 0 0 30px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 10px 20px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">✕</span> проверять данные;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">✕</span> обращаться к CRM;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">✕</span> обращаться к ERP;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">✕</span> создавать документы;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">✕</span> отправлять письма;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">✕</span> обновлять склад;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">✕</span> рассчитывать показатели.</li></ul><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0 0 35px 0; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 10px 0; font-weight: bold;">На тестовом стенде всё прекрасно.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0;">А потом внешний сервис присылает несколько сотен событий подряд. И внезапно webhook становится не просто уведомлением, а точкой входа для огромного количества работы. Если обработчик отвечает слишком долго или завершается с ошибкой, отправитель может повторить доставку. Это создаёт риск дублирования операций и увеличивает нагрузку.</p></div><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; font-weight: bold;">Поэтому хороший webhook-контур часто выглядит иначе:</p><div style="max-width: 1100px; margin: 0 auto 40px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 400px; display: block; margin: 0 auto; z-index: 1;" viewbox="0 0 400 240"><defs><marker id="arrow-green" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker><marker id="arrow-cyan" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><text x="150" y="15" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Внешний сервис</text><circle cx="150" cy="28" r="4" fill="#165c52"></circle><line x1="150" y1="32" x2="150" y2="48" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow-green)"></line><text x="150" y="65" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle">Webhook</text><circle cx="150" cy="78" r="4" fill="#14b8a6"></circle><line x1="150" y1="82" x2="150" y2="98" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow-green)"></line><text x="150" y="115" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" text-anchor="middle">Быстро приняли событие</text><circle cx="150" cy="128" r="4" fill="#165c52"></circle><line x1="150" y1="132" x2="150" y2="152" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow-green)"></line><rect x="35" y="158" width="130" height="42" fill="#000000" stroke="#14b8a6" stroke-width="1"></rect><text x="100" y="183" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" letter-spacing="1">QUEUE</text><path d="M 165,179 L 210,179 M 210,163 L 210,195" stroke="#165c52" stroke-width="1.5" fill="none"></path><path d="M 210,163 L 218,163" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow-cyan)"></path><path d="M 210,179 L 218,179" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow-cyan)"></path><path d="M 210,195 L 218,195" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow-cyan)"></path><text x="230" y="166" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11">обработка</text><text x="230" y="182" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11">повтор при ошибке</text><text x="230" y="198" fill="#aaaaaa" font-family="'SF Mono', Monaco, monospace" font-size="11">логирование</text></svg></div><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">Обработчик webhook может проверять запрос и сохранять событие в очереди. Подтверждать приём следует после сохранения сообщения, если этого требует протокол взаимодействия с отправителем.</p><p style="font-size: 16px; color: #ffffff; margin-top: 25px; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">После сохранения сообщения его обрабатывает отдельный потребитель. Это позволяет быстрее отвечать на webhook-запросы и сохранять принятые события при временной недоступности внутренних систем.</p></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ARCHITECTURE // ASYNC_MESSAGE_QUEUE</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 14px 0;">Очередь сообщений: как отделить отправку от обработки</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Очередь позволяет отделить отправку задачи от её обработки.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Представим склад. ERP сообщает: <span style="color: #ffffff; font-weight: bold;">«Создано задание на отгрузку»</span>. ERP не обязательно ждать завершения обработки складской системой. Можно передать сообщение в очередь:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 580px; display: block; margin: 0 auto; z-index: 1;" viewbox="0 0 580 230"><defs><marker id="arrow-green-queue" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker><marker id="arrow-cyan-queue" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="100" y="5" width="120" height="38" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="160" y="28" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" letter-spacing="0.5">ERP</text><line x1="160" y1="43" x2="160" y2="98" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow-green-queue)"></line><text x="175" y="75" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" text-anchor="start">"Создано задание на отгрузку"</text><rect x="110" y="103" width="100" height="46" fill="#000000" stroke="#14b8a6" stroke-width="1"></rect><text x="160" y="130" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="12" font-weight="bold" text-anchor="middle" letter-spacing="1">QUEUE</text><path d="M 210,126 L 430,126 M 430,67 L 430,185" stroke="#165c52" stroke-width="1.5" fill="none"></path><path d="M 430,67 L 438,67" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow-cyan-queue)"></path><path d="M 430,126 L 438,126" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow-cyan-queue)"></path><path d="M 430,185 L 438,185" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow-cyan-queue)"></path><rect x="448" y="49" width="100" height="34" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="498" y="70" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">Склад</text><rect x="448" y="109" width="100" height="34" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="498" y="130" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">Логистика</text><rect x="448" y="168" width="100" height="34" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="498" y="189" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">Аналитика</text></svg></div><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; font-weight: bold;">Теперь системы становятся менее связаны между собой.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 35px 0;">ERP сообщает о событии и продолжает свою работу. Потребители получают сообщение и обрабатывают его тогда, когда готовы.</p><p style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">[ QUEUE_BENEFITS ]</p><ul style="list-style: none; padding: 0; margin: 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 10px 20px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> сообщений много;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> обработка занимает время;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> системы работают с разной скоростью;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> временная недоступность потребителя допустима;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> нужны повторные попытки;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> одно событие должны обработать несколько систем;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> необходимо сохранять сообщения при временной недоступности потребителя;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> нужно сгладить резкие пики нагрузки.</li></ul></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ARCHITECTURE // CORE_COMPARISON_MATRIX</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 14px 0;">Чем отличаются API, webhook и очередь сообщений</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Кратко:</p><div style="width: 100%; margin-bottom: 30px; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, sans-serif;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; border-bottom: 1px solid #165c52; padding-bottom: 12px; margin-bottom: 15px;"><div style="background: #000000; padding: 25px 25px 25px 20px; box-sizing: border-box; border-left: 1px solid #165c52;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px; text-transform: uppercase;">[ Механизм // API ]</div><h4 style="margin: 0 0 10px 0; color: #ffffff; font-size: 15px; font-weight: bold;">«Дай данные / выполни операцию»</h4><div style="font-size: 13px; color: #aaaaaa;"><span style="color: #165c52; font-family: monospace; margin-right: 4px;">►</span> Инициатор: вызывающая система</div></div><div style="background: #000000; padding: 25px 25px 25px 20px; box-sizing: border-box; border-left: 1px solid #165c52;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px; text-transform: uppercase;">[ Механизм // Webhook ]</div><h4 style="margin: 0 0 10px 0; color: #ffffff; font-size: 15px; font-weight: bold;">«У меня произошло событие»</h4><div style="font-size: 13px; color: #aaaaaa;"><span style="color: #165c52; font-family: monospace; margin-right: 4px;">►</span> Инициатор: система-источник</div></div><div style="background: #000000; padding: 25px 25px 25px 20px; box-sizing: border-box; border-left: 1px solid #14b8a6;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px; text-transform: uppercase;">[ Механизм // Очередь ]</div><h4 style="margin: 0 0 10px 0; color: #ffffff; font-size: 15px; font-weight: bold;">«Вот сообщение, обработай его»</h4><div style="font-size: 13px; color: #14b8a6; font-weight: bold;"><span style="color: #14b8a6; font-family: monospace; margin-right: 4px;">►</span> Инициатор: отправитель (в очередь)</div></div></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Но одной этой таблицы недостаточно для проектирования. Потому что вопрос обычно не звучит так: <span style="color: #ffffff; font-weight: bold;">«Какую технологию выбрать?»</span></p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; font-weight: bold;">Он звучит так: «Что должно произойти, если одна система сейчас недоступна?» Это один из основных вопросов при проектировании интеграции.</p><p> </p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ARCHITECTURE // AVAILABILITY_FAILURE_MODES</div><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 14px 0; font-family: 'SF Mono', Monaco, monospace;">Что произойдёт, если система-получатель станет недоступна?</h4><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 35px 0;">Допустим, CRM должна передать заказ в ERP.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 25px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; padding: 25px 25px 25px 20px; box-sizing: border-box; border-left: 1px solid #165c52;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; font-weight: bold; margin-bottom: 20px; text-transform: uppercase;">[ Вариант с прямым API ]</div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #aaaaaa; line-height: 1.8; margin-bottom: 25px;">CRM → ERP<br><span style="color: #165c52;">└───►</span> ERP недоступна<br><span style="color: #165c52; margin-left: 30px;">└───►</span> <span style="color: #ffffff; background: #5c1616; padding: 2px 6px; font-weight: bold;">ERROR</span></div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0;">Дальше нужно самостоятельно решать:</p><ul style="list-style: none; padding: 0; margin: 0; font-size: 13.5px; color: #aaaaaa; line-height: 1.8;"><li style="position: relative; padding-left: 15px; margin-bottom: 6px;"><span style="position: absolute; left: 0; color: #165c52;">•</span> повторять запрос;</li><li style="position: relative; padding-left: 15px; margin-bottom: 6px;"><span style="position: absolute; left: 0; color: #165c52;">•</span> сколько раз и через какой интервал;</li><li style="position: relative; padding-left: 15px; margin-bottom: 6px;"><span style="position: absolute; left: 0; color: #165c52;">•</span> как определить, что операция всё-таки прошла;</li><li style="position: relative; padding-left: 15px;"><span style="position: absolute; left: 0; color: #165c52;">•</span> что делать при таймауте и как избежать двойного создания заказа.</li></ul><p style="font-size: 13.5px; color: #ffffff; font-weight: bold; margin: 20px 0 0 0;">Сам по себе API не гарантирует доставку и выполнение операции при сбоях.</p></div><div style="background: #000000; padding: 25px 25px 25px 20px; box-sizing: border-box; border-left: 1px solid #14b8a6;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; font-weight: bold; margin-bottom: 20px; text-transform: uppercase;">[ Вариант с очередью ]</div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #aaaaaa; line-height: 1.8; margin-bottom: 25px;">CRM → <span style="color: #14b8a6; font-weight: bold;">Queue</span> → ERP<br><span style="color: #14b8a6;">└───►</span> ERP недоступна<br><span style="color: #14b8a6; margin-left: 30px;">└───►</span> <span style="color: #14b8a6;">сообщение сохраняется в очереди</span><br><span style="color: #14b8a6;">└───►</span> ERP восстанавливается<br><span style="color: #14b8a6; margin-left: 30px;">└───►</span> <span style="color: #ffffff; font-weight: bold;">потребитель повторяет обработку</span></div><p style="font-size: 14px; color: #14b8a6; font-weight: bold; margin: 25px 0 12px 0;">В этом случае сообщение может оставаться в очереди до восстановления потребителя.</p><p style="font-size: 13.5px; color: #aaaaaa; margin: 0; line-height: 1.6;">Такой подход работает, если брокер сохраняет сообщения до подтверждения обработки, а потребитель отправляет подтверждение только после фиксации результата. Если подтверждать сообщение раньше времени, сбой может привести к потере операции. Если подтверждение не дойдёт до брокера, сообщение может быть доставлено повторно. Поэтому потребитель должен уметь распознавать дубликаты.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ARCHITECTURE // SYNCHRONOUS_LIMITS_AND_GROWTH</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 14px 0;">Когда очередь не нужна</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Использовать очередь для всех операций подряд не стоит: некоторым запросам нужен немедленный ответ.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 30px 0;">Если пользователю нужно открыть карточку клиента и получить актуальные данные, очередь может быть совершенно неуместна. Пользователь открывает карточку и ожидает увидеть данные сразу.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; padding: 25px 25px 25px 20px; box-sizing: border-box; border-left: 1px solid #14b8a6;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; font-weight: bold; margin-bottom: 15px; text-transform: uppercase;">[ Естественная модель ]</div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #ffffff; line-height: 1.5;">Frontend → API → Backend → Database</div></div><div style="background: #000000; padding: 25px 25px 25px 20px; box-sizing: border-box; border-left: 1px solid #165c52;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; font-weight: bold; margin-bottom: 15px; text-transform: uppercase;">[ Избыточная модель ]</div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #aaaaaa; line-height: 1.5;">Frontend → Queue → обработчик → ... → ответ</div></div></div><p style="font-size: 15px; color: #ffffff; margin: 0 0 45px 0; font-weight: bold;">Очередь нужна, когда операцию можно выполнить асинхронно и не требуется немедленно возвращать её результат пользователю.</p><p> </p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ARCHITECTURE // COUPLING_SPAGHETTI_ANTI_PATTERN</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 14px 0;">Как меняется интеграция при росте числа систем</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">На маленьком проекте интеграция часто выглядит очень просто: <span style="font-family: 'SF Mono', Monaco, monospace; color: #ffffff; font-weight: bold;">CRM ↔ API ↔ ERP</span>. И это нормально. Не нужно строить распределённую систему из десятка компонентов только потому, что это технически возможно.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">По мере развития проекта к интеграции могут подключаться новые системы:</p><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 10px 20px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> ещё одна CRM;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> мобильное приложение;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> склад и сайт;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> платёжная система;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> служба доставки;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> аналитика;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> документооборот;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> несколько внешних API.</li></ul><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 30px 0;">По мере увеличения числа прямых интеграций схема взаимодействия усложняется. Если каждая система связывается со многими другими, возникает так называемая архитектура «спагетти»:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><div style="display: inline-block; width: 280px; height: 160px; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace; position: relative;"><svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;" viewbox="0 0 280 160"><line x1="18" y1="18" x2="262" y2="18" stroke="#165c52" stroke-width="1.5"></line><line x1="18" y1="18" x2="18" y2="88" stroke="#165c52" stroke-width="1.5"></line><line x1="262" y1="18" x2="262" y2="88" stroke="#165c52" stroke-width="1.5"></line><line x1="18" y1="88" x2="262" y2="88" stroke="#165c52" stroke-width="1.5"></line><line x1="18" y1="18" x2="262" y2="88" stroke="#165c52" stroke-width="1.5" opacity="0.6"></line><line x1="18" y1="88" x2="140" y2="142" stroke="#165c52" stroke-width="1.5" opacity="0.6"></line><line x1="262" y1="88" x2="140" y2="142" stroke="#165c52" stroke-width="1.5" opacity="0.6"></line></svg><div style="position: absolute; top: 0; left: 0; width: 36px; height: 36px; border: 1px solid #ffffff; background: #000000; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: bold; z-index: 2; box-sizing: border-box;">A</div><div style="position: absolute; top: 0; right: 0; width: 36px; height: 36px; border: 1px solid #ffffff; background: #000000; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: bold; z-index: 2; box-sizing: border-box;">B</div><div style="position: absolute; top: 70px; left: 0; width: 36px; height: 36px; border: 1px solid #ffffff; background: #000000; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: bold; z-index: 2; box-sizing: border-box;">C</div><div style="position: absolute; top: 70px; right: 0; width: 36px; height: 36px; border: 1px solid #ffffff; background: #000000; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: bold; z-index: 2; box-sizing: border-box;">D</div><div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 36px; height: 36px; border: 1px solid #ffffff; background: #000000; color: #ffffff; display: flex; align-items: center; justify-content: center; font-weight: bold; z-index: 2; box-sizing: border-box;">E</div></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ARCHITECTURE // EVENT_DRIVEN_ARCHITECTURE</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 14px 0;">Как событийная архитектура упрощает обмен данными</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 30px 0; font-weight: bold;">Вместо прямых связей между всеми системами можно использовать общий механизм передачи событий.</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><div style="display: inline-block; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace; text-align: left; width: 100%; max-width: 320px;"><div style="display: flex; align-items: center; gap: 20px; width: 100%; position: relative;"><div style="border: 1px dashed #165c52; padding: 10px 15px; background: #000000; color: #aaaaaa; font-size: 11px; font-weight: bold; white-space: nowrap; flex-shrink: 0;">Событие заказа</div><div style="width: 30px; height: 1px; background: #165c52; position: relative; flex-shrink: 0;"><div style="position: absolute; right: 0; top: -3px; width: 0; height: 0; border-top: 3px solid transparent; border-bottom: 3px solid transparent; border-left: 5px solid #165c52;"> </div></div><div style="display: flex; flex-direction: column; gap: 10px; flex-grow: 1;"><div style="color: #ffffff; border: 1px solid #165c52; background: #000000; padding: 6px 12px; font-size: 11px; width: 90px; text-align: center; font-weight: bold; box-sizing: border-box;">CRM</div><div style="color: #ffffff; border: 1px solid #165c52; background: #000000; padding: 6px 12px; font-size: 11px; width: 90px; text-align: center; font-weight: bold; box-sizing: border-box;">ERP</div><div style="color: #ffffff; border: 1px solid #165c52; background: #000000; padding: 6px 12px; font-size: 11px; width: 90px; text-align: center; font-weight: bold; box-sizing: border-box;">СКЛАД</div><div style="color: #ffffff; border: 1px solid #165c52; background: #000000; padding: 6px 12px; font-size: 11px; width: 90px; text-align: center; font-weight: bold; box-sizing: border-box;">АНАЛИТИКА</div></div></div></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Источник публикует событие, например <span style="font-family: 'SF Mono', Monaco, monospace; color: #14b8a6; font-weight: bold;">OrderCreated,</span> а потребители независимо решают, какие действия выполнить. Сообщение должно содержать достаточно данных для предусмотренного сценария либо идентификатор объекта, по которому потребитель может получить необходимые сведения через API.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Такая модель уменьшает прямую связанность систем, но требует согласованного формата событий, правил версионирования и понятной семантики повторной обработки.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Но у неё неизбежно появляется собственная инженерная сложность:</p><ul style="list-style: none; padding: 0; margin: 0 0 40px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 10px 20px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">›</span> структура событий;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">›</span> версии сообщений;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">›</span> идемпотентность;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">›</span> порядок событий;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">›</span> повторная доставка;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">›</span> дедупликация;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">›</span> обработка ошибок;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">›</span> мониторинг;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">›</span> dead-letter queue;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">›</span> трассировка операций.</li></ul><div style="border-left: 3px solid #14b8a6; padding-left: 20px; margin: 0 0 20px 0; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">Именно поэтому переход от простого API к очередям — это не просто подключение ещё одного сервиса.</p></div><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0;">Меняется сама архитектурная модель.</p></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ARCHITECTURE // IDEMPOTENCY_SAFETY_PATTERN</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 14px 0;">Идемпотентность: как избежать повторного выполнения операции</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Представим, что система получила сообщение: <span style="font-family: 'SF Mono', Monaco, monospace; color: #ffffff; font-weight: bold;">«Создать документ № 123»</span>. Обработала его. Но ответ потерялся. Отправитель решил повторить сообщение.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 30px 0; font-weight: bold;">Если обработчик просто выполнит операцию ещё раз, мы получим второй документ.</p><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0 0 35px 0; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 10px 0; font-weight: bold;">Поэтому в распределённых системах нужно заранее понимать:</p><p style="font-size: 16px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0;">Что произойдёт, если одно и то же сообщение придёт дважды?</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 30px 0;">Обработчик должен корректно обрабатывать повторно доставленные сообщения, не выполняя одну бизнес-операцию дважды.</p><p> </p><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; font-weight: bold; margin-bottom: 15px; text-transform: uppercase;">IMPLEMENTATION EXAMPLE // EVENT_VALIDATION</div><p style="font-size: 15px; color: #ffffff; margin: 0 15px 15px 0;">Каждому событию можно присвоить уникальный идентификатор:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #14b8a6; background: #071715; padding: 8px 15px 8px 20px; display: inline-block; border-left: 2px solid #14b8a6; margin-bottom: 15px; box-sizing: border-box;">event_id = "8f31..."</div><p style="font-size: 14px; color: #aaaaaa; margin: 0;">Обработчик проверяет идентификатор события по журналу уже обработанных сообщений. Проверка и фиксация результата должны быть организованы так, чтобы параллельные экземпляры обработчика не выполнили одну операцию дважды. Для этого используют, например, уникальное ограничение на идентификатор события и транзакционную фиксацию вместе с бизнес-изменением, если они выполняются в одной базе данных.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0;">На практике именно такие детали требуют дополнительной разработки и тестирования, хотя на архитектурной схеме их обычно не видно.</p></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ARCHITECTURE // EVENT_ORDERING_CHALLENGE</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 14px 0;">Что делать, если события приходят не по порядку</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Например, события могут прийти в таком порядке:</p><div style="background: #000000; padding: 25px 25px 25px 20px; box-sizing: border-box; margin-bottom: 30px; border-left: 1px solid #165c52;"><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0;">Сначала пришло:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; background: #0b0b0b; padding: 8px 15px 8px 20px; display: inline-block; margin-bottom: 20px; border: 1px solid #165c52; box-sizing: border-box;">OrderStatusChanged <span style="color: #14b8a6;">→</span> SHIPPED</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0;">а затем — более старое событие:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; background: #0b0b0b; padding: 8px 15px 8px 20px; display: inline-block; margin-bottom: 0; border: 1px solid #165c52; box-sizing: border-box;">OrderStatusChanged <span style="color: #14b8a6;">→</span> PAID</div></div><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0;">Что должна сделать система?</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 20px 0;">Решение зависит от того, что означает каждое сообщение: изменение состояния объекта или отдельное бизнес-событие. Если каждое событие описывает новое состояние объекта, обработчик должен уметь распознавать устаревшие версии и не перезаписывать ими более актуальное состояние. Если события описывают отдельные бизнес-факты, их нельзя просто отбрасывать по времени: необходимо учитывать допустимые переходы состояния и порядок, требуемый конкретным процессом.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 35px 0;"></p><p style="font-family: 'SF Mono', Monaco, monospace; font-size: 12px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">[ ARCHITECTURAL_CHECKLIST ]</p><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 10px 20px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> гарантируется ли порядок сообщений;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> кем гарантируется;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> для какого конкретно ключа;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> что происходит при повторной доставке;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> может ли сообщение задержаться;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> что делать с устаревшим состоянием.</li></ul><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 35px 0;"></p><div style="border-left: 3px solid #14b8a6; padding-left: 20px; margin: 0; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">Поэтому при выборе очереди нужно отдельно определить правила порядка обработки и работы с устаревшими событиями.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">SUMMARY // ARCHITECTURE_DECISION_TREE</div><h3 style="color: #ffffff; font-size: clamp(22px, 3.2vw, 26px); font-weight: 800; line-height: 1.2; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 14px 0;">Как выбрать способ обмена данными</h3><p style="font-size: 16px; color: #ffffff; margin: 0 0 10px 0; font-weight: bold;">Начинать лучше не с технологии.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 40px 0;">Сначала нужно описать сам сценарий обмена.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 20px;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; border-top: 1px solid #165c52;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px; text-transform: uppercase;">[ Сценарий // Синхронно ]</div><h4 style="margin: 0 0 14px 0; color: #ffffff; font-size: 16px; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">Если системе нужен ответ прямо сейчас</h4><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0 0 20px 0;">Используйте API.</p><ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: #aaaaaa; line-height: 1.6;"><li style="position: relative; padding-left: 15px; margin-bottom: 6px;"><span style="position: absolute; left: 0; color: #165c52;">•</span> Получить карточку клиента.</li><li style="position: relative; padding-left: 15px; margin-bottom: 6px;"><span style="position: absolute; left: 0; color: #165c52;">•</span> Проверить наличие товара.</li><li style="position: relative; padding-left: 15px; margin-bottom: 6px;"><span style="position: absolute; left: 0; color: #165c52;">•</span> Создать заявку.</li><li style="position: relative; padding-left: 15px;"><span style="position: absolute; left: 0; color: #165c52;">•</span> Получить текущий статус.</li></ul></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; border-top: 1px solid #165c52;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px; text-transform: uppercase;">[ Сценарий // Уведомление ]</div><h4 style="margin: 0 0 14px 0; color: #ffffff; font-size: 16px; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">Если нужно сообщить другой системе о событии</h4><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0 0 20px 0;">Используйте webhook.</p><ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: #aaaaaa; line-height: 1.6;"><li style="position: relative; padding-left: 15px; margin-bottom: 6px;"><span style="position: absolute; left: 0; color: #165c52;">•</span> Платёж подтверждён.</li><li style="position: relative; padding-left: 15px; margin-bottom: 6px;"><span style="position: absolute; left: 0; color: #165c52;">•</span> Заказ изменил статус.</li><li style="position: relative; padding-left: 15px; margin-bottom: 6px;"><span style="position: absolute; left: 0; color: #165c52;">•</span> Документ подписан.</li><li style="position: relative; padding-left: 15px;"><span style="position: absolute; left: 0; color: #165c52;">•</span> Новый клиент зарегистрирован.</li></ul></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; border-top: 1px solid #14b8a6;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px; text-transform: uppercase;">[ Сценарий // Асинхронно ]</div><h4 style="margin: 0 0 14px 0; color: #ffffff; font-size: 16px; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">Если обработку можно отделить от события</h4><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0 0 20px 0;">Используйте очередь сообщений.</p><ul style="list-style: none; padding: 0; margin: 0; font-size: 14px; color: #aaaaaa; line-height: 1.6;"><li style="position: relative; padding-left: 15px; margin-bottom: 6px;"><span style="position: absolute; left: 0; color: #14b8a6;">•</span> Обработать 50 000 записей.</li><li style="position: relative; padding-left: 15px; margin-bottom: 6px;"><span style="position: absolute; left: 0; color: #14b8a6;">•</span> Передать задания нескольким потребителям.</li><li style="position: relative; padding-left: 15px; margin-bottom: 6px;"><span style="position: absolute; left: 0; color: #14b8a6;">•</span> Обработать событие с повторной доставкой.</li><li style="position: relative; padding-left: 15px;"><span style="position: absolute; left: 0; color: #14b8a6;">•</span> Продолжать приём сообщений, пока недоступен потребитель, если очередь и инфраструктура настроены соответствующим образом.</li></ul></div></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">SUMMARY // HYBRID_ARCHITECTURE_PATTERN</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 14px 0;">Как API, webhook и очередь работают вместе</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 10px 0; font-weight: bold;">В одной интеграции разные механизмы часто используют для разных задач.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 30px 0;">Она редко строится на утверждениях вроде: <span style="font-family: 'SF Mono', Monaco, monospace; color: #ffffff;">«У нас всё на API»</span> или <span style="font-family: 'SF Mono', Monaco, monospace; color: #ffffff;">«Мы всё сделали через Kafka»</span>. Например, API используют для запросов, webhook — для уведомлений, а очередь — для отложенной обработки сообщений.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 40px;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1.5px; text-transform: uppercase; font-weight: bold; margin-bottom: 12px;">[ API ]</div><p style="font-size: 15px; color: #ffffff; margin: 0;">Применяется строго для **синхронных операций**, когда ответ нужен инициатору здесь и сейчас.</p></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1.5px; text-transform: uppercase; font-weight: bold; margin-bottom: 12px;">[ Webhook ]</div><p style="font-size: 15px; color: #ffffff; margin: 0;">Используется для **получения уведомлений о событиях** от внешних сервисов без постоянного опроса. Фактическая задержка зависит от отправителя, сети и обработки на стороне получателя.</p></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1.5px; text-transform: uppercase; font-weight: bold; margin-bottom: 12px;">[ Очередь ]</div><p style="font-size: 15px; color: #ffffff; margin: 0;">Используется для **тяжёлой, фоновой** или асинхронной обработки, когда требуется отделить отправку от выполнения, сгладить пики нагрузки и предусмотреть восстановление после сбоев.</p></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 35px 0;">При этом внутри одного и того же сквозного бизнес-сценария они могут последовательно работать вместе:</p><div style="max-width: 1100px; margin: 0 auto 35px auto; padding: 0; background: none; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 580px; display: block; margin: 0 auto; z-index: 1;" viewbox="0 0 580 230"><defs><marker id="arrow-green-comb" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#165c52"></path></marker><marker id="arrow-cyan-comb" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="6" markerheight="6" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="80" y="5" width="160" height="38" stroke="#165c52" stroke-width="1" stroke-dasharray="4 4" fill="#000000"></rect><text x="160" y="28" fill="#aaaaaa" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="bold" text-anchor="middle">ВНЕШНЯЯ СИСТЕМА</text><line x1="160" y1="43" x2="160" y2="88" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow-green-comb)"></line><text x="175" y="70" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="bold" letter-spacing="0.5">webhook</text><rect x="80" y="93" width="160" height="38" stroke="#165c52" stroke-width="1" fill="#000000"></rect><text x="160" y="116" fill="#ffffff" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" letter-spacing="0.5">INTEGRATION API</text><line x1="160" y1="131" x2="160" y2="176" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow-green-comb)"></line><rect x="90" y="181" width="140" height="44" stroke="#14b8a6" stroke-width="1" fill="#000000"></rect><text x="160" y="207" fill="#14b8a6" font-family="-apple-system, BlinkMacSystemFont, sans-serif" font-size="11" font-weight="bold" text-anchor="middle" letter-spacing="0.5">MESSAGE QUEUE</text><path d="M 230,203 L 440,203 M 440,114 L 440,203" stroke="#165c52" stroke-width="1.5" fill="none"></path><path d="M 440,114 L 448,114" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow-cyan-comb)"></path><path d="M 440,154 L 448,154" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow-cyan-comb)"></path><path d="M 440,194 L 448,194" stroke="#165c52" stroke-width="1.5" marker-end="url(#arrow-cyan-comb)"></path><rect x="458" y="97" width="90" height="34" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="503" y="118" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">CRM</text><rect x="458" y="137" width="90" height="34" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="503" y="158" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">ERP</text><rect x="458" y="177" width="90" height="34" fill="#000000" stroke="#165c52" stroke-width="1"></rect><text x="503" y="198" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">Analytics</text></svg></div><p style="font-size: 15px; color: #14b8a6; font-weight: bold; margin: 0;">Такой подход позволяет использовать каждый механизм для подходящих ему задач.</p></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ARCHITECTURE // PREMATURE_OPTIMIZATION_LIMITS</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 14px 0;">Когда достаточно простого API</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Не стоит внедрять дополнительную инфраструктуру, пока для неё нет конкретной задачи.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Если компания обменивается данными между двумя системами с небольшой нагрузкой и понятными правилами обработки, API может быть достаточно. Необязательно сразу внедрять брокер сообщений, десяток микросервисов, event bus и сложную систему мониторинга. Архитектура должна соответствовать нагрузке и требованиям бизнеса.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Дополнительную инфраструктуру нужно не только внедрить, но и сопровождать:</p><ul style="list-style: none; padding: 0; margin: 0 35px 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 10px 20px;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">›</span> её нужно разрабатывать;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">›</span> тестировать;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">›</span> мониторить;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">›</span> документировать;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">›</span> обновлять;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">›</span> поддерживать;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #165c52;">›</span> объяснять новым разработчикам.</li></ul><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0 0 45px 0; box-sizing: border-box;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 8px 0;">Поэтому очередь не является «более взрослым» вариантом API.</p><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0;">Это другой инструмент для другой задачи.</p></div><p> </p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">ARCHITECTURE // INTEGRATION_DESIGN_CHECKLIST</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 14px 0;">Что нужно определить перед интеграцией систем</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 35px 0;">Когда проектируем обмен между несколькими системами, недостаточно спросить: <span style="font-family: 'SF Mono', Monaco, monospace; color: #ffffff; font-weight: bold;">«Есть ли у этой системы API?»</span> Мы смотрим глубже:</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 480px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1.5px; font-weight: bold; margin-bottom: 12px;">01 // SOURCE OF TRUTH</div><h4 style="margin: 0 0 8px 0; color: #ffffff; font-size: 15px; font-weight: bold;">Какая система хранит актуальные данные?</h4><p style="margin: 0; color: #aaaaaa; font-size: 14px;">Где действительно хранится актуальное состояние объекта?</p></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1.5px; font-weight: bold; margin-bottom: 12px;">02 // INITIATOR</div><h4 style="margin: 0 0 8px 0; color: #ffffff; font-size: 15px; font-weight: bold;">Кто инициирует действие?</h4><p style="margin: 0; color: #aaaaaa; font-size: 14px;">Пользователь, внутренняя система или внешний сервис?</p></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1.5px; font-weight: bold; margin-bottom: 12px;">03 // IMMEDIACY</div><h4 style="margin: 0 0 8px 0; color: #ffffff; font-size: 15px; font-weight: bold;">Нужен ли ответ немедленно?</h4><p style="margin: 0; color: #aaaaaa; font-size: 14px;">Если да, обычно подходит синхронный запрос к API.</p></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1.5px; font-weight: bold; margin-bottom: 12px;">04 // AVAILABILITY</div><h4 style="margin: 0 0 8px 0; color: #ffffff; font-size: 15px; font-weight: bold;">Что произойдёт при недоступности системы?</h4><p style="margin: 0; color: #aaaaaa; font-size: 14px;">Можно ли повторить операцию позже?</p></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1.5px; font-weight: bold; margin-bottom: 12px;">05 // CRITICALITY</div><h4 style="margin: 0 0 8px 0; color: #ffffff; font-size: 15px; font-weight: bold;">Можно ли потерять событие?</h4><p style="margin: 0; color: #aaaaaa; font-size: 14px;">Нужно определить, какие события допустимо потерять, а какие требуют гарантированного сохранения и повторной обработки.</p></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1.5px; font-weight: bold; margin-bottom: 12px;">06 // IDEMPOTENCY</div><h4 style="margin: 0 0 8px 0; color: #ffffff; font-size: 15px; font-weight: bold;">Допустима ли повторная доставка?</h4><p style="margin: 0; color: #aaaaaa; font-size: 14px;">Если сообщение придёт дважды, система должна корректно это пережить.</p></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1.5px; font-weight: bold; margin-bottom: 12px;">07 // THROUGHPUT</div><h4 style="margin: 0 0 8px 0; color: #ffffff; font-size: 15px; font-weight: bold;">Какой объём и интенсивность обмена?</h4><p style="margin: 0; color: #aaaaaa; font-size: 14px;">Десять сообщений в минуту и сто тысяч сообщений в минуту — разные архитектурные задачи.</p></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1.5px; font-weight: bold; margin-bottom: 12px;">08 // FAN_OUT</div><h4 style="margin: 0 0 8px 0; color: #ffffff; font-size: 15px; font-weight: bold;">Сколько систем будет потреблять событие?</h4><p style="margin: 0; color: #aaaaaa; font-size: 14px;">Если один источник должен уведомлять пять систем, событийная модель может оказаться естественнее множества вызовов.</p></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1.5px; font-weight: bold; margin-bottom: 12px;">09 // OBSERVABILITY</div><h4 style="margin: 0 0 8px 0; color: #ffffff; font-size: 15px; font-weight: bold;">Как будет происходить мониторинг?</h4><p style="margin: 0; color: #aaaaaa; font-size: 14px;">Нужно отслеживать, было ли сообщение доставлено, обработано или завершилось ошибкой.</p></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1.5px; font-weight: bold; margin-bottom: 12px;">10 // ERROR_HANDLING</div><h4 style="margin: 0 0 8px 0; color: #ffffff; font-size: 15px; font-weight: bold;">Что произойдёт при ошибке?</h4><p style="margin: 0; color: #aaaaaa; font-size: 14px;">Заранее определите, когда повторять обработку, когда откладывать сообщение, когда передавать его в dead-letter queue и в каких случаях требуется вмешательство оператора.</p></div></div><div style="max-width: 1100px; margin: 5px auto 0 auto; padding: 0; box-sizing: border-box; width: 100%; text-align: right;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; letter-spacing: 0.5px;"><a href="/kakie-sistemy-my-integriruem/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">[ Посмотреть с какими системами мы интегрируемся ]</a></div></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">SUMMARY // FINAL_ARCHITECTURE_CONCLUSION</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 14px 0;">Сначала сценарий обмена, затем технология</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">Выбор брокера, настройка webhook и проектирование API не решат проблему, если заранее не определены правила обмена данными между системами.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; padding: 25px 25px 25px 20px; box-sizing: border-box; border-left: 1px solid #165c52;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 12px; text-transform: uppercase;">[ Кейс 01 // Конфликт данных ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 10px 0;">Две системы постоянно спорят о том, какая из них владеет определёнными данными.</p><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin: 0;">Сам по себе брокер сообщений эту проблему не решит.</p></div><div style="background: #000000; padding: 25px 25px 25px 20px; box-sizing: border-box; border-left: 1px solid #165c52;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 12px; text-transform: uppercase;">[ Кейс 02 // Дублирование ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 10px 0;">Система получает один и тот же заказ из трёх источников и не умеет определить, что это один заказ.</p><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin: 0;">В этом случае нужно решить задачу идентификации заказов и устранения дубликатов, а не менять способ передачи данных.</p></div><div style="background: #000000; padding: 25px 25px 25px 20px; box-sizing: border-box; border-left: 1px solid #14b8a6;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; margin-bottom: 12px; text-transform: uppercase;">[ Кейс 03 // Ожидания бизнеса ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 10px 0;">Бизнес ожидает, что изменение в одной системе появится в другой мгновенно, хотя вся архитектура построена асинхронно.</p><p style="font-size: 14px; color: #14b8a6; font-weight: bold; margin: 0;">Тогда проблема уже в согласовании требований и модели данных.</p></div></div><div style="border-left: 3px solid #14b8a6; padding-left: 20px; margin: 0 0 50px 0; box-sizing: border-box;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 8px 0;">Поэтому интеграцию лучше начинать не с вопроса: <span style="font-family: 'SF Mono', Monaco, monospace; color: #ffffff;">«Какой протокол использовать?»</span></p><p style="font-size: 16px; color: #ffffff; font-weight: bold; margin: 0;">а с вопроса: «Что именно должно произойти между этими системами и что должно произойти, если что-то пойдёт не по плану?»</p></div><p> </p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">CORE_SUMMARY // ARCHITECTURAL_TOTAL</div><h2 style="color: #ffffff; font-size: clamp(24px, 3.2vw, 28px); font-weight: 800; line-height: 1.15; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0;">Итог</h2><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold;">API, webhook и очередь сообщений — не три версии одного и того же инструмента.</p><ul style="list-style: none; padding: 0; margin: 0 40px 40px 0; font-size: 15px; color: #aaaaaa;"><li style="margin-bottom: 12px; padding-left: 20px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <span style="color: #ffffff; font-weight: bold;">API</span> предоставляет программный интерфейс для получения данных и выполнения операций. Он часто используется для синхронных запросов, когда вызывающей системе нужен немедленный ответ, но сам по себе API не исключает асинхронные операции: например, запрос может запускать фоновую задачу и возвращать её идентификатор для последующей проверки статуса.</li><li style="margin-bottom: 12px; padding-left: 20px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <span style="color: #ffffff; font-weight: bold;">Webhook</span> удобен, когда система должна сообщить другой системе о произошедшем событии в формате push-уведомления.</li><li style="margin-bottom: 0; padding-left: 20px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> <span style="color: #ffffff; font-weight: bold;">Очередь сообщений</span> нужна, когда отправку события важно отделить от его обработки, сглаживать пики нагрузки и допускать временную недоступность потребителей. Возможность надёжно переживать такие сбои зависит от настроек хранения сообщений, подтверждений обработки, повторных попыток и механизма восстановления после ошибок.</li></ul><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; margin-bottom: 35px; border-top: 1px solid #165c52; border-bottom: 1px solid #165c52;"><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 10px 0;">В простом проекте вполне может хватить API.</p><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 10px 0;">В более сложной системе webhook может стать входом в очередь.</p><p style="font-size: 14px; color: #ffffff; font-weight: bold; margin: 0;">Очередь позволяет передавать сообщения нескольким независимым потребителям.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Поэтому правильная архитектура часто выглядит не как выбор одного конкретного протокола, а как осознанное использование каждого механизма там, где он действительно нужен.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 35px 0;">По мере роста числа систем важно учитывать, насколько сильно они зависят друг от друга и как сбой одного компонента повлияет на остальные.</p><div style="border-left: 3px solid #14b8a6; padding-left: 20px; margin: 0; box-sizing: border-box;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 8px 0;">Хорошая интеграция — это не просто когда системы технически умеют обмениваться данными.</p><p style="font-size: 16px; color: #14b8a6; font-weight: bold; font-family: 'SF Mono', Monaco, monospace; margin: 0;">Хорошая интеграция — когда они могут обмениваться данными предсказуемо, контролируемо и без превращения одной временной ошибки в полную остановку всего процесса.</p></div></div></div></div><p> </p><div style="max-width: 1100px; margin: 60px auto 0 auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">НАВИГАЦИЯ // SUGGESTED_READING</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ИНТЕГРАЦИИ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Почему интеграции между системами ломаются</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/pochemu-integracii-mezhdu-sistemami-lomayutsya/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ИНТЕГРАЦИИ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Когда API есть, а интеграция всё равно не работает</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kogda-api-est-a-integraciya-vsyo-ravno-ne-rabotaet/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ИНТЕГРАЦИИ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Как синхронизировать данные между системами</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kak-sinhronizirovat-dannye-mezhdu-sistemami/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div></div></div><div style="max-width: 1100px; margin: 20px auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; border-top: 1px solid #165c52; padding: 40px 0 0 0; box-sizing: border-box; width: 100%;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 40px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ EXPERTISE JOURNAL ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Все инженерные материалы и экспертные статьи</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/ekspertiza/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">перейти к каталогу ──►</a></div></div><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ CORE GLOSSARY ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Полный алфавитный справочник ИТ-терминов</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/glossariy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">открыть справочник ──►</a></div></div></div></div></div></article></main><footer class="footer"><div class="wrapper"><div class="footer__copyright"><p> </p><p> </p></div><button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg width="20" height="20"><use xlink:href="https://log-ai.ru/assets/svg/svg-map.svg#toparrow"/></svg></button></div></footer><script defer="defer" src="https://log-ai.ru/assets/js/scripts.min.js?v&#x3D;d0fc1030089a37f93a2d51bf6d07565c"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script><script>(() => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') !== 'monument') return;
+
+  const IMAGE_URL = 'https://log-ai.ru/media/files/Interstellar.jpeg';
+  const AUDIO_URL = 'https://log-ai.ru/media/files/interstellar.mp3';
+
+  // Защита от повторного запуска
+  if (document.getElementById('log-ai-monument')) return;
+
+  const monument = document.createElement('div');
+  monument.id = 'log-ai-monument';
+
+  const root = document.documentElement;
+  const body = document.body;
+
+  const previousRootOverflow = root.style.overflow;
+  const previousBodyOverflow = body.style.overflow;
+  const previousBodyPosition = body.style.position;
+  const previousBodyTop = body.style.top;
+  const previousBodyWidth = body.style.width;
+  const previousScrollX = window.scrollX;
+  const previousScrollY = window.scrollY;
+
+  root.style.overflow = 'hidden';
+  body.style.overflow = 'hidden';
+  body.style.position = 'fixed';
+  body.style.top = `-${previousScrollY}px`;
+  body.style.width = '100%';
+
+  monument.innerHTML = `
+    <div class="monument-universe"></div>
+    <canvas class="monument-stars"></canvas>
+    <div class="monument-shade"></div>
+
+    <div class="monument-frame">
+      <p class="monument-overline">ARCHIVUM · LOG-AI · MMXXVI</p>
+
+      <div class="monument-rule"></div>
+
+      <h1>PER ASPERA<br><span>AD ASTRA</span></h1>
+
+      <p class="monument-translation">
+        THROUGH HARDSHIP, TO THE STARS
+      </p>
+
+      <div class="monument-message">
+        <p>TO THOSE WHO BUILD BEYOND THE LIMITS OF THEIR TIME.</p>
+        <p>TO THOSE WHO CONTINUE WHEN THE OUTCOME IS UNKNOWN.</p>
+        <p>TO THOSE WHO WILL DISCOVER THIS LONG AFTER ITS CREATION.</p>
+      </div>
+
+      <p class="monument-declaration">
+        YOU WERE NOT THE FIRST TO LOOK AT THE STARS.<br>
+        BUT YOU MAY BE AMONG THOSE WHO REACH THEM.
+      </p>
+
+      <div class="monument-rule"></div>
+          
+      <p class="monument-translation">
+        A MARK LEFT IN THE MACHINE.
+      </p>   
+
+      <p class="monument-signature">
+        LOG·AI·ARCHITECTI·MMXXVI
+      </p>
+
+      <p class="monument-exit" id="monument-hint">
+        [ CLICK ANYWHERE TO RETURN ]
+      </p>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #log-ai-monument {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      background: #03040a;
+      color: #e5dfd3;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      box-sizing: border-box;
+      cursor: pointer;
+      isolation: isolate;
+      opacity: 0;
+      animation: logai-monument-appear 1.8s ease forwards;
+    }
+
+    #log-ai-monument .monument-universe {
+      position: fixed;
+      inset: -3%;
+      z-index: -3;
+      background-image: url("https://log-ai.ru/media/files/Interstellar.jpeg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transform: scale(1.02);
+      animation: logai-cosmic-drift 35s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-shade {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(0,0,0,.24) 0%,
+          rgba(0,0,0,.52) 65%,
+          rgba(0,0,0,.78) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.42),
+          rgba(0,0,0,.18) 45%,
+          rgba(0,0,0,.62)
+        );
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-frame {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', serif;
+      padding: 30px 0;
+      text-shadow: 0 2px 18px rgba(0,0,0,.9);
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-translation,
+    #log-ai-monument .monument-signature,
+    #log-ai-monument .monument-exit {
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-signature {
+      color: #c0a16a;
+    }
+
+    #log-ai-monument .monument-rule {
+      height: 1px;
+      width: 160px;
+      max-width: 60%;
+      margin: 30px auto;
+      background: linear-gradient(
+        to right,
+        transparent,
+        #a68a55,
+        transparent
+      );
+      box-shadow: 0 0 12px rgba(190,155,90,.2);
+    }
+
+    #log-ai-monument h1 {
+      margin: 35px 0 18px;
+      font-size: clamp(30px, 7vw, 58px);
+      line-height: 1.5;
+      letter-spacing: .16em;
+      font-weight: 400;
+      color: #f4f0e8;
+    }
+
+    #log-ai-monument h1 span {
+      color: #d2b77e;
+    }
+
+    #log-ai-monument .monument-translation {
+      color: #c0b8aa;
+    }
+
+    #log-ai-monument .monument-message {
+      margin: 55px auto 38px;
+      max-width: 490px;
+      color: #e0d9cd;
+      font-size: 13px;
+      line-height: 2.2;
+      letter-spacing: .035em;
+    }
+
+    #log-ai-monument .monument-message p {
+      margin: 0 0 12px;
+    }
+
+    #log-ai-monument .monument-declaration {
+      color: #e0c48a;
+      font-size: 12px;
+      line-height: 2.3;
+      letter-spacing: .08em;
+    }
+
+    #log-ai-monument .monument-exit {
+      margin-top: 36px;
+      color: #c0b8aa;
+      font-size: 9px;
+      letter-spacing: .18em;
+    }
+
+    @keyframes logai-monument-appear {
+      to { opacity: 1; }
+    }
+
+    @keyframes logai-cosmic-drift {
+      from { transform: scale(1.02); }
+      to { transform: scale(1.13); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #log-ai-monument,
+      #log-ai-monument .monument-universe {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(monument);
+
+  // Тонкие, редкие звёзды
+  const canvas = monument.querySelector('.monument-stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let frameId = null;
+  let closed = false;
+
+  function resizeStars() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(window.innerWidth * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    stars = Array.from({ length: 65 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      length: 8 + Math.random() * 25,
+      speed: 0.25 + Math.random() * 0.75,
+      alpha: 0.15 + Math.random() * 0.5,
+      delay: Math.random() * 500
+    }));
+  }
+
+  function drawStars() {
+    if (closed) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    for (const star of stars) {
+      star.delay -= 1;
+
+      if (star.delay <= 0) {
+        star.y += star.speed;
+        star.x -= star.speed * 0.35;
+
+        ctx.beginPath();
+        ctx.moveTo(star.x, star.y);
+        ctx.lineTo(star.x - star.length * 0.35,
+                   star.y - star.length);
+
+        ctx.strokeStyle = `rgba(210,220,255,${star.alpha})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+
+        if (star.y > h + 30 || star.x < -30) {
+          star.x = Math.random() * w + 30;
+          star.y = -Math.random() * h * 0.4;
+          star.delay = 30 + Math.random() * 180;
+        }
+      }
+    }
+
+    frameId = requestAnimationFrame(drawStars);
+  }
+
+  resizeStars();
+  drawStars();
+
+  window.addEventListener('resize', resizeStars);
+
+  // Музыка
+  const audio = document.createElement('audio');
+  audio.id = 'monument-audio';
+  audio.src = AUDIO_URL;
+  audio.loop = true;
+  audio.preload = 'auto';
+  audio.volume = 0.35;
+  document.body.appendChild(audio);
+
+  let playing = false;
+  let starting = false;
+
+  const hint = document.getElementById('monument-hint');
+
+  function startMusic() {
+    if (closed || starting || playing) return;
+
+    starting = true;
+
+    audio.play().then(() => {
+      starting = false;
+
+      if (closed) {
+        audio.pause();
+        return;
+      }
+
+      playing = true;
+      hint.textContent = '[ CLICK ANYWHERE TO RETURN ]';
+    }).catch((error) => {
+      starting = false;
+
+      if (closed) return;
+
+      if (error.name === 'NotAllowedError') {
+        hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+        return;
+      }
+
+      console.warn('LOG-AI audio:', error.name, error.message);
+      hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+    });
+  }
+
+  function closeMonument() {
+    if (closed) return;
+    closed = true;
+
+    cancelAnimationFrame(frameId);
+    window.removeEventListener('resize', resizeStars);
+    window.removeEventListener('keydown', onKeyDown);
+
+    audio.pause();
+    audio.remove();
+    monument.remove();
+    style.remove();
+
+    root.style.overflow = previousRootOverflow;
+    body.style.overflow = previousBodyOverflow;
+    body.style.position = previousBodyPosition;
+    body.style.top = previousBodyTop;
+    body.style.width = previousBodyWidth;
+
+    window.scrollTo(previousScrollX, previousScrollY);
+
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete('mode');
+
+    window.history.replaceState(
+      {},
+      document.title,
+      cleanUrl.pathname + cleanUrl.search + cleanUrl.hash
+    );
+  }
+
+  function onKeyDown(event) {
+    if (event.key === 'Escape') closeMonument();
+  }
+
+  monument.addEventListener('click', () => {
+    if (closed) return;
+
+    if (playing) {
+      closeMonument();
+    } else {
+      startMusic();
+    }
+  });
+
+  window.addEventListener('keydown', onKeyDown);
+
+  // Первая попытка автоматического запуска
+  startMusic();
+})();</script><script>(function () {
+    // ВНИМАНИЕ!!!!!!!!!!!!!!!!!!!!Плавный инерционный скролл только для мыши/тачпада
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    let targetY = window.scrollY;
+    let currentY = window.scrollY;
+    let animationFrame = null;
+
+    // ===== НАСТРОЙКИ =====
+    const SPEED = 0.70;       // 0.4 = медленнее, 0.65 = средне, 1.0 = быстрее
+    const SMOOTHNESS = 0.13;  // 0.08 = мягче, 0.12 = средне, 0.18 = быстрее
+    const MAX_STEP = 500;     // максимальный шаг одного движения колеса
+    // =====================
+
+    function animateScroll() {
+        currentY += (targetY - currentY) * SMOOTHNESS;
+
+        if (Math.abs(targetY - currentY) < 0.5) {
+            currentY = targetY;
+            window.scrollTo(0, currentY);
+            animationFrame = null;
+            return;
+        }
+
+        window.scrollTo(0, currentY);
+        animationFrame = requestAnimationFrame(animateScroll);
+    }
+
+    window.addEventListener('wheel', function (event) {
+
+    // Если глобус активирован кликом —
+    // колесо полностью отдаём Globe.gl для zoom.
+    const globe = event.target.closest('#globeViz');
+
+    if (globe && globe.dataset.interacting === 'true') {
+        return;
+    }
+
+    // Внутренний скролл AI-чата не трогаем
+    if (event.target.closest('#logai-window, #logai-msgs')) {
+        return;
+    }
+
+    event.preventDefault();
+
+        let delta = event.deltaY * SPEED;
+
+        // Ограничиваем слишком резкие движения
+        delta = Math.max(-MAX_STEP, Math.min(MAX_STEP, delta));
+
+        targetY += delta;
+
+        // Не даём уйти выше/ниже страницы
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        targetY = Math.max(0, Math.min(targetY, maxY));
+
+        if (!animationFrame) {
+            animationFrame = requestAnimationFrame(animateScroll);
+        }
+    }, { passive: false });
+
+    // Синхронизация, если страницу прокрутили другим способом
+    window.addEventListener('scroll', function () {
+        if (!animationFrame) {
+            targetY = window.scrollY;
+            currentY = window.scrollY;
+        }
+    }, { passive: true });
+
+})();</script><div id="logai-footer-mobile" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box;"><div style="margin: 0 auto 20px auto; padding-top: 40px; text-align: center; margin-bottom: 40px;"><a href="mailto:info@log-ai.ru" style="font-size: 24px; font-family: 'SF Mono', Monaco, monospace; color: #e5e7eb; text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: 0.3px;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#e5e7eb'">info@log-ai.ru</a><p style="color: #aaaaaa; font-size: 15px; line-height: 1.6; max-width: 750px; margin: 15px auto 0 auto;">Пришлите описание задачи, техническое задание или ссылку на существующую систему. Мы оценим задачу и определим возможные варианты реализации.</p></div><div style="max-width: 850px; margin: 0 auto 40px auto; text-align: center; background: #000000; padding: 0; box-sizing: border-box;"><p style="color: #aaaaaa; font-size: 14px; line-height: 1.6; margin: 0;"><span style="color: #4ade80; margin-right: 6px;">🔒</span> Данные и доступ к системам заказчика обрабатываются в соответствии с согласованными требованиями к безопасности и конфиденциальности. Условия доступа, хранения и обработки данных определяются архитектурой проекта и договором.</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; box-sizing: border-box; width: 100%; margin-bottom: 30px;"><p style="color: #666666; font-size: 12px; line-height: 1.6; margin: 0; width: 100%; text-align: justify;">Сайт носит исключительно информационный характер и не является публичной офертой в соответствии со статьёй 437 Гражданского кодекса РФ. Цены, состав и условия предоставления услуг уточняются при проектировании решения и фиксируются в договоре. Условия технического сопровождения и уровень сервиса могут дополнительно определяться отдельным соглашением (SLA).</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; width: 100%; box-sizing: border-box;"><div style="color: #666666; font-size: 12px; line-height: 1.5; text-align: left;">© 2026 Log-AI<br>Автоматизация бизнеса и ИИ-решения под ключ. Работаем по всей России и СНГ.<br>ИП Скопец Антон Викторович<br>ИНН 741709<span></span>260870 · ОГРНИП 326745600<span></span>204228<br>Все права защищены.</div><div style="display: flex; gap: 20px; flex-wrap: wrap; font-family: sans-serif;"><a href="/privacy-policy/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Политика конфиденциальности</a> <a href="/terms/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Пользовательское соглашение</a></div></div></div><style>@media screen and (max-width: 600px) {
+  #logai-footer-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+}</style><style>/* Анимации и точки */
+    @keyframes logai-bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+    .logai-dots { display: flex !important; flex-direction: row !important; gap: 4px !important; align-items: center !important; height: 12px !important; }
+    .logai-dots span { display: inline-block; width: 5px; height: 5px; background: #aaa !important; border-radius: 50%; animation: logai-bounce 1.4s infinite ease-in-out; }
+    .logai-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .logai-dots span:nth-child(3) { animation-delay: 0.4s; }
+    
+    #logai-msgs::-webkit-scrollbar { width: 5px; }
+    #logai-msgs::-webkit-scrollbar-thumb { background: #666; border-radius: 10px; }
+    
+    /* Сообщения и текст */
+    #logai-msgs div { white-space: pre-wrap !important; word-wrap: break-word !important; padding: 12px 16px !important; margin-bottom: 5px !important; display: flex; flex-direction: column; justify-content: center; }
+    #logai-msgs div p { margin: 0 !important; padding: 0 !important; line-height: 1.5 !important; }
+    #logai-msgs { gap: 12px !important; padding: 20px !important; }
+
+    /* Поле ввода и кнопка отправить */
+    #logai-input { flex: 1 !important; padding: 12px 18px !important; border-radius: 20px !important; background: #4a4e56 !important; border: 1px solid rgba(255,255,255,0.1) !important; outline: none !important; color: #fff !important; font-size: 15px !important; resize: none !important; max-height: 120px !important; line-height: 1.4 !important; }
+    #logai-send-btn { background-color: #007bff !important; border: none !important; width: 45px !important; height: 45px !important; border-radius: 50% !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-size: 24px !important; padding: 0 !important; flex-shrink: 0 !important; }
+
+    /* ГЛАВНЫЕ СТИЛИ (чтобы кнопка и окно не исчезали) */
+    #logai-btn {
+        position: fixed !important; bottom: 40px !important; right: 110px !important;
+        width: 65px !important; height: 65px !important; border-radius: 50% !important;
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        cursor: pointer !important; z-index: 10000 !important; box-shadow: 0 10px 25px rgba(0,123,255,0.4);
+    }
+
+    #logai-window {
+        display: none; position: fixed !important; bottom: 115px !important; right: 110px !important;
+        width: 380px !important; height: 600px !important; background: #3b3e45 !important;
+        border-radius: 24px !important; flex-direction: column; overflow: hidden;
+        z-index: 10000 !important; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.15) !important;
+    }
+
+        /* АДАПТИВ ДЛЯ МОБИЛОК: ЧАТ НА ВЕСЬ ЭКРАН */
+    @media screen and (max-width: 480px) {
+        #logai-window { 
+            right: 0 !important; 
+            left: 0 !important; 
+            bottom: 0 !important; 
+            width: 100% !important; 
+            height: 100% !important; /* Растягиваем окно на 100% экрана смартфона */
+            border-radius: 0 !important; /* Убираем скругления углов, чтобы чат сел монолитом */
+            z-index: 999999 !important; /* Перекрываем все кнопки в ноль */
+        }
+        
+        #logai-btn { 
+            bottom: 80px !important; /* Твоя родная высота кнопки, когда чат закрыт */
+            right: 22px !important;  /* Твой родной сдвиг кнопки */
+            z-index: 999998 !important; /* Когда чат открыт, кнопка останется под ним и не будет торчать */
+        }
+    }</style><div id="logai-widget" style="position: fixed; bottom: var(--widget-bottom, 20px); right: var(--widget-right, 20px); z-index: 9999;"><div id="logai-btn" onclick="toggleLogAI()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><div id="logai-window"><div style="background: #2d3035; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; align-items:center; gap:12px;"><div style="width:35px; height:35px; background:#007bff; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(0,123,255,0.5);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg></div><span style="font-weight:600; color:#fff; font-size:16px; letter-spacing: 0.5px;">AI Ассистент</span></div><span onclick="toggleLogAI()" style="cursor:pointer; color:#fff; font-size:35px; line-height: 0.7; opacity: 0.7;">&times;</span></div><div id="logai-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; background:#3b3e45;"></div><div style="padding:15px 15px 8px 15px; background:#2d3035; display:flex; flex-direction:column; border-top: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; gap:10px; align-items:flex-end; width:100%;"><textarea id="logai-input" rows="1" placeholder="Напишите..." oninput="this.style.height='';this.style.height=this.scrollHeight+'px'"></textarea> <button id="logai-send-btn" onclick="sendLogAI()">➤</button></div><div style="text-align:center; font-size:10px; color:#ffffff; opacity:0.3; margin-top:6px; font-family:sans-serif; pointer-events:none; user-select:none;">ИИ может ошибаться</div></div></div></div><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script>const API_URL = 'https://api2.log-ai.ru';
+    const MY_CLIENT_ID = 'client_arhitektor_2'; // МЕНЯТЬ ТУТ
+    const MY_BOT_PATH = 'arhitektor_2';  // МЕНЯТЬ ТУТ 
+    
+       let logSid;
+    try {
+        logSid = localStorage.getItem('logai_sid');
+        if (!logSid) {
+            logSid = 's_' + Math.random().toString(36).substr(2, 12);
+            localStorage.setItem('logai_sid', logSid);
+        }
+    } catch (e) {
+        // Если доступ к памяти закрыт (инкогнито), создаем временный ID
+        logSid = 'temp_' + Math.random().toString(36).substr(2, 12);
+    }
+
+    // Переименовали, чтобы избежать конфликтов
+    let chatIsWaiting = false;
+    let historyLoaded = false;
+    let activeMessageId = null;
+    let pollController = null;
+    let pollTimeoutId = null;
+
+
+       function toggleLogAI() {
+        const w = document.getElementById('logai-window');
+        const isOpen = (window.getComputedStyle(w).display === 'none');
+        
+        if (isOpen) {
+            w.style.display = 'flex';
+            if (!historyLoaded) {
+                loadChatHistory();
+            } 
+            // Если чат в режиме ожидания (точки), пинаем сервер сразу при открытии
+            else if (chatIsWaiting && activeMessageId) {
+                const dotsContainer = document.querySelector('.logai-dots')?.parentElement;
+                if (dotsContainer) {
+                    startPolling(activeMessageId, dotsContainer);
+                }
+            }
+        } else {
+            w.style.display = 'none';
+            // УБРАЛИ stopPolling(), чтобы ИИ докачивал ответ, даже когда окно закрыто
+        }
+    }
+
+
+    function updateInputState() {
+        const input = document.getElementById('logai-input');
+        const btn = document.getElementById('logai-send-btn');
+        if (input) {
+            input.disabled = chatIsWaiting;
+            input.style.opacity = chatIsWaiting ? '0.5' : '1';
+        }
+        if (btn) btn.style.opacity = chatIsWaiting ? '0.5' : '1';
+    }
+
+    function stopPolling() {
+        if (activeMessageId) localStorage.removeItem('poll_start_' + activeMessageId);
+        if (pollController) pollController.abort();
+        if (pollTimeoutId) clearTimeout(pollTimeoutId);
+    
+        pollController = null;
+        pollTimeoutId = null;
+        activeMessageId = null;
+        chatIsWaiting = false;
+        updateInputState();
+    }
+
+    function addLogMsg(txt, isAi) {
+        const d = document.createElement('div');
+        d.style = `padding:12px 16px; border-radius:18px; max-width:82%; font-size:14px; line-height:1.5; margin-bottom:10px; 
+                   ${isAi ? 'align-self:flex-start; background:#4a4e56; color:#dbdee1; border-bottom-left-radius:4px;' 
+                         : 'align-self:flex-end; background:#007bff; color:white; border-bottom-right-radius:4px; box-shadow:0 4px 12px rgba(0,123,255,0.25);'}`;
+
+        if (txt === 'dots') {
+   // ИСПРАВЛЕНО: Добавлен явный текст ожидания рядом с анимацией точек для лучшего UX
+   d.innerHTML = '<div style="display:flex; align-items:center; gap:8px;">' +
+                 '<span style="font-style:italic; opacity:0.8;">ИИ подбирает ответ...</span>' +
+                 '<div class="logai-dots"><span></span><span></span><span></span></div>' +
+                 '</div>';
+ } else {
+   d.innerHTML = typeof marked !== 'undefined' ? marked.parse(txt) : txt;
+ }
+
+        const box = document.getElementById('logai-msgs');
+        box.appendChild(d);
+        box.scrollTop = box.scrollHeight;
+        return d;
+    }
+
+async function loadChatHistory() {
+    const box = document.getElementById('logai-msgs');
+    try {
+        box.innerHTML = '';
+
+        const res = await fetch(`${API_URL}/history/${logSid}?platform=site&clientId=${MY_CLIENT_ID}`);
+        const data = await res.json();
+
+        if (Array.isArray(data.items) && data.items.length > 0) {
+            data.items.forEach((m, index) => {
+                // 1. Показываем сообщение пользователя
+                if (m.message) {
+                    addLogMsg(m.message, false);
+                }
+
+                // 2. Если есть готовый ответ — показываем
+                if (m.answer) {
+                    addLogMsg(m.answer, true);
+                } 
+                // 3. ИСПРАВЛЕНО: Четкое чтение m.message_id из базы данных без путаницы с регистрами
+                else if (m.message_id && index === data.items.length - 1) {
+                    chatIsWaiting = true;
+                    activeMessageId = m.message_id; // Используем m.message_id
+                    
+                    const aiMsg = addLogMsg('dots', true);
+                    startPolling(m.message_id, aiMsg); 
+                }
+            });
+        } else {
+            addLogMsg("Здравствуйте! Я ваш ИИ-ассистент. Чем могу помочь?", true);
+        }
+
+        historyLoaded = true;
+        updateInputState();
+
+    } catch (e) {
+        console.error('History error:', e);
+        addLogMsg("Не удалось загрузить историю чата", true);
+    }
+}
+
+
+async function sendLogAI() {
+    if (chatIsWaiting) return;
+
+    const input = document.getElementById('logai-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // ЖЕЛЕЗНЫЙ ДЕБАУНС: блокируем повторный клик в первую же микросекунду
+    chatIsWaiting = true;
+    updateInputState();
+
+    addLogMsg(msg, false);
+    
+    input.value = ''; 
+    input.style.height = 'auto'; 
+
+    const aiMsg = addLogMsg('dots', true);
+
+    try {
+        const res = await fetch(`${API_URL}/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sessionId: logSid,
+                message: msg,
+                clientId: MY_CLIENT_ID,
+                platform: 'site',
+                botPath: MY_BOT_PATH
+            })
+        });
+
+        // ИСПРАВЛЕНО: Обработка HTTP-ошибок. Передаем false третьим параметром, чтобы не было звука при ошибке
+        if (!res.ok) {
+            let errorMsg = "⚠️ Сервер временно недоступен";
+            if (res.status === 429) errorMsg = "🚫 Слишком много запросов. Подождите немного.";
+            else if (res.status === 403) {
+                try {
+                    const errData = await res.json();
+                    errorMsg = errData.reason || "🚫 Доступ ограничен.";
+                } catch (_) {
+                    errorMsg = "🚫 Доступ ограничен.";
+                }
+            }
+            finish(errorMsg, aiMsg, false); // false — звук НЕ играет
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data.blocked) {
+            finish(data.reason || data.message || "🚫 Сообщение заблокировано", aiMsg, false); // false — без звука
+            return;
+        }
+
+        if (data.messageId) {
+            activeMessageId = data.messageId;
+            startPolling(data.messageId, aiMsg);
+        } else {
+            finish("⚠️ Ошибка регистрации сообщения (нет messageId)", aiMsg, false);
+        }
+    } catch (e) {
+        console.error(e);
+        finish("⚠️ Ошибка связи с сервером. Проверьте интернет.", aiMsg, false);
+    }
+} // Скобка закрывает саму функцию send
+    function startPolling(messageId, aiMsg) {
+        activeMessageId = messageId;
+        pollController = new AbortController();
+        let savedTime = localStorage.getItem('poll_start_' + messageId);
+        if (!savedTime) {
+            savedTime = Date.now().toString();
+            localStorage.setItem('poll_start_' + messageId, savedTime);
+        }
+        let startTime = parseInt(savedTime, 10);
+        let statusChanged = false; // Чтобы не менять текст постоянно
+
+        const poll = async () => {
+            if (activeMessageId !== messageId) return;
+
+            const elapsed = (Date.now() - startTime) / 1000; // секунд прошло
+
+            // 1. На 40-й секунде меняем текст на "Сложный вопрос"
+            if (elapsed > 40 && !statusChanged) {
+                const dots = aiMsg.querySelector('.logai-dots');
+                aiMsg.innerHTML = '🤖 Вопрос сложный, анализирую данные...';
+                if (dots) aiMsg.appendChild(dots); 
+                statusChanged = true;
+            }
+
+            // 2. Лимит ожидания - 10 минут (600 секунд)
+            if (elapsed > 600) {
+                finish("🤖 Извините, ИИ перегружен или запрос слишком сложный. Пожалуйста, попробуйте позже.", aiMsg);
+                return;
+            }
+
+            // 3. Умный интервал: до 50 сек — каждые 3 сек, потом — каждые 10 сек
+            let nextInterval = (elapsed > 50) ? 10000 : 3000;
+
+            try {
+                // Добавили ?t=... чтобы телефон каждый раз реально спрашивал сервер, а не брал из кэша
+                const r = await fetch(`${API_URL}/get-answer/${messageId}?sessionId=${logSid}&clientId=${MY_CLIENT_ID}&t=${Date.now()}`, {
+                    signal: pollController.signal 
+                });
+                const d = await r.json();
+                const finalAnswer = d.answer || (d.status !== 'pending' ? d.answer : null);
+
+                if (finalAnswer) {
+                    finish(finalAnswer, aiMsg);
+                } else {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            } catch (e) {
+                if (e.name !== 'AbortError') {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            }
+        };
+        poll();
+    }
+
+function finish(text, msgElement, isSuccess = true) {
+    if (msgElement) {
+        msgElement.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+        
+        // Звук играет строго при успешном ответе ИИ, при ошибках или банах — тишина
+        if (isSuccess) {
+            try {
+                // ТВОЙ ОРИГИНАЛЬНЫЙ РАБОЧИЙ ПУТЬ: Кэш сбрасывается, файл проигрывается без ошибок 404
+                const audio = new Audio('https://api.log-ai.ru/notify.mp3?v=' + Date.now());
+                audio.volume = 0.4;
+                audio.play().catch(e => console.log("Нужен клик"));
+            } catch (e) {}
+        }
+    }
+    stopPolling();
+}
+
+
+    // Enter для отправки
+    document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('logai-input');
+    if (input) {
+      input.addEventListener('keypress', (e) => {
+        // ИСПРАВЛЕНО: Добавлена проверка !chatIsWaiting, чтобы клавиатура намертво блокировалась во время ожидания ИИ
+        if (e.key === 'Enter' && !e.shiftKey && !chatIsWaiting) {
+          e.preventDefault();
+          sendLogAI();
+        }
+      });
+
+      // ИСПРАВЛЕНО: Текстовое поле плавно растёт вниз до 150px, если текст длинный
+      input.addEventListener('input', function() {
+        this.style.height = 'auto'; 
+        this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+      });
+    }
+    });</script><div id="cookie-notice-wrapper" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #111111; border-top: 1px solid #222222; padding: 10px 15px; box-sizing: border-box; z-index: 99999; display: none; flex-direction: row; justify-content: space-between; align-items: center; gap: 15px; font-family: sans-serif;"><span style="color: #888888; font-size: 12px; line-height: 1.4; text-align: left;">Наш сайт использует файлы cookie для корректной работы. Подробнее — в <a href="/privacy-policy/" style="color: #bfa15f; text-decoration: underline;">Политике конфиденциальности</a>. </span><button onclick="dismissCookieNotice()" style="background: #bfa15f; color: #000000; border: none; padding: 5px 14px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Принять</button></div><style>@media (max-width: 600px) {
+        #cookie-notice-wrapper {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 10px !important;
+            padding: 12px 15px !important;
+        }
+        #cookie-notice-wrapper span {
+            text-align: center !important;
+            font-size: 11px !important;
+        }
+        #cookie-notice-wrapper button {
+            width: 100% !important;
+            padding: 8px !important;
+            font-size: 12px !important;
+        }
+    }</style><script>(function() {
+        var storageKey = 'logai_cookies_accepted';
+        if (!localStorage.getItem(storageKey)) {
+            document.getElementById('cookie-notice-wrapper').style.display = 'flex';
+        }
+    })();
+
+    function dismissCookieNotice() {
+        localStorage.setItem('logai_cookies_accepted', 'true');
+        document.getElementById('cookie-notice-wrapper').style.display = 'none';
+    }</script></body></html>

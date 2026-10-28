@@ -1,0 +1,855 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Как понять, что серверу не хватает ресурсов: диагностика | LOG-AI</title><meta name="description" content="Как определить причину медленной работы сервера? Разбираем диагностику CPU, RAM, диска, сети и приложения, метрики Linux и поиск узких мест."><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://log-ai.ru/kak-ponyat-chto-serveru-ne-hvataet-resursov/"><link rel="alternate" type="application/atom+xml" href="https://log-ai.ru/feed.xml" title="LOG-AI - RSS"><link rel="alternate" type="application/json" href="https://log-ai.ru/feed.json" title="LOG-AI - JSON"><meta property="og:title" content="Как понять, что серверу не хватает ресурсов: диагностика | LOG-AI"><meta property="og:image" content="https://log-ai.ru/media/website/Log-ai-Logo.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:site_name" content="LOG-AI"><meta property="og:description" content="Как определить причину медленной работы сервера? Разбираем диагностику CPU, RAM, диска, сети и приложения, метрики Linux и поиск узких мест."><meta property="og:url" content="https://log-ai.ru/kak-ponyat-chto-serveru-ne-hvataet-resursov/"><meta property="og:type" content="article"><link rel="stylesheet" href="https://log-ai.ru/assets/css/style.css?v&#x3D;b1f5980528b3cc19f4018c94aea81f52"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://log-ai.ru/kak-ponyat-chto-serveru-ne-hvataet-resursov/"},"headline":"Как понять, что серверу не хватает ресурсов","datePublished":"2026-10-11T19:52+05:00","dateModified":"2026-10-22T10:38+05:00","description":"Как определить причину медленной работы сервера? Разбираем диагностику CPU, RAM, диска, сети и приложения, метрики Linux и поиск узких мест.","author":{"@type":"Person","name":"AI Automation","url":"https://log-ai.ru/authors/ai-automation/"},"publisher":{"@type":"Organization","name":"AI Automation"}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript><style>body, html, main, #page, .wrapper, .main { background: #000000 !important; background-color: #000000 !important; }</style><link rel="icon" type="image/png" sizes="32x32" href="/media/files/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/media/files/favicon-16.png"><link rel="apple-touch-icon" sizes="180x180" href="/media/files/favicon-180.png"><meta name="yandex-verification" content="9d14e10b64f3b76c"><meta name="google-site-verification" content="-rKktnoSCGCLZToW-jcZeKu5WvWFGuLKdLwwyCux0-M"></head><body class="page-template"><header class="top js-header"><a class="logo" href="https://log-ai.ru/">LOG-AI</a><nav class="navbar js-navbar"><button class="navbar__toggle js-toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><span class="navbar__toggle-box"><span class="navbar__toggle-inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://log-ai.ru/" target="_self">Главная</a></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Услуги</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/avtomatizaciya-obrabotki-zayavok-i-lidov/" target="_self">Автоматизация обработки заявок и лидов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-biznes-processov-integracii-dannye-i-skvoznye-scenarii/" target="_self">Автоматизация бизнес-процессов</a></li><li><a href="https://log-ai.ru/sbor-i-obrabotka-dannyh/" target="_self">Сбор и обработка данных</a></li><li><a href="https://log-ai.ru/ii-dlya-biznesa-i-nejrosetej/" target="_self">ИИ для бизнеса и нейросети</a></li><li><a href="https://log-ai.ru/specializirovannye-cifrovye-sistemy/" target="_self">Специализированные цифровые системы</a></li><li><a href="https://log-ai.ru/individualnye-korporativnye-sistemy/" target="_self">Корпоративные системы</a></li><li><a href="https://log-ai.ru/tehnicheskoe-soprovozhdenie/" target="_self">Техническое сопровождение</a></li><li><a href="https://log-ai.ru/it-audit-i-predproektnoe-obsledovanie/" title="/it-audit-i-predproektnoe-obsledovanie/" target="_self">IT-аудит и предпроектное обследование</a></li><li><a href="https://log-ai.ru/oblachnyy-i-infrastrukturnyy-konsalting/" title="/oblachnyy-i-infrastrukturnyy-konsalting/" target="_self">Облачный и инфраструктурный консалтинг</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Решения</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakie-sistemy-my-integriruem/" target="_self">Какие системы мы интегрируем</a></li><li><a href="https://log-ai.ru/kak-rabotaet-ii-v-biznese/" target="_self">Как работает ИИ в бизнесе</a></li><li><a href="https://log-ai.ru/resheniya-po-zadacham/" target="_self">Решения по задачам</a></li><li><a href="https://log-ai.ru/avtomatizaciya-proizvodstva/" target="_self">Для производства</a></li><li><a href="https://log-ai.ru/avtomatizaciya-logistiki-i-skladov/" target="_self">Для логистики и складов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-optovoy-torgovli/" target="_self">Для оптовой торговли</a></li><li><a href="https://log-ai.ru/avtomatizaciya-e-commerce/" target="_self">Для e-commerce</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Реализация</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kak-my-rabotaem/" target="_self">Как мы работаем</a></li><li><a href="https://log-ai.ru/dokumentaciya-sistemy/" target="_self">Документация системы</a></li><li><a href="https://log-ai.ru/infrastruktura-i-razmeshchenie/" target="_self">Инфраструктура и размещение</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Выбор</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakuyu-avtomatizaciyu-vybrat/" target="_self">Какую автоматизацию выбрать</a></li><li><a href="https://log-ai.ru/chto-avtomatizirovat-v-biznese-v-pervuyu-ochered/" target="_self">Что автоматизировать в бизнесе в первую очередь</a></li><li><a href="https://log-ai.ru/kak-podgotovit-biznes-k-avtomatizacii/" target="_self">Как подготовить бизнес к автоматизации</a></li><li><a href="https://log-ai.ru/kak-vnedrit-avtomatizaciyu/" target="_self">Как внедрить автоматизацию</a></li><li><a href="https://log-ai.ru/kak-ocenit-rezultat-avtomatizacii/" target="_self">Как оценить результат автоматизации</a></li><li><a href="https://log-ai.ru/stoimost-razrabotki/" target="_self">Стоимость разработки</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">О нас</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/inzhenernyy-sostav/" target="_self">Инженерный состав</a></li><li><a href="https://log-ai.ru/keysy/" target="_self">Кейсы</a></li><li><a href="https://log-ai.ru/glossariy/" target="_self">Глоссарий</a></li><li><a href="https://log-ai.ru/ekspertiza/" target="_self">Экспертиза</a></li><li><a href="https://log-ai.ru/bezopasnost-sistem-dannyh-i-infrastruktury/" target="_self">Безопасность</a></li></ul></li></ul></nav></header><main class="page"><article class="content"><div class="hero hero--noimage"><header class="hero__content hero__content--centered"><div class="wrapper"><h1>Как понять, что серверу не хватает ресурсов</h1></div></header></div><div class="entry-wrapper content__entry"><p> </p><p> </p><p> </p><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Диагностика CPU, памяти, диска, сети и приложения</h3><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold; line-height: 1.6;">Когда сервер начинает тормозить, первое подозрение обычно падает на железо. Не хватает оперативной памяти, процессор не справляется с нагрузкой, диск слишком медленный — значит, пора увеличивать ресурсы. Иногда это действительно правильное решение. Но на практике производительность нередко ограничивает совсем другой фактор: неудачный SQL-запрос, очередь фоновых задач, блокировка в приложении или лимит контейнера, о котором никто не вспомнил при настройке инфраструктуры.</p><p style="font-size: 15px; color: #94a3b8; margin: 0 0 25px 0; line-height: 1.6;">Для бизнеса последствия выглядят одинаково. CRM открывает карточки клиентов по несколько секунд, отчёты задерживаются, интеграции с внешними системами периодически завершаются по тайм-ауту. Сотрудники повторяют действия, задачи накапливаются, автоматизированные процессы перестают укладываться в привычные сроки. При этом сервер может оставаться доступным, а мониторинг не показывать ничего похожего на критическую аварию.</p><p style="font-size: 15px; color: #94a3b8; margin: 0 0 25px 0; line-height: 1.6;">Здесь важно различать два вопроса: почему система работает медленно и хватает ли ей ресурсов для нормальной работы. Первый описывает симптом, второй — одну из возможных причин. Пока между ними нет доказанной связи, увеличение мощности остаётся предположением, за которое бизнес может заплатить, не получив ожидаемого результата.</p><div style="background: #0f172a; border-radius: 8px; padding: 25px; color: #f8fafc; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.05);"><div style="border-bottom: 1px solid #334155; padding-bottom: 15px; margin-bottom: 15px;"><span style="color: #ff6b6b; font-weight: bold;">[БИЗНЕС-СИМПТОМ // Задержки на уровне пользователя]</span><br><span style="color: #94a3b8;">· Проявление:</span> Зависание CRM, долгие отчёты, тайм-ауты интеграционных шлюзов.<br><span style="color: #94a3b8;">· Реальность:</span> Оборудование может быть свободным, пока софт заблокирован изнутри.</div><div><span style="color: #14b8a6; font-weight: bold;">[ТЕХНИЧЕСКИЙ АНАЛИЗ // Изоляция узкого места]</span><br><span style="color: #94a3b8;">· Задача:</span> Сопоставить время отклика с метриками CPU, RAM, дискового ввода-вывода и сети.<br><span style="color: #94a3b8;">· Цель:</span> Найти точную точку потери времени до закупки дополнительных мощностей.</div></div><p style="font-size: 15px; color: #94a3b8; margin: 0 0 35px 0; line-height: 1.6;">Грамотная диагностика начинается не с покупки дополнительных ядер и памяти, а с поиска участка, на котором система теряет время. Для этого нужно сопоставить пользовательские задержки с состоянием процессора, оперативной памяти, дисковой подсистемы, сети и самого приложения. Ниже разберем, какие метрики действительно помогают локализовать проблему.</p></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><div style="margin-bottom: 25px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #14b8a6; margin-bottom: 8px; font-weight: bold; text-transform: uppercase;">1. Процессорное время (CPU)</div><p style="font-size: 15px; color: #94a3b8; margin: 0; line-height: 1.6;">Анализ утилизации процессора требует декомпозиции по типам нагрузок. Метрика <code style="font-family: 'SF Mono', monospace; color: #14b8a6; background: rgba(20, 184, 166, 0.05); padding: 2px 6px; border-radius: 3px;">iowait</code> отражает время простоя CPU при наличии ожидающего завершения дискового ввода-вывода. Однако она не показывает напрямую задержки конкретных процессов и не является самостоятельным доказательством проблем с диском. Её необходимо сопоставлять с задержками операций ввода-вывода, глубиной очереди и активностью накопителя. Высокая доля <code style="font-family: 'SF Mono', monospace; color: #ff6b6b; background: rgba(255, 107, 107, 0.05); padding: 2px 6px; border-radius: 3px;">system (sys)</code> означает, что значительная часть процессорного времени расходуется на выполнение кода ядра Linux. Чтобы выяснить причину, нужно дополнительно проверить системные вызовы, частоту контекстных переключений, работу драйверов и характер нагрузки.</p></div><div style="margin-bottom: 25px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #14b8a6; margin-bottom: 8px; font-weight: bold; text-transform: uppercase;">2. Оперативная память и свопинг</div><p style="font-size: 15px; color: #94a3b8; margin: 0; line-height: 1.6;">Объем свободной RAM в Linux не является маркером дефицита, поскольку ядро активно буферизирует дисковый кэш. Критическим фактором выступает интенсивность свопинга — метрики <code style="font-family: 'SF Mono', monospace; color: #14b8a6; background: rgba(20, 184, 166, 0.05); padding: 2px 6px; border-radius: 3px;">si / so (swap in / swap out)</code>. При интенсивном обмене страницами с диском производительность системы может существенно снижаться даже при невысокой загрузке CPU: процессор простаивает, пока задачи ожидают завершения операций ввода-вывода.</p></div><div style="margin-bottom: 25px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #14b8a6; margin-bottom: 8px; font-weight: bold; text-transform: uppercase;">3. Нагрузка на накопители (Диски)</div><p style="font-size: 15px; color: #94a3b8; margin: 0; line-height: 1.6;">Производительность накопителей лимитируется не столько линейной пропускной способностью, сколько количеством операций ввода-вывода в секунду (<code style="font-family: 'SF Mono', monospace; color: #14b8a6; background: rgba(20, 184, 166, 0.05); padding: 2px 6px; border-radius: 3px;">IOPS</code>) и утилизацией очереди. Высокий (<code style="font-family: 'SF Mono', monospace; color: #ffffff; background: rgba(255,255,255,0.05); padding: 2px 6px; border-radius: 3px;">await</code>) указывает на увеличение времени выполнения операций ввода-вывода, включая ожидание в очереди и обслуживание накопителем. Если эти операции критичны для рабочих процессов, задержки могут распространяться на запросы базы данных и приложения. Причину подтверждают совместным анализом await, глубины очереди, пропускной способности, загрузки устройства и времени ответа пользовательских операций.</p></div><div style="margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #14b8a6; margin-bottom: 8px; font-weight: bold; text-transform: uppercase;">4. Сеть и лимиты контейнеризации (Docker / Kubernetes)</div><p style="font-size: 15px; color: #94a3b8; margin: 0; line-height: 1.6;">В изолированных средах классические метрики хоста маскируют локальные аномалии. Приложение внутри контейнера может упираться в жёсткий лимит <code style="font-family: 'SF Mono', monospace; color: #ff6b6b; background: rgba(255, 107, 107, 0.05); padding: 2px 6px; border-radius: 3px;">CPU throttling</code>. В контейнеризированных средах общие метрики хоста могут скрывать локальное ограничение ресурсов. Контейнер способен упираться в квоту CPU: после её исчерпания выполнение процессов ограничивается до следующего периода квотирования. Поэтому сервер может иметь свободные процессорные ресурсы в целом, а приложение — испытывать задержки. Для проверки анализируют показатели throttling и лимиты CPU на уровне контейнера.</p></div><div style="margin: 0 0 35px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 650px; display: block; margin: 0 auto;" viewbox="0 0 650 160" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><line x1="25" y1="65" x2="625" y2="65" stroke="rgba(20, 184, 166, 0.2)" stroke-width="1.5" stroke-dasharray="6 4"></line><g><circle cx="65" cy="65" r="25" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></circle><text x="65" y="62" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="7" text-anchor="middle" font-weight="bold">NETWORK</text><text x="65" y="74" fill="#94a3b8" font-family="'SF Mono', Monaco, monospace" font-size="8" text-anchor="middle">Стек</text><text x="65" y="115" fill="#14b8a6" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Сеть</text><text x="65" y="130" fill="#64748b" font-family="sans-serif" font-size="10" text-anchor="middle">Тайм-ауты</text></g><path d="M 95 65 L 140 65" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><g><circle cx="185" cy="65" r="25" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></circle><text x="185" y="62" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle" font-weight="bold">LIMIT</text><text x="185" y="74" fill="#ff6b6b" font-family="'SF Mono', Monaco, monospace" font-size="8" text-anchor="middle">Throttle</text><text x="185" y="115" fill="#14b8a6" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Контейнер</text><text x="185" y="130" fill="#64748b" font-family="sans-serif" font-size="10" text-anchor="middle">CPU лимиты</text></g><path d="M 215 65 L 260 65" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><g><circle cx="305" cy="65" r="25" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></circle><text x="305" y="62" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle" font-weight="bold">CPU</text><text x="305" y="74" fill="#94a3b8" font-family="'SF Mono', Monaco, monospace" font-size="8" text-anchor="middle">sys / us</text><text x="305" y="115" fill="#14b8a6" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Вычисления</text><text x="305" y="130" fill="#64748b" font-family="sans-serif" font-size="10" text-anchor="middle">Переключения</text></g><path d="M 335 65 L 380 65" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><g><circle cx="425" cy="65" r="25" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></circle><text x="425" y="62" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle" font-weight="bold">RAM</text><text x="425" y="74" fill="#ff6b6b" font-family="'SF Mono', Monaco, monospace" font-size="8" text-anchor="middle">si / so</text><text x="425" y="115" fill="#14b8a6" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Память</text><text x="425" y="130" fill="#64748b" font-family="sans-serif" font-size="10" text-anchor="middle">Swap на диск</text></g><path d="M 455 65 L 500 65" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><g><circle cx="545" cy="65" r="25" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></circle><text x="545" y="62" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle" font-weight="bold">I/O</text><text x="545" y="74" fill="#94a3b8" font-family="'SF Mono', Monaco, monospace" font-size="8" text-anchor="middle">await</text><text x="545" y="115" fill="#14b8a6" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Накопитель</text><text x="545" y="130" fill="#64748b" font-family="sans-serif" font-size="10" text-anchor="middle">Очередь IOPS</text></g></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Почему сервер тормозит, даже если ресурсы не исчерпаны</h3><p style="font-size: 16px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold; line-height: 1.6;">Представим типичную ИТ-инфраструктуру: веб-приложение, база данных, фоновые обработчики и интеграции с внешними API. Пользователь запрашивает карточку клиента. Приложение проверяет права, тянет данные из PostgreSQL, ждет документы от соседнего сервиса и собирает ответ. Если один компонент задерживает обработку — тормозит вся операция. При этом процессор и память сервера могут оставаться абсолютно свободными.</p><p style="font-size: 15px; color: #94a3b8; margin: 0 0 25px 0; line-height: 1.6;">Типичный пример: приложение отправило запрос в БД и ожидает завершения транзакции. CPU простаивает, так как вычислять в этот момент нечего. Общий мониторинг показывает «зелёную зону», но пользователь продолжает ждать. Когда такие запросы накапливаются, они парализуют пул соединений и рабочие потоки веб-сервера. Локальный затык каскадно разрушает весь сервис.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold; line-height: 1.6;">Для корректной диагностики мы разделяем три фундаментальные характеристики производительности:</p><div style="margin-bottom: 35px;"><div style="margin-bottom: 15px; padding-left: 20px; border-left: 2px solid #14b8a6;"><strong style="color: #ffffff; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; text-transform: uppercase; display: block; margin-bottom: 4px;">1. Время ответа (Latency)</strong> <span style="font-size: 15px; color: #94a3b8; line-height: 1.6;">Чистый интервал времени, проходящий между отправкой бизнес-запроса и получением финального результата пользователем.</span></div><div style="margin-bottom: 15px; padding-left: 20px; border-left: 2px solid #14b8a6;"><strong style="color: #ffffff; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; text-transform: uppercase; display: block; margin-bottom: 4px;">2. Пропускная способность (Throughput)</strong> <span style="font-size: 15px; color: #94a3b8; line-height: 1.6;">Общее количество транзакций, запросов или операций, которые архитектура способна переварить за единицу времени.</span></div><div style="margin-bottom: 0; padding-left: 20px; border-left: 2px solid #14b8a6;"><strong style="color: #ffffff; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; text-transform: uppercase; display: block; margin-bottom: 4px;">3. Насыщение (Saturation)</strong> <span style="font-size: 15px; color: #94a3b8; line-height: 1.6;">Степень ограничения ресурса, фиксирующая появление и лавинообразный рост очередей ожидающих задач.</span></div></div><p style="font-size: 15px; color: #94a3b8; margin: 0 0 35px 0; line-height: 1.6;">Высокий throughput не гарантирует комфортную работу каждому пользователю. Система может обрабатывать тысячи лёгких запросов в минуту, пока тяжёлые операции намертво зависают в очередях. И наоборот: в условиях штиля приложение отвечает мгновенно, но резко деградирует при минимальном росте конкурентных сессий.</p><p style="font-size: 15px; color: #94a3b8; margin: 0 0 25px 0; line-height: 1.6;">Особенно показательны перцентили времени ответа. Среднее значение (mean) способно маскировать серьезные проблемы, которые затрагивают меньшую часть запросов, но критичны для пользователей. Допустим, большинство операций выполняется за 200 мс, однако часть периодически занимает 3 секунды. Средний показатель останется в рамках нормы, скрывая деградацию.</p><div style="background: #0f172a; border-radius: 8px; padding: 25px; color: #f8fafc; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.05);"><div style="border-bottom: 1px solid #334155; padding-bottom: 15px; margin-bottom: 15px;"><span style="color: #14b8a6; font-weight: bold;">[МЕТРИКА // Перцентиль p95]</span><br><span style="color: #94a3b8;">· Значение:</span> Граница, быстрее которой выполняются 95% всех запросов.<br><span style="color: #94a3b8;">· Назначение:</span> Значение: 95-й перцентиль времени ответа — значение, не превышаемое 95% измеренных запросов. · Назначение: Показывает задержки в верхней части распределения, не позволяя среднему значению скрыть проблемы с медленными запросами.</div><div><span style="color: #ff6b6b; font-weight: bold;">[МЕТРИКА // Перцентиль p99]</span><br><span style="color: #94a3b8;">· Значение:</span> Граница для 99% запросов. 1% самых медленных операций.<br><span style="color: #94a3b8;">· Назначение:</span> Помогает локализовать скрытые блокировки, редкие тяжёлые SQL-запросы и аномалии.</div></div><p style="font-size: 15px; color: #94a3b8; margin: 0 0 25px 0; line-height: 1.6;">Ресурсы необходимо оценивать исключительно во времени. Снимок метрик, сделанный через десять минут после инцидента, покажет идеальный порядок. Но в момент сбоя CPU мог быть перегружен, диск — парализован очередью, а пул соединений — полностью исчерпан. Как только всплеск сходит на нет, симптомы исчезают, оставляя причину нераскрытой.</p><p style="font-size: 15px; color: #94a3b8; margin: 0 0 25px 0; line-height: 1.6;">Поэтому расследование начинается с вопросов: что именно замедлилось, когда начался дрифт метрик и какие смежные события происходили в этот период? Сопоставление инцидента с релизами, импортом данных, бэкапами или пиками трафика помогает сузить круг гипотез.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; font-weight: bold; line-height: 1.6;">Для системного аудита мы используем методологию USE (Utilization, Saturation, Errors). Для каждого критического компонента инфраструктуры последовательно проверяются три вектора:</p><ul style="list-style-type: none; padding: 0; margin: 0 0 35px 0;"><li style="margin-bottom: 12px; padding-left: 25px; position: relative; font-size: 15px; color: #94a3b8; line-height: 1.6;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-weight: bold;">[U]</span> <strong style="color: #ffffff;">Утилизация (Utilization):</strong> Степень занятости ресурса за определённый интервал времени. [S] Насыщение (Saturation): Наличие и величина очередей задач, ожидающих доступа к ограниченному ресурсу. [E] Ошибки (Errors): Количество и частота ошибок, связанных с работой ресурса.</li><li style="margin-bottom: 12px; padding-left: 25px; position: relative; font-size: 15px; color: #94a3b8; line-height: 1.6;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-weight: bold;">[S]</span> <strong style="color: #ffffff;">Насыщение (Saturation):</strong> Наличие и глубина очередей задач, ожидающих освобождения данного ресурса.</li><li style="margin-bottom: 0; padding-left: 25px; position: relative; font-size: 15px; color: #94a3b8; line-height: 1.6;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-weight: bold;">[E]</span> <strong style="color: #ffffff;">Ошибки (Errors):</strong> Количество и частота сбоев на уровне обрабатываемых ресурсом системных вызовов.</li></ul><div style="margin: 0 0 35px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 580px; display: block; margin: 0 auto;" viewbox="0 0 580 180" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker><marker id="arrow-red" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#ff6b6b"></path></marker></defs><rect x="10" y="65" width="100" height="40" rx="3" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="60" y="84" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">ПОЛЬЗОВАТЕЛИ</text><text x="60" y="96" fill="#94a3b8" font-family="sans-serif" font-size="9" text-anchor="middle">Ждут ответа</text><path d="M 110 85 L 160 85" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><rect x="175" y="50" width="140" height="70" rx="3" fill="#1e1e2e" stroke="#ff6b6b" stroke-width="1.5"></rect><text x="245" y="70" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">СЕРВЕР ПРИЛОЖЕНИЙ</text><text x="245" y="85" fill="#ff6b6b" font-family="sans-serif" font-size="10" text-anchor="middle" font-weight="bold">Пул забит (100%)</text><text x="245" y="102" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="9" text-anchor="middle">CPU LOAD: 5%</text><path d="M 315 85 L 365 85" fill="none" stroke="#ff6b6b" stroke-width="1.5" marker-end="url(#arrow-red)"></path><rect x="380" y="55" width="180" height="60" rx="3" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="470" y="75" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">POSTGRESQL / БД</text><text x="470" y="90" fill="#ff6b6b" font-family="sans-serif" font-size="10" text-anchor="middle">Ожидание блокировки</text><text x="470" y="103" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">Транзакция зависла</text></svg></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Процессор: когда серверу действительно не хватает CPU</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Высокая загрузка процессора — заметный симптом, но не готовый диагноз. Если CPU постоянно занят, нужно выяснить, чем именно он занят, насколько равномерно распределена нагрузка и приходится ли задачам ждать возможности выполниться.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 15px 0; line-height: 1.6;">Начать можно с трёх команд:</p><div style="background: #0f172a; border-radius: 6px; padding: 20px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.05); font-family: 'SF Mono', Monaco, monospace; font-size: 14px; line-height: 1.5; color: #94a3b8;"><span style="color: #14b8a6;">top</span><br><span style="color: #14b8a6;">mpstat -P ALL 1</span><br><span style="color: #14b8a6;">vmstat 1</span></div><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">top показывает процессы и их потребление ресурсов. mpstat -P ALL 1 выводит загрузку отдельных логических CPU с интервалом в одну секунду. vmstat 1 позволяет наблюдать за очередью выполнения и рядом показателей памяти и системной активности.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 15px 0; line-height: 1.6;">Чтобы увидеть потребление процессора отдельными процессами в динамике, пригодится:</p><div style="background: #0f172a; border-radius: 6px; padding: 20px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.05); font-family: 'SF Mono', Monaco, monospace; font-size: 14px; line-height: 1.5; color: #14b8a6;">pidstat -u -p ALL 1</div><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Эти инструменты отвечают на разные вопросы. top помогает найти процесс с высокой нагрузкой, mpstat — понять, как она распределяется между CPU, а vmstat — проверить, есть ли признаки накопления очереди. Ни один из них по отдельности не объясняет всю причину замедления.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace;">Load average — не процент загрузки процессора</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Одна из распространённых ошибок — воспринимать load average как аналог CPU utilization. В Linux этот показатель отражает среднее количество задач, которые выполняются или готовы выполняться, а также задач в непрерываемом ожидании, за определённые интервалы времени.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Load average, равный 8, на сервере с двумя логическими CPU и на сервере с 32 логическими CPU означает совершенно разные ситуации. Более того, высокий показатель может быть связан с ожиданием ввода-вывода, а не с нехваткой вычислительной мощности.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Для понимания ситуации нужно сопоставлять load average с количеством CPU, загрузкой отдельных ядер и столбцом r в vmstat. Последний показывает число задач, готовых выполняться или выполняющихся в момент измерения.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Если очередь устойчиво превышает доступные вычислительные мощности, а задержки приложения растут одновременно с нагрузкой на CPU, гипотеза о насыщении процессора становится обоснованной. Если же load average высокий, но CPU не загружен, нужно проверить, не ждут ли задачи диск или другие ресурсы.</p></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace;">Почему 50% CPU могут быть проблемой</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Представим сервер с восемью логическими CPU. Общая загрузка составляет 50%, но один поток приложения практически постоянно занимает одно ядро. Остальные CPU остаются свободными.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Если критическая операция не может эффективно распараллеливаться, дополнительная мощность остальных ядер не обязательно ускорит её выполнение. В такой ситуации общий график создаёт ложное впечатление, что у сервера большой запас производительности.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Бывает и обратное: CPU периодически достигает 100%, но пики длятся очень недолго и не сопровождаются ростом времени ответа. Это не обязательно требует масштабирования. Важны продолжительность нагрузки, очередь выполнения и влияние на пользовательские операции.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Отдельно следует смотреть на steal time в виртуальных машинах. Если гипервизор не предоставляет виртуальной машине запрошенное процессорное время, приложение может тормозить, даже когда его собственный код не выглядит чрезмерно тяжёлым. В такой ситуации причина может находиться на уровне физического хоста или настроек виртуализации.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace;">Когда увеличение CPU оправдано</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Если процессор длительное время насыщен, очередь задач растёт, а профилирование показывает значительный объём необходимой вычислительной работы, увеличение мощности или распараллеливание может дать заметный результат.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Но если CPU расходуется на повторные вычисления, неоптимальный алгоритм или бесконечные повторы запросов после тайм-аутов, сначала нужно устранить источник лишней работы. Иначе более мощный сервер просто позволит выполнять её быстрее, не решая основную проблему.</p><div style="margin: 0 0 35px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 600px; display: block; margin: 0 auto;" viewbox="0 0 600 200" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="200" y="10" width="200" height="40" rx="2" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="300" y="34" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="12" text-anchor="middle" font-weight="bold">CPU АНАЛИЗАТОР</text><path d="M 300 50 L 300 80 M 300 80 L 140 80 L 140 110" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><path d="M 300 80 L 460 80 L 460 110" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><rect x="40" y="110" width="200" height="60" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="140" y="132" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Очередь выполнения (r)</text><text x="140" y="148" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">vmstat 1</text><rect x="360" y="110" width="200" height="60" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="460" y="132" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Потоки ядер</text><text x="460" y="148" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">mpstat -P ALL 1</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Оперативная память: как отличить дефицит RAM от нормального кеширования</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">С оперативной памятью часто ошибаются по простой причине: видят, что занято 90% RAM, и считают это признаком нехватки. В Linux свободная память используется в том числе для файлового кеша, ускоряющего повторный доступ к данным. Сама по себе высокая занятость памяти ещё не означает, что система испытывает дефицит.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 15px 0; line-height: 1.6;">Для начала достаточно посмотреть:</p><div style="background: #0f172a; border-radius: 6px; padding: 20px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.05); font-family: 'SF Mono', Monaco, monospace; font-size: 14px; line-height: 1.5; color: #94a3b8;"><span style="color: #14b8a6;">free -h</span><br><span style="color: #14b8a6;">vmstat 1</span></div><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">В выводе free -h особенно полезен показатель available: он приблизительно оценивает объём памяти, который можно выделить новым задачам без серьёзного обращения к swap.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Но и его нужно рассматривать в динамике. Важно не только то, сколько памяти доступно сейчас, но и то, как быстро меняется этот показатель при росте нагрузки.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace;">Что действительно указывает на давление памяти</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Насторожить должно сочетание нескольких признаков:</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— доступная память устойчиво сокращается;</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— усиливается активность чтения из swap и записи в него;</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— растёт время, которое задачи теряют из-за конкуренции за память;</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— производительность приложения ухудшается одновременно с этими изменениями;</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— появляются сообщения OOM Killer о завершении процессов из-за нехватки памяти.</p></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">При этом использование swap не всегда является проблемой. В системе могут оставаться давно не использовавшиеся страницы, которые были перемещены на диск без заметного влияния на работу приложения. Гораздо важнее активный обмен страницами и его последствия.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">В vmstat 1 для этого полезны столбцы si и so, отражающие чтение из swap и запись в него за интервал. Если они постоянно ненулевые, это повод разобраться в ситуации, но окончательный вывод требует сопоставления с задержками, доступной памятью и активностью диска.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 15px 0; line-height: 1.6;">Дополнительно можно посмотреть Pressure Stall Information:</p><div style="background: #0f172a; border-radius: 6px; padding: 20px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.05); font-family: 'SF Mono', Monaco, monospace; font-size: 14px; line-height: 1.5; color: #14b8a6;">cat /proc/pressure/memory</div><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">PSI помогает оценить, сколько времени задачи теряют из-за конкуренции за ресурсы памяти. В отличие от обычного графика занятости RAM, он даёт информацию о влиянии такого давления на выполнение работы.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace;">Утечка памяти или нормальный рост потребления?</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Предположим, потребление памяти приложением растёт в течение дня. Возможны как минимум три объяснения: увеличивается объём обрабатываемых данных, растёт кеш или возникает утечка.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Различить эти сценарии можно, сопоставив память с нагрузкой, количеством запросов и жизненным циклом процесса. Если потребление растёт пропорционально рабочему набору и стабилизируется, это может быть нормальным поведением. Если память продолжает увеличиваться при стабильной нагрузке, нужно исследовать аллокации и поведение приложения.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Отдельный случай — контейнеры. Процесс может достигнуть лимита памяти cgroup и быть завершён, хотя на физическом сервере ещё достаточно свободной RAM. Здесь увеличение памяти хоста не поможет, если лимит контейнера останется прежним.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Практический вывод: память следует увеличивать не потому, что она «почти заполнена», а когда данные показывают, что её дефицит ограничивает выполнение задач или приводит к нестабильности.</p><div style="margin: 0 0 35px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 600px; display: block; margin: 0 auto;" viewbox="0 0 600 220" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="210" y="10" width="180" height="40" rx="2" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="300" y="34" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="12" text-anchor="middle" font-weight="bold">МОНИТОРИНГ RAM</text><path d="M 300 50 L 300 80 M 300 80 L 140 80 L 140 110" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><path d="M 300 80 L 460 80 L 460 110" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><rect x="30" y="110" width="220" height="75" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="140" y="130" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Файловый кэш Linux</text><text x="140" y="148" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">free -&gt; available</text><text x="140" y="165" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">Память свободна для новых задач</text><rect x="350" y="110" width="220" height="75" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="460" y="130" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Активный свопинг и лимиты</text><text x="460" y="148" fill="#ff6b6b" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">vmstat (si/so) | cgroup</text><text x="460" y="165" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">Падение скорости / OOM Killer</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Диск: когда задержки ввода-вывода становятся узким местом</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Дисковую подсистему часто подозревают только тогда, когда передача файлов становится медленной. Однако в серверных приложениях проблема может выглядеть иначе: интерфейс долго ждёт ответ базы данных, фоновые задания постепенно отстают, а процессор остаётся недогруженным.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Причина в том, что производительность накопителя определяется не только скоростью передачи данных. Важны также количество операций в секунду, их размер, характер доступа и задержка выполнения каждой операции.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 15px 0; line-height: 1.6;">Для первичной диагностики используют:</p><div style="background: #0f172a; border-radius: 6px; padding: 20px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.05); font-family: 'SF Mono', Monaco, monospace; font-size: 14px; line-height: 1.5; color: #94a3b8;"><span style="color: #14b8a6;">iostat -xz 1</span><br><span style="color: #14b8a6;">pidstat -d 1</span></div><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Первая команда показывает статистику дисковых устройств, вторая помогает оценить дисковую активность процессов. Если подозрение падает на базу данных, эти данные стоит сопоставить с активными запросами и статистикой самой СУБД.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace;">Четыре показателя, которые нужно понимать</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— <strong>IOPS</strong> — количество операций ввода-вывода в секунду. Накопитель может передавать большие объёмы последовательных данных, но испытывать трудности при большом количестве мелких случайных операций.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— <strong>Throughput</strong> — объём данных, передаваемых за единицу времени. Этот показатель важен, например, при обработке больших файлов, резервном копировании и последовательном чтении.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— <strong>await</strong> — среднее время выполнения операции с учётом ожидания в очереди. Рост этого показателя может объяснять задержки приложения, если критические операции действительно ждут завершения ввода-вывода.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— <strong>aqu-sz</strong> — средний размер очереди запросов к устройству. Если очередь увеличивается вместе с задержками, это может свидетельствовать о насыщении дисковой подсистемы.</p></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Особого внимания заслуживает %util. На устройствах, обрабатывающих запросы последовательно, приближение к 100% часто указывает на высокую занятость. Но для SSD, RAID и других устройств с параллельной обработкой операций этот показатель нельзя напрямую интерпретировать как процент исчерпанной производительности. Документация iostat отдельно предупреждает об ограничениях такой интерпретации.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Универсального порога await, после которого диск автоматически считается медленным, тоже нет. Для одной нагрузки задержка в несколько миллисекунд может быть приемлемой, для другой — существенно влиять на время ответа. Оценивать показатели нужно относительно обычного состояния системы и требований приложения.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace;">Почему база данных может тормозить на быстром SSD</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Допустим, приложение выполняет тысячи небольших синхронных операций записи. Каждая операция требует подтверждения, прежде чем обработка продолжится. Даже если накопитель обладает высокой пропускной способностью, задержка отдельных операций начинает складываться в существенное время ожидания.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Другой вариант — запрос читает гораздо больше данных, чем требуется. Причиной может быть неудачный план выполнения, отсутствие подходящего индекса или неоптимальная структура запроса. Диск получает дополнительную работу, но замена накопителя не обязательно даст ожидаемый эффект.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Поэтому при подозрении на дисковое узкое место важно ответить на два вопроса:</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— Действительно ли задержки ввода-вывода растут в момент ухудшения работы приложения?</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— Какие конкретно операции создают эту нагрузку и почему они необходимы?</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Если диск перегружен резервным копированием, например, проблема может решаться переносом задания на другое время или ограничением его интенсивности. Если причина в неэффективных запросах, потребуется оптимизация базы данных. А если измерения показывают, что необходимая рабочая нагрузка упирается в предел хранилища, тогда уже имеет смысл рассматривать изменение его конфигурации или класса.</p><div style="margin: 0 0 35px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 600px; display: block; margin: 0 auto;" viewbox="0 0 600 220" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="220" y="10" width="160" height="40" rx="2" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="300" y="34" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">ДИАГНОСТИКА I/O</text><path d="M 300 50 L 300 80 M 300 80 L 140 80 L 140 110" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><path d="M 300 80 L 460 80 L 460 110" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><rect x="20" y="110" width="240" height="75" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="140" y="130" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Потоки данных и плотность</text><text x="140" y="148" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">IOPS / Throughput</text><text x="140" y="165" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">Количество мелких или объем больших операций</text><rect x="340" y="110" width="240" height="75" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="460" y="130" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Временные задержки и очереди</text><text x="460" y="148" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">await / aqu-sz</text><text x="460" y="165" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">Время ожидания и глубина запросов в очереди</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Сеть: когда ресурсы сервера в порядке, а запросы всё равно задерживаются</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Сетевые проблемы легко пропустить, если мониторинг ограничивается загрузкой интерфейса. Канал может быть почти свободен, CPU — недогружен, а приложение — регулярно ждать ответы от соседнего сервиса.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 15px 0; line-height: 1.6;">Начать можно с базовой проверки:</p><div style="background: #0f172a; border-radius: 6px; padding: 20px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.05); font-family: 'SF Mono', Monaco, monospace; font-size: 14px; line-height: 1.5; color: #94a3b8;"><span style="color: #14b8a6;">ip -s link</span><br><span style="color: #14b8a6;">sar -n DEV 1</span><br><span style="color: #14b8a6;">ss -s</span></div><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">ip -s link показывает статистику сетевых интерфейсов, включая ошибки и отброшенные пакеты. sar -n DEV 1 позволяет наблюдать за входящим и исходящим трафиком. ss -s помогает оценить общую картину TCP-соединений и сокетов.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">При анализе счётчиков важно смотреть на их прирост во время инцидента. Большое накопленное число ошибок не обязательно означает, что проблема продолжается сейчас.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace;">Какие сетевые проблемы нужно различать</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— Насыщение канала. Трафик приближается к доступной пропускной способности, из-за чего увеличиваются очереди и задержки.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— Потери пакетов и повторные передачи TCP. Данные приходится отправлять повторно, что способно заметно увеличить время обмена.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— Высокая задержка между узлами. Даже при отсутствии потерь каждый обмен занимает существенное время.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— Проблемы с соединениями. Приложение тратит время на установление соединений, ожидает свободного соединения в пуле или сталкивается с большим количеством неэффективно используемых сокетов.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— Ограничения промежуточных компонентов. Балансировщик, прокси, межсетевой экран или облачная сетевая инфраструктура становятся частью критического пути запроса.</p></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Для оценки маршрута и сетевых задержек подходят ping и mtr, а для анализа TCP-соединений — ss. Но результаты нужно трактовать в контексте: отсутствие ответа на ICMP не обязательно означает проблему прикладного трафика, а успешный ping не подтверждает исправность конкретного TCP-сервиса.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace;">Как локализовать задержку</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Предположим, CRM обращается к внешнему сервису для получения документов. Системные метрики CRM выглядят нормально, но открытие карточки клиента стало занимать две секунды вместо половины секунды.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Вместо увеличения ресурсов сервера стоит измерить время отдельных этапов запроса: установление соединения, отправка данных, ожидание ответа внешнего сервиса и обработка результата. Если основная задержка приходится на ожидание ответа, нужно исследовать сетевой путь и саму зависимость.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Здесь важно не смешивать сеть и удалённый сервис. Высокое время ожидания может быть вызвано сетевой задержкой, но может объясняться и тем, что удалённое приложение долго обрабатывает запрос. Чтобы отличить одно от другого, нужны метрики обеих сторон или распределённая трассировка.</p><div style="margin: 0 0 35px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 600px; display: block; margin: 0 auto;" viewbox="0 0 600 200" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="20" y="70" width="140" height="60" rx="2" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="90" y="95" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">CRM SERVER</text><text x="90" y="112" fill="#94a3b8" font-family="sans-serif" font-size="10" text-anchor="middle">Метрики в норме</text><path d="M 160 90 L 250 90" fill="none" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-teal)"></path><text x="205" y="80" fill="#14b8a6" font-family="sans-serif" font-size="11" text-anchor="middle">Сеть (RTT)</text><rect x="250" y="75" width="100" height="30" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="300" y="94" fill="#94a3b8" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">Потери / Прокси</text><path d="M 350 90 L 440 90" fill="none" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#arrow-teal)"></path><rect x="440" y="70" width="140" height="60" rx="2" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="510" y="95" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">REMOTE SERVICE</text><text x="510" y="112" fill="#ff6b6b" font-family="sans-serif" font-size="10" text-anchor="middle">Внутренняя обработка</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Когда проблема находится в приложении, а не в инфраструктуре</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Если CPU, память, диск и сеть не демонстрируют явного насыщения, это не означает, что сервер работает идеально. Возможно, ресурсы доступны, но приложение не умеет эффективно ими пользоваться.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Одна из причин — блокировки. Несколько потоков обращаются к одним данным, но один из них удерживает блокировку, необходимую другим. Ожидающие задачи не могут продолжить работу, хотя процессор свободен.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">В PostgreSQL такую ситуацию исследуют через pg_stat_activity и pg_locks. Важно не просто найти заблокированный запрос, но и установить, кто удерживает блокировку, сколько длится ожидание и почему транзакция не завершается.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Вторая распространённая причина — неэффективные SQL-запросы. Запрос может читать миллионы строк, хотя для результата нужны десятки, выполнять повторные обращения к одним данным или использовать неудачный план выполнения.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 15px 0; line-height: 1.6;">Для анализа применяют:</p><div style="background: #0f172a; border-radius: 6px; padding: 20px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.05); font-family: 'SF Mono', Monaco, monospace; font-size: 14px; line-height: 1.5; color: #14b8a6;">EXPLAIN (ANALYZE, BUFFERS)<br>SELECT ...;</div><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Здесь SELECT ... — условное обозначение запроса, который предстоит исследовать. EXPLAIN ANALYZE действительно выполняет запрос, поэтому его нужно применять с пониманием последствий. EXPLAIN ANALYZE действительно выполняет исследуемый запрос. Для SELECT это означает реальное чтение данных и возможную дополнительную нагрузку. Для INSERT, UPDATE и DELETE команда может изменить данные. На производственной системе необходимо оценить последствия выполнения и нагрузку; для изменяющих запросов использовать безопасный сценарий проверки. Обёртка в транзакцию с ROLLBACK не гарантирует отмену всех побочных эффектов, например действий внешних систем или некоторых последовательностей.</p></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">При интерпретации плана важно сопоставлять оценочное и фактическое количество строк, число обращений к данным, объём чтения и время выполнения отдельных узлов. Большое расхождение между оценками планировщика и реальным результатом может указывать на неточную статистику или особенности распределения данных, которые влияют на выбор плана.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Третья причина — исчерпание пулов соединений и рабочих потоков. Представим, что все соединения приложения с базой заняты запросами, которые долго ждут ответа. Новые запросы стоят в очереди, хотя CPU и память ещё имеют запас. Увеличение числа соединений без анализа ситуации может сделать хуже: база данных получит больше конкурирующих запросов, а задержки возрастут.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Наконец, приложение может тратить время на ожидание внешних API, очередей сообщений или файловых операций. Поэтому при диагностике полезно разделять время обработки запроса на отдельные этапы. Именно это делают инструменты распределённой трассировки: показывают, какой компонент и какая операция задержали результат.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Если ресурс не насыщен, нужно выяснить, чего именно ждёт приложение. Этот вопрос часто приводит к причине быстрее, чем очередной график общей загрузки сервера.</p><div style="margin: 0 0 35px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 640px; display: block; margin: 0 auto;" viewbox="0 0 640 200" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="240" y="10" width="160" height="40" rx="2" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="320" y="34" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">АНАЛИЗ КОДА / БД</text><path d="M 320 50 L 320 80 M 320 80 L 140 80 L 140 110" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><path d="M 320 80 L 480 80 L 480 110" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><rect x="20" y="110" width="240" height="75" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="140" y="130" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Конкуренция за потоки</text><text x="140" y="148" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">pg_locks | Connection Pool</text><text x="140" y="165" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">Ресурсы свободны, но задачи стоят в очереди</text><rect x="347.5" y="110" width="265" height="75" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="480" y="130" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Неоптимальное исполнение</text><text x="480" y="148" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">EXPLAIN ANALYZE | Tracing</text><text x="480" y="165" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">Тайм-ауты внешних API и тяжёлые сканирования таблиц</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">В виртуальных машинах также нужно учитывать конкуренцию за физические CPU, ограничения облачных дисков и особенности сетевой инфраструктуры. Некоторые облачные хранилища поддерживают временное увеличение производительности за счёт burst-кредитов. Если такой механизм предусмотрен конкретным типом диска, исчерпание кредитов может объяснить, почему производительность ухудшилась после продолжительной интенсивной нагрузки.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Поэтому проверять нужно три уровня:</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— приложение и его процессы;</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— ресурсы контейнера или виртуальной машины с учётом лимитов;</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— хост и инфраструктуру, на которой работает сервис.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Без этого легко ошибиться с причиной. Метрики физического сервера показывают общую доступность ресурсов, но не гарантируют, что конкретный контейнер или виртуальная машина может использовать их в нужном объёме.</p><div style="margin: 0 0 35px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 600px; display: block; margin: 0 auto;" viewbox="0 0 600 220" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><line x1="300" y1="15" x2="300" y2="195" stroke="rgba(20, 184, 166, 0.2)" stroke-width="1" stroke-dasharray="4 4"></line><g><rect x="180" y="15" width="240" height="35" rx="2" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="300" y="36" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">1. ПРИЛОЖЕНИЕ И ПРОЦЕССЫ</text><path d="M 300 50 L 300 70" fill="none" stroke="#14b8a6" stroke-width="1" marker-end="url(#arrow-teal)"></path></g><g><rect x="180" y="75" width="240" height="45" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="300" y="94" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">2. КОНТЕЙНЕР / ВМ</text><text x="300" y="108" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="9" text-anchor="middle">cgroup limits / burst credits</text><path d="M 300 120 L 300 140" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1" marker-end="url(#arrow-teal)"></path></g><g><rect x="180" y="145" width="240" height="45" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="300" y="164" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">3. ХОСТ И ИНФРАСТРУКТУРА</text><text x="300" y="178" fill="#94a3b8" font-family="'SF Mono', Monaco, monospace" font-size="9" text-anchor="middle">Физическое железо / Сетевой путь</text></g></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Какие метрики действительно помогают найти узкое место</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Когда мониторинг показывает сотни показателей, возникает соблазн анализировать всё подряд. На практике полезнее начать с нескольких метрик, которые позволяют подтвердить или опровергнуть конкретные гипотезы.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Для этого удобно совместить две методики. USE помогает исследовать ресурсы через утилизацию, насыщение и ошибки. RED применяется на уровне сервисов и фокусируется на частоте запросов, ошибках и длительности обработки. Вместе они позволяют сопоставить состояние инфраструктуры с тем, что происходит с пользовательскими запросами.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; margin-bottom: 35px; width: 100%; box-sizing: border-box;"><div style="background: rgba(20, 184, 166, 0.02); border: 1px solid rgba(20, 184, 166, 0.15); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 16px; color: #14b8a6; font-weight: bold; margin-bottom: 14px; text-transform: uppercase; letter-spacing: -0.3px;">CPU</div><div style="margin-bottom: 12px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Что проверять:</div><div style="font-size: 14px; color: #ffffff; line-height: 1.4;">Загрузка отдельных ядер, run queue, steal time</div></div><div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Что искать:</div><div style="font-size: 14px; color: #94a3b8; line-height: 1.4;">Устойчивую очередь задач, нехватку процессорного времени</div></div></div><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.08); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 16px; color: #ffffff; font-weight: bold; margin-bottom: 14px; text-transform: uppercase; letter-spacing: -0.3px;">RAM</div><div style="margin-bottom: 12px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Что проверять:</div><div style="font-size: 14px; color: #ffffff; line-height: 1.4;">MemAvailable, swap activity, memory PSI, OOM events</div></div><div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Что искать:</div><div style="font-size: 14px; color: #94a3b8; line-height: 1.4;">Давление на память, активную подкачку, завершение процессов</div></div></div><div style="background: rgba(20, 184, 166, 0.02); border: 1px solid rgba(20, 184, 166, 0.15); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 16px; color: #14b8a6; font-weight: bold; margin-bottom: 14px; text-transform: uppercase; letter-spacing: -0.3px;">Диск</div><div style="margin-bottom: 12px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Что проверять:</div><div style="font-size: 14px; color: #ffffff; line-height: 1.4;">await, aqu-sz, IOPS, throughput</div></div><div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Что искать:</div><div style="font-size: 14px; color: #94a3b8; line-height: 1.4;">Рост задержек и очередей при критичных операциях</div></div></div><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.08); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 16px; color: #ffffff; font-weight: bold; margin-bottom: 14px; text-transform: uppercase; letter-spacing: -0.3px;">Сеть</div><div style="margin-bottom: 12px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Что проверять:</div><div style="font-size: 14px; color: #ffffff; line-height: 1.4;">Throughput, RTT, TCP retransmits, ошибки и drops интерфейса</div></div><div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Что искать:</div><div style="font-size: 14px; color: #94a3b8; line-height: 1.4;">Потери, насыщение канала, увеличение времени обмена</div></div></div><div style="background: rgba(20, 184, 166, 0.02); border: 1px solid rgba(20, 184, 166, 0.15); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 16px; color: #14b8a6; font-weight: bold; margin-bottom: 14px; text-transform: uppercase; letter-spacing: -0.3px;">Приложение</div><div style="margin-bottom: 12px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Что проверять:</div><div style="font-size: 14px; color: #ffffff; line-height: 1.4;">p95/p99, ошибки, длительность этапов, длина очередей</div></div><div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px;">Что искать:</div><div style="font-size: 14px; color: #94a3b8; line-height: 1.4;">Ожидания, блокировки, исчерпание пулов</div></div></div><div style="grid-column: 1 / -1; background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.08); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 16px; color: #ffffff; font-weight: bold; margin-bottom: 14px; text-transform: uppercase; letter-spacing: -0.3px;">Контейнеры и VM</div><div style="display: flex; flex-direction: column; gap: 12px;"><div><span style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Что проверять:</span> <span style="font-size: 14px; color: #ffffff; margin-left: 5px;">Throttling, лимиты памяти, метрики хоста</span></div><div><span style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #64748b; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">Что искать:</span> <span style="font-size: 14px; color: #94a3b8; margin-left: 5px;">Ограничения на уровне виртуализации</span></div></div></div></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Эта матрица показателей не устанавливает универсальные пороги. Например, await в 10 мс не всегда означает проблему, а 90% использования RAM не всегда говорит о нехватке памяти. Значения нужно оценивать с учётом характера нагрузки, требований приложения и обычного состояния системы.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace;">PSI: показатель, который дополняет обычный мониторинг</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">В Linux доступен механизм Pressure Stall Information, позволяющий оценивать, сколько времени задачи теряют из-за конкуренции за ресурсы CPU, памяти и ввода-вывода.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 15px 0; line-height: 1.6;">Проверить показатели можно так:</p><div style="background: #0f172a; border-radius: 6px; padding: 20px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.05); font-family: 'SF Mono', Monaco, monospace; font-size: 14px; line-height: 1.5; color: #14b8a6;"><span style="color: #14b8a6;">cat /proc/pressure/cpu</span><br><span style="color: #14b8a6;">cat /proc/pressure/memory</span><br><span style="color: #14b8a6;">cat /proc/pressure/io</span></div><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Конкретный набор доступных данных зависит от версии ядра и конфигурации. Интерпретировать PSI следует по динамике и в связи с задержками приложения: сам факт наличия ненулевого значения не означает аварийную ситуацию.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Преимущество PSI в том, что он помогает увидеть не только занятость ресурса, но и влияние давления на выполнение задач. Это особенно полезно в случаях, когда привычные графики не объясняют замедление полностью.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Ещё одна важная деталь — временное разрешение метрик. Среднее значение за пять минут может скрыть короткую перегрузку, которая регулярно вызывает тайм-ауты. Для расследования инцидентов полезно сохранять данные с достаточно частым интервалом, а для долгосрочного мониторинга использовать подходящую агрегацию.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Главный принцип здесь прост: каждая метрика должна отвечать на конкретный диагностический вопрос. Если непонятно, какую гипотезу проверяет график, его наличие в дашборде вряд ли поможет быстрее найти причину.</p><div style="margin: 0 0 35px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 600px; display: block; margin: 0 auto;" viewbox="0 0 600 180" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="30" y="55" width="200" height="70" rx="2" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="130" y="75" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="12" text-anchor="middle" font-weight="bold">RED METHODOLOGY</text><text x="130" y="94" fill="#94a3b8" font-family="sans-serif" font-size="10" text-anchor="middle">Бизнес-уровень / Сервисы</text><text x="130" y="110" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="9" text-anchor="middle">Rate · Errors · Duration</text><path d="M 230 90 L 370 90" fill="none" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#arrow-teal)"></path><text x="300" y="80" fill="#14b8a6" font-family="sans-serif" font-size="11" text-anchor="middle">Кросс-анализ</text><rect x="370" y="55" width="200" height="70" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="470" y="75" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="12" text-anchor="middle" font-weight="bold">USE METHODOLOGY</text><text x="470" y="94" fill="#94a3b8" font-family="sans-serif" font-size="10" text-anchor="middle">Инфраструктура / Железо</text><text x="470" y="110" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="9" text-anchor="middle">Utilization · Saturation · Errors</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Сквозной пример: CRM стала работать втрое медленнее</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Рассмотрим учебный сценарий. Компания использует CRM на Linux-сервере с PostgreSQL. После импорта крупной партии клиентских данных пользователи начинают жаловаться на медленное открытие карточек и поиск по базе.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">До изменения типичное время ответа составляло 300 мс, после — около 900 мс. Эти числа условные и иллюстрируют ход расследования.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Первая ошибка, которой нужно избежать, — сразу предположить, что база данных не справляется с выросшим объёмом. Это возможно, но пока неизвестно, что именно ограничивает выполнение запросов.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace;">Проверяем, где возникло замедление</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Сначала сравниваем время ответа разных операций. Авторизация и загрузка главной страницы работают как раньше, а поиск и открытие карточек замедлились. Это говорит о том, что проблема может быть связана с конкретными запросами или данными, которые используются этими операциями.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Далее сопоставляем время возникновения задержек с метриками CPU, RAM, диска и сети.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Допустим, CPU не демонстрирует устойчивого насыщения, доступной памяти достаточно, активной подкачки нет, а задержки дисковых операций не показывают явного роста. Это не исключает все инфраструктурные проблемы, но делает гипотезу о нехватке ресурсов менее убедительной.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Следующий шаг — посмотреть, сколько времени запросы проводят в базе данных и на каких этапах обработки задерживаются.</p><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace;">Исследуем SQL</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Предположим, анализ активных запросов и планов выполнения показывает, что поиск клиентов стал обрабатывать значительно больше строк, чем возвращает пользователю. Причём проблема возникает только для определённого типа поиска.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Здесь необходимо проверить фактическое количество обработанных строк, план выполнения, используемые индексы и статистику таблиц. После массового импорта могли измениться распределение данных и селективность условий запроса. Но нельзя автоматически считать отсутствие индекса причиной: иногда проблема заключается в самом условии поиска или в том, что оптимизатор обоснованно выбирает последовательное чтение.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Допустим, анализ подтвердил, что для часто используемого условия фильтрации подходящего индекса действительно нет, а добавление индекса оправдано с учётом нагрузки на запись и объёма таблицы.</p></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h4 style="color: #ffffff; font-size: 18px; font-weight: bold; margin: 0 0 20px 0; font-family: 'SF Mono', Monaco, monospace;">Проверяем решение</h4><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">После изменения нужно повторить тест на сопоставимом наборе данных и нагрузке. Измеряем не только среднее время ответа, но и p95/p99, потребление CPU, дисковую активность и влияние на операции записи.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Для иллюстрации допустим, что типичное время ответа снизилось с 900 до 320 мс, а p95 также улучшился. В реальном расследовании такие результаты нужно получить измерениями, а не предполагать заранее.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Если улучшение подтверждено, гипотеза о неэффективном плане выполнения получает сильную поддержку. Если нет — расследование продолжается: возможно, есть другая причина или одновременно действуют несколько факторов.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">В этом примере важен не конкретный индекс, а логика действий. Мы не стали сразу увеличивать CPU или RAM: сначала определили замедлившуюся операцию, проверили основные метрики инфраструктуры и исследовали план выполнения запроса.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Именно так должна выглядеть техническая диагностика: не набор универсальных советов, а последовательность проверяемых гипотез.</p><div style="margin: 0 0 35px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 780px; display: block; margin: 0 auto;" viewbox="0 0 780 140" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><line x1="20" y1="50" x2="760" y2="50" stroke="rgba(20, 184, 166, 0.2)" stroke-width="1.5" stroke-dasharray="4 4"></line><g><circle cx="90" cy="50" r="16" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></circle><text x="90" y="54" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle" font-weight="bold">01</text><text x="90" y="90" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Симптом</text><text x="90" y="106" fill="#94a3b8" font-family="sans-serif" font-size="9" text-anchor="middle">Локализация замедления</text></g><path d="M 115 50 L 265 50" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><g><circle cx="290" cy="50" r="16" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></circle><text x="290" y="54" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">02</text><text x="290" y="90" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Инфраструктура</text><text x="290" y="106" fill="#94a3b8" font-family="sans-serif" font-size="9" text-anchor="middle">Проверка утилизации ресурсов</text></g><path d="M 315 50 L 465 50" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><g><circle cx="490" cy="50" r="16" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></circle><text x="490" y="54" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">03</text><text x="490" y="90" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">План запроса</text><text x="490" y="106" fill="#94a3b8" font-family="sans-serif" font-size="9" text-anchor="middle">Исследование SQL через EXPLAIN</text></g><path d="M 515 50 L 665 50" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><g><circle cx="690" cy="50" r="16" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></circle><text x="690" y="54" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">04</text><text x="690" y="90" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Проверка</text><text x="690" y="106" fill="#14b8a6" font-family="sans-serif" font-size="9" text-anchor="middle">Повторный замер p95/p99</text></g></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Пошаговый алгоритм: от симптома к первопричине</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Когда сервер тормозит в рабочей среде, важно не распыляться на десятки проверок. Последовательность действий должна помогать постепенно сужать круг возможных причин.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— <strong>Шаг 1. Зафиксировать симптом.</strong> Определите, какие операции замедлились, когда началась проблема, сколько пользователей она затрагивает и как изменились задержки и частота ошибок.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— <strong>Шаг 2. Сопоставить показатели во времени.</strong> Проверьте CPU, память, диск, сеть и метрики приложения за период инцидента. По возможности используйте одинаковые временные интервалы и учитывайте задержку поступления метрик.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— <strong>Шаг 3. Найти признаки насыщения.</strong> Ищите очереди задач, давление на память, задержки дисковых операций, сетевые потери и ограничения контейнеров. Не считайте один необычный показатель достаточным доказательством.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— <strong>Шаг 4. Определить конкретный процесс или этап запроса.</strong> Используйте pidstat, системные журналы, метрики СУБД, профилирование и распределённую трассировку. На этом этапе нужно выяснить, кто создаёт нагрузку или чего ждёт приложение.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— <strong>Шаг 5. Сформулировать и проверить гипотезу.</strong> Например: «Поиск замедлился из-за большого объёма чтения в PostgreSQL». Далее нужны измерения, которые подтверждают или опровергают именно эту причину.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— <strong>Шаг 6. Внести контролируемое изменение.</strong> Оптимизировать запрос, скорректировать лимит, изменить конфигурацию или добавить ресурсы — в зависимости от установленной причины.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— <strong>Шаг 7. Повторить измерения.</strong> Сравните время ответа, ошибки и нагрузку до и после изменения при сопоставимых условиях. Проверьте, не переместилось ли узкое место в другой компонент.</p></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 15px 0; line-height: 1.6;">Для первичной проверки Linux-сервера можно использовать следующий набор:</p><div style="background: #0f172a; border-radius: 6px; padding: 20px; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.05); font-family: 'SF Mono', Monaco, monospace; font-size: 14px; line-height: 1.5; color: #14b8a6;">uptime<br>top<br>vmstat 1<br>free -h<br>iostat -xz 1<br>pidstat -u -d 1<br>ss -s</div><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">(Обратите внимание: утилита pidstat входит в состав пакета sysstat и в некоторых дистрибутивах Linux может отсутствовать из коробки — её необходимо установить через системный пакетный менеджер, например, sudo apt install sysstat или sudo dnf install sysstat.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Команды показывают разные стороны работы системы, но не заменяют полноценного анализа. Например, iostat может выявить рост задержек устройства, однако для понимания причины понадобится определить процесс, который создаёт операции. top покажет потребление CPU, но не объяснит, почему приложение выполняет лишние вычисления.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Учитывайте и особенности самих инструментов: первый отчёт vmstat 1 в Linux обычно содержит средние значения с момента загрузки системы, а последующие показывают статистику за соответствующий интервал. При анализе учитывайте это различие.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">На рабочем сервере также не стоит без необходимости включать тяжёлое трассирование всех процессов. Начните с базовых метрик и постепенно повышайте детализацию там, где остаются вопросы.</p><div style="margin: 0 0 35px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 600px; display: block; margin: 0 auto;" viewbox="0 0 600 240" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><rect x="220" y="95" width="160" height="45" rx="3" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="300" y="116" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">ПЕРВИЧНЫЙ НАБОР</text><text x="300" y="129" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">uptime / top</text><path d="M 300 95 L 300 45" fill="none" stroke="#14b8a6" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow-teal)"></path><rect x="200" y="5" width="200" height="40" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="300" y="21" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Очереди и Память</text><text x="300" y="34" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">vmstat 1 | free -h</text><path d="M 220 117 L 145 117" fill="none" stroke="#14b8a6" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow-teal)"></path><rect x="5" y="95" width="140" height="45" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="75" y="113" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Процессы и Диск</text><text x="75" y="127" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="9" text-anchor="middle">pidstat | iostat</text><path d="M 380 117 L 455 117" fill="none" stroke="#14b8a6" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow-teal)"></path><rect x="455" y="95" width="140" height="45" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="525" y="113" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Сетевые сокеты</text><text x="525" y="127" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle">ss -s</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Когда нужно увеличивать ресурсы, а когда — менять приложение</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">После диагностики необходимо выбрать решение, которое устраняет подтверждённое ограничение, а не просто делает его менее заметным.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; margin-bottom: 35px; width: 100%; box-sizing: border-box;"><div style="background: rgba(20, 184, 166, 0.02); border: 1px solid rgba(20, 184, 166, 0.15); padding: 24px; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #14b8a6; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">CPU устойчиво насыщен полезной работой</div><div style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0;">Увеличить вычислительную мощность, распараллелить обработку или оптимизировать вычисления</div></div><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.08); padding: 24px; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">Память действительно ограничивает рабочую нагрузку</div><div style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0;">Увеличить RAM, устранить утечку или пересмотреть потребление и лимиты</div></div><div style="background: rgba(20, 184, 166, 0.02); border: 1px solid rgba(20, 184, 166, 0.15); padding: 24px; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #14b8a6; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">Диск не справляется с необходимым профилем ввода-вывода</div><div style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0;">Оптимизировать операции, изменить конфигурацию или выбрать подходящее хранилище</div></div><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.08); padding: 24px; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">Сеть ограничивает обмен</div><div style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0;">Устранить потери, проверить сетевой путь, соединения и лимиты</div></div><div style="background: rgba(20, 184, 166, 0.02); border: 1px solid rgba(20, 184, 166, 0.15); padding: 24px; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #14b8a6; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">Запросы ждут блокировок</div><div style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0;">Сократить время транзакций, изменить порядок операций или устранить причину конкуренции</div></div><div style="background: rgba(255, 255, 255, 0.01); border: 1px solid rgba(255, 255, 255, 0.08); padding: 24px; border-radius: 6px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">Приложение накапливает очереди</div><div style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0;">Пересмотреть параллелизм, пулы, тайм-ауты и скорость поступления задач</div></div><div style="grid-column: 1 / -1; background: rgba(20, 184, 166, 0.02); border: 1px solid rgba(20, 184, 166, 0.15); padding: 24px; border-radius: 6px; box-sizing: border-box;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 14px; color: #14b8a6; font-weight: bold; margin-bottom: 12px; line-height: 1.4; text-transform: uppercase; letter-spacing: -0.3px;">Контейнер упирается в лимит</div><div style="font-size: 15px; color: #94a3b8; line-height: 1.6; margin: 0;">Пересмотреть лимиты и запросы ресурсов с учётом реального потребления</div></div></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Увеличение ресурсов оправдано, когда подтверждено насыщение конкретного ресурса и дополнительная мощность позволит ускорить обработку или увеличить пропускную способность системы.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Но масштабирование не всегда бесплатно даже с технической точки зрения. Дополнительные рабочие потоки могут увеличить конкуренцию за блокировки. Увеличение числа соединений с базой данных — привести к большему количеству одновременно выполняемых запросов и ухудшить ситуацию. Горизонтальное масштабирование приложения не обязательно поможет, если все экземпляры обращаются к одной перегруженной базе данных.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Поэтому решение следует оценивать с учётом всей архитектуры. Если изменение ускоряет один компонент, но создаёт дополнительную нагрузку на другой, итоговый эффект может оказаться нулевым или отрицательным.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">После внедрения решения нужно повторно проверить критический путь запроса, включая внешние зависимости. Устранение одного узкого места нередко выявляет следующее — и это нормальная часть работы с производительностью сложных систем.</p><div style="margin: 0 0 35px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 600px; display: block; margin: 0 auto;" viewbox="0 0 600 180" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><line x1="100" y1="130" x2="500" y2="130" stroke="rgba(255,255,255,0.15)" stroke-width="2"></line><polygon points="300,100 285,130 315,130" fill="#14b8a6"></polygon><g><rect x="60" y="35" width="160" height="50" rx="2" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="140" y="58" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">SCALE UP</text><text x="140" y="72" fill="#94a3b8" font-family="sans-serif" font-size="9" text-anchor="middle">Вертикальное / Ресурсы</text><line x1="140" y1="85" x2="140" y2="130" stroke="#14b8a6" stroke-width="1" stroke-dasharray="2 2"></line></g><g><rect x="380" y="35" width="160" height="50" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="460" y="58" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">CODE OPTIMIZATION</text><text x="460" y="72" fill="#94a3b8" font-family="sans-serif" font-size="9" text-anchor="middle">Алгоритмы / СУБД / Пулы</text><line x1="460" y1="85" x2="460" y2="130" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="2 2"></line></g><text x="300" y="160" fill="#94a3b8" font-family="sans-serif" font-size="11" text-anchor="middle">Итоговый эффект с учетом всей ИТ-архитектуры</text></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Как обнаруживать проблемы до того, как их заметят пользователи</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Разовая диагностика помогает устранить конкретный инцидент. Но если компания регулярно сталкивается с замедлениями, необходима системная наблюдаемость.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Начинать лучше с бизнес-операций. Важно понимать, сколько занимает открытие карточки клиента, формирование отчёта, обработка заказа или синхронизация с внешней системой. Затем эти показатели связываются с метриками приложения и инфраструктуры.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Такой подход позволяет увидеть не только то, что сервер загружен, но и то, как техническое состояние отражается на работе пользователей.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 15px 0; line-height: 1.6;">Для этого полезно собирать несколько групп данных:</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— Метрики пользовательского опыта: время ответа, p95/p99, частота ошибок и тайм-аутов.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— Системные метрики: загрузка CPU, доступная память, активность swap, задержки диска, сетевой трафик и ошибки.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— Метрики приложения: длительность этапов обработки, размер очередей, занятость пулов соединений и рабочих потоков.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— Метрики зависимостей: время ответа базы данных, внешних API, очередей сообщений и других критичных сервисов.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6; padding-left: 20px; text-indent: -20px;">— Исторические данные: объём запросов, активные пользователи, фоновые задания и изменение нагрузки во времени.</p></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Пороги оповещений нужно выбирать под конкретную систему. Универсальное правило «CPU выше 80% — авария» часто приводит к ложным срабатываниям и не помогает выявить ситуации, когда приложение тормозит при невысокой загрузке.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Гораздо полезнее отслеживать сочетания признаков. Например, рост p95 вместе с увеличением очереди запросов и насыщением CPU позволяет сформировать более содержательный сигнал, чем один график загрузки процессора.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Не менее важна история метрик. Она помогает сравнивать текущую ситуацию с обычной нагрузкой, замечать постепенное увеличение времени ответа и определять, какие операции или изменения предшествуют ухудшению производительности.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Мониторинг должен быть связан с понятным процессом реагирования: кто получает сигнал, какие данные проверяет и по каким критериям определяет, что проблема устранена. Иначе даже хорошо настроенные графики останутся набором наблюдений, а не инструментом управления надёжностью.</p><div style="margin: 0 0 35px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 600px; display: block; margin: 0 auto;" viewbox="0 0 600 240" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><line x1="300" y1="20" x2="300" y2="200" stroke="rgba(20, 184, 166, 0.2)" stroke-width="1" stroke-dasharray="4 4"></line><g><rect x="150" y="15" width="300" height="35" rx="2" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></rect><text x="300" y="36" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">ПОЛЬЗОВАТЕЛЬСКИЙ ОПЫТ (p95 / Ошибки)</text><path d="M 300 65 L 300 50" fill="none" stroke="#14b8a6" stroke-width="1" marker-end="url(#arrow-teal)"></path></g><g><rect x="150" y="70" width="300" height="35" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="300" y="91" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">МЕТРИКИ ПРИЛОЖЕНИЯ (Очереди / Пулы)</text><path d="M 300 120 L 300 105" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1" marker-end="url(#arrow-teal)"></path></g><g><rect x="150" y="125" width="300" height="35" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="300" y="146" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">ЗАВИСИМОСТИ (Базы данных / Внешние API)</text><path d="M 300 175 L 300 160" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1" marker-end="url(#arrow-teal)"></path></g><g><rect x="150" y="180" width="300" height="35" rx="2" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></rect><text x="300" y="201" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle">ИНФРАСТРУКТУРА (CPU / RAM / Диск / Сеть)</text></g></svg></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 25px 0; text-transform: uppercase;">Заключение</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Нехватка ресурсов — только одна из возможных причин медленной работы сервера. Чтобы подтвердить её, недостаточно увидеть высокую загрузку CPU, заполненную память или очередь дисковых операций. Нужно установить, что именно ограничивает выполнение работы и объясняет задержки, которые наблюдают пользователи.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Если процессор насыщен необходимыми вычислениями, увеличение мощности может быть оправдано. Если система испытывает давление на память, потребуется разобраться с рабочим набором и ограничениями. Если запросы ждут диск, нужно исследовать профиль ввода-вывода. А если системные показатели выглядят нормально, поиск следует продолжить внутри приложения: анализировать SQL-запросы, блокировки, пулы соединений, очереди и внешние зависимости.</p></div><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; line-height: 1.6;">Главное — не путать симптом с причиной. Сервер можно сделать мощнее, но это не гарантирует, что приложение станет работать быстрее. Грамотная диагностика иногда позволяет устранить причину замедления без дополнительных расходов на инфраструктуру.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 35px 0; line-height: 1.6;">Для бизнеса результат измеряется не количеством ядер и гигабайтов оперативной памяти, а стабильностью процессов, предсказуемым временем ответа и отсутствием сбоев в работе сервисов. Поэтому правильная диагностика должна завершаться не предположением, что серверу «нужно побольше ресурсов», а подтверждённым объяснением проблемы и измеренным результатом её устранения.</p><div style="margin: 0 0 35px 0; padding: 30px 20px; background: rgba(20, 184, 166, 0.01); border: 1px dashed rgba(22, 92, 82, 0.25); border-radius: 6px; box-sizing: border-box; width: 100%; text-align: center;"><svg style="width: 100%; height: auto; max-width: 600px; display: block; margin: 0 auto;" viewbox="0 0 600 160" xmlns="http://w3.org"><defs><marker id="arrow-teal" viewbox="0 0 10 10" refx="6" refy="5" markerwidth="5" markerheight="5" orient="auto-start-reverse"><path d="M 0 1.5 L 7 5 L 0 8.5 z" fill="#14b8a6"></path></marker></defs><line x1="40" y1="65" x2="560" y2="65" stroke="rgba(20, 184, 166, 0.2)" stroke-width="1.5" stroke-dasharray="6 4"></line><g><circle cx="90" cy="65" r="22" fill="#1e1e2e" stroke="rgba(255,255,255,0.15)" stroke-width="1"></circle><text x="90" y="69" fill="#94a3b8" font-family="'SF Mono', Monaco, monospace" font-size="7" text-anchor="middle">ЯДРА / ГБ</text><text x="90" y="115" fill="#94a3b8" font-family="sans-serif" font-size="11" text-anchor="middle">Сырые мощности</text><text x="90" y="130" fill="#64748b" font-family="sans-serif" font-size="9" text-anchor="middle">Рост затрат</text></g><path d="M 130 65 L 205 65" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="3 3" marker-end="url(#arrow-teal)"></path><g><circle cx="250" cy="65" r="22" fill="#1e1e2e" stroke="#14b8a6" stroke-width="1.5"></circle><text x="250" y="69" fill="#ffffff" font-family="'SF Mono', Monaco, monospace" font-size="10" text-anchor="middle" font-weight="bold">АНАЛИЗ</text><text x="250" y="115" fill="#ffffff" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">Верификация</text><text x="250" y="130" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="9" text-anchor="middle">Поиск причин</text></g><path d="M 290 65 L 365 65" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#arrow-teal)"></path><g><circle cx="410" cy="65" r="22" fill="#1e1e2e" stroke="#14b8a6" stroke-width="2"></circle><text x="410" y="69" fill="#14b8a6" font-family="'SF Mono', Monaco, monospace" font-size="11" text-anchor="middle" font-weight="bold">✔</text><text x="410" y="115" fill="#14b8a6" font-family="sans-serif" font-size="11" text-anchor="middle" font-weight="bold">СТАБИЛЬНОСТЬ</text><text x="410" y="130" fill="#ffffff" font-family="sans-serif" font-size="10" text-anchor="middle">Бизнес-процессы</text></g></svg></div></div><p> </p><div style="max-width: 1100px; margin: 60px auto 0 auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">НАВИГАЦИЯ // SUGGESTED_READING</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ИНФРАСТРУКТУРА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Почему после обновления система начинает работать хуже</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/pochemu-posle-obnovleniya-sistema-nachinaet-rabotat-huzhe/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ИНФРАСТРУКТУРА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Что делать, если система работает, но пользователи жалуются на тормоза</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/chto-delat-esli-sistema-rabotaet-no-polzovateli-zhaluyutsya-na-tormoza/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // АРХИТЕКТУРА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Когда системе нужно масштабирование</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kogda-sisteme-nuzhno-masshtabirovanie/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div></div></div><div style="max-width: 1100px; margin: 20px auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; border-top: 1px solid #165c52; padding: 40px 0 0 0; box-sizing: border-box; width: 100%;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 40px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ EXPERTISE JOURNAL ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Все инженерные материалы и экспертные статьи</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/ekspertiza/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">перейти к каталогу ──►</a></div></div><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ CORE GLOSSARY ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Полный алфавитный справочник ИТ-терминов</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/glossariy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">открыть справочник ──►</a></div></div></div></div></div></div></div></div></article></main><footer class="footer"><div class="wrapper"><div class="footer__copyright"><p> </p><p> </p></div><button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg width="20" height="20"><use xlink:href="https://log-ai.ru/assets/svg/svg-map.svg#toparrow"/></svg></button></div></footer><script defer="defer" src="https://log-ai.ru/assets/js/scripts.min.js?v&#x3D;d0fc1030089a37f93a2d51bf6d07565c"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script><script>(() => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') !== 'monument') return;
+
+  const IMAGE_URL = 'https://log-ai.ru/media/files/Interstellar.jpeg';
+  const AUDIO_URL = 'https://log-ai.ru/media/files/interstellar.mp3';
+
+  // Защита от повторного запуска
+  if (document.getElementById('log-ai-monument')) return;
+
+  const monument = document.createElement('div');
+  monument.id = 'log-ai-monument';
+
+  const root = document.documentElement;
+  const body = document.body;
+
+  const previousRootOverflow = root.style.overflow;
+  const previousBodyOverflow = body.style.overflow;
+  const previousBodyPosition = body.style.position;
+  const previousBodyTop = body.style.top;
+  const previousBodyWidth = body.style.width;
+  const previousScrollX = window.scrollX;
+  const previousScrollY = window.scrollY;
+
+  root.style.overflow = 'hidden';
+  body.style.overflow = 'hidden';
+  body.style.position = 'fixed';
+  body.style.top = `-${previousScrollY}px`;
+  body.style.width = '100%';
+
+  monument.innerHTML = `
+    <div class="monument-universe"></div>
+    <canvas class="monument-stars"></canvas>
+    <div class="monument-shade"></div>
+
+    <div class="monument-frame">
+      <p class="monument-overline">ARCHIVUM · LOG-AI · MMXXVI</p>
+
+      <div class="monument-rule"></div>
+
+      <h1>PER ASPERA<br><span>AD ASTRA</span></h1>
+
+      <p class="monument-translation">
+        THROUGH HARDSHIP, TO THE STARS
+      </p>
+
+      <div class="monument-message">
+        <p>TO THOSE WHO BUILD BEYOND THE LIMITS OF THEIR TIME.</p>
+        <p>TO THOSE WHO CONTINUE WHEN THE OUTCOME IS UNKNOWN.</p>
+        <p>TO THOSE WHO WILL DISCOVER THIS LONG AFTER ITS CREATION.</p>
+      </div>
+
+      <p class="monument-declaration">
+        YOU WERE NOT THE FIRST TO LOOK AT THE STARS.<br>
+        BUT YOU MAY BE AMONG THOSE WHO REACH THEM.
+      </p>
+
+      <div class="monument-rule"></div>
+          
+      <p class="monument-translation">
+        A MARK LEFT IN THE MACHINE.
+      </p>   
+
+      <p class="monument-signature">
+        LOG·AI·ARCHITECTI·MMXXVI
+      </p>
+
+      <p class="monument-exit" id="monument-hint">
+        [ CLICK ANYWHERE TO RETURN ]
+      </p>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #log-ai-monument {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      background: #03040a;
+      color: #e5dfd3;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      box-sizing: border-box;
+      cursor: pointer;
+      isolation: isolate;
+      opacity: 0;
+      animation: logai-monument-appear 1.8s ease forwards;
+    }
+
+    #log-ai-monument .monument-universe {
+      position: fixed;
+      inset: -3%;
+      z-index: -3;
+      background-image: url("https://log-ai.ru/media/files/Interstellar.jpeg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transform: scale(1.02);
+      animation: logai-cosmic-drift 35s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-shade {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(0,0,0,.24) 0%,
+          rgba(0,0,0,.52) 65%,
+          rgba(0,0,0,.78) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.42),
+          rgba(0,0,0,.18) 45%,
+          rgba(0,0,0,.62)
+        );
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-frame {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', serif;
+      padding: 30px 0;
+      text-shadow: 0 2px 18px rgba(0,0,0,.9);
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-translation,
+    #log-ai-monument .monument-signature,
+    #log-ai-monument .monument-exit {
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-signature {
+      color: #c0a16a;
+    }
+
+    #log-ai-monument .monument-rule {
+      height: 1px;
+      width: 160px;
+      max-width: 60%;
+      margin: 30px auto;
+      background: linear-gradient(
+        to right,
+        transparent,
+        #a68a55,
+        transparent
+      );
+      box-shadow: 0 0 12px rgba(190,155,90,.2);
+    }
+
+    #log-ai-monument h1 {
+      margin: 35px 0 18px;
+      font-size: clamp(30px, 7vw, 58px);
+      line-height: 1.5;
+      letter-spacing: .16em;
+      font-weight: 400;
+      color: #f4f0e8;
+    }
+
+    #log-ai-monument h1 span {
+      color: #d2b77e;
+    }
+
+    #log-ai-monument .monument-translation {
+      color: #c0b8aa;
+    }
+
+    #log-ai-monument .monument-message {
+      margin: 55px auto 38px;
+      max-width: 490px;
+      color: #e0d9cd;
+      font-size: 13px;
+      line-height: 2.2;
+      letter-spacing: .035em;
+    }
+
+    #log-ai-monument .monument-message p {
+      margin: 0 0 12px;
+    }
+
+    #log-ai-monument .monument-declaration {
+      color: #e0c48a;
+      font-size: 12px;
+      line-height: 2.3;
+      letter-spacing: .08em;
+    }
+
+    #log-ai-monument .monument-exit {
+      margin-top: 36px;
+      color: #c0b8aa;
+      font-size: 9px;
+      letter-spacing: .18em;
+    }
+
+    @keyframes logai-monument-appear {
+      to { opacity: 1; }
+    }
+
+    @keyframes logai-cosmic-drift {
+      from { transform: scale(1.02); }
+      to { transform: scale(1.13); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #log-ai-monument,
+      #log-ai-monument .monument-universe {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(monument);
+
+  // Тонкие, редкие звёзды
+  const canvas = monument.querySelector('.monument-stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let frameId = null;
+  let closed = false;
+
+  function resizeStars() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(window.innerWidth * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    stars = Array.from({ length: 65 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      length: 8 + Math.random() * 25,
+      speed: 0.25 + Math.random() * 0.75,
+      alpha: 0.15 + Math.random() * 0.5,
+      delay: Math.random() * 500
+    }));
+  }
+
+  function drawStars() {
+    if (closed) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    for (const star of stars) {
+      star.delay -= 1;
+
+      if (star.delay <= 0) {
+        star.y += star.speed;
+        star.x -= star.speed * 0.35;
+
+        ctx.beginPath();
+        ctx.moveTo(star.x, star.y);
+        ctx.lineTo(star.x - star.length * 0.35,
+                   star.y - star.length);
+
+        ctx.strokeStyle = `rgba(210,220,255,${star.alpha})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+
+        if (star.y > h + 30 || star.x < -30) {
+          star.x = Math.random() * w + 30;
+          star.y = -Math.random() * h * 0.4;
+          star.delay = 30 + Math.random() * 180;
+        }
+      }
+    }
+
+    frameId = requestAnimationFrame(drawStars);
+  }
+
+  resizeStars();
+  drawStars();
+
+  window.addEventListener('resize', resizeStars);
+
+  // Музыка
+  const audio = document.createElement('audio');
+  audio.id = 'monument-audio';
+  audio.src = AUDIO_URL;
+  audio.loop = true;
+  audio.preload = 'auto';
+  audio.volume = 0.35;
+  document.body.appendChild(audio);
+
+  let playing = false;
+  let starting = false;
+
+  const hint = document.getElementById('monument-hint');
+
+  function startMusic() {
+    if (closed || starting || playing) return;
+
+    starting = true;
+
+    audio.play().then(() => {
+      starting = false;
+
+      if (closed) {
+        audio.pause();
+        return;
+      }
+
+      playing = true;
+      hint.textContent = '[ CLICK ANYWHERE TO RETURN ]';
+    }).catch((error) => {
+      starting = false;
+
+      if (closed) return;
+
+      if (error.name === 'NotAllowedError') {
+        hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+        return;
+      }
+
+      console.warn('LOG-AI audio:', error.name, error.message);
+      hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+    });
+  }
+
+  function closeMonument() {
+    if (closed) return;
+    closed = true;
+
+    cancelAnimationFrame(frameId);
+    window.removeEventListener('resize', resizeStars);
+    window.removeEventListener('keydown', onKeyDown);
+
+    audio.pause();
+    audio.remove();
+    monument.remove();
+    style.remove();
+
+    root.style.overflow = previousRootOverflow;
+    body.style.overflow = previousBodyOverflow;
+    body.style.position = previousBodyPosition;
+    body.style.top = previousBodyTop;
+    body.style.width = previousBodyWidth;
+
+    window.scrollTo(previousScrollX, previousScrollY);
+
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete('mode');
+
+    window.history.replaceState(
+      {},
+      document.title,
+      cleanUrl.pathname + cleanUrl.search + cleanUrl.hash
+    );
+  }
+
+  function onKeyDown(event) {
+    if (event.key === 'Escape') closeMonument();
+  }
+
+  monument.addEventListener('click', () => {
+    if (closed) return;
+
+    if (playing) {
+      closeMonument();
+    } else {
+      startMusic();
+    }
+  });
+
+  window.addEventListener('keydown', onKeyDown);
+
+  // Первая попытка автоматического запуска
+  startMusic();
+})();</script><script>(function () {
+    // ВНИМАНИЕ!!!!!!!!!!!!!!!!!!!!Плавный инерционный скролл только для мыши/тачпада
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    let targetY = window.scrollY;
+    let currentY = window.scrollY;
+    let animationFrame = null;
+
+    // ===== НАСТРОЙКИ =====
+    const SPEED = 0.70;       // 0.4 = медленнее, 0.65 = средне, 1.0 = быстрее
+    const SMOOTHNESS = 0.13;  // 0.08 = мягче, 0.12 = средне, 0.18 = быстрее
+    const MAX_STEP = 500;     // максимальный шаг одного движения колеса
+    // =====================
+
+    function animateScroll() {
+        currentY += (targetY - currentY) * SMOOTHNESS;
+
+        if (Math.abs(targetY - currentY) < 0.5) {
+            currentY = targetY;
+            window.scrollTo(0, currentY);
+            animationFrame = null;
+            return;
+        }
+
+        window.scrollTo(0, currentY);
+        animationFrame = requestAnimationFrame(animateScroll);
+    }
+
+    window.addEventListener('wheel', function (event) {
+
+    // Если глобус активирован кликом —
+    // колесо полностью отдаём Globe.gl для zoom.
+    const globe = event.target.closest('#globeViz');
+
+    if (globe && globe.dataset.interacting === 'true') {
+        return;
+    }
+
+    // Внутренний скролл AI-чата не трогаем
+    if (event.target.closest('#logai-window, #logai-msgs')) {
+        return;
+    }
+
+    event.preventDefault();
+
+        let delta = event.deltaY * SPEED;
+
+        // Ограничиваем слишком резкие движения
+        delta = Math.max(-MAX_STEP, Math.min(MAX_STEP, delta));
+
+        targetY += delta;
+
+        // Не даём уйти выше/ниже страницы
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        targetY = Math.max(0, Math.min(targetY, maxY));
+
+        if (!animationFrame) {
+            animationFrame = requestAnimationFrame(animateScroll);
+        }
+    }, { passive: false });
+
+    // Синхронизация, если страницу прокрутили другим способом
+    window.addEventListener('scroll', function () {
+        if (!animationFrame) {
+            targetY = window.scrollY;
+            currentY = window.scrollY;
+        }
+    }, { passive: true });
+
+})();</script><div id="logai-footer-mobile" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box;"><div style="margin: 0 auto 20px auto; padding-top: 40px; text-align: center; margin-bottom: 40px;"><a href="mailto:info@log-ai.ru" style="font-size: 24px; font-family: 'SF Mono', Monaco, monospace; color: #e5e7eb; text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: 0.3px;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#e5e7eb'">info@log-ai.ru</a><p style="color: #aaaaaa; font-size: 15px; line-height: 1.6; max-width: 750px; margin: 15px auto 0 auto;">Пришлите описание задачи, техническое задание или ссылку на существующую систему. Мы оценим задачу и определим возможные варианты реализации.</p></div><div style="max-width: 850px; margin: 0 auto 40px auto; text-align: center; background: #000000; padding: 0; box-sizing: border-box;"><p style="color: #aaaaaa; font-size: 14px; line-height: 1.6; margin: 0;"><span style="color: #4ade80; margin-right: 6px;">🔒</span> Данные и доступ к системам заказчика обрабатываются в соответствии с согласованными требованиями к безопасности и конфиденциальности. Условия доступа, хранения и обработки данных определяются архитектурой проекта и договором.</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; box-sizing: border-box; width: 100%; margin-bottom: 30px;"><p style="color: #666666; font-size: 12px; line-height: 1.6; margin: 0; width: 100%; text-align: justify;">Сайт носит исключительно информационный характер и не является публичной офертой в соответствии со статьёй 437 Гражданского кодекса РФ. Цены, состав и условия предоставления услуг уточняются при проектировании решения и фиксируются в договоре. Условия технического сопровождения и уровень сервиса могут дополнительно определяться отдельным соглашением (SLA).</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; width: 100%; box-sizing: border-box;"><div style="color: #666666; font-size: 12px; line-height: 1.5; text-align: left;">© 2026 Log-AI<br>Автоматизация бизнеса и ИИ-решения под ключ. Работаем по всей России и СНГ.<br>ИП Скопец Антон Викторович<br>ИНН 741709<span></span>260870 · ОГРНИП 326745600<span></span>204228<br>Все права защищены.</div><div style="display: flex; gap: 20px; flex-wrap: wrap; font-family: sans-serif;"><a href="/privacy-policy/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Политика конфиденциальности</a> <a href="/terms/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Пользовательское соглашение</a></div></div></div><style>@media screen and (max-width: 600px) {
+  #logai-footer-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+}</style><style>/* Анимации и точки */
+    @keyframes logai-bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+    .logai-dots { display: flex !important; flex-direction: row !important; gap: 4px !important; align-items: center !important; height: 12px !important; }
+    .logai-dots span { display: inline-block; width: 5px; height: 5px; background: #aaa !important; border-radius: 50%; animation: logai-bounce 1.4s infinite ease-in-out; }
+    .logai-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .logai-dots span:nth-child(3) { animation-delay: 0.4s; }
+    
+    #logai-msgs::-webkit-scrollbar { width: 5px; }
+    #logai-msgs::-webkit-scrollbar-thumb { background: #666; border-radius: 10px; }
+    
+    /* Сообщения и текст */
+    #logai-msgs div { white-space: pre-wrap !important; word-wrap: break-word !important; padding: 12px 16px !important; margin-bottom: 5px !important; display: flex; flex-direction: column; justify-content: center; }
+    #logai-msgs div p { margin: 0 !important; padding: 0 !important; line-height: 1.5 !important; }
+    #logai-msgs { gap: 12px !important; padding: 20px !important; }
+
+    /* Поле ввода и кнопка отправить */
+    #logai-input { flex: 1 !important; padding: 12px 18px !important; border-radius: 20px !important; background: #4a4e56 !important; border: 1px solid rgba(255,255,255,0.1) !important; outline: none !important; color: #fff !important; font-size: 15px !important; resize: none !important; max-height: 120px !important; line-height: 1.4 !important; }
+    #logai-send-btn { background-color: #007bff !important; border: none !important; width: 45px !important; height: 45px !important; border-radius: 50% !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-size: 24px !important; padding: 0 !important; flex-shrink: 0 !important; }
+
+    /* ГЛАВНЫЕ СТИЛИ (чтобы кнопка и окно не исчезали) */
+    #logai-btn {
+        position: fixed !important; bottom: 40px !important; right: 110px !important;
+        width: 65px !important; height: 65px !important; border-radius: 50% !important;
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        cursor: pointer !important; z-index: 10000 !important; box-shadow: 0 10px 25px rgba(0,123,255,0.4);
+    }
+
+    #logai-window {
+        display: none; position: fixed !important; bottom: 115px !important; right: 110px !important;
+        width: 380px !important; height: 600px !important; background: #3b3e45 !important;
+        border-radius: 24px !important; flex-direction: column; overflow: hidden;
+        z-index: 10000 !important; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.15) !important;
+    }
+
+        /* АДАПТИВ ДЛЯ МОБИЛОК: ЧАТ НА ВЕСЬ ЭКРАН */
+    @media screen and (max-width: 480px) {
+        #logai-window { 
+            right: 0 !important; 
+            left: 0 !important; 
+            bottom: 0 !important; 
+            width: 100% !important; 
+            height: 100% !important; /* Растягиваем окно на 100% экрана смартфона */
+            border-radius: 0 !important; /* Убираем скругления углов, чтобы чат сел монолитом */
+            z-index: 999999 !important; /* Перекрываем все кнопки в ноль */
+        }
+        
+        #logai-btn { 
+            bottom: 80px !important; /* Твоя родная высота кнопки, когда чат закрыт */
+            right: 22px !important;  /* Твой родной сдвиг кнопки */
+            z-index: 999998 !important; /* Когда чат открыт, кнопка останется под ним и не будет торчать */
+        }
+    }</style><div id="logai-widget" style="position: fixed; bottom: var(--widget-bottom, 20px); right: var(--widget-right, 20px); z-index: 9999;"><div id="logai-btn" onclick="toggleLogAI()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><div id="logai-window"><div style="background: #2d3035; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; align-items:center; gap:12px;"><div style="width:35px; height:35px; background:#007bff; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(0,123,255,0.5);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg></div><span style="font-weight:600; color:#fff; font-size:16px; letter-spacing: 0.5px;">AI Ассистент</span></div><span onclick="toggleLogAI()" style="cursor:pointer; color:#fff; font-size:35px; line-height: 0.7; opacity: 0.7;">&times;</span></div><div id="logai-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; background:#3b3e45;"></div><div style="padding:15px 15px 8px 15px; background:#2d3035; display:flex; flex-direction:column; border-top: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; gap:10px; align-items:flex-end; width:100%;"><textarea id="logai-input" rows="1" placeholder="Напишите..." oninput="this.style.height='';this.style.height=this.scrollHeight+'px'"></textarea> <button id="logai-send-btn" onclick="sendLogAI()">➤</button></div><div style="text-align:center; font-size:10px; color:#ffffff; opacity:0.3; margin-top:6px; font-family:sans-serif; pointer-events:none; user-select:none;">ИИ может ошибаться</div></div></div></div><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script>const API_URL = 'https://api2.log-ai.ru';
+    const MY_CLIENT_ID = 'client_arhitektor_2'; // МЕНЯТЬ ТУТ
+    const MY_BOT_PATH = 'arhitektor_2';  // МЕНЯТЬ ТУТ 
+    
+       let logSid;
+    try {
+        logSid = localStorage.getItem('logai_sid');
+        if (!logSid) {
+            logSid = 's_' + Math.random().toString(36).substr(2, 12);
+            localStorage.setItem('logai_sid', logSid);
+        }
+    } catch (e) {
+        // Если доступ к памяти закрыт (инкогнито), создаем временный ID
+        logSid = 'temp_' + Math.random().toString(36).substr(2, 12);
+    }
+
+    // Переименовали, чтобы избежать конфликтов
+    let chatIsWaiting = false;
+    let historyLoaded = false;
+    let activeMessageId = null;
+    let pollController = null;
+    let pollTimeoutId = null;
+
+
+       function toggleLogAI() {
+        const w = document.getElementById('logai-window');
+        const isOpen = (window.getComputedStyle(w).display === 'none');
+        
+        if (isOpen) {
+            w.style.display = 'flex';
+            if (!historyLoaded) {
+                loadChatHistory();
+            } 
+            // Если чат в режиме ожидания (точки), пинаем сервер сразу при открытии
+            else if (chatIsWaiting && activeMessageId) {
+                const dotsContainer = document.querySelector('.logai-dots')?.parentElement;
+                if (dotsContainer) {
+                    startPolling(activeMessageId, dotsContainer);
+                }
+            }
+        } else {
+            w.style.display = 'none';
+            // УБРАЛИ stopPolling(), чтобы ИИ докачивал ответ, даже когда окно закрыто
+        }
+    }
+
+
+    function updateInputState() {
+        const input = document.getElementById('logai-input');
+        const btn = document.getElementById('logai-send-btn');
+        if (input) {
+            input.disabled = chatIsWaiting;
+            input.style.opacity = chatIsWaiting ? '0.5' : '1';
+        }
+        if (btn) btn.style.opacity = chatIsWaiting ? '0.5' : '1';
+    }
+
+    function stopPolling() {
+        if (activeMessageId) localStorage.removeItem('poll_start_' + activeMessageId);
+        if (pollController) pollController.abort();
+        if (pollTimeoutId) clearTimeout(pollTimeoutId);
+    
+        pollController = null;
+        pollTimeoutId = null;
+        activeMessageId = null;
+        chatIsWaiting = false;
+        updateInputState();
+    }
+
+    function addLogMsg(txt, isAi) {
+        const d = document.createElement('div');
+        d.style = `padding:12px 16px; border-radius:18px; max-width:82%; font-size:14px; line-height:1.5; margin-bottom:10px; 
+                   ${isAi ? 'align-self:flex-start; background:#4a4e56; color:#dbdee1; border-bottom-left-radius:4px;' 
+                         : 'align-self:flex-end; background:#007bff; color:white; border-bottom-right-radius:4px; box-shadow:0 4px 12px rgba(0,123,255,0.25);'}`;
+
+        if (txt === 'dots') {
+   // ИСПРАВЛЕНО: Добавлен явный текст ожидания рядом с анимацией точек для лучшего UX
+   d.innerHTML = '<div style="display:flex; align-items:center; gap:8px;">' +
+                 '<span style="font-style:italic; opacity:0.8;">ИИ подбирает ответ...</span>' +
+                 '<div class="logai-dots"><span></span><span></span><span></span></div>' +
+                 '</div>';
+ } else {
+   d.innerHTML = typeof marked !== 'undefined' ? marked.parse(txt) : txt;
+ }
+
+        const box = document.getElementById('logai-msgs');
+        box.appendChild(d);
+        box.scrollTop = box.scrollHeight;
+        return d;
+    }
+
+async function loadChatHistory() {
+    const box = document.getElementById('logai-msgs');
+    try {
+        box.innerHTML = '';
+
+        const res = await fetch(`${API_URL}/history/${logSid}?platform=site&clientId=${MY_CLIENT_ID}`);
+        const data = await res.json();
+
+        if (Array.isArray(data.items) && data.items.length > 0) {
+            data.items.forEach((m, index) => {
+                // 1. Показываем сообщение пользователя
+                if (m.message) {
+                    addLogMsg(m.message, false);
+                }
+
+                // 2. Если есть готовый ответ — показываем
+                if (m.answer) {
+                    addLogMsg(m.answer, true);
+                } 
+                // 3. ИСПРАВЛЕНО: Четкое чтение m.message_id из базы данных без путаницы с регистрами
+                else if (m.message_id && index === data.items.length - 1) {
+                    chatIsWaiting = true;
+                    activeMessageId = m.message_id; // Используем m.message_id
+                    
+                    const aiMsg = addLogMsg('dots', true);
+                    startPolling(m.message_id, aiMsg); 
+                }
+            });
+        } else {
+            addLogMsg("Здравствуйте! Я ваш ИИ-ассистент. Чем могу помочь?", true);
+        }
+
+        historyLoaded = true;
+        updateInputState();
+
+    } catch (e) {
+        console.error('History error:', e);
+        addLogMsg("Не удалось загрузить историю чата", true);
+    }
+}
+
+
+async function sendLogAI() {
+    if (chatIsWaiting) return;
+
+    const input = document.getElementById('logai-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // ЖЕЛЕЗНЫЙ ДЕБАУНС: блокируем повторный клик в первую же микросекунду
+    chatIsWaiting = true;
+    updateInputState();
+
+    addLogMsg(msg, false);
+    
+    input.value = ''; 
+    input.style.height = 'auto'; 
+
+    const aiMsg = addLogMsg('dots', true);
+
+    try {
+        const res = await fetch(`${API_URL}/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sessionId: logSid,
+                message: msg,
+                clientId: MY_CLIENT_ID,
+                platform: 'site',
+                botPath: MY_BOT_PATH
+            })
+        });
+
+        // ИСПРАВЛЕНО: Обработка HTTP-ошибок. Передаем false третьим параметром, чтобы не было звука при ошибке
+        if (!res.ok) {
+            let errorMsg = "⚠️ Сервер временно недоступен";
+            if (res.status === 429) errorMsg = "🚫 Слишком много запросов. Подождите немного.";
+            else if (res.status === 403) {
+                try {
+                    const errData = await res.json();
+                    errorMsg = errData.reason || "🚫 Доступ ограничен.";
+                } catch (_) {
+                    errorMsg = "🚫 Доступ ограничен.";
+                }
+            }
+            finish(errorMsg, aiMsg, false); // false — звук НЕ играет
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data.blocked) {
+            finish(data.reason || data.message || "🚫 Сообщение заблокировано", aiMsg, false); // false — без звука
+            return;
+        }
+
+        if (data.messageId) {
+            activeMessageId = data.messageId;
+            startPolling(data.messageId, aiMsg);
+        } else {
+            finish("⚠️ Ошибка регистрации сообщения (нет messageId)", aiMsg, false);
+        }
+    } catch (e) {
+        console.error(e);
+        finish("⚠️ Ошибка связи с сервером. Проверьте интернет.", aiMsg, false);
+    }
+} // Скобка закрывает саму функцию send
+    function startPolling(messageId, aiMsg) {
+        activeMessageId = messageId;
+        pollController = new AbortController();
+        let savedTime = localStorage.getItem('poll_start_' + messageId);
+        if (!savedTime) {
+            savedTime = Date.now().toString();
+            localStorage.setItem('poll_start_' + messageId, savedTime);
+        }
+        let startTime = parseInt(savedTime, 10);
+        let statusChanged = false; // Чтобы не менять текст постоянно
+
+        const poll = async () => {
+            if (activeMessageId !== messageId) return;
+
+            const elapsed = (Date.now() - startTime) / 1000; // секунд прошло
+
+            // 1. На 40-й секунде меняем текст на "Сложный вопрос"
+            if (elapsed > 40 && !statusChanged) {
+                const dots = aiMsg.querySelector('.logai-dots');
+                aiMsg.innerHTML = '🤖 Вопрос сложный, анализирую данные...';
+                if (dots) aiMsg.appendChild(dots); 
+                statusChanged = true;
+            }
+
+            // 2. Лимит ожидания - 10 минут (600 секунд)
+            if (elapsed > 600) {
+                finish("🤖 Извините, ИИ перегружен или запрос слишком сложный. Пожалуйста, попробуйте позже.", aiMsg);
+                return;
+            }
+
+            // 3. Умный интервал: до 50 сек — каждые 3 сек, потом — каждые 10 сек
+            let nextInterval = (elapsed > 50) ? 10000 : 3000;
+
+            try {
+                // Добавили ?t=... чтобы телефон каждый раз реально спрашивал сервер, а не брал из кэша
+                const r = await fetch(`${API_URL}/get-answer/${messageId}?sessionId=${logSid}&clientId=${MY_CLIENT_ID}&t=${Date.now()}`, {
+                    signal: pollController.signal 
+                });
+                const d = await r.json();
+                const finalAnswer = d.answer || (d.status !== 'pending' ? d.answer : null);
+
+                if (finalAnswer) {
+                    finish(finalAnswer, aiMsg);
+                } else {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            } catch (e) {
+                if (e.name !== 'AbortError') {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            }
+        };
+        poll();
+    }
+
+function finish(text, msgElement, isSuccess = true) {
+    if (msgElement) {
+        msgElement.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+        
+        // Звук играет строго при успешном ответе ИИ, при ошибках или банах — тишина
+        if (isSuccess) {
+            try {
+                // ТВОЙ ОРИГИНАЛЬНЫЙ РАБОЧИЙ ПУТЬ: Кэш сбрасывается, файл проигрывается без ошибок 404
+                const audio = new Audio('https://api.log-ai.ru/notify.mp3?v=' + Date.now());
+                audio.volume = 0.4;
+                audio.play().catch(e => console.log("Нужен клик"));
+            } catch (e) {}
+        }
+    }
+    stopPolling();
+}
+
+
+    // Enter для отправки
+    document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('logai-input');
+    if (input) {
+      input.addEventListener('keypress', (e) => {
+        // ИСПРАВЛЕНО: Добавлена проверка !chatIsWaiting, чтобы клавиатура намертво блокировалась во время ожидания ИИ
+        if (e.key === 'Enter' && !e.shiftKey && !chatIsWaiting) {
+          e.preventDefault();
+          sendLogAI();
+        }
+      });
+
+      // ИСПРАВЛЕНО: Текстовое поле плавно растёт вниз до 150px, если текст длинный
+      input.addEventListener('input', function() {
+        this.style.height = 'auto'; 
+        this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+      });
+    }
+    });</script><div id="cookie-notice-wrapper" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #111111; border-top: 1px solid #222222; padding: 10px 15px; box-sizing: border-box; z-index: 99999; display: none; flex-direction: row; justify-content: space-between; align-items: center; gap: 15px; font-family: sans-serif;"><span style="color: #888888; font-size: 12px; line-height: 1.4; text-align: left;">Наш сайт использует файлы cookie для корректной работы. Подробнее — в <a href="/privacy-policy/" style="color: #bfa15f; text-decoration: underline;">Политике конфиденциальности</a>. </span><button onclick="dismissCookieNotice()" style="background: #bfa15f; color: #000000; border: none; padding: 5px 14px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Принять</button></div><style>@media (max-width: 600px) {
+        #cookie-notice-wrapper {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 10px !important;
+            padding: 12px 15px !important;
+        }
+        #cookie-notice-wrapper span {
+            text-align: center !important;
+            font-size: 11px !important;
+        }
+        #cookie-notice-wrapper button {
+            width: 100% !important;
+            padding: 8px !important;
+            font-size: 12px !important;
+        }
+    }</style><script>(function() {
+        var storageKey = 'logai_cookies_accepted';
+        if (!localStorage.getItem(storageKey)) {
+            document.getElementById('cookie-notice-wrapper').style.display = 'flex';
+        }
+    })();
+
+    function dismissCookieNotice() {
+        localStorage.setItem('logai_cookies_accepted', 'true');
+        document.getElementById('cookie-notice-wrapper').style.display = 'none';
+    }</script></body></html>

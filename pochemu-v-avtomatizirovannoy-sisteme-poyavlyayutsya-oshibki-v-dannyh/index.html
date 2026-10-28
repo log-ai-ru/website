@@ -1,0 +1,855 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Почему в автоматизированной системе появляются ошибки в данных LOG-AI</title><meta name="description" content="Почему автоматическая передача не гарантирует корректность данных? Разбираем причины ошибок, дубликаты, конфликты и методы обеспечения надёжности интеграций."><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://log-ai.ru/pochemu-v-avtomatizirovannoy-sisteme-poyavlyayutsya-oshibki-v-dannyh/"><link rel="alternate" type="application/atom+xml" href="https://log-ai.ru/feed.xml" title="LOG-AI - RSS"><link rel="alternate" type="application/json" href="https://log-ai.ru/feed.json" title="LOG-AI - JSON"><meta property="og:title" content="Почему в автоматизированной системе появляются ошибки в данных  LOG-AI"><meta property="og:image" content="https://log-ai.ru/media/website/Log-ai-Logo.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:site_name" content="LOG-AI"><meta property="og:description" content="Почему автоматическая передача не гарантирует корректность данных? Разбираем причины ошибок, дубликаты, конфликты и методы обеспечения надёжности интеграций."><meta property="og:url" content="https://log-ai.ru/pochemu-v-avtomatizirovannoy-sisteme-poyavlyayutsya-oshibki-v-dannyh/"><meta property="og:type" content="article"><link rel="stylesheet" href="https://log-ai.ru/assets/css/style.css?v&#x3D;b1f5980528b3cc19f4018c94aea81f52"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://log-ai.ru/pochemu-v-avtomatizirovannoy-sisteme-poyavlyayutsya-oshibki-v-dannyh/"},"headline":"Почему в автоматизированной системе появляются ошибки в данных","datePublished":"2026-10-10T15:57+05:00","dateModified":"2026-10-24T19:38+05:00","description":"Почему автоматическая передача не гарантирует корректность данных? Разбираем причины ошибок, дубликаты, конфликты и методы обеспечения надёжности интеграций.","author":{"@type":"Person","name":"AI Automation","url":"https://log-ai.ru/authors/ai-automation/"},"publisher":{"@type":"Organization","name":"AI Automation"}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript><style>body, html, main, #page, .wrapper, .main { background: #000000 !important; background-color: #000000 !important; }</style><link rel="icon" type="image/png" sizes="32x32" href="/media/files/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/media/files/favicon-16.png"><link rel="apple-touch-icon" sizes="180x180" href="/media/files/favicon-180.png"><meta name="yandex-verification" content="9d14e10b64f3b76c"><meta name="google-site-verification" content="-rKktnoSCGCLZToW-jcZeKu5WvWFGuLKdLwwyCux0-M"></head><body class="page-template"><header class="top js-header"><a class="logo" href="https://log-ai.ru/">LOG-AI</a><nav class="navbar js-navbar"><button class="navbar__toggle js-toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><span class="navbar__toggle-box"><span class="navbar__toggle-inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://log-ai.ru/" target="_self">Главная</a></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Услуги</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/avtomatizaciya-obrabotki-zayavok-i-lidov/" target="_self">Автоматизация обработки заявок и лидов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-biznes-processov-integracii-dannye-i-skvoznye-scenarii/" target="_self">Автоматизация бизнес-процессов</a></li><li><a href="https://log-ai.ru/sbor-i-obrabotka-dannyh/" target="_self">Сбор и обработка данных</a></li><li><a href="https://log-ai.ru/ii-dlya-biznesa-i-nejrosetej/" target="_self">ИИ для бизнеса и нейросети</a></li><li><a href="https://log-ai.ru/specializirovannye-cifrovye-sistemy/" target="_self">Специализированные цифровые системы</a></li><li><a href="https://log-ai.ru/individualnye-korporativnye-sistemy/" target="_self">Корпоративные системы</a></li><li><a href="https://log-ai.ru/tehnicheskoe-soprovozhdenie/" target="_self">Техническое сопровождение</a></li><li><a href="https://log-ai.ru/it-audit-i-predproektnoe-obsledovanie/" title="/it-audit-i-predproektnoe-obsledovanie/" target="_self">IT-аудит и предпроектное обследование</a></li><li><a href="https://log-ai.ru/oblachnyy-i-infrastrukturnyy-konsalting/" title="/oblachnyy-i-infrastrukturnyy-konsalting/" target="_self">Облачный и инфраструктурный консалтинг</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Решения</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakie-sistemy-my-integriruem/" target="_self">Какие системы мы интегрируем</a></li><li><a href="https://log-ai.ru/kak-rabotaet-ii-v-biznese/" target="_self">Как работает ИИ в бизнесе</a></li><li><a href="https://log-ai.ru/resheniya-po-zadacham/" target="_self">Решения по задачам</a></li><li><a href="https://log-ai.ru/avtomatizaciya-proizvodstva/" target="_self">Для производства</a></li><li><a href="https://log-ai.ru/avtomatizaciya-logistiki-i-skladov/" target="_self">Для логистики и складов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-optovoy-torgovli/" target="_self">Для оптовой торговли</a></li><li><a href="https://log-ai.ru/avtomatizaciya-e-commerce/" target="_self">Для e-commerce</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Реализация</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kak-my-rabotaem/" target="_self">Как мы работаем</a></li><li><a href="https://log-ai.ru/dokumentaciya-sistemy/" target="_self">Документация системы</a></li><li><a href="https://log-ai.ru/infrastruktura-i-razmeshchenie/" target="_self">Инфраструктура и размещение</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Выбор</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakuyu-avtomatizaciyu-vybrat/" target="_self">Какую автоматизацию выбрать</a></li><li><a href="https://log-ai.ru/chto-avtomatizirovat-v-biznese-v-pervuyu-ochered/" target="_self">Что автоматизировать в бизнесе в первую очередь</a></li><li><a href="https://log-ai.ru/kak-podgotovit-biznes-k-avtomatizacii/" target="_self">Как подготовить бизнес к автоматизации</a></li><li><a href="https://log-ai.ru/kak-vnedrit-avtomatizaciyu/" target="_self">Как внедрить автоматизацию</a></li><li><a href="https://log-ai.ru/kak-ocenit-rezultat-avtomatizacii/" target="_self">Как оценить результат автоматизации</a></li><li><a href="https://log-ai.ru/stoimost-razrabotki/" target="_self">Стоимость разработки</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">О нас</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/inzhenernyy-sostav/" target="_self">Инженерный состав</a></li><li><a href="https://log-ai.ru/keysy/" target="_self">Кейсы</a></li><li><a href="https://log-ai.ru/glossariy/" target="_self">Глоссарий</a></li><li><a href="https://log-ai.ru/ekspertiza/" target="_self">Экспертиза</a></li><li><a href="https://log-ai.ru/bezopasnost-sistem-dannyh-i-infrastruktury/" target="_self">Безопасность</a></li></ul></li></ul></nav></header><main class="page"><article class="content"><div class="hero hero--noimage"><header class="hero__content hero__content--centered"><div class="wrapper"><h1>Почему в автоматизированной системе появляются ошибки в данных</h1></div></header></div><div class="entry-wrapper content__entry"><p> </p><p> </p><p> </p><p> </p><p> </p><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px;">АНАЛИЗ_НАДЁЖНОСТИ // INTEGRITY_ERRORS_REPORT</div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">причины, примеры и способы предотвращения</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Автоматическая передача данных не гарантирует их корректность. Данные могут успешно пройти через API, сохраниться в базе данных и получить подтверждение обработки, но при этом оказаться продублированными, устаревшими или неверно интерпретированными. В распределённых системах ошибка может возникнуть даже тогда, когда каждый отдельный компонент работает штатно.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">СХЕМА // ПОТОК ДАННЫХ И ЛОГИЧЕСКИЙ СБОЙ</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 15px; width: 100%; box-sizing: border-box; margin-bottom: 30px; font-family: 'SF Mono', Monaco, monospace; text-align: center; font-size: 13px;"><div style="background: #050807; border: 1px solid #165c52; padding: 15px; box-sizing: border-box;"><div style="color: #aaaaaa; margin-bottom: 5px;">ОТПРАВИТЕЛЬ</div><div style="color: #14b8a6; font-weight: bold;">[Успешно]</div></div><div style="background: #050807; border: 1px solid #165c52; padding: 15px; box-sizing: border-box;"><div style="color: #aaaaaa; margin-bottom: 5px;">API / ШЛЮЗ</div><div style="color: #14b8a6; font-weight: bold;">[200 OK]</div></div><div style="background: #050807; border: 1px solid #165c52; padding: 15px; box-sizing: border-box;"><div style="color: #aaaaaa; margin-bottom: 5px;">БАЗА ДАННЫХ</div><div style="color: #14b8a6; font-weight: bold;">[Записано]</div></div><div style="background: #1a0808; border: 1px dashed #ff6b6b; padding: 15px; box-sizing: border-box;"><div style="color: #ff6b6b; margin-bottom: 5px;">ИТОГОВЫЙ СТАТУС</div><div style="color: #ff6b6b; font-weight: bold;">[Искажение / Дубликат]</div></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Проблема заключается в том, что корректность данных зависит не только от передачи, но и от правил их преобразования, порядка обработки событий, конкурентного изменения состояния и согласованности между системами.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">РАСПРЕДЕЛЁННЫЙ_СБОЙ // INTEGRATION_CONFLICT_EXAMPLE</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 30px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Например, CRM может передать заказ в ERP, складская система — подтвердить резервирование, а платёжный сервис — сообщить об успешной оплате. При этом заказ может оказаться продублированным, объём зарезервированного товара — превысить доступный остаток, а статус заказа в CRM — не соответствовать фактическому состоянию операции.</p><p style="font-size: 15px; color: #ffffff; margin: 0;">Чтобы предотвратить подобные ситуации, недостаточно настроить обмен данными и проверить, что интеграция работает без технических ошибок. Необходимо определить, какие состояния допустимы, как система обрабатывает повторные операции и конфликты, каким образом обнаруживает расхождения и как восстанавливает корректное состояние после сбоя.</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ЗАДАЧИ_ПРОЕКТИРОВАНИЯ // PREVENTION_STRATEGY_TASKS</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>определение допустимых состояний;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>обработка повторных операций;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>разрешение конфликтов;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>обнаружение расхождений данных;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>восстановление после сбоев.</p></div></div><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: bold; border-left: 3px solid #14b8a6; padding-left: 15px;">В этой статье разберём причины ошибок данных в автоматизированных системах, рассмотрим механизмы их возникновения на конкретных примерах и покажем, какие архитектурные решения помогают обеспечить надёжность интеграций.</p></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">АРХИТЕКТУРА_ДАННЫХ // TRANSMISSION_VS_INTEGRITY</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Почему успешная передача данных не означает корректного результата</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Рассмотрим типичную корпоративную архитектуру, в которой интернет-магазин, CRM, ERP, складская система и платёжный сервис обмениваются информацией.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Каждый компонент отвечает за определённую часть бизнес-процесса. Интернет-магазин принимает заказ, CRM хранит информацию о клиенте и сделке, ERP формирует учётные документы, складская система управляет резервами, а платёжный сервис подтверждает денежные операции.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Обмен может выполняться через API, очереди сообщений, вебхуки или фоновые задания. Для каждого механизма необходимо учитывать особенности доставки, возможные ограничения и предусмотренные способы обработки сбоев.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">СХЕМА // КОРПОРАТИВНЫЙ ИНТЕГРАЦИОННЫЙ КОНТУР</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 30px; font-family: 'SF Mono', Monaco, monospace; text-align: center; font-size: 12px;"><div style="background: #000000; border: 1px solid #165c52; padding: 12px; box-sizing: border-box;"><span style="color: #14b8a6;">[Магазин]</span><br><span style="font-size: 11px; color: #aaaaaa;">Приём заказа</span></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px; box-sizing: border-box;"><span style="color: #14b8a6;">[CRM]</span><br><span style="font-size: 11px; color: #aaaaaa;">Клиент и сделка</span></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px; box-sizing: border-box;"><span style="color: #14b8a6;">[ERP]</span><br><span style="font-size: 11px; color: #aaaaaa;">Учётные документы</span></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px; box-sizing: border-box;"><span style="color: #14b8a6;">[Склад / WMS]</span><br><span style="font-size: 11px; color: #aaaaaa;">Управление резервами</span></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px; box-sizing: border-box;"><span style="color: #14b8a6;">[Биллинг]</span><br><span style="font-size: 11px; color: #aaaaaa;">Денежные операции</span></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Предположим, интернет-магазин отправляет заказ в ERP. Сервер принимает запрос, сохраняет заказ и возвращает успешный ответ. На первый взгляд операция завершена правильно.</p><p style="font-size: 16px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Однако возможны разные сценарии:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">АНАЛИЗ_УЯЗВИМОСТЕЙ // FAILURE_SCENARIOS</div><ul style="list-style: none; padding: 0; margin: 0 0 30px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> Заказ сохраняется, но ответ теряется при передаче отправителю. Отправитель повторяет запрос, а если получатель не обеспечивает идемпотентность операции, возникает риск создания дубликата.</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> Количество товара передаётся в допустимом формате, но отправитель и получатель используют разные единицы измерения.</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> Два процесса одновременно резервируют товар, основываясь на одном и том же остатке.</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> Устаревшее сообщение приходит после более нового и возвращает заказу предыдущий статус.</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #ff6b6b;">›</span> Заказ сохраняется в одной системе, но событие о его создании не попадает в другую.</li></ul><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 35px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Во всех этих случаях проблема возникает не обязательно в момент передачи. Она может появиться при повторной обработке, преобразовании, изменении состояния или взаимодействии нескольких компонентов.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Поэтому важно различать несколько характеристик качества данных.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">СПЕЦИФИКАЦИЯ_КАЧЕСТВА // DATA_QUALITY_METRICS</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #050807; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Доставка</div><div style="font-size: 14px; color: #aaaaaa;">Сообщение достигает получателя согласно предусмотренным гарантиям</div></div><div style="background: #050807; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Целостность данных</div><div style="font-size: 14px; color: #aaaaaa;">Данные сохраняют требуемую полноту и непротиворечивость, а несанкционированные или непредусмотренные изменения могут быть обнаружены предусмотренными механизмами контроля</div></div><div style="background: #050807; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Семантическая корректность</div><div style="font-size: 14px; color: #aaaaaa;">Значения интерпретируются в соответствии с согласованным контрактом данных</div></div><div style="background: #050807; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Актуальность</div><div style="font-size: 14px; color: #aaaaaa;">Применяется подходящая версия состояния</div></div><div style="background: #050807; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Согласованность</div><div style="font-size: 14px; color: #aaaaaa;">Связанные данные не нарушают установленные правила</div></div><div style="background: #050807; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Бизнес-корректность</div><div style="font-size: 14px; color: #aaaaaa;">Результат соответствует бизнес-правилам и ограничениям предметной области</div></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Эти характеристики не взаимозаменяемы. Сообщение может быть доставлено без повреждений, но содержать недопустимый статус. Запись может быть актуальной, но неверно отражать бизнес-факт. Две системы могут временно содержать разные версии данных, если архитектура допускает такую задержку синхронизации и бизнес-процесс не требует немедленной согласованности этих данных.</p><div style="background: #000000; border-left: 3px solid #14b8a6; padding-left: 15px; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0;">Корректность данных — это не просто отсутствие ошибок передачи. Это соответствие фактического состояния системы установленным бизнес-правилам.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ДИАГНОСТИКА // ROOT_CAUSE_ANALYSIS</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Основные причины ошибок в автоматизированных системах</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Чтобы правильно диагностировать проблему, необходимо установить механизм её возникновения. Попытка исправить все ошибки одним универсальным способом обычно приводит к тому, что часть дефектов сохраняется или возникает повторно.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">КЛАССИФИКАЦИЯ_ДЕФЕКТОВ // ERROR_TRIGGERS</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;"><span style="color: #ff6b6b; margin-right: 5px;">[01]</span> Повторная обработка одной операции</div><div style="font-size: 14px; color: #aaaaaa;">Повторная доставка сообщения — нормальная ситуация для многих интеграционных механизмов. Она может происходить после тайм-аута, потери подтверждения, перезапуска обработчика или повторной отправки запроса.<br><br><span style="color: #ff6b6b; font-weight: bold;">Если получатель воспринимает каждую попытку как новую бизнес-операцию, появляются дубликаты.</span></div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;"><span style="color: #ff6b6b; margin-right: 5px;">[02]</span> Несовместимые форматы и правила интерпретации</div><div style="font-size: 14px; color: #aaaaaa;">Системы могут по-разному представлять даты, время, денежные суммы, единицы измерения, идентификаторы и отсутствующие значения.<br><br>Даже если сообщение соответствует технической схеме, его смысл может отличаться от ожидаемого. Такая ошибка особенно опасна тем, что часто не вызывает исключений и незаметно распространяется дальше.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;"><span style="color: #ff6b6b; margin-right: 5px;">[03]</span> Конкурентное изменение состояния</div><div style="font-size: 14px; color: #aaaaaa;">Несколько процессов одновременно читают и изменяют общие данные. Каждый из них может принимать решение на основании корректного на момент чтения состояния, но совместный результат нарушает бизнес-ограничения.<br><br>Типичные примеры — двойное резервирование товара, потерянное обновление записи и повторное проведение финансовой операции из-за отсутствия защиты от повторного выполнения.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;"><span style="color: #ff6b6b; margin-right: 5px;">[04]</span> Нарушение порядка событий</div><div style="font-size: 14px; color: #aaaaaa;">Сообщения могут поступать с задержкой или обрабатываться параллельно. Если система безусловно применяет каждое полученное значение, устаревшее событие способно перезаписать более новое.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;"><span style="color: #ff6b6b; margin-right: 5px;">[05]</span> Частичное выполнение распределённого процесса</div><div style="font-size: 14px; color: #aaaaaa;">Одна операция завершается успешно, а следующая — нет. Например, заказ создаётся в ERP, но резервирование на складе не происходит. Или платёж уже проведён, но система заказов ещё не получила или не обработала подтверждение оплаты.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;"><span style="color: #ff6b6b; margin-right: 5px;">[06]</span> Отсутствие контроля между системами</div><div style="font-size: 14px; color: #aaaaaa;">Даже при наличии локальных проверок расхождения могут оставаться незамеченными. Если система не сопоставляет связанные записи, не проверяет бизнес-инварианты и не контролирует незавершённые процессы, ошибка способна сохраняться до момента, когда её обнаружит пользователь или бизнес.</div></div></div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 35px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Эти причины могут действовать одновременно. Например, частичный сбой вызывает повторную обработку, повтор приводит к конфликту версий, а отсутствие сверки позволяет расхождению остаться незамеченным.</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ВИЗУАЛИЗАЦИЯ // ПРИЧИННО-СЛЕДСТВЕННАЯ СХЕМА СБОЕВ</div><div style="width: 100%; padding: 25px; background: #050807; border: 1px solid #165c52; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; margin-bottom: 25px;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 10px; margin-bottom: 20px; text-align: center;"><div style="border: 1px dashed #ff6b6b; background: #1a0808; padding: 10px; color: #ff6b6b; border-radius: 2px;">Дублирование</div><div style="border: 1px dashed #ff6b6b; background: #1a0808; padding: 10px; color: #ff6b6b; border-radius: 2px;">Семантические ошибки</div><div style="border: 1px dashed #ff6b6b; background: #1a0808; padding: 10px; color: #ff6b6b; border-radius: 2px;">Конкурентность</div><div style="border: 1px dashed #ff6b6b; background: #1a0808; padding: 10px; color: #ff6b6b; border-radius: 2px;">Нарушение порядка</div></div><div style="display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; box-sizing: border-box; text-align: center;"><div style="color: #ff6b6b; font-weight: bold; font-size: 18px;">▼</div><div style="background: #0c0606; border: 1px solid #ff6b6b; padding: 12px 20px; width: 100%; max-width: 500px; box-sizing: border-box; color: #ff6b6b; font-weight: bold;">СБОЙ ИЛИ НЕОДНОЗНАЧНОСТЬ</div><div style="color: #ff6b6b; font-weight: bold; font-size: 16px;">➔</div><div style="background: #0c0606; border: 1px solid #ff6b6b; padding: 12px 20px; width: 100%; max-width: 500px; box-sizing: border-box; color: #ffffff;">НЕПРАВИЛЬНОЕ ПРИМЕНЕНИЕ ОПЕРАЦИИ</div><div style="color: #ff6b6b; font-weight: bold; font-size: 16px;">➔</div><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 12px 20px; width: 100%; max-width: 500px; box-sizing: border-box; color: #ff6b6b;">НАРУШЕНИЕ БИЗНЕС-ИНВАРИАНТА</div><div style="color: #ff6b6b; font-weight: bold; font-size: 16px;">➔</div><div style="background: #200b0b; padding: 12px 20px; width: 100%; max-width: 500px; box-sizing: border-box; color: #ff6b6b; border-radius: 2px;">РАСПРОСТРАНЕНИЕ ОШИБКИ</div><div style="color: #14b8a6; font-weight: bold; font-size: 18px;">▼</div><div style="background: #050807; border: 1px solid #14b8a6; padding: 12px 20px; width: 100%; max-width: 500px; box-sizing: border-box; color: #14b8a6; font-weight: bold;">ОБНАРУЖЕНИЕ И ВОССТАНОВЛЕНИЕ</div></div></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ИДЕМПОТЕНТНОСТЬ // IDEMPOTENCY_CONTROL</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Дубликаты: почему повторный запрос может создать второй заказ</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Одна из наиболее распространённых причин дублирования — неопределённость результата после тайм-аута.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Предположим, интернет-магазин отправляет запрос на создание заказа. ERP сохраняет запись, но ответ не доходит до отправителя. Интернет-магазин не может установить, завершилась ли операция, и повторяет запрос.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Для отправителя повтор выглядит необходимым: без него заказ может не попасть в ERP. Но для получателя повторный запрос способен выглядеть как совершенно новая операция.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 15px; width: 100%; margin-bottom: 35px; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace; font-size: 13px;"><div style="background: #200b0b; padding: 12px 15px; border-radius: 2px; border: 1px dashed #ff6b6b;"><span style="color: #ff6b6b; font-weight: bold;">Повторная попытка передачи</span></div><div style="background: #0a1f1c; padding: 12px 15px; border-radius: 2px; border: 1px solid #14b8a6;"><span style="color: #14b8a6; font-weight: bold;">Повторное выполнение бизнес-действия</span></div></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ВИЗУАЛИЗАЦИЯ // ТАЙМАУТ И ДУБЛИРОВАНИЕ</div><div style="width: 100%; padding: 25px; background: #0c0606; border: 1px dashed #ff6b6b; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; margin-bottom: 35px; border-radius: 4px;"><div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 15px; width: 100%; text-align: center;"><div style="border: 1px solid #ff6b6b; padding: 10px; background: #000000; min-width: 150px; color: #ffffff;">Магазин (Клиент)</div><div style="color: #ff6b6b; font-weight: bold;">➔ Запрос 1 ➔</div><div style="border: 1px solid #165c52; padding: 10px; background: #050807; min-width: 150px; color: #14b8a6;">ERP (Заказ создан)</div><div style="color: #ff6b6b; font-weight: bold;">❌ Сбой ответа (Таймаут)</div></div><div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 15px; width: 100%; text-align: center; margin-top: 15px;"><div style="border: 1px solid #ff6b6b; padding: 10px; background: #000000; min-width: 150px; color: #ffffff;">Магазин (Повтор)</div><div style="color: #ff6b6b; font-weight: bold;">➔ Запрос 2 ➔</div><div style="border: 1px dashed #ff6b6b; padding: 10px; background: #1a0808; min-width: 150px; color: #ff6b6b; font-weight: bold;">ERP (Второй заказ! ДУБЛЬ)</div><div style="visibility: hidden; min-width: 150px;"> </div></div></div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Как предотвратить повторный бизнес-эффект</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Для этого применяют идемпотентность. В контексте интеграций идемпотентность означает, что повторное выполнение одной и той же логической операции не создаёт дополнительных бизнес-эффектов сверх предусмотренного результата.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 15px 0; font-weight: bold;">Например, при создании заказа отправитель передаёт устойчивый идентификатор операции:</p><div style="max-width: 520px; font-size: 13px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; background: #050807; border: 1px dashed #165c52; padding: 20px; margin: 0 0 15px 0; box-sizing: border-box; line-height: 1.5;">{<br>  "idempotency_key": "create-order-78421",<br>  "external_order_id": "78421",<br>  "customer_id": "customer-103",<br>  "items": [<br>    {<br>      "sku": "A-104",<br>      "quantity": 5<br>    }<br>  ]<br>}</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 25px 0; font-style: italic;">Это условный пример структуры сообщения.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Получатель регистрирует ключ идемпотентности и связывает его с результатом операции. При повторном запросе с тем же ключом система определяет, была ли операция уже выполнена, и в соответствии с контрактом возвращает сохранённый результат либо сообщает о том, что операция ещё обрабатывается. Второй заказ при этом не создаётся.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">КОНТРАКТ_БЕЗОПАСНОСТИ // TRANSACTIONAL_IDEMPOTENCY</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 25px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Однако простого поиска ключа в базе недостаточно. Если сначала создать заказ, а затем отдельно записать ключ, то сбой между этими действиями оставит заказ без зарегистрированного результата операции.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Поэтому регистрацию ключа идемпотентности и создание заказа необходимо организовать так, чтобы они не приводили к противоречивому состоянию при сбое. Если оба действия выполняются в одной базе данных, этого обычно добиваются с помощью одной транзакции и уникального ограничения на ключ операции.</p></div><div style="background: #000000; border-left: 3px solid #165c52; padding-left: 15px; box-sizing: border-box;"><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Контракт должен определять поведение при повторном использовании ключа с другим содержимым. Получатель должен проверить соответствие запроса исходной операции и отклонить повтор с несовместимыми параметрами, вернув предусмотренную контрактом ошибку. Повторный запрос не должен приводить к выполнению другой бизнес-операции под уже использованным ключом.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ИДЕНТИФИКАЦИЯ // ID_ARCHITECTURE_METRICS</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Почему идентификатора сообщения недостаточно</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">В жизненном цикле заказа могут возникать десятки событий: создание, изменение состава, подтверждение оплаты, резервирование и отмена. Каждое событие может иметь собственный идентификатор, но все они относятся к одной бизнес-сущности.</p><p style="font-size: 16px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Поэтому необходимо различать:</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>идентификатор сущности, например заказа;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>идентификатор логической операции;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>идентификатор события;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>идентификатор попытки обработки.</p></div></div><div style="background: #000000; border-left: 2px solid #14b8a6; padding-left: 15px; margin-bottom: 35px; box-sizing: border-box;"><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Эти значения решают разные задачи. Идентификатор сообщения или события позволяет отслеживать конкретную единицу обмена, ключ идемпотентности — распознавать повторные запросы одной логической операции, а идентификатор сущности — связывать изменения с конкретным бизнес-объектом.</p></div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Почему нельзя удалять все похожие записи</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Два заказа с одинаковой суммой, составом и клиентом не обязательно являются дублями. Клиент может намеренно оформить два одинаковых заказа. Поэтому поиск похожих записей и предотвращение повторной обработки — разные задачи.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">РАЗДЕЛЕНИЕ_ЗАДАЧ // DE_DUPLICATION_STRATEGY</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #050807; border: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 12px; font-weight: bold;">[ ЦЕЛЬ // ЗАЩИТА ОТ ПОВТОРНЫХ ОПЕРАЦИЙ ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Для защиты от повторных операций используют устойчивые идентификаторы и ограничения.</p></div><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ ЦЕЛЬ // ПОИСК ДУБЛИКАТОВ СУЩНОСТЕЙ ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Для поиска дубликатов клиентов, организаций или товаров применяют сопоставление атрибутов, нормализацию данных и правила разрешения неоднозначных совпадений.</p></div></div><div style="display: grid; grid-template-columns: 1fr; max-width: 500px; margin-bottom: 10px; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace; font-size: 13px;"><div style="background: #200b0b; padding: 10px 15px; border-radius: 2px; border: 1px solid #ff6b6b;"><span style="color: #ff6b6b; font-weight: bold;">Универсальное сравнение полей не заменяет идентификацию бизнес-сущностей.</span></div></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">СЕМАНТИКА // FORMAT_COMPATIBILITY_ERRORS</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Несовместимые форматы: когда система принимает неправильные данные без ошибки</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Не все ошибки связаны с потерей сообщений или сбоями. Иногда информация успешно передаётся, но после преобразования перестаёт соответствовать исходному смыслу.</p><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Формат и семантика — разные вещи</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Рассмотрим несколько примеров.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">АНАЛИЗ_РАСХОЖДЕНИЙ // SEMANTIC_MISMATCHES</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 16px; width: 100%; box-sizing: border-box; margin-bottom: 30px;"><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Даты и время</div><div style="font-size: 14px; color: #aaaaaa;">Значение 2026-10-11 обозначает календарную дату. Значение 2026-10-11T09:00:00 не содержит информации о часовом поясе и потому само по себе не определяет однозначный момент времени. Если одна система трактует его как локальное время, а другая — как UTC, они могут по-разному интерпретировать один и тот же набор символов.</div></div><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Денежные суммы</div><div style="font-size: 14px; color: #aaaaaa;">Число 1500 само по себе не определяет валюту и единицу представления суммы. Оно может обозначать 1 500 рублей или 1 500 копеек, если контракт допускает представление денежных сумм в минимальных единицах валюты. Если контракт не фиксирует семантику поля, технически корректное преобразование приведёт к финансовой ошибке.</div></div><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Единицы измерения</div><div style="font-size: 14px; color: #aaaaaa;">Значение 5 может означать пять штук, пять упаковок или пять килограммов. Без однозначного определения единицы система не способна надёжно интерпретировать его.</div></div><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Отсутствующие значения</div><div style="font-size: 14px; color: #aaaaaa;">Отсутствующее поле, значение null и пустая строка могут иметь разный смысл. Например, при частичном обновлении отсутствие поля может означать «не изменять значение», а null — «очистить значение», если именно такое поведение определено контрактом.</div></div></div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 35px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Если эти различия не определены контрактом, система может затирать существующие данные, неверно рассчитывать суммы или изменять состояние объекта без предусмотренного бизнес-основания.</p></div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Четыре уровня проверки</h3><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold; border-left: 3px solid #14b8a6; padding-left: 15px;">Надёжная проверка данных должна охватывать четыре уровня.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">УРОВНИ_ВАЛИДАЦИИ // VALIDATION_LAYERS</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>Структура: сообщение соответствует схеме, обязательные поля присутствуют.</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>Типы и диапазоны: значения имеют допустимые типы и находятся в разрешённых пределах.</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>Семантика: валюты, единицы измерения, даты и другие значения интерпретируются однозначно.</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>Бизнес-правила: операция допустима в текущем состоянии процесса.</p></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Например, количество товара 5 может соответствовать типу данных и допустимому диапазону значений. Однако если товар продаётся только упаковками по 12 единиц, бизнес-валидация должна отклонить такое количество либо применить предусмотренное правилами преобразование.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 35px 0;">Проверки, зависящие от текущего состояния, необходимо согласовывать с механизмом фиксации изменений. Иначе состояние может измениться после проверки, но до записи результата, что приведёт к нарушению бизнес-ограничений.</p><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Контракты должны фиксировать смысл данных</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Контракт интеграции должен определять не только типы полей, но и их семантику:</p><ul style="list-style: none; padding: 0; margin: 0 0 25px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> единицы измерения и валюты;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> правила округления;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> формат дат и времени, а также правила указания и интерпретации часовых поясов;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> семантику отсутствующих полей, null и пустых значений;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> допустимые статусы и переходы между ними;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> правила совместимости версий;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> поведение при получении неизвестных значений.</li></ul><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ИЗМЕНЕНИЕ_СЕМАНТИКИ // CONTRACT_EVOLUTION</div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 25px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Особое внимание необходимо уделять изменениям бизнес-смысла. Если поле раньше содержало сумму с учётом налога, а после обновления стало содержать сумму без налога, структурная проверка не обнаружит проблему: тип и формат поля останутся прежними, хотя его семантика изменится.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Поэтому изменения контрактов необходимо проверять на совместимость и тестировать не только на уровне структуры сообщений, но и на уровне семантики данных и результатов бизнес-обработки.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">КОНКУРЕНТНОСТЬ // RACE_CONDITIONS_VOLUME</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Состояния гонки: как два корректных процесса создают ошибку</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Состояние гонки возникает, когда итог зависит от порядка выполнения конкурирующих операций, обращающихся к общему состоянию.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Предположим, на складе доступно 10 единиц товара. Два заказа почти одновременно требуют по 7 единиц.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Оба процесса читают остаток 10, проходят проверку доступности и пытаются зарезервировать по 7 единиц товара. Если проверка доступности и изменение состояния не выполняются атомарно и не защищены от конкурентных изменений, система может подтвердить оба резерва, превысив доступный остаток.</p><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 35px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Каждый процесс по отдельности принял решение на основании корректного значения. Ошибка возникла из-за того, что система не обеспечила выполнение общего ограничения при одновременных операциях.</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ВИЗУАЛИЗАЦИЯ // СЦЕНАРИИ КОНКУРЕНТНОГО ДОСТУПА К ОСТАТКУ</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 15px; font-weight: bold;">[ СЦЕНАРИЙ // ОШИБКА ГОНКИ ]</div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #aaaaaa; line-height: 1.8;">Остаток на складе: <span style="color: #ffffff; font-weight: bold;">10</span><br><span style="color: #ff6b6b;">➔ Заказ 1:</span> Читает остаток (10)<br><span style="color: #ff6b6b;">➔ Заказ 2:</span> Читает остаток (10)<br><span style="color: #14b8a6;">✔ Заказ 1:</span> Проверка пройдена (7 &lt;= 10)<br><span style="color: #14b8a6;">✔ Заказ 2:</span> Проверка пройдена (7 &lt;= 10)<br><span style="color: #ff6b6b; font-weight: bold;">❌ ИТОГ: Резерв 14 ед. (Превышение!)</span></div></div><div style="background: #050807; border: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 15px; font-weight: bold;">[ СЦЕНАРИЙ // АТОМАРНАЯ ПРОВЕРКА ]</div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #aaaaaa; line-height: 1.8;">Остаток на складе: <span style="color: #ffffff; font-weight: bold;">10</span><br><span style="color: #14b8a6;">➔ Заказ 1:</span> Атомарно списывает 7 ед.<br><span style="color: #14b8a6;">✔ Заказ 1:</span> Успех (Остаток стал: 3)<br><span style="color: #ff6b6b;">➔ Заказ 2:</span> Атомарно пробует списать 7 ед.<br><span style="color: #ff6b6b; font-weight: bold;">❌ Заказ 2: Отказ (Недостаточно остатка 3 &lt; 7)</span><br><span style="color: #aaaaaa;"> </span></div></div></div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Как обеспечить корректность конкурентных изменений</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Один из подходов — атомарно проверять доступность и изменять остаток на стороне базы данных.</p><div style="max-width: 520px; font-size: 13px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; background: #050807; border: 1px dashed #165c52; padding: 20px; margin: 0 0 20px 0; box-sizing: border-box; line-height: 1.5;">UPDATE inventory<br>SET available_qty = available_qty - 7<br>WHERE sku = 'A-104'<br>  AND available_qty &gt;= 7;</div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">После выполнения необходимо проверить количество изменённых строк. Если обновлена одна строка, условное списание доступного остатка выполнено. Если ни одна строка не обновлена, запись отсутствует либо условие доступности не выполнено. В этом случае причину отказа при необходимости проверяют отдельно. Заказ нельзя считать зарезервированным, пока не подтверждена вся операция резервирования. Если резерв состоит из нескольких записей, их изменение необходимо согласовать транзакционно.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Этот пример работает при условии, что модель учёта и все операции, влияющие на доступность, соблюдают соответствующие правила. Если резервы ведутся отдельно или другие процессы обходят этот механизм, потребуется более полная модель конкурентного доступа.</p><p style="font-size: 16px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Для предотвращения состояний гонки используют:</p><ul style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> атомарные операции с проверкой условий;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> оптимистический контроль конкурентности на основе версий записей;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> блокировки конфликтующих ресурсов;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> транзакции с подходящим уровнем изоляции;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> ограничения базы данных, обеспечивающие критичные инварианты.</li></ul><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Потерянное обновление</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Другой распространённый сценарий — два процесса читают одну версию записи и независимо сохраняют результаты изменений.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Например, два процесса читают остаток 10. Первый резервирует 3 единицы и рассчитывает новое значение 7, второй резервирует 2 единицы и рассчитывает значение 8. Если оба процесса сохраняют рассчитанное значение без проверки версии записи, последнее обновление может затереть результат первого. В итоге система покажет остаток 7 или 8 вместо корректного значения 5.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 15px 0; font-weight: bold;">Один из способов защиты — условное обновление с проверкой версии:</p><div style="max-width: 520px; font-size: 13px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; background: #050807; border: 1px dashed #165c52; padding: 20px; margin: 0 0 20px 0; box-sizing: border-box; line-height: 1.5;">UPDATE inventory<br>SET available_qty = 7,<br>    version = version + 1<br>WHERE sku = 'A-104'<br>  AND version = 12;</div><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0 0 30px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Если обновлено ноль строк, это означает, что запись не соответствует условию обновления: например, её версия уже изменилась или запись отсутствует. При конфликте версий процесс должен перечитать актуальные данные, заново проверить бизнес-ограничения и пересчитать результат, а не просто повторить запись прежнего значения.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 15px 0;">Если другая операция уже изменила запись и увеличила версию, обновление не затронет ни одной строки. Процесс должен перечитать актуальное состояние и принять новое решение.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Важно понимать, что контроль версии защищает от определённого класса конфликтов, но не заменяет все остальные ограничения. Например, для общего лимита по нескольким записям может потребоваться транзакционная проверка более широкого состояния.</p></div><div style="background: #000000; border-left: 2px solid #14b8a6; padding-left: 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 16px; color: #ffffff; font-weight: bold; margin: 0;">Надёжная защита от конкурентности строится вокруг бизнес-инварианта: система должна предотвращать недопустимый результат независимо от того, в каком порядке выполняются параллельные операции.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ХРОНОЛОГИЯ // EVENT_ORDERING_FALLACY</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Нарушение порядка событий: почему старое значение возвращается в систему</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">В асинхронной архитектуре порядок доставки сообщений может отличаться от порядка возникновения бизнес-событий. Это зависит от настроек брокера, параллелизма обработчиков, повторных попыток и особенностей маршрутизации.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Предположим, клиент изменил адрес доставки сначала на адрес A, а затем на адрес B. Событие об адресе B обработано первым. Позже приходит задержавшееся событие об адресе A.</p><div style="display: grid; grid-template-columns: 1fr; max-width: 550px; margin-bottom: 35px; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace; font-size: 13px;"><div style="background: #200b0b; padding: 12px 15px; border-radius: 2px; border: 1px solid #ff6b6b;"><span style="color: #ff6b6b; font-weight: bold;">Если система безусловно применяет каждое полученное значение, старый адрес перезапишет новый.</span></div></div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Почему времени создания недостаточно</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Временные метки полезны для диагностики, но не всегда позволяют надёжно определить порядок бизнес-изменений. Часы разных узлов могут расходиться, а время создания события может отличаться от момента фиксации изменения в системе-источнике.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 35px 0;">Для контроля порядка применяют версии сущностей, последовательные номера изменений от авторитетного источника и правила обработки, учитывающие тип события.</p><p style="font-size: 16px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold; border-left: 3px solid #14b8a6; padding-left: 15px;">Однако важно различать два вида сообщений.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">СЕМАНТИКА_СООБЩЕНИЙ // EVENT_TYPES_DIFFERENCE</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #050807; border: 1px solid #165c52; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 12px; font-weight: bold;">[ ТИП // СОБЫТИЕ О СОСТОЯНИИ ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Событие об изменении состояния сообщает новое значение или состояние сущности. Если событие содержит надёжную версию или последовательный номер изменения, система может отклонить более старое обновление.</p></div><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ ТИП // СОБЫТИЕ О ФАКТЕ ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Событие о произошедшем факте сообщает, что действие состоялось, например что платёж был проведён. Такое событие нельзя автоматически отбросить только на основании порядка доставки: необходимо учитывать его бизнес-смысл, уникальность и связь с другими событиями.</p></div></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">АРХИТЕКТУРНЫЙ_ПРИНЦИП // ORDERING_RESOLUTION</div><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Следовательно, стратегия обработки должна учитывать семантику события.</p><p style="font-size: 15px; color: #14b8a6; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Универсальное правило «последнее полученное значение побеждает» подходит не для всех бизнес-процессов.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">СИНХРОНИЗАЦИЯ // DATA_CONFLICT_RESOLUTION</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Конфликты между системами: откуда брать правильное значение</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">В корпоративной архитектуре одна сущность часто представлена в нескольких системах. Само по себе это не ошибка: разные компоненты могут хранить копии данных для выполнения собственных задач.</p><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 25px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Проблема возникает, когда не определено, какая система отвечает за изменение конкретного значения и как разрешать расхождения.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Например, CRM может хранить согласованную с клиентом цену сделки, ERP — сумму проведённого учётного документа, а каталог товаров — базовую цену товара. Эти значения могут различаться без ошибки, поскольку относятся к разным бизнес-понятиям и этапам процесса.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Если интеграция безусловно копирует последнее значение из одного компонента в другой, она может уничтожить корректную информацию.</p></div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Владение данными</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Для каждой сущности или группы атрибутов необходимо определить авторитетный источник данных и правила изменения, синхронизации и разрешения конфликтов.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 15px 0; font-weight: bold;">В зависимости от архитектуры организации это может быть:</p><ul style="list-style: none; padding: 0; margin: 0 0 20px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> CRM — для условий сделки и клиентских отношений;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> складская система — для фактических движений и резервов;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> ERP — для учётных документов;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> платёжный провайдер — для подтверждения внешней платёжной операции;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> логистическая система — для состояний доставки.</li></ul><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 25px 0; font-style: italic;">Это лишь пример распределения ответственности, а не универсальная схема. В конкретной архитектуре роли могут быть устроены иначе.</p><div style="background: #000000; border-left: 3px solid #165c52; padding-left: 15px; margin-bottom: 35px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Главный принцип заключается в том, что компоненты должны изменять данные в пределах определённой ответственности. CRM может инициировать резервирование, но не должна считать товар зарезервированным без подтверждения системы, которая отвечает за соответствующий учёт.</p></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">РАСПРЕДЕЛЁННЫЙ_СБОЙ // PARTIAL_EXECUTION_FLOW</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Частичное выполнение: когда бизнес-процесс останавливается посередине</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Распределённый процесс обычно состоит из нескольких независимых операций: создание заказа, резервирование товара, подтверждение оплаты, формирование документа и организация доставки.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Каждый шаг может завершиться локально, но весь процесс — остановиться на середине.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Например, заказ сохранён в ERP, однако склад временно недоступен. Или платёж уже подтверждён провайдером, но событие об оплате ещё не обработано системой заказов.</p><div style="background: #000000; border-left: 3px solid #165c52; padding-left: 15px; margin-bottom: 35px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0;">Такие промежуточные состояния не всегда можно исключить. Задача архитектуры — сделать их явными, ограниченными и восстанавливаемыми.</p></div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Проблема двойной записи</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Предположим, приложение сохраняет заказ в локальной базе данных, а затем отдельно публикует событие в брокер сообщений.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ СЦЕНАРИЙ 1 // СНАЧАЛА БАЗА, ЗАТЕМ БРОКЕР ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Если процесс завершится между этими действиями, заказ останется в базе, но событие не будет опубликовано.</p></div><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ СЦЕНАРИЙ 2 // СНАЧАЛА БРОКЕР, ЗАТЕМ БАЗА ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Если поменять порядок, возможна обратная ситуация: событие уже получено другими системами, а соответствующая запись не сохранена.</p></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Для снижения риска потери события между фиксацией бизнес-изменения и публикацией используют паттерн Transactional Outbox. Бизнес-изменение и запись события в таблицу Outbox сохраняются в одной локальной транзакции. Отдельный процесс читает эту таблицу и публикует события в брокер, повторяя попытки при временных сбоях. Публикация может произойти повторно, поэтому потребители должны корректно обрабатывать повторную доставку и предотвращать повторное выполнение бизнес-операций.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ВИЗУАЛИЗАЦИЯ // ПАТТЕРН TRANSACTIONAL OUTBOX</div><div style="width: 100%; padding: 25px; background: #050807; border: 1px solid #165c52; box-sizing: border-box; font-family: 'SF Mono', Monaco, monospace; font-size: 13px; margin-bottom: 30px; border-radius: 4px;"><div style="display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; box-sizing: border-box; text-align: center;"><div style="background: #000000; border: 1px solid #165c52; padding: 12px 20px; width: 100%; max-width: 550px; box-sizing: border-box; color: #ffffff;">ПРИЛОЖЕНИЕ (Бизнес-изменение + Запись в таблицу Outbox)<br><span style="color: #14b8a6; font-size: 11px;">[В одной локальной транзакции 🔒]</span></div><div style="color: #14b8a6; font-weight: bold; font-size: 16px;">▼</div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 20px; width: 100%; max-width: 550px; box-sizing: border-box; color: #14b8a6;">ФОНОВЫЙ ПРОЦЕСС RELEASER / POLLER<br><span style="color: #aaaaaa; font-size: 11px;">[Читает Outbox и отправляет в брокер]</span></div><div style="color: #ff6b6b; font-weight: bold; font-size: 14px;">➔ Публикация события (Повторы возможны! 🔄) ➔</div><div style="background: #000000; border: 1px dashed #165c52; padding: 12px 20px; width: 100%; max-width: 550px; box-sizing: border-box; color: #ffffff;">ПОТРЕБИТЕЛЬ СООБЩЕНИЯ<br><span style="color: #ff6b6b; font-size: 11px;">[Обработка с защитой от повторного бизнес-эффекта]</span></div></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">КОНТРОЛЬ ЦЕЛОСТНОСТИ // INTEGRITY_MONITORING</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Как обнаруживать ошибки до того, как они повлияют на бизнес</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Даже хорошо спроектированная интеграция нуждается в независимом контроле. Некоторые ошибки возникают только при редких последовательностях событий, другие становятся заметны лишь при сопоставлении данных нескольких систем.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 25px 0; font-weight: bold; border-left: 3px solid #14b8a6; padding-left: 15px;">Здесь необходимо различать три механизма: технический мониторинг, контроль бизнес-инвариантов и сверку.</p><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Технический мониторинг</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Он показывает, как работает обмен:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ТЕХНИЧЕСКИЕ_МЕТРИКИ // TELEMETRY_COUNTERS</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>сколько сообщений поступило и обработано;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>сколько времени занимает обработка;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>сколько сообщений ожидает в очередях;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>сколько повторных попыток выполняется;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>какие ошибки возвращают получатели;</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>сколько операций или бизнес-процессов остаётся в промежуточных состояниях дольше установленного времени.</p></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Эти показатели помогают выявлять задержки, недоступность сервисов и накопление необработанных сообщений.</p><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ ОГРАНИЧЕНИЕ // МОНИТОРИНГ НЕ ДОКАЗЫВАЕТ КОРРЕКТНОСТЬ ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Но технический мониторинг не доказывает, что данные правильные. Система может успешно обработать каждое сообщение и при этом систематически неверно интерпретировать суммы или единицы измерения.</p></div><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Контроль бизнес-инвариантов</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Инвариант — это условие, которое должно сохраняться при всех допустимых операциях.</p><p style="font-size: 15px; color: #ffffff; margin: 0 0 15px 0; font-weight: bold;">Примеры:</p><ul style="list-style: none; padding: 0; margin: 0 0 25px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 12px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> повторная обработка одной логической операции создания заказа не приводит к появлению нескольких заказов;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> каждый проведённый платёж связан с соответствующей бизнес-операцией, а его сумма и валюта соответствуют условиям этой операции;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> складские ограничения не нарушаются;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> отменённый заказ не переходит в недопустимое состояние из-за повторной обработки или получения устаревшего события;</li><li style="position: relative; padding-left: 20px;"><span style="position: absolute; left: 0; color: #14b8a6;">›</span> обязательные связи между документами сохраняются.</li></ul><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ПРИНЦИП_ВАЛИДАЦИИ // INVARIANT_ENFORCEMENT</div><div style="border-left: 3px solid #165c52; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Критичные инварианты следует обеспечивать непосредственно при выполнении операций, когда это возможно. Периодические проверки дополняют защиту, но не заменяют её.</p></div></div><p> </p><h3 style="color: #ffffff; font-size: clamp(20px, 2.8vw, 24px); font-weight: bold; line-height: 1.2; letter-spacing: -0.4px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Сверка между системами</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Сверка, или reconciliation, — это независимое сопоставление связанных данных для обнаружения пропущенных операций, дублей и противоречий.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">АНАЛИЗ_СВЕРКИ // RECONCILIATION_CASE</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 20px;"><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ ПРИМЕР // РАСХОЖДЕНИЕ В СЧЕТЧИКАХ ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">В CRM за определённый период зарегистрировано 1 250 заказов, а в ERP найдено 1 247 соответствующих документов. Разница ещё не доказывает ошибку: часть заказов может находиться в обработке, не подлежать передаче по бизнес-правилам или учитываться в другом периоде.</p></div><div style="background: #050807; border: 1px solid #14b8a6; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; margin-bottom: 12px; font-weight: bold;">[ ТРЕБОВАНИЕ // КРИТЕРИИ АНАЛИЗА ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Поэтому сверка должна учитывать устойчивые идентификаторы, допустимые связи между сущностями, статусы, временные границы и правила формирования документов.</p></div></div><p style="font-size: 16px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold;">Практическая процедура включает:</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ПРОЦЕДУРА_КОНТРОЛЯ // RECONCILIATION_STEPS</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 12px; width: 100%; box-sizing: border-box; margin-bottom: 25px;"><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>Определение множества сущностей, которые должны соответствовать друг другу.</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>Сопоставление записей по идентификаторам.</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>Проверку обязательных связей и атрибутов.</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>Классификацию обнаруженных расхождений.</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>Выбор безопасного способа исправления.</p></div><div style="background: #000000; border: 1px solid #165c52; padding: 12px 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 14px; color: #aaaaaa; margin: 0;"><span style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; margin-right: 5px;">[fn]</span>Повторную сверку для подтверждения результата.</p></div></div><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0 0 25px 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Важно, что сверка не должна автоматически переписывать данные без установления причины. Различающиеся значения могут быть корректными, если системы отражают разные стадии расчёта или разные бизнес-показатели.</p></div><div style="background: #000000; border-left: 3px solid #165c52; padding-left: 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Для больших объёмов данных можно применять инкрементальные проверки, контрольные суммы и агрегаты по периодам. Однако совпадение агрегатов не доказывает идентичность каждой записи, поэтому для критичных сущностей необходимы проверки на уровне конкретных объектов.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ВОССТАНОВЛЕНИЕ // DATA_RECOVERY_PROTOCOL</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Как правильно восстанавливать данные после ошибки</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Обнаружение расхождения — только половина задачи. Не менее важно исправить его так, чтобы не создать новые ошибки.</p><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px; margin-bottom: 35px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ РИСК // ПОВЕРХНОСТНОЕ ИСПРАВЛЕНИЕ ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Ручное изменение значения без анализа первопричины часто даёт временный результат. Например, оператор исправил статус заказа, но исходное событие осталось в очереди и позднее вернуло прежнее состояние.</p></div><p style="font-size: 16px; color: #ffffff; margin: 0 0 20px 0; font-weight: bold; border-left: 3px solid #14b8a6; padding-left: 15px;">Безопасное восстановление должно включать следующие этапы.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ПРОТОКОЛ_ВОССТАНОВЛЕНИЯ // RECOVERY_STEPS</div><ol style="list-style: none; padding: 0; margin: 0 0 35px 0; font-size: 15px; color: #aaaaaa; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px 20px; width: 100%; box-sizing: border-box;"><li style="position: relative; padding-left: 30px;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold;">1.</span><strong>Ограничить распространение ошибки.</strong> Если дальнейшая обработка может создавать дубли или повторно записывать некорректные значения, необходимо контролируемо приостановить затронутый поток либо ограничить выполнение проблемных операций.</li><li style="position: relative; padding-left: 30px;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold;">2.</span><strong>Восстановить последовательность событий.</strong> Использовать идентификаторы операций, версии записей, историю изменений и журналы обработки, чтобы определить, что именно произошло.</li><li style="position: relative; padding-left: 30px;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold;">3.</span><strong>Установить авторитетное состояние.</strong> Определить, какие данные подтверждены авторитетным источником и соответствуют истории бизнес-операций и установленным правилам.</li><li style="position: relative; padding-left: 30px;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold;">4.</span><strong>Проверить зависимости.</strong> Выяснить, какие документы, платежи, резервы и последующие события затронуты.</li><li style="position: relative; padding-left: 30px;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold;">5.</span><strong>Выполнить корректирующее действие.</strong> В зависимости от причины это может быть безопасная повторная обработка события, корректировка записи, отмена ещё не завершённой операции, компенсационная операция или ручное разрешение конфликта.</li><li style="position: relative; padding-left: 30px;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold;">6.</span><strong>Подтвердить результат.</strong> Проверить не только исправленную запись, но и связанные бизнес-инварианты. Затем выполнить повторную сверку.</li><li style="position: relative; padding-left: 30px;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold;">7.</span><strong>Устранить первопричину.</strong> Если проблема возникла из-за отсутствия идемпотентности, незащищённой конкурентности или неверного контракта, необходимо исправить соответствующий механизм и протестировать сценарий повторно.</li></ol><div style="border-left: 3px solid #5c1616; padding-left: 20px; margin: 0; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 10px 0;">Для восстановления иногда требуется повторное воспроизведение событий. Но его нельзя выполнять без подготовки: обработчик может отправлять уведомления, создавать документы или инициировать внешние операции.</p><p style="font-size: 15px; color: #ff6b6b; font-weight: bold; font-family: 'SF Mono', Monaco, monospace;">&gt; Повтор должен учитывать уже выполненные действия и предотвращать повторный бизнес-эффект.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">ВЕРИФИКАЦИЯ // INTEGRATION_TESTING_SUITE</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Как тестировать интеграцию до запуска</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Тест успешной передачи данных подтверждает только базовый сценарий. Он не показывает, что произойдёт при потере подтверждения, конкурентном изменении, нарушении порядка событий или частичном выполнении процесса.</p><div style="background: #000000; border-left: 2px solid #14b8a6; padding-left: 15px; margin-bottom: 35px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0;">Поэтому необходимо проверять не только значения на входе и выходе, но и последовательности операций.</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ПЛАН_ТЕСТИРОВАНИЯ // QA_SCENARIOS</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; width: 100%; box-sizing: border-box; margin-bottom: 30px;"><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Тестирование повторов</div><div style="font-size: 14px; color: #aaaaaa;">Одно и то же событие отправляется несколько раз, в том числе параллельно. Проверяется, что повтор не создаёт дополнительных бизнес-эффектов.<br><br>Отдельно моделируется завершение обработчика после фиксации операции, но до отправки подтверждения.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Тестирование конкурентных изменений</div><div style="font-size: 14px; color: #aaaaaa;">Несколько процессов одновременно изменяют общий остаток, статус или другую критичную сущность. Проверяется, сохраняются ли бизнес-инварианты при разных последовательностях выполнения.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Тестирование порядка событий</div><div style="font-size: 14px; color: #aaaaaa;">Сообщения доставляются с задержкой и в обратном порядке. Проверяется, что устаревшие обновления не перезаписывают более новые состояния, а значимые события о совершившихся операциях корректно обрабатываются независимо от порядка доставки.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Тестирование частичных сбоев</div><div style="font-size: 14px; color: #aaaaaa;">Процесс прерывается между двумя шагами распределённой операции. Затем выполняется восстановление, и проверяется, что система не создаёт дубли и не остаётся в неуправляемом промежуточном состоянии.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Тестирование контрактов</div><div style="font-size: 14px; color: #aaaaaa;">Проверяются отсутствующие поля, значения null, граничные значения, неизвестные статусы, изменения схем, преобразования валют и единиц измерения.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Проверка восстановления</div><div style="font-size: 14px; color: #aaaaaa;">Контролируемо моделируются тайм-ауты, временная недоступность компонентов и аварийное завершение обработчиков. Цель — убедиться не только в том, что система обнаруживает сбой, но и в том, что после восстановления она приходит к допустимому состоянию.</div></div></div><div style="background: #050807; border-left: 3px solid #14b8a6; padding-left: 15px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-weight: bold; margin: 0;">Такое тестирование помогает обнаруживать ошибки, которые практически невозможно выявить проверкой одного успешного сценария.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">РЕГЛАМЕНТ // DATA_QUALITY_AUDIT_CHECKLIST</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Практический чек-лист аудита качества данных</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">При проверке существующей интеграции полезно двигаться от бизнес-рисков к техническим механизмам.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ЭТАПЫ_ПРОВЕРКИ // AUDIT_STEPS</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 16px; width: 100%; box-sizing: border-box; margin-bottom: 35px;"><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Шаг 1. Определить критичные сущности</div><div style="font-size: 14px; color: #aaaaaa;">Составить перечень заказов, клиентов, товаров, платежей и документов. Для каждой сущности зафиксировать идентификатор, владельца данных, допустимые изменения и связанные объекты.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Шаг 2. Сформулировать бизнес-инварианты</div><div style="font-size: 14px; color: #aaaaaa;">Определить условия, нарушение которых означает бизнес-ошибку. Например, невозможность повторно провести одну логическую операцию или зарезервировать больше товара, чем допускает модель складского учёта.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Шаг 3. Проверить гарантии обмена</div><div style="font-size: 14px; color: #aaaaaa;">Для каждого API, брокера и фонового процесса установить правила повторных попыток, гарантии и ограничения доставки, порядок обработки, механизм подтверждения результата и порядок восстановления после сбоев.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Шаг 4. Проверить конкурентность</div><div style="font-size: 14px; color: #aaaaaa;">Выявить операции, которые одновременно изменяют общие данные. Установить, как система обнаруживает конфликты и предотвращает потерянные обновления.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Шаг 5. Проверить контракты</div><div style="font-size: 14px; color: #aaaaaa;">Уточнить смысл полей, единицы измерения, валюты, правила обработки отсутствующих значений, версии схем и допустимые переходы состояния.</div></div><div style="background: #000000; border: 1px solid #165c52; padding: 15px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; color: #ffffff; font-weight: bold; margin-bottom: 8px;">Шаг 6. Проверить восстановление</div><div style="font-size: 14px; color: #aaaaaa;">Установить, можно ли определить результат незавершённой операции, безопасно повторить обработку и подтвердить корректность восстановленных данных.</div></div></div><div style="background: #000000; border-left: 3px solid #14b8a6; padding-left: 15px; margin-bottom: 30px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 10px 0;">Шаг 7. Организовать независимый контроль</p><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Настроить технический мониторинг, проверку бизнес-инвариантов и сверку между системами. Для критичных процессов определить допустимую задержку, время обнаружения расхождений и порядок эскалации.</p></div><div style="background: #0a1f1c; padding: 15px 20px; border-radius: 2px; border: 1px solid #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; width: 100%; box-sizing: border-box;"><span style="color: #14b8a6; font-weight: bold;">Результатом аудита должна стать карта гарантий: какие свойства обеспечены, какие зависят от внешних условий и какие риски остаются незащищёнными.</span></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">РЕЗЮМЕ // ARCHITECTURAL_CONCLUSION</div><h2 style="color: #ffffff; font-size: clamp(20px, 3vw, 26px); font-weight: 800; line-height: 1.3; letter-spacing: -0.5px; font-family: 'SF Mono', Monaco, monospace; margin: 0 0 20px 0; text-transform: uppercase;">Заключение</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Ошибки в данных автоматизированных систем возникают не только из-за дефектов кода или сбоев передачи сообщений. Они также появляются, когда архитектура не обеспечивает однозначную интерпретацию значений, защиту от повторного выполнения бизнес-операций, корректное конкурентное изменение состояния, обработку устаревших событий и управляемое согласование данных между системами.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 25px 0;">Каждый класс проблем требует своего механизма защиты. Идемпотентность защищает от повторного выполнения одной логической операции. Контракты данных обеспечивают однозначность интерпретации значений. Контроль конкурентности помогает сохранять бизнес-инварианты при параллельных изменениях. Версионирование и правила обработки событий позволяют корректно работать с устаревшими сообщениями. Сверка помогает обнаруживать расхождения, которые не удалось предотвратить на уровне отдельных операций.</p><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; letter-spacing: 1px; text-transform: uppercase; font-weight: bold; margin-bottom: 15px;">ОГРАНИЧЕНИЯ_МЕХАНИЗМОВ // ARCHITECTURAL_LIMITATIONS</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box; margin-bottom: 30px;"><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ ИЛЛЮЗИЯ // ЛОКАЛЬНАЯ АТОМАРНОСТЬ ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Транзакция в одной базе данных не гарантирует согласованность независимых систем. Успешная доставка не исключает повторной обработки.</p></div><div style="background: #0c0606; border: 1px dashed #ff6b6b; padding: 20px; box-sizing: border-box; border-radius: 4px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #ff6b6b; margin-bottom: 12px; font-weight: bold;">[ ИЛЛЮЗИЯ // АВТО-ВЫБОР ПОСЛЕДНЕГО ]</div><p style="font-size: 14px; color: #ffffff; font-family: 'SF Mono', Monaco, monospace; margin: 0; line-height: 1.5;">Автоматический выбор последнего значения не гарантирует, что оно соответствует бизнес-фактам. Ни один механизм не решает задачу целиком.</p></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Надёжная автоматизация не обязательно исключает любые временные различия между системами. Она должна обеспечивать другое: допустимые состояния определены, критичные ограничения защищены, сбои обнаруживаются, а восстановление не создаёт новых неконтролируемых последствий.</p><div style="background: #000000; border-left: 3px solid #14b8a6; padding-left: 15px; margin-bottom: 30px; box-sizing: border-box; width: 100%;"><p style="font-size: 15px; color: #ffffff; font-weight: bold; margin: 0 0 10px 0;">Главный принцип проектирования заключается в следующем:</p><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Для каждого изменения данных необходимо определить его источник, условия применения, защиту от повторного эффекта и способ проверки результата.</p></div><div style="background: #0a1f1c; padding: 15px 20px; border-radius: 2px; border: 1px solid #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 14px; width: 100%; box-sizing: border-box;"><span style="color: #14b8a6; font-weight: bold;">Именно поэтому качество данных следует рассматривать как самостоятельное архитектурное требование. Оно формируется не одним интеграционным сервисом, а всей системой — от контрактов и модели данных до обработки событий, контроля конкурентности и эксплуатации.</span></div></div><p> </p><div style="max-width: 1100px; margin: 60px auto 0 auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">НАВИГАЦИЯ // SUGGESTED_READING</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ДАННЫЕ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Почему данные в разных системах расходятся</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/pochemu-dannye-v-raznyh-sistemah-rashodyatsya/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ДАННЫЕ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Почему в системе появляются дубликаты и несовпадения</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/pochemu-v-sisteme-poyavlyayutsya-dublikaty-i-nesovpadeniya/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ИНТЕГРАЦИИ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Как синхронизировать данные между системами</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kak-sinhronizirovat-dannye-mezhdu-sistemami/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div></div></div><div style="max-width: 1100px; margin: 20px auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; border-top: 1px solid #165c52; padding: 40px 0 0 0; box-sizing: border-box; width: 100%;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 40px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ EXPERTISE JOURNAL ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Все инженерные материалы и экспертные статьи</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/ekspertiza/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">перейти к каталогу ──►</a></div></div><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ CORE GLOSSARY ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Полный алфавитный справочник ИТ-терминов</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/glossariy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">открыть справочник ──►</a></div></div></div></div></div></div></article></main><footer class="footer"><div class="wrapper"><div class="footer__copyright"><p> </p><p> </p></div><button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg width="20" height="20"><use xlink:href="https://log-ai.ru/assets/svg/svg-map.svg#toparrow"/></svg></button></div></footer><script defer="defer" src="https://log-ai.ru/assets/js/scripts.min.js?v&#x3D;d0fc1030089a37f93a2d51bf6d07565c"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script><script>(() => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') !== 'monument') return;
+
+  const IMAGE_URL = 'https://log-ai.ru/media/files/Interstellar.jpeg';
+  const AUDIO_URL = 'https://log-ai.ru/media/files/interstellar.mp3';
+
+  // Защита от повторного запуска
+  if (document.getElementById('log-ai-monument')) return;
+
+  const monument = document.createElement('div');
+  monument.id = 'log-ai-monument';
+
+  const root = document.documentElement;
+  const body = document.body;
+
+  const previousRootOverflow = root.style.overflow;
+  const previousBodyOverflow = body.style.overflow;
+  const previousBodyPosition = body.style.position;
+  const previousBodyTop = body.style.top;
+  const previousBodyWidth = body.style.width;
+  const previousScrollX = window.scrollX;
+  const previousScrollY = window.scrollY;
+
+  root.style.overflow = 'hidden';
+  body.style.overflow = 'hidden';
+  body.style.position = 'fixed';
+  body.style.top = `-${previousScrollY}px`;
+  body.style.width = '100%';
+
+  monument.innerHTML = `
+    <div class="monument-universe"></div>
+    <canvas class="monument-stars"></canvas>
+    <div class="monument-shade"></div>
+
+    <div class="monument-frame">
+      <p class="monument-overline">ARCHIVUM · LOG-AI · MMXXVI</p>
+
+      <div class="monument-rule"></div>
+
+      <h1>PER ASPERA<br><span>AD ASTRA</span></h1>
+
+      <p class="monument-translation">
+        THROUGH HARDSHIP, TO THE STARS
+      </p>
+
+      <div class="monument-message">
+        <p>TO THOSE WHO BUILD BEYOND THE LIMITS OF THEIR TIME.</p>
+        <p>TO THOSE WHO CONTINUE WHEN THE OUTCOME IS UNKNOWN.</p>
+        <p>TO THOSE WHO WILL DISCOVER THIS LONG AFTER ITS CREATION.</p>
+      </div>
+
+      <p class="monument-declaration">
+        YOU WERE NOT THE FIRST TO LOOK AT THE STARS.<br>
+        BUT YOU MAY BE AMONG THOSE WHO REACH THEM.
+      </p>
+
+      <div class="monument-rule"></div>
+          
+      <p class="monument-translation">
+        A MARK LEFT IN THE MACHINE.
+      </p>   
+
+      <p class="monument-signature">
+        LOG·AI·ARCHITECTI·MMXXVI
+      </p>
+
+      <p class="monument-exit" id="monument-hint">
+        [ CLICK ANYWHERE TO RETURN ]
+      </p>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #log-ai-monument {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      background: #03040a;
+      color: #e5dfd3;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      box-sizing: border-box;
+      cursor: pointer;
+      isolation: isolate;
+      opacity: 0;
+      animation: logai-monument-appear 1.8s ease forwards;
+    }
+
+    #log-ai-monument .monument-universe {
+      position: fixed;
+      inset: -3%;
+      z-index: -3;
+      background-image: url("https://log-ai.ru/media/files/Interstellar.jpeg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transform: scale(1.02);
+      animation: logai-cosmic-drift 35s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-shade {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(0,0,0,.24) 0%,
+          rgba(0,0,0,.52) 65%,
+          rgba(0,0,0,.78) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.42),
+          rgba(0,0,0,.18) 45%,
+          rgba(0,0,0,.62)
+        );
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-frame {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', serif;
+      padding: 30px 0;
+      text-shadow: 0 2px 18px rgba(0,0,0,.9);
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-translation,
+    #log-ai-monument .monument-signature,
+    #log-ai-monument .monument-exit {
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-signature {
+      color: #c0a16a;
+    }
+
+    #log-ai-monument .monument-rule {
+      height: 1px;
+      width: 160px;
+      max-width: 60%;
+      margin: 30px auto;
+      background: linear-gradient(
+        to right,
+        transparent,
+        #a68a55,
+        transparent
+      );
+      box-shadow: 0 0 12px rgba(190,155,90,.2);
+    }
+
+    #log-ai-monument h1 {
+      margin: 35px 0 18px;
+      font-size: clamp(30px, 7vw, 58px);
+      line-height: 1.5;
+      letter-spacing: .16em;
+      font-weight: 400;
+      color: #f4f0e8;
+    }
+
+    #log-ai-monument h1 span {
+      color: #d2b77e;
+    }
+
+    #log-ai-monument .monument-translation {
+      color: #c0b8aa;
+    }
+
+    #log-ai-monument .monument-message {
+      margin: 55px auto 38px;
+      max-width: 490px;
+      color: #e0d9cd;
+      font-size: 13px;
+      line-height: 2.2;
+      letter-spacing: .035em;
+    }
+
+    #log-ai-monument .monument-message p {
+      margin: 0 0 12px;
+    }
+
+    #log-ai-monument .monument-declaration {
+      color: #e0c48a;
+      font-size: 12px;
+      line-height: 2.3;
+      letter-spacing: .08em;
+    }
+
+    #log-ai-monument .monument-exit {
+      margin-top: 36px;
+      color: #c0b8aa;
+      font-size: 9px;
+      letter-spacing: .18em;
+    }
+
+    @keyframes logai-monument-appear {
+      to { opacity: 1; }
+    }
+
+    @keyframes logai-cosmic-drift {
+      from { transform: scale(1.02); }
+      to { transform: scale(1.13); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #log-ai-monument,
+      #log-ai-monument .monument-universe {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(monument);
+
+  // Тонкие, редкие звёзды
+  const canvas = monument.querySelector('.monument-stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let frameId = null;
+  let closed = false;
+
+  function resizeStars() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(window.innerWidth * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    stars = Array.from({ length: 65 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      length: 8 + Math.random() * 25,
+      speed: 0.25 + Math.random() * 0.75,
+      alpha: 0.15 + Math.random() * 0.5,
+      delay: Math.random() * 500
+    }));
+  }
+
+  function drawStars() {
+    if (closed) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    for (const star of stars) {
+      star.delay -= 1;
+
+      if (star.delay <= 0) {
+        star.y += star.speed;
+        star.x -= star.speed * 0.35;
+
+        ctx.beginPath();
+        ctx.moveTo(star.x, star.y);
+        ctx.lineTo(star.x - star.length * 0.35,
+                   star.y - star.length);
+
+        ctx.strokeStyle = `rgba(210,220,255,${star.alpha})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+
+        if (star.y > h + 30 || star.x < -30) {
+          star.x = Math.random() * w + 30;
+          star.y = -Math.random() * h * 0.4;
+          star.delay = 30 + Math.random() * 180;
+        }
+      }
+    }
+
+    frameId = requestAnimationFrame(drawStars);
+  }
+
+  resizeStars();
+  drawStars();
+
+  window.addEventListener('resize', resizeStars);
+
+  // Музыка
+  const audio = document.createElement('audio');
+  audio.id = 'monument-audio';
+  audio.src = AUDIO_URL;
+  audio.loop = true;
+  audio.preload = 'auto';
+  audio.volume = 0.35;
+  document.body.appendChild(audio);
+
+  let playing = false;
+  let starting = false;
+
+  const hint = document.getElementById('monument-hint');
+
+  function startMusic() {
+    if (closed || starting || playing) return;
+
+    starting = true;
+
+    audio.play().then(() => {
+      starting = false;
+
+      if (closed) {
+        audio.pause();
+        return;
+      }
+
+      playing = true;
+      hint.textContent = '[ CLICK ANYWHERE TO RETURN ]';
+    }).catch((error) => {
+      starting = false;
+
+      if (closed) return;
+
+      if (error.name === 'NotAllowedError') {
+        hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+        return;
+      }
+
+      console.warn('LOG-AI audio:', error.name, error.message);
+      hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+    });
+  }
+
+  function closeMonument() {
+    if (closed) return;
+    closed = true;
+
+    cancelAnimationFrame(frameId);
+    window.removeEventListener('resize', resizeStars);
+    window.removeEventListener('keydown', onKeyDown);
+
+    audio.pause();
+    audio.remove();
+    monument.remove();
+    style.remove();
+
+    root.style.overflow = previousRootOverflow;
+    body.style.overflow = previousBodyOverflow;
+    body.style.position = previousBodyPosition;
+    body.style.top = previousBodyTop;
+    body.style.width = previousBodyWidth;
+
+    window.scrollTo(previousScrollX, previousScrollY);
+
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete('mode');
+
+    window.history.replaceState(
+      {},
+      document.title,
+      cleanUrl.pathname + cleanUrl.search + cleanUrl.hash
+    );
+  }
+
+  function onKeyDown(event) {
+    if (event.key === 'Escape') closeMonument();
+  }
+
+  monument.addEventListener('click', () => {
+    if (closed) return;
+
+    if (playing) {
+      closeMonument();
+    } else {
+      startMusic();
+    }
+  });
+
+  window.addEventListener('keydown', onKeyDown);
+
+  // Первая попытка автоматического запуска
+  startMusic();
+})();</script><script>(function () {
+    // ВНИМАНИЕ!!!!!!!!!!!!!!!!!!!!Плавный инерционный скролл только для мыши/тачпада
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    let targetY = window.scrollY;
+    let currentY = window.scrollY;
+    let animationFrame = null;
+
+    // ===== НАСТРОЙКИ =====
+    const SPEED = 0.70;       // 0.4 = медленнее, 0.65 = средне, 1.0 = быстрее
+    const SMOOTHNESS = 0.13;  // 0.08 = мягче, 0.12 = средне, 0.18 = быстрее
+    const MAX_STEP = 500;     // максимальный шаг одного движения колеса
+    // =====================
+
+    function animateScroll() {
+        currentY += (targetY - currentY) * SMOOTHNESS;
+
+        if (Math.abs(targetY - currentY) < 0.5) {
+            currentY = targetY;
+            window.scrollTo(0, currentY);
+            animationFrame = null;
+            return;
+        }
+
+        window.scrollTo(0, currentY);
+        animationFrame = requestAnimationFrame(animateScroll);
+    }
+
+    window.addEventListener('wheel', function (event) {
+
+    // Если глобус активирован кликом —
+    // колесо полностью отдаём Globe.gl для zoom.
+    const globe = event.target.closest('#globeViz');
+
+    if (globe && globe.dataset.interacting === 'true') {
+        return;
+    }
+
+    // Внутренний скролл AI-чата не трогаем
+    if (event.target.closest('#logai-window, #logai-msgs')) {
+        return;
+    }
+
+    event.preventDefault();
+
+        let delta = event.deltaY * SPEED;
+
+        // Ограничиваем слишком резкие движения
+        delta = Math.max(-MAX_STEP, Math.min(MAX_STEP, delta));
+
+        targetY += delta;
+
+        // Не даём уйти выше/ниже страницы
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        targetY = Math.max(0, Math.min(targetY, maxY));
+
+        if (!animationFrame) {
+            animationFrame = requestAnimationFrame(animateScroll);
+        }
+    }, { passive: false });
+
+    // Синхронизация, если страницу прокрутили другим способом
+    window.addEventListener('scroll', function () {
+        if (!animationFrame) {
+            targetY = window.scrollY;
+            currentY = window.scrollY;
+        }
+    }, { passive: true });
+
+})();</script><div id="logai-footer-mobile" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box;"><div style="margin: 0 auto 20px auto; padding-top: 40px; text-align: center; margin-bottom: 40px;"><a href="mailto:info@log-ai.ru" style="font-size: 24px; font-family: 'SF Mono', Monaco, monospace; color: #e5e7eb; text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: 0.3px;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#e5e7eb'">info@log-ai.ru</a><p style="color: #aaaaaa; font-size: 15px; line-height: 1.6; max-width: 750px; margin: 15px auto 0 auto;">Пришлите описание задачи, техническое задание или ссылку на существующую систему. Мы оценим задачу и определим возможные варианты реализации.</p></div><div style="max-width: 850px; margin: 0 auto 40px auto; text-align: center; background: #000000; padding: 0; box-sizing: border-box;"><p style="color: #aaaaaa; font-size: 14px; line-height: 1.6; margin: 0;"><span style="color: #4ade80; margin-right: 6px;">🔒</span> Данные и доступ к системам заказчика обрабатываются в соответствии с согласованными требованиями к безопасности и конфиденциальности. Условия доступа, хранения и обработки данных определяются архитектурой проекта и договором.</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; box-sizing: border-box; width: 100%; margin-bottom: 30px;"><p style="color: #666666; font-size: 12px; line-height: 1.6; margin: 0; width: 100%; text-align: justify;">Сайт носит исключительно информационный характер и не является публичной офертой в соответствии со статьёй 437 Гражданского кодекса РФ. Цены, состав и условия предоставления услуг уточняются при проектировании решения и фиксируются в договоре. Условия технического сопровождения и уровень сервиса могут дополнительно определяться отдельным соглашением (SLA).</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; width: 100%; box-sizing: border-box;"><div style="color: #666666; font-size: 12px; line-height: 1.5; text-align: left;">© 2026 Log-AI<br>Автоматизация бизнеса и ИИ-решения под ключ. Работаем по всей России и СНГ.<br>ИП Скопец Антон Викторович<br>ИНН 741709<span></span>260870 · ОГРНИП 326745600<span></span>204228<br>Все права защищены.</div><div style="display: flex; gap: 20px; flex-wrap: wrap; font-family: sans-serif;"><a href="/privacy-policy/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Политика конфиденциальности</a> <a href="/terms/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Пользовательское соглашение</a></div></div></div><style>@media screen and (max-width: 600px) {
+  #logai-footer-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+}</style><style>/* Анимации и точки */
+    @keyframes logai-bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+    .logai-dots { display: flex !important; flex-direction: row !important; gap: 4px !important; align-items: center !important; height: 12px !important; }
+    .logai-dots span { display: inline-block; width: 5px; height: 5px; background: #aaa !important; border-radius: 50%; animation: logai-bounce 1.4s infinite ease-in-out; }
+    .logai-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .logai-dots span:nth-child(3) { animation-delay: 0.4s; }
+    
+    #logai-msgs::-webkit-scrollbar { width: 5px; }
+    #logai-msgs::-webkit-scrollbar-thumb { background: #666; border-radius: 10px; }
+    
+    /* Сообщения и текст */
+    #logai-msgs div { white-space: pre-wrap !important; word-wrap: break-word !important; padding: 12px 16px !important; margin-bottom: 5px !important; display: flex; flex-direction: column; justify-content: center; }
+    #logai-msgs div p { margin: 0 !important; padding: 0 !important; line-height: 1.5 !important; }
+    #logai-msgs { gap: 12px !important; padding: 20px !important; }
+
+    /* Поле ввода и кнопка отправить */
+    #logai-input { flex: 1 !important; padding: 12px 18px !important; border-radius: 20px !important; background: #4a4e56 !important; border: 1px solid rgba(255,255,255,0.1) !important; outline: none !important; color: #fff !important; font-size: 15px !important; resize: none !important; max-height: 120px !important; line-height: 1.4 !important; }
+    #logai-send-btn { background-color: #007bff !important; border: none !important; width: 45px !important; height: 45px !important; border-radius: 50% !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-size: 24px !important; padding: 0 !important; flex-shrink: 0 !important; }
+
+    /* ГЛАВНЫЕ СТИЛИ (чтобы кнопка и окно не исчезали) */
+    #logai-btn {
+        position: fixed !important; bottom: 40px !important; right: 110px !important;
+        width: 65px !important; height: 65px !important; border-radius: 50% !important;
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        cursor: pointer !important; z-index: 10000 !important; box-shadow: 0 10px 25px rgba(0,123,255,0.4);
+    }
+
+    #logai-window {
+        display: none; position: fixed !important; bottom: 115px !important; right: 110px !important;
+        width: 380px !important; height: 600px !important; background: #3b3e45 !important;
+        border-radius: 24px !important; flex-direction: column; overflow: hidden;
+        z-index: 10000 !important; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.15) !important;
+    }
+
+        /* АДАПТИВ ДЛЯ МОБИЛОК: ЧАТ НА ВЕСЬ ЭКРАН */
+    @media screen and (max-width: 480px) {
+        #logai-window { 
+            right: 0 !important; 
+            left: 0 !important; 
+            bottom: 0 !important; 
+            width: 100% !important; 
+            height: 100% !important; /* Растягиваем окно на 100% экрана смартфона */
+            border-radius: 0 !important; /* Убираем скругления углов, чтобы чат сел монолитом */
+            z-index: 999999 !important; /* Перекрываем все кнопки в ноль */
+        }
+        
+        #logai-btn { 
+            bottom: 80px !important; /* Твоя родная высота кнопки, когда чат закрыт */
+            right: 22px !important;  /* Твой родной сдвиг кнопки */
+            z-index: 999998 !important; /* Когда чат открыт, кнопка останется под ним и не будет торчать */
+        }
+    }</style><div id="logai-widget" style="position: fixed; bottom: var(--widget-bottom, 20px); right: var(--widget-right, 20px); z-index: 9999;"><div id="logai-btn" onclick="toggleLogAI()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><div id="logai-window"><div style="background: #2d3035; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; align-items:center; gap:12px;"><div style="width:35px; height:35px; background:#007bff; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(0,123,255,0.5);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg></div><span style="font-weight:600; color:#fff; font-size:16px; letter-spacing: 0.5px;">AI Ассистент</span></div><span onclick="toggleLogAI()" style="cursor:pointer; color:#fff; font-size:35px; line-height: 0.7; opacity: 0.7;">&times;</span></div><div id="logai-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; background:#3b3e45;"></div><div style="padding:15px 15px 8px 15px; background:#2d3035; display:flex; flex-direction:column; border-top: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; gap:10px; align-items:flex-end; width:100%;"><textarea id="logai-input" rows="1" placeholder="Напишите..." oninput="this.style.height='';this.style.height=this.scrollHeight+'px'"></textarea> <button id="logai-send-btn" onclick="sendLogAI()">➤</button></div><div style="text-align:center; font-size:10px; color:#ffffff; opacity:0.3; margin-top:6px; font-family:sans-serif; pointer-events:none; user-select:none;">ИИ может ошибаться</div></div></div></div><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script>const API_URL = 'https://api2.log-ai.ru';
+    const MY_CLIENT_ID = 'client_arhitektor_2'; // МЕНЯТЬ ТУТ
+    const MY_BOT_PATH = 'arhitektor_2';  // МЕНЯТЬ ТУТ 
+    
+       let logSid;
+    try {
+        logSid = localStorage.getItem('logai_sid');
+        if (!logSid) {
+            logSid = 's_' + Math.random().toString(36).substr(2, 12);
+            localStorage.setItem('logai_sid', logSid);
+        }
+    } catch (e) {
+        // Если доступ к памяти закрыт (инкогнито), создаем временный ID
+        logSid = 'temp_' + Math.random().toString(36).substr(2, 12);
+    }
+
+    // Переименовали, чтобы избежать конфликтов
+    let chatIsWaiting = false;
+    let historyLoaded = false;
+    let activeMessageId = null;
+    let pollController = null;
+    let pollTimeoutId = null;
+
+
+       function toggleLogAI() {
+        const w = document.getElementById('logai-window');
+        const isOpen = (window.getComputedStyle(w).display === 'none');
+        
+        if (isOpen) {
+            w.style.display = 'flex';
+            if (!historyLoaded) {
+                loadChatHistory();
+            } 
+            // Если чат в режиме ожидания (точки), пинаем сервер сразу при открытии
+            else if (chatIsWaiting && activeMessageId) {
+                const dotsContainer = document.querySelector('.logai-dots')?.parentElement;
+                if (dotsContainer) {
+                    startPolling(activeMessageId, dotsContainer);
+                }
+            }
+        } else {
+            w.style.display = 'none';
+            // УБРАЛИ stopPolling(), чтобы ИИ докачивал ответ, даже когда окно закрыто
+        }
+    }
+
+
+    function updateInputState() {
+        const input = document.getElementById('logai-input');
+        const btn = document.getElementById('logai-send-btn');
+        if (input) {
+            input.disabled = chatIsWaiting;
+            input.style.opacity = chatIsWaiting ? '0.5' : '1';
+        }
+        if (btn) btn.style.opacity = chatIsWaiting ? '0.5' : '1';
+    }
+
+    function stopPolling() {
+        if (activeMessageId) localStorage.removeItem('poll_start_' + activeMessageId);
+        if (pollController) pollController.abort();
+        if (pollTimeoutId) clearTimeout(pollTimeoutId);
+    
+        pollController = null;
+        pollTimeoutId = null;
+        activeMessageId = null;
+        chatIsWaiting = false;
+        updateInputState();
+    }
+
+    function addLogMsg(txt, isAi) {
+        const d = document.createElement('div');
+        d.style = `padding:12px 16px; border-radius:18px; max-width:82%; font-size:14px; line-height:1.5; margin-bottom:10px; 
+                   ${isAi ? 'align-self:flex-start; background:#4a4e56; color:#dbdee1; border-bottom-left-radius:4px;' 
+                         : 'align-self:flex-end; background:#007bff; color:white; border-bottom-right-radius:4px; box-shadow:0 4px 12px rgba(0,123,255,0.25);'}`;
+
+        if (txt === 'dots') {
+   // ИСПРАВЛЕНО: Добавлен явный текст ожидания рядом с анимацией точек для лучшего UX
+   d.innerHTML = '<div style="display:flex; align-items:center; gap:8px;">' +
+                 '<span style="font-style:italic; opacity:0.8;">ИИ подбирает ответ...</span>' +
+                 '<div class="logai-dots"><span></span><span></span><span></span></div>' +
+                 '</div>';
+ } else {
+   d.innerHTML = typeof marked !== 'undefined' ? marked.parse(txt) : txt;
+ }
+
+        const box = document.getElementById('logai-msgs');
+        box.appendChild(d);
+        box.scrollTop = box.scrollHeight;
+        return d;
+    }
+
+async function loadChatHistory() {
+    const box = document.getElementById('logai-msgs');
+    try {
+        box.innerHTML = '';
+
+        const res = await fetch(`${API_URL}/history/${logSid}?platform=site&clientId=${MY_CLIENT_ID}`);
+        const data = await res.json();
+
+        if (Array.isArray(data.items) && data.items.length > 0) {
+            data.items.forEach((m, index) => {
+                // 1. Показываем сообщение пользователя
+                if (m.message) {
+                    addLogMsg(m.message, false);
+                }
+
+                // 2. Если есть готовый ответ — показываем
+                if (m.answer) {
+                    addLogMsg(m.answer, true);
+                } 
+                // 3. ИСПРАВЛЕНО: Четкое чтение m.message_id из базы данных без путаницы с регистрами
+                else if (m.message_id && index === data.items.length - 1) {
+                    chatIsWaiting = true;
+                    activeMessageId = m.message_id; // Используем m.message_id
+                    
+                    const aiMsg = addLogMsg('dots', true);
+                    startPolling(m.message_id, aiMsg); 
+                }
+            });
+        } else {
+            addLogMsg("Здравствуйте! Я ваш ИИ-ассистент. Чем могу помочь?", true);
+        }
+
+        historyLoaded = true;
+        updateInputState();
+
+    } catch (e) {
+        console.error('History error:', e);
+        addLogMsg("Не удалось загрузить историю чата", true);
+    }
+}
+
+
+async function sendLogAI() {
+    if (chatIsWaiting) return;
+
+    const input = document.getElementById('logai-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // ЖЕЛЕЗНЫЙ ДЕБАУНС: блокируем повторный клик в первую же микросекунду
+    chatIsWaiting = true;
+    updateInputState();
+
+    addLogMsg(msg, false);
+    
+    input.value = ''; 
+    input.style.height = 'auto'; 
+
+    const aiMsg = addLogMsg('dots', true);
+
+    try {
+        const res = await fetch(`${API_URL}/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sessionId: logSid,
+                message: msg,
+                clientId: MY_CLIENT_ID,
+                platform: 'site',
+                botPath: MY_BOT_PATH
+            })
+        });
+
+        // ИСПРАВЛЕНО: Обработка HTTP-ошибок. Передаем false третьим параметром, чтобы не было звука при ошибке
+        if (!res.ok) {
+            let errorMsg = "⚠️ Сервер временно недоступен";
+            if (res.status === 429) errorMsg = "🚫 Слишком много запросов. Подождите немного.";
+            else if (res.status === 403) {
+                try {
+                    const errData = await res.json();
+                    errorMsg = errData.reason || "🚫 Доступ ограничен.";
+                } catch (_) {
+                    errorMsg = "🚫 Доступ ограничен.";
+                }
+            }
+            finish(errorMsg, aiMsg, false); // false — звук НЕ играет
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data.blocked) {
+            finish(data.reason || data.message || "🚫 Сообщение заблокировано", aiMsg, false); // false — без звука
+            return;
+        }
+
+        if (data.messageId) {
+            activeMessageId = data.messageId;
+            startPolling(data.messageId, aiMsg);
+        } else {
+            finish("⚠️ Ошибка регистрации сообщения (нет messageId)", aiMsg, false);
+        }
+    } catch (e) {
+        console.error(e);
+        finish("⚠️ Ошибка связи с сервером. Проверьте интернет.", aiMsg, false);
+    }
+} // Скобка закрывает саму функцию send
+    function startPolling(messageId, aiMsg) {
+        activeMessageId = messageId;
+        pollController = new AbortController();
+        let savedTime = localStorage.getItem('poll_start_' + messageId);
+        if (!savedTime) {
+            savedTime = Date.now().toString();
+            localStorage.setItem('poll_start_' + messageId, savedTime);
+        }
+        let startTime = parseInt(savedTime, 10);
+        let statusChanged = false; // Чтобы не менять текст постоянно
+
+        const poll = async () => {
+            if (activeMessageId !== messageId) return;
+
+            const elapsed = (Date.now() - startTime) / 1000; // секунд прошло
+
+            // 1. На 40-й секунде меняем текст на "Сложный вопрос"
+            if (elapsed > 40 && !statusChanged) {
+                const dots = aiMsg.querySelector('.logai-dots');
+                aiMsg.innerHTML = '🤖 Вопрос сложный, анализирую данные...';
+                if (dots) aiMsg.appendChild(dots); 
+                statusChanged = true;
+            }
+
+            // 2. Лимит ожидания - 10 минут (600 секунд)
+            if (elapsed > 600) {
+                finish("🤖 Извините, ИИ перегружен или запрос слишком сложный. Пожалуйста, попробуйте позже.", aiMsg);
+                return;
+            }
+
+            // 3. Умный интервал: до 50 сек — каждые 3 сек, потом — каждые 10 сек
+            let nextInterval = (elapsed > 50) ? 10000 : 3000;
+
+            try {
+                // Добавили ?t=... чтобы телефон каждый раз реально спрашивал сервер, а не брал из кэша
+                const r = await fetch(`${API_URL}/get-answer/${messageId}?sessionId=${logSid}&clientId=${MY_CLIENT_ID}&t=${Date.now()}`, {
+                    signal: pollController.signal 
+                });
+                const d = await r.json();
+                const finalAnswer = d.answer || (d.status !== 'pending' ? d.answer : null);
+
+                if (finalAnswer) {
+                    finish(finalAnswer, aiMsg);
+                } else {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            } catch (e) {
+                if (e.name !== 'AbortError') {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            }
+        };
+        poll();
+    }
+
+function finish(text, msgElement, isSuccess = true) {
+    if (msgElement) {
+        msgElement.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+        
+        // Звук играет строго при успешном ответе ИИ, при ошибках или банах — тишина
+        if (isSuccess) {
+            try {
+                // ТВОЙ ОРИГИНАЛЬНЫЙ РАБОЧИЙ ПУТЬ: Кэш сбрасывается, файл проигрывается без ошибок 404
+                const audio = new Audio('https://api.log-ai.ru/notify.mp3?v=' + Date.now());
+                audio.volume = 0.4;
+                audio.play().catch(e => console.log("Нужен клик"));
+            } catch (e) {}
+        }
+    }
+    stopPolling();
+}
+
+
+    // Enter для отправки
+    document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('logai-input');
+    if (input) {
+      input.addEventListener('keypress', (e) => {
+        // ИСПРАВЛЕНО: Добавлена проверка !chatIsWaiting, чтобы клавиатура намертво блокировалась во время ожидания ИИ
+        if (e.key === 'Enter' && !e.shiftKey && !chatIsWaiting) {
+          e.preventDefault();
+          sendLogAI();
+        }
+      });
+
+      // ИСПРАВЛЕНО: Текстовое поле плавно растёт вниз до 150px, если текст длинный
+      input.addEventListener('input', function() {
+        this.style.height = 'auto'; 
+        this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+      });
+    }
+    });</script><div id="cookie-notice-wrapper" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #111111; border-top: 1px solid #222222; padding: 10px 15px; box-sizing: border-box; z-index: 99999; display: none; flex-direction: row; justify-content: space-between; align-items: center; gap: 15px; font-family: sans-serif;"><span style="color: #888888; font-size: 12px; line-height: 1.4; text-align: left;">Наш сайт использует файлы cookie для корректной работы. Подробнее — в <a href="/privacy-policy/" style="color: #bfa15f; text-decoration: underline;">Политике конфиденциальности</a>. </span><button onclick="dismissCookieNotice()" style="background: #bfa15f; color: #000000; border: none; padding: 5px 14px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Принять</button></div><style>@media (max-width: 600px) {
+        #cookie-notice-wrapper {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 10px !important;
+            padding: 12px 15px !important;
+        }
+        #cookie-notice-wrapper span {
+            text-align: center !important;
+            font-size: 11px !important;
+        }
+        #cookie-notice-wrapper button {
+            width: 100% !important;
+            padding: 8px !important;
+            font-size: 12px !important;
+        }
+    }</style><script>(function() {
+        var storageKey = 'logai_cookies_accepted';
+        if (!localStorage.getItem(storageKey)) {
+            document.getElementById('cookie-notice-wrapper').style.display = 'flex';
+        }
+    })();
+
+    function dismissCookieNotice() {
+        localStorage.setItem('logai_cookies_accepted', 'true');
+        document.getElementById('cookie-notice-wrapper').style.display = 'none';
+    }</script></body></html>

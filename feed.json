@@ -1,0 +1,13 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "LOG-AI",
+    "description": "",
+    "home_page_url": "https://log-ai.ru",
+    "feed_url": "https://log-ai.ru/feed.json",
+    "user_comment": "",
+    "author": {
+        "name": "AI Automation"
+    },
+    "items": [
+    ]
+}

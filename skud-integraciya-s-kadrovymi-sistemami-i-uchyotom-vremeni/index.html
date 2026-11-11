@@ -1,0 +1,855 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>СКУД: интеграция с HR и учётом рабочего времени | LOG-AI</title><meta name="description" content="Как связать СКУД с кадровой системой и учётом времени: сотрудники, пропуска, права доступа, увольнения, события прохода и отказоустойчивость."><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://log-ai.ru/skud-integraciya-s-kadrovymi-sistemami-i-uchyotom-vremeni/"><link rel="alternate" type="application/atom+xml" href="https://log-ai.ru/feed.xml" title="LOG-AI - RSS"><link rel="alternate" type="application/json" href="https://log-ai.ru/feed.json" title="LOG-AI - JSON"><meta property="og:title" content="СКУД: интеграция с HR и учётом рабочего времени | LOG-AI"><meta property="og:image" content="https://log-ai.ru/media/website/Log-ai-Logo.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:site_name" content="LOG-AI"><meta property="og:description" content="Как связать СКУД с кадровой системой и учётом времени: сотрудники, пропуска, права доступа, увольнения, события прохода и отказоустойчивость."><meta property="og:url" content="https://log-ai.ru/skud-integraciya-s-kadrovymi-sistemami-i-uchyotom-vremeni/"><meta property="og:type" content="article"><link rel="stylesheet" href="https://log-ai.ru/assets/css/style.css?v&#x3D;b1f5980528b3cc19f4018c94aea81f52"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://log-ai.ru/skud-integraciya-s-kadrovymi-sistemami-i-uchyotom-vremeni/"},"headline":"СКУД: интеграция с кадровыми системами и учётом времени","datePublished":"2026-11-11T13:13+05:00","dateModified":"2026-11-11T14:09+05:00","description":"Как связать СКУД с кадровой системой и учётом времени: сотрудники, пропуска, права доступа, увольнения, события прохода и отказоустойчивость.","author":{"@type":"Person","name":"LOG-AI","url":"https://log-ai.ru/authors/log-ai/"},"publisher":{"@type":"Organization","name":"LOG-AI"}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript><style>body, html, main, #page, .wrapper, .main { background: #000000 !important; background-color: #000000 !important; }</style><link rel="icon" type="image/png" sizes="32x32" href="/media/files/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/media/files/favicon-16.png"><link rel="apple-touch-icon" sizes="180x180" href="/media/files/favicon-180.png"><meta name="yandex-verification" content="9d14e10b64f3b76c"><meta name="google-site-verification" content="-rKktnoSCGCLZToW-jcZeKu5WvWFGuLKdLwwyCux0-M"></head><body class="page-template"><header class="top js-header"><a class="logo" href="https://log-ai.ru/">LOG-AI</a><nav class="navbar js-navbar"><button class="navbar__toggle js-toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><span class="navbar__toggle-box"><span class="navbar__toggle-inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://log-ai.ru/" target="_self">Главная</a></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Услуги</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/avtomatizaciya-obrabotki-zayavok-i-lidov/" target="_self">Автоматизация обработки заявок и лидов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-biznes-processov-integracii-dannye-i-skvoznye-scenarii/" target="_self">Автоматизация бизнес-процессов</a></li><li><a href="https://log-ai.ru/sbor-i-obrabotka-dannyh/" target="_self">Сбор и обработка данных</a></li><li><a href="https://log-ai.ru/ii-dlya-biznesa-i-nejrosetej/" target="_self">ИИ для бизнеса и нейросети</a></li><li><a href="https://log-ai.ru/specializirovannye-cifrovye-sistemy/" target="_self">Специализированные цифровые системы</a></li><li><a href="https://log-ai.ru/individualnye-korporativnye-sistemy/" target="_self">Корпоративные системы</a></li><li><a href="https://log-ai.ru/tehnicheskoe-soprovozhdenie/" target="_self">Техническое сопровождение</a></li><li><a href="https://log-ai.ru/it-audit-i-predproektnoe-obsledovanie/" title="/it-audit-i-predproektnoe-obsledovanie/" target="_self">ИТ-аудит и предпроектное обследование</a></li><li><a href="https://log-ai.ru/oblachnyy-i-infrastrukturnyy-konsalting/" title="/oblachnyy-i-infrastrukturnyy-konsalting/" target="_self">Облачный и инфраструктурный консалтинг</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Решения</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakie-sistemy-my-integriruem/" target="_self">Какие системы мы интегрируем</a></li><li><a href="https://log-ai.ru/kak-rabotaet-ii-v-biznese/" target="_self">Как работает ИИ в бизнесе</a></li><li><a href="https://log-ai.ru/resheniya-po-zadacham/" target="_self">Решения по задачам</a></li><li><a href="https://log-ai.ru/avtomatizaciya-proizvodstva/" target="_self">Для производства</a></li><li><a href="https://log-ai.ru/avtomatizaciya-logistiki-i-skladov/" target="_self">Для логистики и складов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-optovoy-torgovli/" target="_self">Для оптовой торговли</a></li><li><a href="https://log-ai.ru/avtomatizaciya-e-commerce/" target="_self">Для e-commerce</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Реализация</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kak-my-rabotaem/" target="_self">Как мы работаем</a></li><li><a href="https://log-ai.ru/dokumentaciya-sistemy/" target="_self">Документация системы</a></li><li><a href="https://log-ai.ru/infrastruktura-i-razmeshchenie/" target="_self">Инфраструктура и размещение</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Выбор</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakuyu-avtomatizaciyu-vybrat/" target="_self">Какую автоматизацию выбрать</a></li><li><a href="https://log-ai.ru/chto-avtomatizirovat-v-biznese-v-pervuyu-ochered/" target="_self">Что автоматизировать в бизнесе в первую очередь</a></li><li><a href="https://log-ai.ru/kak-podgotovit-biznes-k-avtomatizacii/" target="_self">Как подготовить бизнес к автоматизации</a></li><li><a href="https://log-ai.ru/kak-vnedrit-avtomatizaciyu/" target="_self">Как внедрить автоматизацию</a></li><li><a href="https://log-ai.ru/kak-ocenit-rezultat-avtomatizacii/" target="_self">Как оценить результат автоматизации</a></li><li><a href="https://log-ai.ru/stoimost-razrabotki/" target="_self">Стоимость разработки</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">О нас</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/inzhenernyy-sostav/" target="_self">Инженерный состав</a></li><li><a href="https://log-ai.ru/keysy/" target="_self">Кейсы</a></li><li><a href="https://log-ai.ru/glossariy/" target="_self">Глоссарий</a></li><li><a href="https://log-ai.ru/ekspertiza/" target="_self">Экспертиза</a></li><li><a href="https://log-ai.ru/bezopasnost-sistem-dannyh-i-infrastruktury/" target="_self">Безопасность</a></li></ul></li></ul></nav></header><main class="page"><article class="content"><div class="hero hero--noimage"><header class="hero__content hero__content--centered"><div class="wrapper"><h1>СКУД: интеграция с кадровыми системами и учётом времени</h1></div></header></div><div class="entry-wrapper content__entry"><p> </p><p> </p><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box;"><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; line-height: 1.3;">Интеграция СКУД с кадровыми системами и учётом рабочего времени</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 16px 0;">Система контроля и управления доступом (СКУД) часто воспринимается как инструмент, который просто открывает двери по пропуску и фиксирует время прохода сотрудников. Но на предприятии с несколькими подразделениями, сменным графиком, подрядчиками и ограниченными зонами доступа её роль значительно шире.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 32px 0;">СКУД должна понимать, кто именно пытается пройти на территорию, имеет ли этот человек действующее разрешение, в какие помещения ему разрешён доступ и в какое время он может находиться на объекте. При этом кадровая информация постоянно меняется: сотрудники принимаются на работу, переводятся, увольняются, уходят в отпуск, меняют должности и графики.</p><div style="padding: 20px; margin: 0 0 40px 0; background: #1a0f0f; border-left: 3px solid #ef4444; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ РИСКИ ОТСУТСТВИЯ ИНТЕГРАЦИИ ]</div><div style="display: flex; flex-wrap: wrap; gap: 10px;"><span style="padding: 6px 12px; background: #000000; border: 1px solid #3f1818; font-size: 13px; color: #ffffff;">Уволенный сотрудник сохраняет действующий пропуск</span> <span style="padding: 6px 12px; background: #000000; border: 1px solid #3f1818; font-size: 13px; color: #ffffff;">Новый работник не может попасть на место, хотя уже оформлен</span> <span style="padding: 6px 12px; background: #000000; border: 1px solid #3f1818; font-size: 13px; color: #ffffff;">Переведённый сотрудник сохраняет доступ к старым помещениям</span> <span style="padding: 6px 12px; background: #000000; border: 1px solid #3f1818; font-size: 13px; color: #ffffff;">Временный пропуск подрядчика не закрывается после завершения работ</span></div></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 32px 0;">Есть и другая сторона проблемы. События прохода необходимо передавать в систему учёта рабочего времени, сопоставлять с графиками смен и использовать для формирования табелей. Но факт открытия турникета сам по себе ещё не доказывает, что человек отработал установленное количество часов. Поэтому интеграция — это организация единого управляемого процесса, в котором кадровые изменения своевременно влияют на права доступа, а расхождения не приводят к ошибкам в безопасности и расчётах.</p><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; line-height: 1.3;">1. Почему СКУД нельзя рассматривать отдельно от кадровой системы</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Кадровая система и СКУД работают с одним человеком, но описывают его с разных сторон. Эти задачи связаны, но не взаимозаменяемы.</p><div style="margin: 0 auto 40px auto; max-width: 800px; width: 100%; text-align: left; background: #000000; border: 1px solid #1a1a1a; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM // SYSTEM_ROLES_SEPARATION ]</div><svg viewbox="0 0 760 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="50" width="180" height="80" rx="4" fill="#0b0b0b" stroke="#14b8a6" stroke-width="1.5"></rect><text x="110" y="75" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="11" font-weight="bold" text-anchor="middle">HR-СИСТЕМА</text><text x="110" y="95" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10" text-anchor="middle">Трудовые отношения:</text><text x="110" y="115" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Приём, перевод, увольнение</text><path d="M 200 80 L 260 50" stroke="#14b8a6" stroke-width="1.5"></path><polygon points="260,50 254,46 254,54" fill="#14b8a6"></polygon><text x="220" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Статус</text><path d="M 200 100 L 260 130" stroke="#14b8a6" stroke-width="1.5"></path><polygon points="260,130 254,126 254,134" fill="#14b8a6"></polygon><text x="220" y="125" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">График</text><rect x="270" y="20" width="180" height="80" rx="4" fill="#0b0b0b" stroke="#14b8a6" stroke-width="1.5"></rect><text x="360" y="45" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="11" font-weight="bold" text-anchor="middle">СКУД</text><text x="360" y="65" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10" text-anchor="middle">Физический доступ:</text><text x="360" y="85" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Разрешение на проход</text><rect x="270" y="120" width="220" height="80" rx="4" fill="#0b0b0b" stroke="#14b8a6" stroke-width="1.5"></rect><text x="380" y="145" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="11" font-weight="bold" text-anchor="middle">УЧЁТ РАБОЧЕГО ВРЕМЕНИ</text><text x="380" y="165" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10" text-anchor="middle">Присутствие и отклонения:</text><text x="380" y="185" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Сопоставление событий с графиком</text><path d="M 360 100 L 360 115" stroke="#555555" stroke-width="1.5" stroke-dasharray="4 4"></path><polygon points="360,115 356,109 364,109" fill="#555555"></polygon><text x="375" y="110" fill="#555555" font-family="'SF Mono', monospace" font-size="8" text-anchor="start">События прохода</text></svg></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 32px 0;">Например, сотрудник может числиться в штате, но не иметь права доступа в серверную. Другой работник может быть уволен, однако его кадровая запись должна сохраняться в архиве, тогда как разрешение на проход необходимо немедленно отозвать. А сотрудник, который прошёл через проходную в 08:55, не обязательно приступил к работе именно в 08:55: возможно, он переодевался, проходил инструктаж или направлялся в другое здание.</p><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Кто должен быть главным источником информации</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Одна из распространённых ошибок — разрешить всем системам изменять одни и те же сведения. Чтобы этого избежать, необходимо установить владельцев данных (Single Source of Truth).</p><div style="display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 40px 0;"><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; border-top: 3px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ВЛАДЕЛЕЦ: HR-СИСТЕМА ]</div><div style="display: flex; flex-direction: column; gap: 8px;"><div style="font-size: 14px; color: #ffffff;">• ФИО и кадровый статус</div><div style="font-size: 14px; color: #ffffff;">• Табельный номер</div><div style="font-size: 14px; color: #ffffff;">• Подразделение и должность</div><div style="font-size: 14px; color: #ffffff;">• Дата приёма и увольнения</div></div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; border-top: 3px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ВЛАДЕЛЕЦ: СКУД ]</div><div style="display: flex; flex-direction: column; gap: 8px;"><div style="font-size: 14px; color: #ffffff;">• Физический идентификатор пропуска</div><div style="font-size: 14px; color: #ffffff;">• Права доступа (политики)</div><div style="font-size: 14px; color: #ffffff;">• Точки прохода и оборудование</div><div style="font-size: 14px; color: #ffffff;">• События прохода (журнал)</div></div></div><div style="flex: 1 1 100%; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; border-top: 3px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ВЛАДЕЛЕЦ: СИСТЕМА УЧЁТА РАБОЧЕГО ВРЕМЕНИ ]</div><div style="display: flex; flex-wrap: wrap; gap: 12px;"><div style="flex: 1; min-width: 200px; font-size: 14px; color: #ffffff;">• Графики и правила учёта времени</div><div style="flex: 1; min-width: 200px; font-size: 14px; color: #ffffff;">• Расчётные показатели присутствия и отклонений</div></div></div></div><div style="padding: 24px; margin: 0 0 0 0; background: #0a1514; border: 1px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ГЛАВНЫЙ ПРИНЦИП ИНТЕГРАЦИИ ]</div><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; font-weight: 500;">Система, которая получает данные, не должна самовольно становиться их владельцем.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 12px 0;">Например, СКУД может получить из HR сведения о переводе сотрудника, но не должна самостоятельно менять его кадровую должность. А система учёта времени может получить события прохода, но не должна изменять физические права доступа.</p><p style="font-size: 15px; color: #ffffff; margin: 0;">Такое строгое разделение ролей исключает значительную часть конфликтов и рассинхронизации между корпоративными системами.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box;"><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; line-height: 1.3;">2. Какие данные необходимо передавать между СКУД, HR и системой учёта времени</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 16px 0;">Состав интеграции необходимо определять исходя из реальных бизнес-процессов.</p><div style="padding: 20px; margin: 0 0 40px 0; background: #1a0f0f; border-left: 3px solid #ef4444; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 8px;">[ НЕДОСТАТОЧНО ]</div><p style="font-size: 15px; color: #ffffff; margin: 0;">Передача только ФИО и табельного номера. Для полноценной работы необходимо учитывать кадровые события, идентификаторы пропусков, разрешения, графики и результаты регистрации проходов.</p></div><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Данные о сотрудниках</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Из кадровой системы в интеграционный контур обычно передаются:</p><div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 24px 0;"><div style="flex: 1 1 calc(33.333% - 10px); min-width: 240px; padding: 12px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Уникальный идентификатор сотрудника</div></div><div style="flex: 1 1 calc(33.333% - 10px); min-width: 240px; padding: 12px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Табельный номер и ФИО</div></div><div style="flex: 1 1 calc(33.333% - 10px); min-width: 240px; padding: 12px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Подразделение и должность</div></div><div style="flex: 1 1 calc(33.333% - 10px); min-width: 240px; padding: 12px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Организация (юр. лицо)</div></div><div style="flex: 1 1 calc(33.333% - 10px); min-width: 240px; padding: 12px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Кадровый статус</div></div><div style="flex: 1 1 calc(33.333% - 10px); min-width: 240px; padding: 12px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Даты начала и прекращения работы</div></div><div style="flex: 1 1 100%; padding: 12px 16px; background: #0a1514; border: 1px solid #14b8a6; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Сведения, необходимые для назначения категории доступа</div></div></div><div style="padding: 20px; margin: 0 0 48px 0; background: #0a1514; border-left: 2px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 8px 0; font-weight: 500;">Принципиально важно:</p><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Использовать постоянный уникальный идентификатор сотрудника, а не ФИО. ФИО может измениться, у разных людей оно может совпадать, а в различных системах могут использоваться разные варианты написания. Уникальный идентификатор позволяет сохранять связь между системами даже после изменения персональных данных.</p></div><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Данные о пропусках</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Для управления физическими идентификаторами необходимо учитывать:</p><div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 24px 0;"><div style="flex: 1 1 calc(33.333% - 10px); min-width: 240px; padding: 12px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Номер пропуска и тип идентификатора</div></div><div style="flex: 1 1 calc(33.333% - 10px); min-width: 240px; padding: 12px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Владелец пропуска</div></div><div style="flex: 1 1 calc(33.333% - 10px); min-width: 240px; padding: 12px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Даты выдачи и активации</div></div><div style="flex: 1 1 calc(33.333% - 10px); min-width: 240px; padding: 12px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Срок действия</div></div><div style="flex: 1 1 calc(33.333% - 10px); min-width: 240px; padding: 12px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Текущий статус</div></div><div style="flex: 1 1 calc(33.333% - 10px); min-width: 240px; padding: 12px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Дата и причина блокировки</div></div></div><div style="padding: 20px; margin: 0 0 48px 0; background: #1a150a; border-left: 3px solid #eab308; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 8px 0; font-weight: 500;">Важно различать человека и пропуск:</p><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Один сотрудник может получить новый пропуск взамен потерянного. В таком случае нельзя создавать нового сотрудника в СКУД. Необходимо заменить или деактивировать прежний идентификатор и связать новый с существующей карточкой человека. Иначе в системе постепенно накапливаются дубликаты, а история проходов одного сотрудника оказывается распределена между несколькими записями.</p></div><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Данные о правах доступа</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Кадровая система может передавать подразделение, должность и другие атрибуты, на основании которых определяется подходящая категория доступа. Но конкретное разрешение на проход должно формироваться по утверждённым правилам.</p><div style="padding: 20px; margin: 0 0 24px 0; background: #1a0f0f; border-left: 2px solid #ef4444; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0;">Принадлежность к инженерному подразделению сама по себе не должна автоматически открывать доступ во все технические помещения. Необходимо учитывать назначение помещения, должностные обязанности, требования безопасности, согласования руководителей и дополнительные ограничения.</p></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 16px 0;">В результате для каждого сотрудника формируется набор разрешений:</p><div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 48px 0;"><div style="padding: 8px 16px; background: #0a1514; border: 1px solid #14b8a6; font-size: 14px; color: #ffffff;">На территорию предприятия</div><div style="padding: 8px 16px; background: #0a1514; border: 1px solid #14b8a6; font-size: 14px; color: #ffffff;">В конкретное здание</div><div style="padding: 8px 16px; background: #0a1514; border: 1px solid #14b8a6; font-size: 14px; color: #ffffff;">В определённые помещения</div><div style="padding: 8px 16px; background: #0a1514; border: 1px solid #14b8a6; font-size: 14px; color: #ffffff;">В отдельные технические зоны</div><div style="padding: 8px 16px; background: #0a1514; border: 1px solid #14b8a6; font-size: 14px; color: #ffffff;">В пределах разрешённых временных интервалов</div></div><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">События прохода</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Из СКУД в систему учёта рабочего времени передаются события, содержащие:</p><div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 24px 0;"><div style="flex: 1 1 calc(33.333% - 10px); min-width: 240px; padding: 12px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Идентификатор события</div></div><div style="flex: 1 1 calc(33.333% - 10px); min-width: 240px; padding: 12px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Идентификатор сотрудника и пропуска</div></div><div style="flex: 1 1 calc(33.333% - 10px); min-width: 240px; padding: 12px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Дата и время</div></div><div style="flex: 1 1 calc(33.333% - 10px); min-width: 240px; padding: 12px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Точка доступа и направление</div></div><div style="flex: 1 1 calc(33.333% - 10px); min-width: 240px; padding: 12px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Результат операции и тип события</div></div><div style="flex: 1 1 calc(33.333% - 10px); min-width: 240px; padding: 12px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;">Сведения об устройстве</div></div></div><div style="padding: 20px; margin: 0 0 60px 0; background: #0a1514; border-left: 2px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 8px 0; font-weight: 500;">Принципиально важно:</p><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Передавать не только успешные проходы. Отказы, попытки использования заблокированного пропуска и другие значимые события могут быть необходимы для расследования инцидентов и анализа работы системы безопасности. При этом в табель рабочего времени должны попадать только те события, которые соответствуют утверждённым правилам учёта.</p></div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; line-height: 1.3;">3. Жизненный цикл доступа: от оформления сотрудника до отзыва пропуска</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 16px 0;">Самая сложная часть интеграции — не первоначальная загрузка списка сотрудников, а правильная обработка изменений.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 32px 0;">Кадровая информация постоянно обновляется. Поэтому интеграция должна реагировать на события, а не только периодически копировать справочники.</p><div style="margin: 0 auto 40px auto; max-width: 800px; width: 100%; text-align: left; background: #000000; border: 1px solid #1a1a1a; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM // EMPLOYEE_ACCESS_LIFECYCLE ]</div><svg viewbox="0 0 760 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><line x1="40" y1="90" x2="720" y2="90" stroke="#333333" stroke-width="2"></line><circle cx="80" cy="90" r="8" fill="#14b8a6"></circle><text x="80" y="60" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="bold" text-anchor="middle">ПРИЁМ</text><text x="80" y="120" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Создание профиля</text><text x="80" y="135" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">в HR и СКУД</text><circle cx="200" cy="90" r="8" fill="#14b8a6"></circle><text x="200" y="60" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="bold" text-anchor="middle">ВЫДАЧА</text><text x="200" y="120" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Пропуск + права</text><text x="200" y="135" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">доступа</text><circle cx="340" cy="90" r="8" fill="#eab308"></circle><text x="340" y="60" fill="#eab308" font-family="'SF Mono', monospace" font-size="10" font-weight="bold" text-anchor="middle">ПЕРЕВОД</text><text x="340" y="120" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Пересчёт прав</text><text x="340" y="135" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">доступа</text><circle cx="480" cy="90" r="8" fill="#555555"></circle><text x="480" y="60" fill="#aaaaaa" font-family="'SF Mono', monospace" font-size="10" font-weight="bold" text-anchor="middle">ОТПУСК</text><text x="480" y="120" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Кадровое событие,</text><text x="480" y="135" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">не отзыв прав</text><circle cx="640" cy="90" r="10" fill="#ef4444"></circle><text x="640" y="60" fill="#ef4444" font-family="'SF Mono', monospace" font-size="10" font-weight="bold" text-anchor="middle">УВОЛЬНЕНИЕ</text><text x="640" y="120" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Немедленный отзыв</text><text x="640" y="135" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">всех прав доступа</text><text x="380" y="170" fill="#555555" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">ИНТЕГРАЦИЯ ДОЛЖНА РЕАГИРОВАТЬ НА КАЖДОЕ СОБЫТИЕ, А НЕ КОПИРОВАТЬ СПРАВОЧНИКИ</text></svg></div><div style="display: flex; flex-direction: column; gap: 16px; margin: 0 0 40px 0;"><div style="padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ПРИЁМ НОВОГО СОТРУДНИКА ]</div><p style="font-size: 14px; color: #ffffff; margin: 0 0 12px 0;">После оформления в кадровой системе интеграционный процесс проверяет, существует ли профиль в СКУД. Если нет — создаётся новая карточка.</p><div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;"><span style="padding: 4px 8px; background: #111111; border: 1px solid #222222; font-size: 12px; color: #aaaaaa;">Сопоставление ID</span> <span style="padding: 4px 8px; background: #111111; border: 1px solid #222222; font-size: 12px; color: #aaaaaa;">Назначение категории доступа</span> <span style="padding: 4px 8px; background: #111111; border: 1px solid #222222; font-size: 12px; color: #aaaaaa;">Проверка согласований</span> <span style="padding: 4px 8px; background: #111111; border: 1px solid #222222; font-size: 12px; color: #aaaaaa;">Регистрация пропуска</span></div><div style="padding: 12px 16px; background: #1a150a; border-radius: 4px;"><p style="font-size: 14px; color: #ffffff; margin: 0;"><strong style="color: #eab308;">Важно:</strong> доступ не должен предоставляться только на основании факта создания кадровой записи. Сотрудник может быть оформлен, но ещё не пройти инструктаж или не получить разрешение руководителя.</p></div></div><div style="padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; border-left: 3px solid #eab308; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #eab308; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ПЕРЕВОД В ДРУГОЕ ПОДРАЗДЕЛЕНИЕ ]</div><p style="font-size: 14px; color: #ffffff; margin: 0 0 12px 0;">Перевод — не просто изменение текстового поля «Подразделение». Он может повлиять на весь набор разрешений.</p><div style="padding: 12px 16px; background: #1a0f0f; border-radius: 4px;"><p style="font-size: 14px; color: #ffffff; margin: 0;"><strong style="color: #ef4444;">Критично:</strong> необходимо не просто добавить новые права, а <strong style="color: #ffffff;">пересчитать весь набор разрешений</strong>. Если система только дополняет существующие права, у сотрудника со временем накапливается избыточный доступ — нарушение принципа минимально необходимых привилегий.</p></div></div><div style="padding: 20px; background: #1a0f0f; border: 1px solid #3f1818; border-left: 3px solid #ef4444; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ УВОЛЬНЕНИЕ СОТРУДНИКА ]</div><p style="font-size: 14px; color: #ffffff; margin: 0 0 12px 0;">Наиболее критичный кадровый сценарий. После получения подтверждённого события интеграция должна запустить процесс отзыва доступа:</p><div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;"><span style="padding: 4px 8px; background: #000000; border: 1px solid #3f1818; font-size: 12px; color: #ffffff;">Блокировка пропуска</span> <span style="padding: 4px 8px; background: #000000; border: 1px solid #3f1818; font-size: 12px; color: #ffffff;">Отзыв всех разрешений</span> <span style="padding: 4px 8px; background: #000000; border: 1px solid #3f1818; font-size: 12px; color: #ffffff;">Обработка доп. идентификаторов</span> <span style="padding: 4px 8px; background: #000000; border: 1px solid #3f1818; font-size: 12px; color: #ffffff;">Обновление статуса</span> <span style="padding: 4px 8px; background: #000000; border: 1px solid #3f1818; font-size: 12px; color: #ffffff;">Передача в учёт времени</span> <span style="padding: 4px 8px; background: #000000; border: 1px solid #3f1818; font-size: 12px; color: #ffffff;">Фиксация результата</span></div><div style="padding: 12px 16px; background: #000000; border-radius: 4px;"><p style="font-size: 14px; color: #ffffff; margin: 0;"><strong style="color: #ef4444;">Внимание:</strong> нельзя полагаться исключительно на обычную ночную синхронизацию. Если речь идёт о немедленном прекращении доступа по решению уполномоченного лица, система должна поддерживать отдельный приоритетный сценарий отзыва.</p></div></div><div style="padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; border-left: 3px solid #555555; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #aaaaaa; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ОТПУСК, БОЛЬНИЧНЫЙ И ВРЕМЕННОЕ ОТСУТСТВИЕ ]</div><p style="font-size: 14px; color: #ffffff; margin: 0 0 12px 0;">Не каждое отсутствие сотрудника означает необходимость блокировать его пропуск. Отпуск, командировка и больничный прежде всего относятся к кадровому и трудовому учёту.</p><p style="font-size: 14px; color: #aaaaaa; margin: 0;">Вопрос о временном ограничении доступа должен решаться отдельно, исходя из политики предприятия. Если компания автоматически блокирует всех сотрудников со статусом «отсутствует», она рискует создать ненужные проблемы.</p></div></div><div style="padding: 24px; margin: 0 0 0 0; background: #0a1514; border: 1px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ КЛЮЧЕВОЕ РАЗЛИЧИЕ ]</div><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0; font-weight: 500;">Необходимо разделить два понятия:</p><div style="display: flex; flex-wrap: wrap; gap: 16px;"><div style="flex: 1; min-width: 240px; padding: 16px; background: #000000; border: 1px solid #145c52; border-radius: 4px;"><div style="font-size: 14px; color: #ffffff; font-weight: bold;">Отсутствие на работе</div><div style="font-size: 13px; color: #aaaaaa; margin-top: 4px;">Кадровое событие (отпуск, больничный)</div></div><div style="flex: 1; min-width: 240px; padding: 16px; background: #000000; border: 1px solid #145c52; border-radius: 4px;"><div style="font-size: 14px; color: #ffffff; font-weight: bold;">Отсутствие права доступа</div><div style="font-size: 13px; color: #aaaaaa; margin-top: 4px;">Безопасностное событие (отзыв, блокировка)</div></div></div><p style="font-size: 15px; color: #ffffff; margin: 16px 0 0 0;">Это разные бизнес-события, и их нельзя смешивать в единый автоматический процесс.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box;"><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; line-height: 1.3;">4. Как организовать управление правами доступа без ручной настройки каждого сотрудника</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 16px 0;">На небольшом предприятии администратор может выдавать права вручную. Но если организация располагает несколькими зданиями, сотнями помещений и большим количеством сотрудников, такой подход становится трудноуправляемым.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 32px 0;">Кроме того, ручная настройка создаёт зависимость от конкретных специалистов. Один сотрудник знает, кому разрешено проходить в технические помещения, другой ведёт таблицу временных пропусков, третий отвечает за блокировку уволенных работников. При отсутствии единой модели организация теряет прозрачность.</p><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Доступ на основании ролей (RBAC)</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Сотруднику назначается роль или категория доступа, соответствующая его рабочим обязанностям. Каждая роль связана с определённым набором разрешений:</p><div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 40px 0;"><div style="padding: 10px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; font-size: 14px; color: #ffffff;">Административный персонал</div><div style="padding: 10px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; font-size: 14px; color: #ffffff;">Производственный персонал</div><div style="padding: 10px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; font-size: 14px; color: #ffffff;">Инженерно-техническая служба</div><div style="padding: 10px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; font-size: 14px; color: #ffffff;">Складские сотрудники</div><div style="padding: 10px 16px; background: #0b0b0b; border: 1px solid #1a1a1a; font-size: 14px; color: #ffffff;">Служба безопасности</div><div style="padding: 10px 16px; background: #1a150a; border: 1px solid #eab308; font-size: 14px; color: #eab308;">Подрядчики (временный доступ)</div></div><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Учёт дополнительных атрибутов (ABAC)</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Для более сложных предприятий одного назначения роли может быть недостаточно. Целесообразно учитывать дополнительные атрибуты, определяющие доступ совокупностью условий:</p><div style="display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 40px 0;"><div style="flex: 1 1 calc(33.333% - 12px); min-width: 240px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">•</span>Подразделение и объект работы</div></div><div style="flex: 1 1 calc(33.333% - 12px); min-width: 240px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">•</span>Должность и тип трудовых отношений</div></div><div style="flex: 1 1 calc(33.333% - 12px); min-width: 240px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">•</span>Смена и срок действия разрешения</div></div><div style="flex: 1 1 calc(33.333% - 12px); min-width: 240px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">•</span>Наличие необходимых допусков</div></div></div><div style="padding: 20px; margin: 0 0 48px 0; background: #0a1514; border-left: 2px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0;"><strong style="color: #ffffff;">Пример:</strong> два инженера могут иметь одинаковую должность, но работать на разных производственных площадках. Одному разрешён доступ в технические помещения первого объекта, другому — второго. Доступ определяется не только должностью, но и контекстом.</p></div><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Временные права и исключения</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">На практике стандартных ролей недостаточно. Специалисту подрядной организации может потребоваться доступ в электрощитовую на два дня для проведения диагностики.</p><div style="margin: 0 auto 32px auto; max-width: 700px; width: 100%; text-align: left; background: #000000; border: 1px solid #1a1a1a; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM // TEMPORARY_ACCESS_LIFECYCLE ]</div><svg viewbox="0 0 660 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="50" width="120" height="40" rx="4" fill="#0b0b0b" stroke="#555555" stroke-width="1.5"></rect><text x="80" y="74" fill="#ffffff" font-family="'SF Mono', monospace" font-size="10" font-weight="bold" text-anchor="middle">ЗАПРОС</text><line x1="140" y1="70" x2="180" y2="70" stroke="#555555" stroke-width="1.5"></line><polygon points="180,70 174,66 174,74" fill="#555555"></polygon><rect x="190" y="50" width="120" height="40" rx="4" fill="#0b0b0b" stroke="#eab308" stroke-width="1.5"></rect><text x="250" y="74" fill="#eab308" font-family="'SF Mono', monospace" font-size="10" font-weight="bold" text-anchor="middle">СОГЛАСОВАНИЕ</text><line x1="310" y1="70" x2="350" y2="70" stroke="#555555" stroke-width="1.5"></line><polygon points="350,70 344,66 344,74" fill="#555555"></polygon><rect x="360" y="30" width="140" height="80" rx="4" fill="#0a1514" stroke="#14b8a6" stroke-width="1.5"></rect><text x="430" y="60" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="bold" text-anchor="middle">АКТИВНЫЙ ДОСТУП</text><text x="430" y="80" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Ограничен по времени</text><text x="430" y="98" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">и перечню помещений</text><line x1="500" y1="70" x2="540" y2="70" stroke="#555555" stroke-width="1.5"></line><polygon points="540,70 534,66 534,74" fill="#555555"></polygon><rect x="550" y="50" width="90" height="40" rx="4" fill="#1a0f0f" stroke="#ef4444" stroke-width="1.5"></rect><text x="595" y="74" fill="#ef4444" font-family="'SF Mono', monospace" font-size="10" font-weight="bold" text-anchor="middle">АВТООТЗЫВ</text></svg></div><div style="padding: 20px; margin: 0 0 0 0; background: #1a0f0f; border-left: 3px solid #ef4444; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 8px 0; font-weight: 500;">Критическое требование:</p><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Временные права не должны превращаться в постоянные. После завершения работ система должна <strong style="color: #ffffff;">автоматически</strong> закрыть разрешение, даже если ответственный сотрудник забыл выполнить это вручную.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box;"><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; line-height: 1.3;">5. Как связать СКУД с учётом рабочего времени</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 32px 0;">Это отдельная задача, которая часто становится причиной ошибок после внедрения интеграции. На первый взгляд всё просто: сотрудник приложил пропуск, система записала время, данные передались в табель. Но в реальности между событием прохода и фактически отработанным временем существует несколько промежуточных правил.</p><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Почему отметка прохода не равна отработанному времени</h3><div style="padding: 24px; margin: 0 0 32px 0; background: #1a0f0f; border: 1px solid #3f1818; border-left: 3px solid #ef4444; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 16px 0;">Представим, что сотрудник прошёл через турникет в 08:47 и покинул территорию в 17:20. Можно ли считать, что он отработал 8 часов 33 минуты? Не обязательно.</p><div style="display: flex; flex-wrap: wrap; gap: 8px;"><span style="padding: 6px 12px; background: #000000; border: 1px solid #3f1818; font-size: 13px; color: #ffffff;">Обеденный перерыв</span> <span style="padding: 6px 12px; background: #000000; border: 1px solid #3f1818; font-size: 13px; color: #ffffff;">Личные выходы с территории</span> <span style="padding: 6px 12px; background: #000000; border: 1px solid #3f1818; font-size: 13px; color: #ffffff;">Перемещения между зданиями</span> <span style="padding: 6px 12px; background: #000000; border: 1px solid #3f1818; font-size: 13px; color: #ffffff;">Рабочие задания за пределами объекта</span> <span style="padding: 6px 12px; background: #000000; border: 1px solid #3f1818; font-size: 13px; color: #ffffff;">Служебные поездки</span> <span style="padding: 6px 12px; background: #000000; border: 1px solid #3f1818; font-size: 13px; color: #ffffff;">Посещение нескольких проходных</span></div></div><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Графики и сменная работа</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Особую сложность представляет сменный режим. Если система просто группирует события по календарным датам, она может ошибочно разделить одну рабочую смену на два отдельных периода.</p><div style="margin: 0 auto 32px auto; max-width: 700px; width: 100%; text-align: left; background: #000000; border: 1px solid #1a1a1a; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM // SHIFT_CROSSING_MIDNIGHT ]</div><svg viewbox="0 0 660 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><line x1="40" y1="70" x2="620" y2="70" stroke="#333333" stroke-width="2"></line><text x="40" y="95" fill="#555555" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">19:00</text><text x="200" y="95" fill="#555555" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">20:00</text><text x="330" y="95" fill="#ef4444" font-family="'SF Mono', monospace" font-size="9" font-weight="bold" text-anchor="middle">00:00 (СМЕНА ДАТЫ)</text><text x="460" y="95" fill="#555555" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">08:00</text><text x="620" y="95" fill="#555555" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">09:00</text><rect x="100" y="30" width="360" height="30" rx="4" fill="#0a1514" stroke="#14b8a6" stroke-width="1.5"></rect><text x="280" y="50" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="bold" text-anchor="middle">РАБОЧАЯ СМЕНА: 19:45 — 08:10</text><circle cx="120" cy="70" r="6" fill="#14b8a6"></circle><text x="120" y="20" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="bold" text-anchor="middle">ВХОД</text><text x="120" y="120" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">День 1</text><circle cx="440" cy="70" r="6" fill="#14b8a6"></circle><text x="440" y="20" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="bold" text-anchor="middle">ВЫХОД</text><text x="440" y="120" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">День 2</text><rect x="480" y="20" width="160" height="50" rx="4" fill="#1a0f0f" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4 4"></rect><text x="560" y="40" fill="#ef4444" font-family="'SF Mono', monospace" font-size="9" font-weight="bold" text-anchor="middle">ОШИБКА:</text><text x="560" y="58" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Разрыв смены по дате</text></svg></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Поэтому учёт времени должен опираться на назначенный график и правила расчёта смен, а не на настройки турникета. Юридические правила учёта должны определяться кадровой и расчётной политикой организации.</p><div style="display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 48px 0;"><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">✓</span>Время начала и окончания смены</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">✓</span>Допустимые отклонения и перерывы</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">✓</span>Пересечение календарных суток</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">✓</span>Переработки, отсутствия и подтверждённые корректировки</div></div></div><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Как выглядит правильная схема обработки</h3><div style="display: flex; flex-direction: column; gap: 12px; margin: 0 0 32px 0;"><div style="padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; display: flex; align-items: center; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; margin-right: 16px; min-width: 60px;">ШАГ 01</div><div style="font-size: 14px; color: #ffffff;">СКУД фиксирует сырые события прохода (вход, выход, отказ).</div></div><div style="padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; display: flex; align-items: center; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; margin-right: 16px; min-width: 60px;">ШАГ 02</div><div style="font-size: 14px; color: #ffffff;">Интеграционный слой передаёт события в систему учёта рабочего времени.</div></div><div style="padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; display: flex; align-items: center; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; margin-right: 16px; min-width: 60px;">ШАГ 03</div><div style="font-size: 14px; color: #ffffff;">Система сопоставляет события с сотрудником, графиком и установленными правилами.</div></div><div style="padding: 16px 20px; background: #0a1514; border: 1px solid #14b8a6; display: flex; align-items: center; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; margin-right: 16px; min-width: 60px;">РЕЗУЛЬТАТ</div><div style="font-size: 14px; color: #ffffff;">Формируются итоги: начало/окончание присутствия, опоздания, ранние уходы, отсутствующие отметки и события, требующие проверки.</div></div></div><div style="padding: 24px; margin: 0 0 0 0; background: #1a150a; border-left: 3px solid #eab308; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #eab308; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ОБРАБОТКА ПРОТИВОРЕЧИЙ ]</div><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0;">Если обнаружено противоречие, система должна направить его на обработку ответственному сотруднику, а не самостоятельно создавать неподтверждённое кадровое событие.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Например, если человек вошёл на территорию, но не зарегистрировал выход, нельзя автоматически считать, что он находился на рабочем месте до конца суток. Необходимо применить утверждённое правило обработки неполной пары событий или запросить подтверждение у руководителя.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box;"><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; line-height: 1.3;">6. Самая опасная ошибка интеграции: повторное создание событий и рассинхронизация</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 16px 0;">При обмене данными между несколькими системами нельзя рассчитывать, что каждое сообщение будет доставлено ровно один раз. Возможны повторные отправки, временные ошибки, задержки, потеря соединения и повторная обработка ранее полученных данных.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 32px 0;">Особенно критично это для событий прохода и кадровых изменений.</p><div style="padding: 20px; margin: 0 0 40px 0; background: #1a0f0f; border-left: 3px solid #ef4444; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 8px;">[ ТИПИЧНЫЙ СЦЕНАРИЙ СБОЯ ]</div><p style="font-size: 15px; color: #ffffff; margin: 0 0 8px 0;">Сотрудник прошёл через турникет в 08:52. СКУД записала событие и передала его в интеграционный слой.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Но система учёта рабочего времени не успела вернуть подтверждение получения. Интеграция повторяет отправку. Если принимающая система не умеет распознавать повторные события, в учёте появятся две одинаковые отметки, что исказит расчёт времени, статистику посещений и последующие отчёты.</p></div><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Идемпотентность при обработке событий</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Для предотвращения таких ситуаций необходимо использовать уникальные идентификаторы событий. Каждое событие прохода получает собственный ID, сформированный системой-источником. При получении сообщения принимающая система проверяет, обрабатывалось ли оно ранее. Если событие уже зарегистрировано, повторная отправка не должна создавать новую запись.</p><div style="padding: 20px; margin: 0 0 48px 0; background: #0a1514; border-left: 2px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 8px 0; font-weight: 500;">Принцип идемпотентности необходим не только для проходов:</p><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Например, повторное получение события увольнения не должно приводить к созданию нескольких операций блокировки или ошибкам в обработке профиля сотрудника.</p></div><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Почему нельзя ориентироваться только на время получения</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Ещё одна проблема — задержка доставки. Допустим, сотрудник прошёл через проходную в 08:30, но из-за временного отсутствия связи событие поступило в систему учёта времени только в 10:15. Если система ориентируется исключительно на время получения сообщения, она зафиксирует проход в 10:15, что является грубой ошибкой.</p><div style="margin: 0 auto 32px auto; max-width: 700px; width: 100%; text-align: left; background: #000000; border: 1px solid #1a1a1a; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM // EVENT_TIMESTAMPS_VS_PROCESSING ]</div><svg viewbox="0 0 660 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><line x1="40" y1="90" x2="620" y2="90" stroke="#333333" stroke-width="2"></line><circle cx="80" cy="90" r="6" fill="#14b8a6"></circle><text x="80" y="60" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="bold" text-anchor="middle">T1: 08:30</text><text x="80" y="120" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Фактическое событие</text><circle cx="160" cy="90" r="6" fill="#14b8a6"></circle><text x="160" y="60" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="bold" text-anchor="middle">T2: 08:30</text><text x="160" y="120" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Регистрация СКУД</text><rect x="180" y="75" width="200" height="30" rx="4" fill="#1a150a" stroke="#eab308" stroke-width="1" stroke-dasharray="4 4"></rect><text x="280" y="94" fill="#eab308" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">ЗАДЕРЖКА СЕТИ / ОЧЕРЕДЬ</text><circle cx="400" cy="90" r="6" fill="#ef4444"></circle><text x="400" y="60" fill="#ef4444" font-family="'SF Mono', monospace" font-size="9" font-weight="bold" text-anchor="middle">T3: 10:15</text><text x="400" y="120" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Получение интеграцией</text><circle cx="520" cy="90" r="6" fill="#555555"></circle><text x="520" y="60" fill="#aaaaaa" font-family="'SF Mono', monospace" font-size="9" font-weight="bold" text-anchor="middle">T4: 10:15</text><text x="520" y="120" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Обработка системой</text><text x="330" y="160" fill="#ef4444" font-family="'SF Mono', monospace" font-size="10" font-weight="bold" text-anchor="middle">ОШИБКА: Использование T3 или T4 вместо T1 приведёт к неверному расчёту времени</text></svg></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Для корректного учёта необходимо различать и сохранять все четыре этапа:</p><div style="display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 40px 0;"><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">[ T1 ]</div><div style="font-size: 14px; color: #ffffff;">Время фактического события (физический проход)</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">[ T2 ]</div><div style="font-size: 14px; color: #ffffff;">Время регистрации события системой-источником (СКУД)</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">[ T3 ]</div><div style="font-size: 14px; color: #ffffff;">Время получения сообщения интеграционным слоем</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">[ T4 ]</div><div style="font-size: 14px; color: #ffffff;">Время обработки принимающей системой (учёт времени)</div></div></div><div style="padding: 24px; margin: 0 0 0 0; background: #1a150a; border: 1px solid #eab308; border-left: 3px solid #eab308; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #eab308; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ КРИТИЧЕСКОЕ ТРЕБОВАНИЕ К ИНФРАСТРУКТУРЕ ]</div><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0;">Для корректного учёта необходимо сохранять исходную временную отметку, а также сведения о её источнике и часовом поясе.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0;">На распределённых объектах дополнительно важно контролировать синхронизацию часов контроллеров и серверов (например, через NTP или PTP). Иначе даже правильно переданные события могут иметь некорректные временные значения, что сделает любой анализ недостоверным.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box;"><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; line-height: 1.3;">7. Что делать, если HR, СКУД или система учёта времени временно недоступны</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 16px 0;">Это один из наиболее важных вопросов при проектировании интеграции. На предприятии система доступа не должна полностью зависеть от постоянной доступности кадрового сервера или корпоративной сети.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 32px 0;">Если HR-система временно не отвечает, предприятие не должно автоматически потерять возможность прохода всех действующих сотрудников. А если связь с сервером СКУД нарушилась, система учёта времени не должна бесследно потерять события, которые уже зарегистрированы контроллерами. Поэтому необходимо заранее предусмотреть автономную работу и последующее восстановление обмена.</p><div style="display: flex; flex-direction: column; gap: 16px; margin: 0 0 40px 0;"><div style="padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; border-left: 3px solid #eab308; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #eab308; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ СЦЕНАРИЙ 01 ] Недоступна кадровая система (HR)</div><p style="font-size: 14px; color: #ffffff; margin: 0 0 12px 0;">СКУД продолжает использовать ранее полученные и подтверждённые сведения о сотрудниках и действующих разрешениях, сохраняя штатную работу.</p><div style="padding: 12px 16px; background: #1a150a; border-radius: 4px;"><p style="font-size: 14px; color: #ffffff; margin: 0 0 8px 0;"><strong style="color: #eab308;">Риск:</strong> Сотрудник был уволен, но событие ещё не поступило в СКУД.</p><p style="font-size: 14px; color: #aaaaaa; margin: 0;">Решение: Уполномоченный сотрудник должен иметь возможность запустить приоритетный процесс блокировки через доступный контур управления. После восстановления связи информация сверяется. Важно не допустить, чтобы позднее поступившая старая запись случайно восстановила уже отозванный доступ.</p></div></div><div style="padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; border-left: 3px solid #eab308; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #eab308; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ СЦЕНАРИЙ 02 ] Недоступен сервер СКУД</div><p style="font-size: 14px; color: #ffffff; margin: 0 0 12px 0;">Контроллеры доступа продолжают работу с локально сохранёнными настройками, проверяя разрешения и фиксируя события в локальной памяти.</p><div style="display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px;"><span style="padding: 4px 8px; background: #111111; border: 1px solid #222222; font-size: 12px; color: #aaaaaa;">Объём локальной памяти событий</span> <span style="padding: 4px 8px; background: #111111; border: 1px solid #222222; font-size: 12px; color: #aaaaaa;">Поведение при заполнении памяти</span> <span style="padding: 4px 8px; background: #111111; border: 1px solid #222222; font-size: 12px; color: #aaaaaa;">Исключение повторной передачи</span> <span style="padding: 4px 8px; background: #111111; border: 1px solid #222222; font-size: 12px; color: #aaaaaa;">Актуальность локальных разрешений</span></div><div style="padding: 12px 16px; background: #1a150a; border-radius: 4px;"><p style="font-size: 14px; color: #ffffff; margin: 0;"><strong style="color: #eab308;">Важно:</strong> Автономная работа означает использование последней известной конфигурации. Если пропуск был отозван уже после потери связи, контроллер может продолжить считать его действительным. Для критичных зон необходимо отдельно оценивать допустимую задержку отзыва.</p></div></div><div style="padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; border-left: 3px solid #eab308; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #eab308; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ СЦЕНАРИЙ 03 ] Недоступна система учёта рабочего времени</div><p style="font-size: 14px; color: #ffffff; margin: 0 0 12px 0;">СКУД продолжает фиксировать события. Интеграционный слой сохраняет сообщения в очереди до восстановления принимающей стороны.</p><div style="display: flex; flex-wrap: wrap; gap: 6px;"><span style="padding: 4px 8px; background: #111111; border: 1px solid #222222; font-size: 12px; color: #ffffff;">Сохранение исходного порядка и времени</span> <span style="padding: 4px 8px; background: #111111; border: 1px solid #222222; font-size: 12px; color: #ffffff;">Проверка уникальности (дедупликация)</span> <span style="padding: 4px 8px; background: #111111; border: 1px solid #222222; font-size: 12px; color: #ffffff;">Контроль успешности обработки</span> <span style="padding: 4px 8px; background: #111111; border: 1px solid #222222; font-size: 12px; color: #ffffff;">Формирование отчёта о расхождениях</span></div></div></div><div style="margin: 0 auto 40px auto; max-width: 700px; width: 100%; text-align: left; background: #000000; border: 1px solid #1a1a1a; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM // OFFLINE_RECOVERY_AND_DEDUPLICATION ]</div><svg viewbox="0 0 660 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="50" width="140" height="60" rx="4" fill="#0b0b0b" stroke="#14b8a6" stroke-width="1.5"></rect><text x="90" y="75" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="bold" text-anchor="middle">КОНТРОЛЛЕР СКУД</text><text x="90" y="95" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Локальное хранение</text><rect x="200" y="50" width="120" height="60" rx="4" fill="#1a150a" stroke="#eab308" stroke-width="1.5" stroke-dasharray="4 4"></rect><text x="260" y="75" fill="#eab308" font-family="'SF Mono', monospace" font-size="10" font-weight="bold" text-anchor="middle">ОЧЕРЕДЬ</text><text x="260" y="95" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Интеграционный слой</text><line x1="320" y1="80" x2="370" y2="80" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="370,80 364,76 364,84" fill="#14b8a6"></polygon><text x="345" y="70" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">СВЯЗЬ</text><rect x="380" y="50" width="140" height="60" rx="4" fill="#0b0b0b" stroke="#14b8a6" stroke-width="1.5"></rect><text x="450" y="75" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="bold" text-anchor="middle">СЕРВЕР УЧЁТА</text><text x="450" y="95" fill="#aaaaaa" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Приём и обработка</text><rect x="560" y="50" width="80" height="60" rx="4" fill="#0a1514" stroke="#14b8a6" stroke-width="1.5"></rect><text x="600" y="75" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="bold" text-anchor="middle">БЕЗ</text><text x="600" y="90" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="bold" text-anchor="middle">ДУБЛИКАТОВ</text><line x1="520" y1="80" x2="555" y2="80" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="555,80 549,76 549,84" fill="#14b8a6"></polygon></svg></div><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Что происходит после восстановления связи</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Нельзя просто включить обмен и считать, что все системы автоматически синхронизировались. Необходимо выполнить сверку. HR-система передаёт актуальный статус, а СКУД сравнивает его с локальным состоянием.</p><div style="padding: 24px; margin: 0 0 0 0; background: #1a0f0f; border: 1px solid #3f1818; border-left: 3px solid #ef4444; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ КРИТИЧЕСКОЕ ПРАВИЛО ПРИОРИТЕТА ]</div><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0;">Особенно опасна ситуация, когда устаревшая информация может восстановить ранее отозванные права.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Операции отзыва доступа должны иметь контролируемый приоритет, а восстановление разрешений — требовать соответствующего нового основания. Система должна применять актуальное подтверждённое изменение, игнорируя устаревшие команды.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box;"><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; line-height: 1.3;">8. Условный пример: промышленное предприятие с тремя сменами</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 16px 0;">Рассмотрим предприятие с несколькими производственными корпусами, складом, административным зданием и общей проходной. На объекте работают 850 сотрудников, ежедневно присутствуют подрядчики и сервисные инженеры. Работа организована в три смены.</p><div style="display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 40px 0;"><div style="flex: 1 1 calc(50% - 16px); min-width: 280px; padding: 20px; background: #1a0f0f; border: 1px solid #3f1818; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ДО ИНТЕГРАЦИИ ]</div><ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;"><li style="font-size: 14px; color: #ffffff;"><span style="color: #ef4444; margin-right: 8px;">✕</span>Заявки на пропуска и увольнения передаются вручную</li><li style="font-size: 14px; color: #ffffff;"><span style="color: #ef4444; margin-right: 8px;">✕</span>Пропуска увольняемых блокируются с задержкой</li><li style="font-size: 14px; color: #ffffff;"><span style="color: #ef4444; margin-right: 8px;">✕</span>После перевода сохраняются лишние разрешения</li><li style="font-size: 14px; color: #ffffff;"><span style="color: #ef4444; margin-right: 8px;">✕</span>Подрядчики проходят на территорию после завершения работ</li><li style="font-size: 14px; color: #ffffff;"><span style="color: #ef4444; margin-right: 8px;">✕</span>Ночные смены некорректно разделяются между датами</li></ul></div><div style="flex: 1 1 calc(50% - 16px); min-width: 280px; padding: 20px; background: #0a1514; border: 1px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ПОСЛЕ ИНТЕГРАЦИИ ]</div><ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px;"><li style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; margin-right: 8px;">✓</span>HR-система — единственный источник кадровых данных</li><li style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; margin-right: 8px;">✓</span>Автоматический пересмотр прав при любых изменениях</li><li style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; margin-right: 8px;">✓</span>Отдельный процесс временной регистрации для подрядчиков</li><li style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; margin-right: 8px;">✓</span>События прохода сопоставляются с графиками смен</li><li style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; margin-right: 8px;">✓</span>Отказоустойчивость и автоматическая синхронизация</li></ul></div></div><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Ситуация с увольнением во время ночной смены</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Кадровая служба оформляет прекращение трудовых отношений с сотрудником второй смены. Интеграция получает событие, проверяет идентификатор и запускает процесс отзыва разрешений. СКУД подтверждает изменение статуса.</p><div style="padding: 20px; margin: 0 0 40px 0; background: #1a0f0f; border-left: 3px solid #ef4444; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 8px 0; font-weight: 500;">Принципиальная деталь:</p><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Если один из контроллеров временно недоступен, система не должна считать отзыв полностью выполненным только потому, что центральный сервер принял команду. Необходимо отслеживать доставку изменения до соответствующего устройства. Если подтверждение не получено, формируется исключение для службы безопасности. Отправленная команда и фактически применённое ограничение — не одно и то же.</p></div><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Ситуация с ночной сменой и задержкой событий</h3><div style="margin: 0 auto 32px auto; max-width: 700px; width: 100%; text-align: left; background: #000000; border: 1px solid #1a1a1a; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM // NIGHT_SHIFT_EVENT_RECONCILIATION ]</div><svg viewbox="0 0 660 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><line x1="40" y1="80" x2="620" y2="80" stroke="#333333" stroke-width="2"></line><text x="40" y="105" fill="#555555" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">19:00</text><text x="180" y="105" fill="#555555" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">20:00</text><text x="330" y="105" fill="#ef4444" font-family="'SF Mono', monospace" font-size="9" font-weight="bold" text-anchor="middle">00:00 (СМЕНА ДАТЫ)</text><text x="480" y="105" fill="#555555" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">07:00</text><text x="620" y="105" fill="#555555" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">08:00</text><rect x="80" y="40" width="460" height="30" rx="4" fill="#0a1514" stroke="#14b8a6" stroke-width="1.5"></rect><text x="310" y="60" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="bold" text-anchor="middle">РАБОЧАЯ СМЕНА: 19:45 — 07:55 (СЛЕДУЮЩЕГО ДНЯ)</text><circle cx="100" cy="80" r="6" fill="#14b8a6"></circle><text x="100" y="30" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="bold" text-anchor="middle">ВХОД 19:45</text><rect x="280" y="20" width="100" height="25" rx="4" fill="#1a150a" stroke="#eab308" stroke-width="1" stroke-dasharray="4 4"></rect><text x="330" y="37" fill="#eab308" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">СБОЙ СВЯЗИ 23:30</text><line x1="330" y1="45" x2="330" y2="74" stroke="#eab308" stroke-width="1" stroke-dasharray="2 2"></line><circle cx="520" cy="80" r="6" fill="#14b8a6"></circle><text x="520" y="30" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="bold" text-anchor="middle">ВЫХОД 07:55</text><rect x="500" y="115" width="140" height="35" rx="4" fill="#0a1514" stroke="#14b8a6" stroke-width="1.5"></rect><text x="570" y="137" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="10" text-anchor="middle">Одна смена, без дублей</text></svg></div><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 32px 0;">Контроллеры сохраняют события локально. После восстановления связи информация поступает в систему учёта времени. Система использует первоначальные временные отметки, проверяет уникальность событий и сопоставляет их с графиком смен. В результате обе отметки относятся к одной рабочей смене, а не к двум отдельным кalendarным периодам. Если одно событие поступило повторно, оно не создаёт дополнительную отметку.</p><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Что изменилось в результате</h3><div style="display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 32px 0;"><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">✓</span>Кадровые изменения автоматически инициируют пересмотр доступа</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">✓</span>Пропуска жёстко связаны с конкретными сотрудниками</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">✓</span>Временные разрешения имеют строгий ограниченный срок</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">✓</span>События прохода передаются без потери исходного времени</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">✓</span>Повторные сообщения не создают дубликатов (идемпотентность)</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">✓</span>Недоступность одной системы не останавливает остальные процессы</div></div></div><div style="padding: 24px; margin: 0 0 0 0; background: #0a1514; border: 1px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ГЛАВНЫЙ РЕЗУЛЬТАТ ]</div><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0;">Главное изменение заключается в том, что служба безопасности, кадровая служба и специалисты по учёту времени перестают вести три независимых набора информации об одном человеке.</p><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: 500;">Вместо этого предприятие получает единый управляемый процесс, где данные синхронизированы, ошибки перехватываются автоматически, а каждое действие имеет понятный источник и контролируемые последствия.</p></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box;"><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; line-height: 1.3;">9. Как построить архитектуру интеграции СКУД, HR и учёта времени</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 16px 0;">Для небольшой организации может быть достаточно штатных механизмов обмена между программными продуктами.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 32px 0;">Но на предприятии с несколькими объектами, тысячами сотрудников и распределёнными точками доступа прямые соединения между каждой парой систем быстро становятся сложными в сопровождении. Если каждая система самостоятельно реализует все необходимые связи, количество интеграций растёт вместе с количеством участников.</p><div style="margin: 0 auto 40px auto; max-width: 800px; width: 100%; text-align: left; background: #000000; border: 1px solid #1a1a1a; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 10px; color: #555555; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM // POINT_TO_POINT_VS_INTEGRATION_LAYER ]</div><svg viewbox="0 0 780 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><text x="140" y="20" fill="#ef4444" font-family="'SF Mono', monospace" font-size="10" font-weight="bold" text-anchor="middle">ПРЯМЫЕ СВЯЗИ (СЛОЖНО)</text><rect x="40" y="50" width="80" height="30" rx="4" fill="#0b0b0b" stroke="#555555" stroke-width="1"></rect><text x="80" y="69" fill="#ffffff" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">HR</text><rect x="180" y="50" width="80" height="30" rx="4" fill="#0b0b0b" stroke="#555555" stroke-width="1"></rect><text x="220" y="69" fill="#ffffff" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">СКУД</text><rect x="40" y="130" width="80" height="30" rx="4" fill="#0b0b0b" stroke="#555555" stroke-width="1"></rect><text x="80" y="149" fill="#ffffff" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">Учёт времени</text><rect x="180" y="130" width="80" height="30" rx="4" fill="#0b0b0b" stroke="#555555" stroke-width="1"></rect><text x="220" y="149" fill="#ffffff" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">Безопасность</text><line x1="120" y1="65" x2="180" y2="65" stroke="#ef4444" stroke-width="1"></line><line x1="80" y1="80" x2="80" y2="130" stroke="#ef4444" stroke-width="1"></line><line x1="120" y1="145" x2="180" y2="145" stroke="#ef4444" stroke-width="1"></line><line x1="220" y1="80" x2="220" y2="130" stroke="#ef4444" stroke-width="1"></line><line x1="120" y1="65" x2="220" y2="145" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"></line><line x1="80" y1="80" x2="180" y2="145" stroke="#ef4444" stroke-width="1" stroke-dasharray="2 2"></line><line x1="380" y1="20" x2="380" y2="180" stroke="#333333" stroke-width="1" stroke-dasharray="4 4"></line><text x="580" y="20" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="bold" text-anchor="middle">ИНТЕГРАЦИОННЫЙ СЛОЙ (ОПТИМАЛЬНО)</text><rect x="480" y="40" width="200" height="120" rx="4" fill="#0a1514" stroke="#14b8a6" stroke-width="1.5"></rect><text x="580" y="65" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="11" font-weight="bold" text-anchor="middle">ИНТЕГРАЦИОННАЯ ШИНА</text><text x="580" y="85" fill="#ffffff" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">• Маршрутизация</text><text x="580" y="100" fill="#ffffff" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">• Трансформация данных</text><text x="580" y="115" fill="#ffffff" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">• Очереди и мониторинг</text><text x="580" y="130" fill="#ffffff" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">• Единая модель данных</text><rect x="700" y="50" width="60" height="30" rx="4" fill="#0b0b0b" stroke="#14b8a6" stroke-width="1"></rect><text x="730" y="69" fill="#ffffff" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">HR</text><line x1="680" y1="65" x2="700" y2="65" stroke="#14b8a6" stroke-width="1.5"></line><rect x="700" y="130" width="60" height="30" rx="4" fill="#0b0b0b" stroke="#14b8a6" stroke-width="1"></rect><text x="730" y="149" fill="#ffffff" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">СКУД</text><line x1="680" y1="145" x2="700" y2="145" stroke="#14b8a6" stroke-width="1.5"></line><rect x="400" y="130" width="60" height="30" rx="4" fill="#0b0b0b" stroke="#14b8a6" stroke-width="1"></rect><text x="430" y="149" fill="#ffffff" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Учёт</text><line x1="480" y1="145" x2="460" y2="145" stroke="#14b8a6" stroke-width="1.5"></line><rect x="400" y="50" width="60" height="30" rx="4" fill="#0b0b0b" stroke="#14b8a6" stroke-width="1"></rect><text x="430" y="69" fill="#ffffff" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Безоп.</text><line x1="480" y1="65" x2="460" y2="65" stroke="#14b8a6" stroke-width="1.5"></line></svg></div><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Почему интеграционный слой особенно важен</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 16px 0;">Предположим, предприятие меняет кадровую систему. Если обмен реализован напрямую и содержит множество индивидуальных связей, переход может потребовать переработки интеграций с СКУД и системой учёта времени.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 32px 0;">Если же существует промежуточный слой с согласованной моделью данных, новая HR-система может подключаться к нему через адаптер. Это снижает зависимость архитектуры от конкретного программного продукта. Но сам по себе интеграционный слой не решает проблему качества данных: необходимо также определить единые идентификаторы, правила обработки изменений, допустимые задержки, механизмы сверки и ответственность за исправление ошибок.</p><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; line-height: 1.3;">10. Информационная безопасность и защита персональных данных</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 16px 0;">Интеграция СКУД с кадровыми системами затрагивает информацию, которая требует особого внимания. Речь идёт не только о ФИО и табельных номерах.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 32px 0;">Система может содержать историю перемещений сотрудников, сведения о посещении отдельных помещений, графики присутствия и данные об отказах в доступе. В совокупности такая информация позволяет делать выводы о поведении человека и его рабочей активности. Поэтому безопасность должна закладываться в архитектуру с самого начала.</p><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Разграничение полномочий</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Кадровый специалист не обязательно должен иметь возможность самостоятельно изменять технические настройки контроллеров. Администратор СКУД не должен получать полный доступ ко всем кадровым сведениям. Руководитель подразделения может согласовывать права доступа своих сотрудников, но не должен самостоятельно назначать разрешения в критические помещения без предусмотренного согласования.</p><div style="display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 32px 0;"><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">•</span>Кадровая служба управляет кадровыми сведениями</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">•</span>Служба безопасности отвечает за политику доступа</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">•</span>Администраторы поддерживают работоспособность СКУД</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">•</span>Ответственные подразделений согласуют необходимые разрешения</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">•</span>HR обрабатывает отклонения рабочего времени</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-size: 14px; color: #ffffff;"><span style="color: #14b8a6; font-weight: bold; margin-right: 8px;">•</span>ИТ-служба отвечает за интеграционную инфраструктуру</div></div></div><div style="padding: 20px; margin: 0 0 40px 0; background: #0a1514; border-left: 2px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0;">Все значимые изменения должны фиксироваться в журналах аудита. Для передачи данных необходимо использовать защищённые каналы связи, а для взаимодействия систем — аутентификацию и разграничение полномочий. Важно не использовать одну общую учётную запись с избыточными правами для всех интеграционных операций.</p></div><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Защита обмена и хранение событий</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Доступ к кадровым данным, журналам проходов и административным функциям должен предоставляться только тем компонентам и сотрудникам, которым он действительно необходим.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Отдельного внимания требует хранение событий. Необходимо определить сроки хранения, основания обработки, порядок предоставления доступа и удаления информации в соответствии с применимыми требованиями законодательства.</p><div style="padding: 20px; margin: 0 0 40px 0; background: #1a150a; border-left: 3px solid #eab308; box-sizing: border-box;"><p style="font-size: 15px; color: #ffffff; margin: 0 0 8px 0; font-weight: 500;">Особый статус биометрии:</p><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Если используются биометрические идентификаторы, такие решения требуют отдельной правовой и организационной оценки. Биометрические данные нельзя рассматривать как обычный атрибут сотрудника.</p></div><h3 style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; margin: 0 0 16px 0; text-transform: uppercase; letter-spacing: 1.5px;">Безопасность при отказах систем</h3><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 20px 0;">Важно также заранее определить, что происходит при потере связи. Для разных помещений и типов оборудования допустимые режимы могут отличаться.</p><div style="display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 0 0;"><div style="flex: 1 1 calc(50% - 16px); min-width: 280px; padding: 20px; background: #1a0f0f; border: 1px solid #3f1818; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ЗАЩИЩЁННЫЕ ЗОНЫ ]</div><p style="font-size: 14px; color: #ffffff; margin: 0;">Политика может предусматривать отказ в новом проходе при невозможности подтвердить разрешение через центральный сервер.</p></div><div style="flex: 1 1 calc(50% - 16px); min-width: 280px; padding: 20px; background: #0a1514; border: 1px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ПОЖАРНАЯ БЕЗОПАСНОСТЬ ]</div><p style="font-size: 14px; color: #ffffff; margin: 0;">Требования пожарной безопасности и аварийной эвакуации должны иметь абсолютный приоритет над обычной логикой корпоративной авторизации. Интеграция с HR не должна становиться условием открытия путей эвакуации.</p></div></div></div><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #ffffff; text-align: left; line-height: 1.6; padding: 0; box-sizing: border-box;"><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; line-height: 1.3;">11. Какие ошибки чаще всего допускают при внедрении</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 16px 0;">Даже технически исправная интеграция может давать неудовлетворительный результат, если не продуманы правила работы.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 32px 0;">Наиболее распространённые проблемы связаны не с передачей данных, а с неправильной организацией процессов.</p><div style="display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 48px 0;"><div style="flex: 1 1 calc(50% - 16px); min-width: 280px; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ОШИБКА 01 ] Использование ФИО вместо постоянного идентификатора</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 12px 0;">После изменения фамилии система может создать новую запись вместо обновления существующей.</p><div style="padding: 12px; background: #0a1514; border-radius: 4px;"><p style="font-size: 14px; color: #ffffff; margin: 0;"><strong style="color: #14b8a6;">Решение:</strong> Использовать стабильный уникальный идентификатор сотрудника и отдельно управлять физическими идентификаторами пропусков.</p></div></div><div style="flex: 1 1 calc(50% - 16px); min-width: 280px; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ОШИБКА 02 ] Автоматическая выдача доступа только по должности</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 12px 0;">Одинаковая должность не означает одинаковые обязанности и разрешения.</p><div style="padding: 12px; background: #0a1514; border-radius: 4px;"><p style="font-size: 14px; color: #ffffff; margin: 0;"><strong style="color: #14b8a6;">Решение:</strong> Учитывать подразделение, объект, конкретные задачи, согласования и дополнительные условия.</p></div></div><div style="flex: 1 1 calc(50% - 16px); min-width: 280px; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ОШИБКА 03 ] Блокировка пропуска только при ночной синхронизации</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 12px 0;">Для обычных изменений такая периодичность допустима, но критические события требуют оперативной реакции.</p><div style="padding: 12px; background: #0a1514; border-radius: 4px;"><p style="font-size: 14px; color: #ffffff; margin: 0;"><strong style="color: #14b8a6;">Решение:</strong> Определить категории кадровых событий и допустимое время реакции для каждой из них.</p></div></div><div style="flex: 1 1 calc(50% - 16px); min-width: 280px; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ОШИБКА 04 ] Отсутствие контроля фактического отзыва</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 12px 0;">Команда отправлена на сервер, но контроллер на объекте её не получил.</p><div style="padding: 12px; background: #0a1514; border-radius: 4px;"><p style="font-size: 14px; color: #ffffff; margin: 0;"><strong style="color: #14b8a6;">Решение:</strong> Отслеживать не только передачу команды, но и подтверждение её применения в соответствующем контуре доступа.</p></div></div><div style="flex: 1 1 calc(50% - 16px); min-width: 280px; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ОШИБКА 05 ] Смешивание кадрового статуса и права доступа</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 12px 0;">Отпуск автоматически трактуется как необходимость блокировки, а активный договор — как разрешение на проход везде.</p><div style="padding: 12px; background: #0a1514; border-radius: 4px;"><p style="font-size: 14px; color: #ffffff; margin: 0;"><strong style="color: #14b8a6;">Решение:</strong> Чётко разделить кадровые события и правила авторизации.</p></div></div><div style="flex: 1 1 calc(50% - 16px); min-width: 280px; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ОШИБКА 06 ] Использование событий прохода как готового табеля</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 12px 0;">Время открытия турникета принимается за фактическое рабочее время без учёта контекста.</p><div style="padding: 12px; background: #0a1514; border-radius: 4px;"><p style="font-size: 14px; color: #ffffff; margin: 0;"><strong style="color: #14b8a6;">Решение:</strong> Сопоставлять события с графиками и правилами учёта, предусматривая обработку неполных данных.</p></div></div><div style="flex: 1 1 calc(50% - 16px); min-width: 280px; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ОШИБКА 07 ] Отсутствие защиты от повторной обработки</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 12px 0;">Повторная отправка сообщения создаёт дополнительные отметки или ошибочные операции.</p><div style="padding: 12px; background: #0a1514; border-radius: 4px;"><p style="font-size: 14px; color: #ffffff; margin: 0;"><strong style="color: #14b8a6;">Решение:</strong> Использовать уникальные идентификаторы событий и идемпотентную обработку.</p></div></div><div style="flex: 1 1 calc(50% - 16px); min-width: 280px; padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ОШИБКА 08 ] Игнорирование автономной работы контроллеров</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 12px 0;">Предприятие проверяет только штатную работу, но не тестирует потерю связи и восстановление обмена.</p><div style="padding: 12px; background: #0a1514; border-radius: 4px;"><p style="font-size: 14px; color: #ffffff; margin: 0;"><strong style="color: #14b8a6;">Решение:</strong> Проводить испытания сценариев недоступности систем, включая накопление и сверку событий.</p></div></div></div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; line-height: 1.3;">12. Как внедрять интеграцию без остановки действующих процессов</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 16px 0;">Внедрение лучше начинать не с программирования обмена, а с обследования процессов.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 32px 0;">Необходимо выяснить, как сейчас оформляются сотрудники, кто выдаёт пропуска, как согласуются права доступа, каким образом фиксируются проходы и как формируется табель. Особенно важно определить все исключения: подрядчиков, временный персонал, посетителей, сотрудников нескольких юридических лиц, работников со сменными графиками.</p><div style="display: flex; flex-direction: column; gap: 12px; margin: 0 0 48px 0;"><div style="padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 8px;">[ ЭТАП 01 ] Обследование систем и данных</div><p style="font-size: 14px; color: #ffffff; margin: 0;">Изучаются HR, СКУД и система учёта времени. Определяются существующие справочники, идентификаторы, форматы обмена, кадровые события и ограничения программных продуктов.</p></div><div style="padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 8px;">[ ЭТАП 02 ] Разработка единой модели данных</div><p style="font-size: 14px; color: #ffffff; margin: 0;">Определяются идентификаторы сотрудников, пропусков, организаций, подразделений, точек доступа и событий. Устанавливаются правила сопоставления и обработки дубликатов.</p></div><div style="padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 8px;">[ ЭТАП 03 ] Проектирование модели доступа</div><p style="font-size: 14px; color: #ffffff; margin: 0;">Формируются категории, роли, атрибуты, временные ограничения и процедуры согласования. Отдельно проектируются процессы для подрядчиков и временного персонала.</p></div><div style="padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 8px;">[ ЭТАП 04 ] Настройка кадровой интеграции</div><p style="font-size: 14px; color: #ffffff; margin: 0;">Реализуется передача приёмов, переводов, увольнений и других необходимых изменений. Проверяется корректность применения кадровых событий с учётом дат вступления в силу.</p></div><div style="padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 8px;">[ ЭТАП 05 ] Интеграция событий прохода</div><p style="font-size: 14px; color: #ffffff; margin: 0;">Настраивается передача событий в систему учёта времени, включая уникальные идентификаторы, исходные временные отметки и контроль повторной доставки.</p></div><div style="padding: 20px; background: #0b0b0b; border: 1px solid #1a1a1a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 8px;">[ ЭТАП 06 ] Проверка отказоустойчивости</div><p style="font-size: 14px; color: #ffffff; margin: 0;">Тестируются временная недоступность HR, потеря связи с контроллерами, остановка системы учёта времени, повторная передача сообщений и восстановление синхронизации.</p></div><div style="padding: 20px; background: #0a1514; border: 1px solid #14b8a6; border-left: 3px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 8px;">[ ЭТАП 07 ] Пилотная эксплуатация</div><p style="font-size: 14px; color: #ffffff; margin: 0 0 8px 0;">Разумно начать с одного здания или подразделения. На пилоте проверяются реальные кадровые сценарии, сменные графики, временные пропуска и процессы отзыва доступа.</p><p style="font-size: 14px; color: #aaaaaa; margin: 0;">После устранения замечаний решение распространяется на остальные объекты.</p></div></div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; line-height: 1.3;">13. Как измерить результат интеграции</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 32px 0;">Оценивать проект только по факту успешного обмена данными неправильно. Важно понимать, насколько интеграция улучшила безопасность и работу кадровых процессов.</p><div style="display: flex; flex-wrap: wrap; gap: 12px; margin: 0 0 40px 0;"><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">ВРЕМЯ ПРИМЕНЕНИЯ ИЗМЕНЕНИЙ</div><div style="font-size: 14px; color: #ffffff;">Оперативность синхронизации от кадрового события до фактического ограничения</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">ДОЛЯ ОБРАБОТАННЫХ СОБЫТИЙ</div><div style="font-size: 14px; color: #ffffff;">Надёжность обмена кадровыми данными</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">НЕСОПОСТАВЛЕННЫЕ СОТРУДНИКИ</div><div style="font-size: 14px; color: #ffffff;">Качество идентификации и связывания записей</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #1a0f0f; border: 1px solid #3f1818; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">АКТИВНЫЕ ПРОПУСКА У УВОЛЕННЫХ</div><div style="font-size: 14px; color: #ffffff;">Качество и скорость отзыва доступа (критический показатель)</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #1a150a; border: 1px solid #eab308; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #eab308; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">ПРОСРОЧЕННЫЕ ВРЕМЕННЫЕ РАЗРЕШЕНИЯ</div><div style="font-size: 14px; color: #ffffff;">Контроль временного доступа подрядчиков</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">СОБЫТИЯ, ПЕРЕДАННЫЕ БЕЗ ПОТЕРЬ</div><div style="font-size: 14px; color: #ffffff;">Полнота учёта проходов для формирования табеля</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">ПОВТОРНО ОБРАБОТАННЫЕ СОБЫТИЯ</div><div style="font-size: 14px; color: #ffffff;">Качество защиты от дубликатов (идемпотентность)</div></div><div style="flex: 1 1 calc(50% - 12px); min-width: 280px; padding: 16px 20px; background: #0b0b0b; border: 1px solid #1a1a1a; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;">ВРЕМЯ ВОССТАНОВЛЕНИЯ СИНХРОНИЗАЦИИ</div><div style="font-size: 14px; color: #ffffff;">Устойчивость процессов после сбоев связи</div></div></div><div style="padding: 24px; margin: 0 0 40px 0; background: #0a1514; border: 1px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ САМЫЙ ВАЖНЫЙ ПОКАЗАТЕЛЬ ]</div><p style="font-size: 15px; color: #ffffff; margin: 0 0 12px 0;">Особенно важно измерять время от момента вступления кадрового изменения в силу до момента, когда соответствующее ограничение <strong style="color: #ffffff;">действительно применяется</strong> системой доступа.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0;">Это более содержательный показатель, чем время отправки сообщения из HR. Если кадровая запись уже закрыта, а пропуск остаётся активным, это должно обнаруживаться автоматически и попадать в очередь обработки. Для крупных предприятий полезно регулярно проводить сверку действующих сотрудников, пропусков и назначенных разрешений.</p></div><h2 style="font-family: 'SF Mono', Monaco, monospace; font-size: 22px; font-weight: bold; margin: 0 0 20px 0; color: #ffffff; letter-spacing: 0.5px; line-height: 1.3;">Заключение</h2><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 16px 0;">Интеграция СКУД с кадровыми системами и учётом рабочего времени — это задача, в которой пересекаются информационная безопасность, кадровые процессы, управление персоналом и промышленная инфраструктура.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 16px 0;">Нельзя просто передать список сотрудников в систему доступа и считать задачу решённой. Необходимо обеспечить правильную идентификацию людей, связать кадровые события с жизненным циклом пропусков, организовать выдачу и отзыв разрешений, учитывать временные ограничения и обеспечить корректную передачу событий прохода.</p><p style="font-size: 15px; color: #aaaaaa; margin: 0 0 32px 0;">Особое внимание требуется уделить отказоустойчивости. Если одна из систем временно недоступна, остальные должны продолжать выполнять предусмотренные функции, а накопленные изменения и события должны корректно обрабатываться после восстановления связи. Не менее важно разделить физический доступ и учёт рабочего времени: проход через турникет — это зарегистрированное событие, а не автоматически подтверждённая продолжительность работы.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a1514; border: 1px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; margin-bottom: 12px;">[ ПОДХОД LOG-AI ]</div><p style="font-size: 15px; color: #ffffff; margin: 0 0 16px 0;">Мы рассматриваем подобные интеграции как построение согласованной системы управления данными и бизнес-процессами. Здесь важна не только техническая связь между программными продуктами, но и правильное распределение ответственности: кадровая система определяет трудовые отношения, СКУД управляет физическим доступом, а система учёта времени обрабатывает события присутствия в соответствии с установленными правилами.</p><p style="font-size: 15px; color: #ffffff; margin: 0; font-weight: 500;">Хорошо спроектированная интеграция должна обеспечивать простую, но принципиально важную вещь: кадровое изменение не должно оставаться незамеченным системой безопасности, пропуск не должен жить собственной жизнью после прекращения его действия, а событие прохода не должно превращаться в ошибку в рабочем табеле.</p></div></div><p> </p><div style="max-width: 1100px; margin: 60px auto 0 auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">НАВИГАЦИЯ // SUGGESTED_READING</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ДОКУМЕНТЫ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Как автоматизировать обработку документов</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kak-avtomatizirovat-obrabotku-dokumentov/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ДАННЫЕ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Как собирать данные из разных источников</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kak-sobirat-dannye-iz-raznyh-istochnikov/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ИНТЕГРАЦИИ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Как подключить внешний источник и не сломать систему</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kak-podklyuchit-vneshniy-istochnik-i-ne-slomat-sistemu/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div></div></div><div style="max-width: 1100px; margin: 20px auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; border-top: 1px solid #165c52; padding: 40px 0 0 0; box-sizing: border-box; width: 100%;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 40px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ EXPERTISE JOURNAL ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Все инженерные материалы и экспертные статьи</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/ekspertiza/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">перейти к каталогу ──►</a></div></div><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ CORE GLOSSARY ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Полный алфавитный справочник ИТ-терминов</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/glossariy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">открыть справочник ──►</a></div></div></div></div><p> </p></div></article></main><footer class="footer"><div class="wrapper"><div class="footer__copyright"><p> </p><p> </p></div><button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg width="20" height="20"><use xlink:href="https://log-ai.ru/assets/svg/svg-map.svg#toparrow"/></svg></button></div></footer><script defer="defer" src="https://log-ai.ru/assets/js/scripts.min.js?v&#x3D;d0fc1030089a37f93a2d51bf6d07565c"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script><script>(() => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') !== 'monument') return;
+
+  const IMAGE_URL = 'https://log-ai.ru/media/files/Interstellar.jpeg';
+  const AUDIO_URL = 'https://log-ai.ru/media/files/interstellar.mp3';
+
+  // Защита от повторного запуска
+  if (document.getElementById('log-ai-monument')) return;
+
+  const monument = document.createElement('div');
+  monument.id = 'log-ai-monument';
+
+  const root = document.documentElement;
+  const body = document.body;
+
+  const previousRootOverflow = root.style.overflow;
+  const previousBodyOverflow = body.style.overflow;
+  const previousBodyPosition = body.style.position;
+  const previousBodyTop = body.style.top;
+  const previousBodyWidth = body.style.width;
+  const previousScrollX = window.scrollX;
+  const previousScrollY = window.scrollY;
+
+  root.style.overflow = 'hidden';
+  body.style.overflow = 'hidden';
+  body.style.position = 'fixed';
+  body.style.top = `-${previousScrollY}px`;
+  body.style.width = '100%';
+
+  monument.innerHTML = `
+    <div class="monument-universe"></div>
+    <canvas class="monument-stars"></canvas>
+    <div class="monument-shade"></div>
+
+    <div class="monument-frame">
+      <p class="monument-overline">ARCHIVUM · LOG-AI · MMXXVI</p>
+
+      <div class="monument-rule"></div>
+
+      <h1>PER ASPERA<br><span>AD ASTRA</span></h1>
+
+      <p class="monument-translation">
+        THROUGH HARDSHIP, TO THE STARS
+      </p>
+
+      <div class="monument-message">
+        <p>TO THOSE WHO BUILD BEYOND THE LIMITS OF THEIR TIME.</p>
+        <p>TO THOSE WHO CONTINUE WHEN THE OUTCOME IS UNKNOWN.</p>
+        <p>TO THOSE WHO WILL DISCOVER THIS LONG AFTER ITS CREATION.</p>
+      </div>
+
+      <p class="monument-declaration">
+        YOU WERE NOT THE FIRST TO LOOK AT THE STARS.<br>
+        BUT YOU MAY BE AMONG THOSE WHO REACH THEM.
+      </p>
+
+      <div class="monument-rule"></div>
+          
+      <p class="monument-translation">
+        A MARK LEFT IN THE MACHINE.
+      </p>   
+
+      <p class="monument-signature">
+        LOG·AI·ARCHITECTI·MMXXVI
+      </p>
+
+      <p class="monument-exit" id="monument-hint">
+        [ CLICK ANYWHERE TO RETURN ]
+      </p>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #log-ai-monument {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      background: #03040a;
+      color: #e5dfd3;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      box-sizing: border-box;
+      cursor: pointer;
+      isolation: isolate;
+      opacity: 0;
+      animation: logai-monument-appear 1.8s ease forwards;
+    }
+
+    #log-ai-monument .monument-universe {
+      position: fixed;
+      inset: -3%;
+      z-index: -3;
+      background-image: url("https://log-ai.ru/media/files/Interstellar.jpeg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transform: scale(1.02);
+      animation: logai-cosmic-drift 35s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-shade {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(0,0,0,.24) 0%,
+          rgba(0,0,0,.52) 65%,
+          rgba(0,0,0,.78) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.42),
+          rgba(0,0,0,.18) 45%,
+          rgba(0,0,0,.62)
+        );
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-frame {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', serif;
+      padding: 30px 0;
+      text-shadow: 0 2px 18px rgba(0,0,0,.9);
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-translation,
+    #log-ai-monument .monument-signature,
+    #log-ai-monument .monument-exit {
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-signature {
+      color: #c0a16a;
+    }
+
+    #log-ai-monument .monument-rule {
+      height: 1px;
+      width: 160px;
+      max-width: 60%;
+      margin: 30px auto;
+      background: linear-gradient(
+        to right,
+        transparent,
+        #a68a55,
+        transparent
+      );
+      box-shadow: 0 0 12px rgba(190,155,90,.2);
+    }
+
+    #log-ai-monument h1 {
+      margin: 35px 0 18px;
+      font-size: clamp(30px, 7vw, 58px);
+      line-height: 1.5;
+      letter-spacing: .16em;
+      font-weight: 400;
+      color: #f4f0e8;
+    }
+
+    #log-ai-monument h1 span {
+      color: #d2b77e;
+    }
+
+    #log-ai-monument .monument-translation {
+      color: #c0b8aa;
+    }
+
+    #log-ai-monument .monument-message {
+      margin: 55px auto 38px;
+      max-width: 490px;
+      color: #e0d9cd;
+      font-size: 13px;
+      line-height: 2.2;
+      letter-spacing: .035em;
+    }
+
+    #log-ai-monument .monument-message p {
+      margin: 0 0 12px;
+    }
+
+    #log-ai-monument .monument-declaration {
+      color: #e0c48a;
+      font-size: 12px;
+      line-height: 2.3;
+      letter-spacing: .08em;
+    }
+
+    #log-ai-monument .monument-exit {
+      margin-top: 36px;
+      color: #c0b8aa;
+      font-size: 9px;
+      letter-spacing: .18em;
+    }
+
+    @keyframes logai-monument-appear {
+      to { opacity: 1; }
+    }
+
+    @keyframes logai-cosmic-drift {
+      from { transform: scale(1.02); }
+      to { transform: scale(1.13); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #log-ai-monument,
+      #log-ai-monument .monument-universe {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(monument);
+
+  // Тонкие, редкие звёзды
+  const canvas = monument.querySelector('.monument-stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let frameId = null;
+  let closed = false;
+
+  function resizeStars() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(window.innerWidth * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    stars = Array.from({ length: 65 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      length: 8 + Math.random() * 25,
+      speed: 0.25 + Math.random() * 0.75,
+      alpha: 0.15 + Math.random() * 0.5,
+      delay: Math.random() * 500
+    }));
+  }
+
+  function drawStars() {
+    if (closed) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    for (const star of stars) {
+      star.delay -= 1;
+
+      if (star.delay <= 0) {
+        star.y += star.speed;
+        star.x -= star.speed * 0.35;
+
+        ctx.beginPath();
+        ctx.moveTo(star.x, star.y);
+        ctx.lineTo(star.x - star.length * 0.35,
+                   star.y - star.length);
+
+        ctx.strokeStyle = `rgba(210,220,255,${star.alpha})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+
+        if (star.y > h + 30 || star.x < -30) {
+          star.x = Math.random() * w + 30;
+          star.y = -Math.random() * h * 0.4;
+          star.delay = 30 + Math.random() * 180;
+        }
+      }
+    }
+
+    frameId = requestAnimationFrame(drawStars);
+  }
+
+  resizeStars();
+  drawStars();
+
+  window.addEventListener('resize', resizeStars);
+
+  // Музыка
+  const audio = document.createElement('audio');
+  audio.id = 'monument-audio';
+  audio.src = AUDIO_URL;
+  audio.loop = true;
+  audio.preload = 'auto';
+  audio.volume = 0.35;
+  document.body.appendChild(audio);
+
+  let playing = false;
+  let starting = false;
+
+  const hint = document.getElementById('monument-hint');
+
+  function startMusic() {
+    if (closed || starting || playing) return;
+
+    starting = true;
+
+    audio.play().then(() => {
+      starting = false;
+
+      if (closed) {
+        audio.pause();
+        return;
+      }
+
+      playing = true;
+      hint.textContent = '[ CLICK ANYWHERE TO RETURN ]';
+    }).catch((error) => {
+      starting = false;
+
+      if (closed) return;
+
+      if (error.name === 'NotAllowedError') {
+        hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+        return;
+      }
+
+      console.warn('LOG-AI audio:', error.name, error.message);
+      hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+    });
+  }
+
+  function closeMonument() {
+    if (closed) return;
+    closed = true;
+
+    cancelAnimationFrame(frameId);
+    window.removeEventListener('resize', resizeStars);
+    window.removeEventListener('keydown', onKeyDown);
+
+    audio.pause();
+    audio.remove();
+    monument.remove();
+    style.remove();
+
+    root.style.overflow = previousRootOverflow;
+    body.style.overflow = previousBodyOverflow;
+    body.style.position = previousBodyPosition;
+    body.style.top = previousBodyTop;
+    body.style.width = previousBodyWidth;
+
+    window.scrollTo(previousScrollX, previousScrollY);
+
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete('mode');
+
+    window.history.replaceState(
+      {},
+      document.title,
+      cleanUrl.pathname + cleanUrl.search + cleanUrl.hash
+    );
+  }
+
+  function onKeyDown(event) {
+    if (event.key === 'Escape') closeMonument();
+  }
+
+  monument.addEventListener('click', () => {
+    if (closed) return;
+
+    if (playing) {
+      closeMonument();
+    } else {
+      startMusic();
+    }
+  });
+
+  window.addEventListener('keydown', onKeyDown);
+
+  // Первая попытка автоматического запуска
+  startMusic();
+})();</script><script>(function () {
+    // ВНИМАНИЕ!!!!!!!!!!!!!!!!!!!!Плавный инерционный скролл только для мыши/тачпада
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    let targetY = window.scrollY;
+    let currentY = window.scrollY;
+    let animationFrame = null;
+
+    // ===== НАСТРОЙКИ =====
+    const SPEED = 0.70;       // 0.4 = медленнее, 0.65 = средне, 1.0 = быстрее
+    const SMOOTHNESS = 0.13;  // 0.08 = мягче, 0.12 = средне, 0.18 = быстрее
+    const MAX_STEP = 500;     // максимальный шаг одного движения колеса
+    // =====================
+
+    function animateScroll() {
+        currentY += (targetY - currentY) * SMOOTHNESS;
+
+        if (Math.abs(targetY - currentY) < 0.5) {
+            currentY = targetY;
+            window.scrollTo(0, currentY);
+            animationFrame = null;
+            return;
+        }
+
+        window.scrollTo(0, currentY);
+        animationFrame = requestAnimationFrame(animateScroll);
+    }
+
+    window.addEventListener('wheel', function (event) {
+
+    // Если глобус активирован кликом —
+    // колесо полностью отдаём Globe.gl для zoom.
+    const globe = event.target.closest('#globeViz');
+
+    if (globe && globe.dataset.interacting === 'true') {
+        return;
+    }
+
+    // Внутренний скролл AI-чата не трогаем
+    if (event.target.closest('#logai-window, #logai-msgs')) {
+        return;
+    }
+
+    event.preventDefault();
+
+        let delta = event.deltaY * SPEED;
+
+        // Ограничиваем слишком резкие движения
+        delta = Math.max(-MAX_STEP, Math.min(MAX_STEP, delta));
+
+        targetY += delta;
+
+        // Не даём уйти выше/ниже страницы
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        targetY = Math.max(0, Math.min(targetY, maxY));
+
+        if (!animationFrame) {
+            animationFrame = requestAnimationFrame(animateScroll);
+        }
+    }, { passive: false });
+
+    // Синхронизация, если страницу прокрутили другим способом
+    window.addEventListener('scroll', function () {
+        if (!animationFrame) {
+            targetY = window.scrollY;
+            currentY = window.scrollY;
+        }
+    }, { passive: true });
+
+})();</script><div id="logai-footer-mobile" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box;"><div style="margin: 0 auto 20px auto; padding-top: 40px; text-align: center; margin-bottom: 40px;"><a href="mailto:info@log-ai.ru" style="font-size: 24px; font-family: 'SF Mono', Monaco, monospace; color: #e5e7eb; text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: 0.3px;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#e5e7eb'">info@log-ai.ru</a><p style="color: #aaaaaa; font-size: 15px; line-height: 1.6; max-width: 750px; margin: 15px auto 0 auto;">Пришлите описание задачи, техническое задание или ссылку на существующую систему. Мы оценим задачу и определим возможные варианты реализации.</p></div><div style="max-width: 850px; margin: 0 auto 40px auto; text-align: center; background: #000000; padding: 0; box-sizing: border-box;"><p style="color: #aaaaaa; font-size: 14px; line-height: 1.6; margin: 0;"><span style="color: #4ade80; margin-right: 6px;">🔒</span> Данные и доступ к системам заказчика обрабатываются в соответствии с согласованными требованиями к безопасности и конфиденциальности. Условия доступа, хранения и обработки данных определяются архитектурой проекта и договором.</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; box-sizing: border-box; width: 100%; margin-bottom: 30px;"><p style="color: #666666; font-size: 12px; line-height: 1.6; margin: 0; width: 100%; text-align: justify;">Сайт носит исключительно информационный характер и не является публичной офертой в соответствии со статьёй 437 Гражданского кодекса РФ. Цены, состав и условия предоставления услуг уточняются при проектировании решения и фиксируются в договоре. Условия технического сопровождения и уровень сервиса могут дополнительно определяться отдельным соглашением (SLA).</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; width: 100%; box-sizing: border-box;"><div style="color: #666666; font-size: 12px; line-height: 1.5; text-align: left;">© 2026 Log-AI<br>Автоматизация бизнеса и ИИ-решения под ключ. Работаем по всей России и СНГ.<br>ИП Скопец Антон Викторович<br>ИНН 741709<span></span>260870 · ОГРНИП 326745600<span></span>204228<br>Все права защищены.</div><div style="display: flex; gap: 20px; flex-wrap: wrap; font-family: sans-serif;"><a href="/privacy-policy/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Политика конфиденциальности</a> <a href="/terms/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Пользовательское соглашение</a></div></div></div><style>@media screen and (max-width: 600px) {
+  #logai-footer-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+}</style><style>/* Анимации и точки */
+    @keyframes logai-bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+    .logai-dots { display: flex !important; flex-direction: row !important; gap: 4px !important; align-items: center !important; height: 12px !important; }
+    .logai-dots span { display: inline-block; width: 5px; height: 5px; background: #aaa !important; border-radius: 50%; animation: logai-bounce 1.4s infinite ease-in-out; }
+    .logai-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .logai-dots span:nth-child(3) { animation-delay: 0.4s; }
+    
+    #logai-msgs::-webkit-scrollbar { width: 5px; }
+    #logai-msgs::-webkit-scrollbar-thumb { background: #666; border-radius: 10px; }
+    
+    /* Сообщения и текст */
+    #logai-msgs div { white-space: pre-wrap !important; word-wrap: break-word !important; padding: 12px 16px !important; margin-bottom: 5px !important; display: flex; flex-direction: column; justify-content: center; }
+    #logai-msgs div p { margin: 0 !important; padding: 0 !important; line-height: 1.5 !important; }
+    #logai-msgs { gap: 12px !important; padding: 20px !important; }
+
+    /* Поле ввода и кнопка отправить */
+    #logai-input { flex: 1 !important; padding: 12px 18px !important; border-radius: 20px !important; background: #4a4e56 !important; border: 1px solid rgba(255,255,255,0.1) !important; outline: none !important; color: #fff !important; font-size: 15px !important; resize: none !important; max-height: 120px !important; line-height: 1.4 !important; }
+    #logai-send-btn { background-color: #007bff !important; border: none !important; width: 45px !important; height: 45px !important; border-radius: 50% !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-size: 24px !important; padding: 0 !important; flex-shrink: 0 !important; }
+
+    /* ГЛАВНЫЕ СТИЛИ (чтобы кнопка и окно не исчезали) */
+    #logai-btn {
+        position: fixed !important; bottom: 40px !important; right: 110px !important;
+        width: 65px !important; height: 65px !important; border-radius: 50% !important;
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        cursor: pointer !important; z-index: 10000 !important; box-shadow: 0 10px 25px rgba(0,123,255,0.4);
+    }
+
+    #logai-window {
+        display: none; position: fixed !important; bottom: 115px !important; right: 110px !important;
+        width: 380px !important; height: 600px !important; background: #3b3e45 !important;
+        border-radius: 24px !important; flex-direction: column; overflow: hidden;
+        z-index: 10000 !important; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.15) !important;
+    }
+
+        /* АДАПТИВ ДЛЯ МОБИЛОК: ЧАТ НА ВЕСЬ ЭКРАН */
+    @media screen and (max-width: 480px) {
+        #logai-window { 
+            right: 0 !important; 
+            left: 0 !important; 
+            bottom: 0 !important; 
+            width: 100% !important; 
+            height: 100% !important; /* Растягиваем окно на 100% экрана смартфона */
+            border-radius: 0 !important; /* Убираем скругления углов, чтобы чат сел монолитом */
+            z-index: 999999 !important; /* Перекрываем все кнопки в ноль */
+        }
+        
+        #logai-btn { 
+            bottom: 80px !important; /* Твоя родная высота кнопки, когда чат закрыт */
+            right: 22px !important;  /* Твой родной сдвиг кнопки */
+            z-index: 999998 !important; /* Когда чат открыт, кнопка останется под ним и не будет торчать */
+        }
+    }</style><div id="logai-widget" style="position: fixed; bottom: var(--widget-bottom, 20px); right: var(--widget-right, 20px); z-index: 9999;"><div id="logai-btn" onclick="toggleLogAI()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><div id="logai-window"><div style="background: #2d3035; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; align-items:center; gap:12px;"><div style="width:35px; height:35px; background:#007bff; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(0,123,255,0.5);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg></div><span style="font-weight:600; color:#fff; font-size:16px; letter-spacing: 0.5px;">AI Ассистент</span></div><span onclick="toggleLogAI()" style="cursor:pointer; color:#fff; font-size:35px; line-height: 0.7; opacity: 0.7;">&times;</span></div><div id="logai-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; background:#3b3e45;"></div><div style="padding:15px 15px 8px 15px; background:#2d3035; display:flex; flex-direction:column; border-top: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; gap:10px; align-items:flex-end; width:100%;"><textarea id="logai-input" rows="1" placeholder="Напишите..." oninput="this.style.height='';this.style.height=this.scrollHeight+'px'"></textarea> <button id="logai-send-btn" onclick="sendLogAI()">➤</button></div><div style="text-align:center; font-size:10px; color:#ffffff; opacity:0.3; margin-top:6px; font-family:sans-serif; pointer-events:none; user-select:none;">ИИ может ошибаться</div></div></div></div><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script>const API_URL = 'https://api2.log-ai.ru';
+    const MY_CLIENT_ID = 'client_arhitektor_2'; // МЕНЯТЬ ТУТ
+    const MY_BOT_PATH = 'arhitektor_2';  // МЕНЯТЬ ТУТ 
+    
+       let logSid;
+    try {
+        logSid = localStorage.getItem('logai_sid');
+        if (!logSid) {
+            logSid = 's_' + Math.random().toString(36).substr(2, 12);
+            localStorage.setItem('logai_sid', logSid);
+        }
+    } catch (e) {
+        // Если доступ к памяти закрыт (инкогнито), создаем временный ID
+        logSid = 'temp_' + Math.random().toString(36).substr(2, 12);
+    }
+
+    // Переименовали, чтобы избежать конфликтов
+    let chatIsWaiting = false;
+    let historyLoaded = false;
+    let activeMessageId = null;
+    let pollController = null;
+    let pollTimeoutId = null;
+
+
+       function toggleLogAI() {
+        const w = document.getElementById('logai-window');
+        const isOpen = (window.getComputedStyle(w).display === 'none');
+        
+        if (isOpen) {
+            w.style.display = 'flex';
+            if (!historyLoaded) {
+                loadChatHistory();
+            } 
+            // Если чат в режиме ожидания (точки), пинаем сервер сразу при открытии
+            else if (chatIsWaiting && activeMessageId) {
+                const dotsContainer = document.querySelector('.logai-dots')?.parentElement;
+                if (dotsContainer) {
+                    startPolling(activeMessageId, dotsContainer);
+                }
+            }
+        } else {
+            w.style.display = 'none';
+            // УБРАЛИ stopPolling(), чтобы ИИ докачивал ответ, даже когда окно закрыто
+        }
+    }
+
+
+    function updateInputState() {
+        const input = document.getElementById('logai-input');
+        const btn = document.getElementById('logai-send-btn');
+        if (input) {
+            input.disabled = chatIsWaiting;
+            input.style.opacity = chatIsWaiting ? '0.5' : '1';
+        }
+        if (btn) btn.style.opacity = chatIsWaiting ? '0.5' : '1';
+    }
+
+    function stopPolling() {
+        if (activeMessageId) localStorage.removeItem('poll_start_' + activeMessageId);
+        if (pollController) pollController.abort();
+        if (pollTimeoutId) clearTimeout(pollTimeoutId);
+    
+        pollController = null;
+        pollTimeoutId = null;
+        activeMessageId = null;
+        chatIsWaiting = false;
+        updateInputState();
+    }
+
+    function addLogMsg(txt, isAi) {
+        const d = document.createElement('div');
+        d.style = `padding:12px 16px; border-radius:18px; max-width:82%; font-size:14px; line-height:1.5; margin-bottom:10px; 
+                   ${isAi ? 'align-self:flex-start; background:#4a4e56; color:#dbdee1; border-bottom-left-radius:4px;' 
+                         : 'align-self:flex-end; background:#007bff; color:white; border-bottom-right-radius:4px; box-shadow:0 4px 12px rgba(0,123,255,0.25);'}`;
+
+        if (txt === 'dots') {
+   // ИСПРАВЛЕНО: Добавлен явный текст ожидания рядом с анимацией точек для лучшего UX
+   d.innerHTML = '<div style="display:flex; align-items:center; gap:8px;">' +
+                 '<span style="font-style:italic; opacity:0.8;">ИИ подбирает ответ...</span>' +
+                 '<div class="logai-dots"><span></span><span></span><span></span></div>' +
+                 '</div>';
+ } else {
+   d.innerHTML = typeof marked !== 'undefined' ? marked.parse(txt) : txt;
+ }
+
+        const box = document.getElementById('logai-msgs');
+        box.appendChild(d);
+        box.scrollTop = box.scrollHeight;
+        return d;
+    }
+
+async function loadChatHistory() {
+    const box = document.getElementById('logai-msgs');
+    try {
+        box.innerHTML = '';
+
+        const res = await fetch(`${API_URL}/history/${logSid}?platform=site&clientId=${MY_CLIENT_ID}`);
+        const data = await res.json();
+
+        if (Array.isArray(data.items) && data.items.length > 0) {
+            data.items.forEach((m, index) => {
+                // 1. Показываем сообщение пользователя
+                if (m.message) {
+                    addLogMsg(m.message, false);
+                }
+
+                // 2. Если есть готовый ответ — показываем
+                if (m.answer) {
+                    addLogMsg(m.answer, true);
+                } 
+                // 3. ИСПРАВЛЕНО: Четкое чтение m.message_id из базы данных без путаницы с регистрами
+                else if (m.message_id && index === data.items.length - 1) {
+                    chatIsWaiting = true;
+                    activeMessageId = m.message_id; // Используем m.message_id
+                    
+                    const aiMsg = addLogMsg('dots', true);
+                    startPolling(m.message_id, aiMsg); 
+                }
+            });
+        } else {
+            addLogMsg("Здравствуйте! Я ваш ИИ-ассистент. Чем могу помочь?", true);
+        }
+
+        historyLoaded = true;
+        updateInputState();
+
+    } catch (e) {
+        console.error('History error:', e);
+        addLogMsg("Не удалось загрузить историю чата", true);
+    }
+}
+
+
+async function sendLogAI() {
+    if (chatIsWaiting) return;
+
+    const input = document.getElementById('logai-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // ЖЕЛЕЗНЫЙ ДЕБАУНС: блокируем повторный клик в первую же микросекунду
+    chatIsWaiting = true;
+    updateInputState();
+
+    addLogMsg(msg, false);
+    
+    input.value = ''; 
+    input.style.height = 'auto'; 
+
+    const aiMsg = addLogMsg('dots', true);
+
+    try {
+        const res = await fetch(`${API_URL}/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sessionId: logSid,
+                message: msg,
+                clientId: MY_CLIENT_ID,
+                platform: 'site',
+                botPath: MY_BOT_PATH
+            })
+        });
+
+        // ИСПРАВЛЕНО: Обработка HTTP-ошибок. Передаем false третьим параметром, чтобы не было звука при ошибке
+        if (!res.ok) {
+            let errorMsg = "⚠️ Сервер временно недоступен";
+            if (res.status === 429) errorMsg = "🚫 Слишком много запросов. Подождите немного.";
+            else if (res.status === 403) {
+                try {
+                    const errData = await res.json();
+                    errorMsg = errData.reason || "🚫 Доступ ограничен.";
+                } catch (_) {
+                    errorMsg = "🚫 Доступ ограничен.";
+                }
+            }
+            finish(errorMsg, aiMsg, false); // false — звук НЕ играет
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data.blocked) {
+            finish(data.reason || data.message || "🚫 Сообщение заблокировано", aiMsg, false); // false — без звука
+            return;
+        }
+
+        if (data.messageId) {
+            activeMessageId = data.messageId;
+            startPolling(data.messageId, aiMsg);
+        } else {
+            finish("⚠️ Ошибка регистрации сообщения (нет messageId)", aiMsg, false);
+        }
+    } catch (e) {
+        console.error(e);
+        finish("⚠️ Ошибка связи с сервером. Проверьте интернет.", aiMsg, false);
+    }
+} // Скобка закрывает саму функцию send
+    function startPolling(messageId, aiMsg) {
+        activeMessageId = messageId;
+        pollController = new AbortController();
+        let savedTime = localStorage.getItem('poll_start_' + messageId);
+        if (!savedTime) {
+            savedTime = Date.now().toString();
+            localStorage.setItem('poll_start_' + messageId, savedTime);
+        }
+        let startTime = parseInt(savedTime, 10);
+        let statusChanged = false; // Чтобы не менять текст постоянно
+
+        const poll = async () => {
+            if (activeMessageId !== messageId) return;
+
+            const elapsed = (Date.now() - startTime) / 1000; // секунд прошло
+
+            // 1. На 40-й секунде меняем текст на "Сложный вопрос"
+            if (elapsed > 40 && !statusChanged) {
+                const dots = aiMsg.querySelector('.logai-dots');
+                aiMsg.innerHTML = '🤖 Вопрос сложный, анализирую данные...';
+                if (dots) aiMsg.appendChild(dots); 
+                statusChanged = true;
+            }
+
+            // 2. Лимит ожидания - 10 минут (600 секунд)
+            if (elapsed > 600) {
+                finish("🤖 Извините, ИИ перегружен или запрос слишком сложный. Пожалуйста, попробуйте позже.", aiMsg);
+                return;
+            }
+
+            // 3. Умный интервал: до 50 сек — каждые 3 сек, потом — каждые 10 сек
+            let nextInterval = (elapsed > 50) ? 10000 : 3000;
+
+            try {
+                // Добавили ?t=... чтобы телефон каждый раз реально спрашивал сервер, а не брал из кэша
+                const r = await fetch(`${API_URL}/get-answer/${messageId}?sessionId=${logSid}&clientId=${MY_CLIENT_ID}&t=${Date.now()}`, {
+                    signal: pollController.signal 
+                });
+                const d = await r.json();
+                const finalAnswer = d.answer || (d.status !== 'pending' ? d.answer : null);
+
+                if (finalAnswer) {
+                    finish(finalAnswer, aiMsg);
+                } else {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            } catch (e) {
+                if (e.name !== 'AbortError') {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            }
+        };
+        poll();
+    }
+
+function finish(text, msgElement, isSuccess = true) {
+    if (msgElement) {
+        msgElement.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+        
+        // Звук играет строго при успешном ответе ИИ, при ошибках или банах — тишина
+        if (isSuccess) {
+            try {
+                // ТВОЙ ОРИГИНАЛЬНЫЙ РАБОЧИЙ ПУТЬ: Кэш сбрасывается, файл проигрывается без ошибок 404
+                const audio = new Audio('https://api.log-ai.ru/notify.mp3?v=' + Date.now());
+                audio.volume = 0.4;
+                audio.play().catch(e => console.log("Нужен клик"));
+            } catch (e) {}
+        }
+    }
+    stopPolling();
+}
+
+
+    // Enter для отправки
+    document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('logai-input');
+    if (input) {
+      input.addEventListener('keypress', (e) => {
+        // ИСПРАВЛЕНО: Добавлена проверка !chatIsWaiting, чтобы клавиатура намертво блокировалась во время ожидания ИИ
+        if (e.key === 'Enter' && !e.shiftKey && !chatIsWaiting) {
+          e.preventDefault();
+          sendLogAI();
+        }
+      });
+
+      // ИСПРАВЛЕНО: Текстовое поле плавно растёт вниз до 150px, если текст длинный
+      input.addEventListener('input', function() {
+        this.style.height = 'auto'; 
+        this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+      });
+    }
+    });</script><div id="cookie-notice-wrapper" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #111111; border-top: 1px solid #222222; padding: 10px 15px; box-sizing: border-box; z-index: 99999; display: none; flex-direction: row; justify-content: space-between; align-items: center; gap: 15px; font-family: sans-serif;"><span style="color: #888888; font-size: 12px; line-height: 1.4; text-align: left;">Наш сайт использует файлы cookie для корректной работы. Подробнее — в <a href="/privacy-policy/" style="color: #bfa15f; text-decoration: underline;">Политике конфиденциальности</a>. </span><button onclick="dismissCookieNotice()" style="background: #bfa15f; color: #000000; border: none; padding: 5px 14px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Принять</button></div><style>@media (max-width: 600px) {
+        #cookie-notice-wrapper {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 10px !important;
+            padding: 12px 15px !important;
+        }
+        #cookie-notice-wrapper span {
+            text-align: center !important;
+            font-size: 11px !important;
+        }
+        #cookie-notice-wrapper button {
+            width: 100% !important;
+            padding: 8px !important;
+            font-size: 12px !important;
+        }
+    }</style><script>(function() {
+        var storageKey = 'logai_cookies_accepted';
+        if (!localStorage.getItem(storageKey)) {
+            document.getElementById('cookie-notice-wrapper').style.display = 'flex';
+        }
+    })();
+
+    function dismissCookieNotice() {
+        localStorage.setItem('logai_cookies_accepted', 'true');
+        document.getElementById('cookie-notice-wrapper').style.display = 'none';
+    }</script></body></html>

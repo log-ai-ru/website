@@ -1,0 +1,855 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Windows Server → Linux: миграция корпоративных сервисов | LOG-AI</title><meta name="description" content="Как перенести файловые серверы, приложения и фоновые задачи с Windows Server на Linux, сохранить интеграции и определить, какие службы требуют замены."><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://log-ai.ru/windows-server-linux-kak-perenesti-korporativnye-servisy/"><link rel="alternate" type="application/atom+xml" href="https://log-ai.ru/feed.xml" title="LOG-AI - RSS"><link rel="alternate" type="application/json" href="https://log-ai.ru/feed.json" title="LOG-AI - JSON"><meta property="og:title" content="Windows Server → Linux: миграция корпоративных сервисов | LOG-AI"><meta property="og:image" content="https://log-ai.ru/media/website/Log-ai-Logo.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:site_name" content="LOG-AI"><meta property="og:description" content="Как перенести файловые серверы, приложения и фоновые задачи с Windows Server на Linux, сохранить интеграции и определить, какие службы требуют замены."><meta property="og:url" content="https://log-ai.ru/windows-server-linux-kak-perenesti-korporativnye-servisy/"><meta property="og:type" content="article"><link rel="stylesheet" href="https://log-ai.ru/assets/css/style.css?v&#x3D;b1f5980528b3cc19f4018c94aea81f52"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://log-ai.ru/windows-server-linux-kak-perenesti-korporativnye-servisy/"},"headline":"Windows Server → Linux: как перенести корпоративные сервисы","datePublished":"2026-11-12T18:12+05:00","dateModified":"2026-11-12T18:45+05:00","description":"Как перенести файловые серверы, приложения и фоновые задачи с Windows Server на Linux, сохранить интеграции и определить, какие службы требуют замены.","author":{"@type":"Person","name":"LOG-AI","url":"https://log-ai.ru/authors/log-ai/"},"publisher":{"@type":"Organization","name":"LOG-AI"}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript><style>body, html, main, #page, .wrapper, .main { background: #000000 !important; background-color: #000000 !important; }</style><link rel="icon" type="image/png" sizes="32x32" href="/media/files/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/media/files/favicon-16.png"><link rel="apple-touch-icon" sizes="180x180" href="/media/files/favicon-180.png"><meta name="yandex-verification" content="9d14e10b64f3b76c"><meta name="google-site-verification" content="-rKktnoSCGCLZToW-jcZeKu5WvWFGuLKdLwwyCux0-M"></head><body class="page-template"><header class="top js-header"><a class="logo" href="https://log-ai.ru/">LOG-AI</a><nav class="navbar js-navbar"><button class="navbar__toggle js-toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><span class="navbar__toggle-box"><span class="navbar__toggle-inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://log-ai.ru/" target="_self">Главная</a></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Услуги</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/avtomatizaciya-obrabotki-zayavok-i-lidov/" target="_self">Автоматизация обработки заявок и лидов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-biznes-processov-integracii-dannye-i-skvoznye-scenarii/" target="_self">Автоматизация бизнес-процессов</a></li><li><a href="https://log-ai.ru/sbor-i-obrabotka-dannyh/" target="_self">Сбор и обработка данных</a></li><li><a href="https://log-ai.ru/ii-dlya-biznesa-i-nejrosetej/" target="_self">ИИ для бизнеса и нейросети</a></li><li><a href="https://log-ai.ru/specializirovannye-cifrovye-sistemy/" target="_self">Специализированные цифровые системы</a></li><li><a href="https://log-ai.ru/individualnye-korporativnye-sistemy/" target="_self">Корпоративные системы</a></li><li><a href="https://log-ai.ru/tehnicheskoe-soprovozhdenie/" target="_self">Техническое сопровождение</a></li><li><a href="https://log-ai.ru/it-audit-i-predproektnoe-obsledovanie/" title="/it-audit-i-predproektnoe-obsledovanie/" target="_self">ИТ-аудит и предпроектное обследование</a></li><li><a href="https://log-ai.ru/oblachnyy-i-infrastrukturnyy-konsalting/" title="/oblachnyy-i-infrastrukturnyy-konsalting/" target="_self">Облачный и инфраструктурный консалтинг</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Решения</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakie-sistemy-my-integriruem/" target="_self">Какие системы мы интегрируем</a></li><li><a href="https://log-ai.ru/kak-rabotaet-ii-v-biznese/" target="_self">Как работает ИИ в бизнесе</a></li><li><a href="https://log-ai.ru/resheniya-po-zadacham/" target="_self">Решения по задачам</a></li><li><a href="https://log-ai.ru/avtomatizaciya-proizvodstva/" target="_self">Для производства</a></li><li><a href="https://log-ai.ru/avtomatizaciya-logistiki-i-skladov/" target="_self">Для логистики и складов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-optovoy-torgovli/" target="_self">Для оптовой торговли</a></li><li><a href="https://log-ai.ru/avtomatizaciya-e-commerce/" target="_self">Для e-commerce</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Реализация</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kak-my-rabotaem/" target="_self">Как мы работаем</a></li><li><a href="https://log-ai.ru/dokumentaciya-sistemy/" target="_self">Документация системы</a></li><li><a href="https://log-ai.ru/infrastruktura-i-razmeshchenie/" target="_self">Инфраструктура и размещение</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Выбор</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakuyu-avtomatizaciyu-vybrat/" target="_self">Какую автоматизацию выбрать</a></li><li><a href="https://log-ai.ru/chto-avtomatizirovat-v-biznese-v-pervuyu-ochered/" target="_self">Что автоматизировать в бизнесе в первую очередь</a></li><li><a href="https://log-ai.ru/kak-podgotovit-biznes-k-avtomatizacii/" target="_self">Как подготовить бизнес к автоматизации</a></li><li><a href="https://log-ai.ru/kak-vnedrit-avtomatizaciyu/" target="_self">Как внедрить автоматизацию</a></li><li><a href="https://log-ai.ru/kak-ocenit-rezultat-avtomatizacii/" target="_self">Как оценить результат автоматизации</a></li><li><a href="https://log-ai.ru/stoimost-razrabotki/" target="_self">Стоимость разработки</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">О нас</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/inzhenernyy-sostav/" target="_self">Инженерный состав</a></li><li><a href="https://log-ai.ru/keysy/" target="_self">Кейсы</a></li><li><a href="https://log-ai.ru/glossariy/" target="_self">Глоссарий</a></li><li><a href="https://log-ai.ru/ekspertiza/" target="_self">Экспертиза</a></li><li><a href="https://log-ai.ru/bezopasnost-sistem-dannyh-i-infrastruktury/" target="_self">Безопасность</a></li></ul></li></ul></nav></header><main class="page"><article class="content"><div class="hero hero--noimage"><header class="hero__content hero__content--centered"><div class="wrapper"><h1>Windows Server → Linux: как перенести корпоративные сервисы</h1></div></header></div><div class="entry-wrapper content__entry"><p> </p><p> </p><p> </p><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 24px; font-weight: 600; margin: 0 0 24px 0; color: #ffffff; letter-spacing: -0.3px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Переход с Windows Server на Linux: миграция сервисов, а не просто замена ОС</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Переход с <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Windows Server</span> на <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Linux</span> часто начинается с понятной задачи: сократить зависимость от определённой технологической платформы, пересмотреть инфраструктурные расходы или построить более гибкую серверную среду.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">На первом этапе всё выглядит просто. Есть несколько серверов, на них работают файловые ресурсы, внутренние приложения, службы автоматизации и базы данных. Кажется, что достаточно подобрать дистрибутив, установить компоненты и перенести данные. Но именно здесь возникает распространённое заблуждение.</p><div style="padding: 24px; margin: 0 0 32px 0; background: #0a0a0a; border: 1px solid #222222; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0 0 12px 0; font-weight: 500;">Корпоративный сервер — это не операционная система с набором программ. Это участник общей инфраструктуры.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0;">Например, сервер может каждую ночь получать данные из ERP, проверять документы, формировать архив и передавать результат в бухгалтерскую систему. Сам процесс занимает несколько минут, но от его выполнения зависит работа нескольких подразделений. Если перенести только приложение, не воспроизведя механизмы запуска, права доступа, сетевые подключения и обработку ошибок, технически миграция может считаться завершённой, а бизнес-процесс уже не будет работать.</p></div><div style="padding: 24px; margin: 0 0 0 0; background: #000000; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Поэтому переход с Windows Server на Linux необходимо рассматривать как миграцию корпоративных сервисов с сохранением их функциональности, зависимостей и эксплуатационных характеристик.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">1. Почему это нельзя сводить к замене операционной системы</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Windows Server и Linux предоставляют принципиально разные механизмы управления службами, процессами, пользователями и файловыми ресурсами. Даже если обе платформы способны выполнять одинаковую бизнес-функцию, способы её реализации отличаются кардинально.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : FUNCTION_OVER_COMPONENT_MIGRATION ]</div><svg viewbox="0 0 750 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="250" y="10" width="250" height="30" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="375" y="30" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">БИЗНЕС-ФУНКЦИЯ (Неизменна)</text><line x1="300" y1="40" x2="200" y2="70" stroke="#333333" stroke-width="1.5"></line><line x1="450" y1="40" x2="550" y2="70" stroke="#333333" stroke-width="1.5"></line><rect x="50" y="70" width="300" height="60" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="200" y="90" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">WINDOWS SERVER</text><text x="200" y="115" fill="#666666" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Task Scheduler + NTFS + AD + Registry</text><rect x="400" y="70" width="300" height="60" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="550" y="90" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">LINUX</text><text x="550" y="115" fill="#666666" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">systemd/cron + POSIX ACL + PAM/NSS + Configs</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">В <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Windows Server</span> используются собственные механизмы: планировщик заданий, реестр, доменная интеграция, системные библиотеки и специфические модели разграничения доступа.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">В <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Linux</span> для аналогичных задач применяются <span style="font-family: 'SF Mono', monospace; color: #ffffff;">systemd</span>, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">cron</span>, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">PAM</span>, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">NSS</span>, файловые разрешения <span style="font-family: 'SF Mono', monospace; color: #ffffff;">POSIX</span>, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ACL</span> и другие компоненты.</p><div style="display: flex; flex-wrap: wrap; gap: 2px; margin: 0 0 32px 0; border: 1px solid #222222;"><div style="flex: 1 1 300px; padding: 24px; background: #0a0a0a; border-right: 1px solid #222222; border-bottom: 1px solid #222222;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #888888; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 12px;">Пример: Сетевая папка в Windows</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Доступ определяется сложным сочетанием NTFS-разрешений, групп Active Directory, наследования ACL и сетевых разрешений SMB.</p></div><div style="flex: 1 1 300px; padding: 24px; background: #000000;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 12px;">Пример: Сетевая папка в Linux</div><p style="font-size: 15px; color: #d0d0d0; margin: 0; line-height: 1.6;">Аналогичная задача решается через Samba, POSIX ACL, группы пользователей Linux и настройки доступа к общим ресурсам (shares).</p></div></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Это означает, что механический перенос файлов без переноса логики разрешений не обеспечивает сохранение исходной модели доступа. Такая же ситуация возникает с фоновыми задачами, приложениями и системными службами.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border: 1px solid #14b8a6; text-align: center; box-sizing: border-box;"><p style="font-size: 18px; color: #ffffff; margin: 0; font-weight: 600; line-height: 1.5; letter-spacing: -0.2px;">Главный вопрос миграции: не <span style="color: #14b8a6;">чем</span> заменить конкретный компонент Windows, а <span style="color: #14b8a6;">как</span> сохранить функцию, которую этот компонент выполняет в общей архитектуре предприятия.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">2. С чего начинать: инвентаризация Windows-служб и зависимостей</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">До выбора <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Linux</span>-дистрибутива необходимо понять, что именно работает на существующих серверах. Причём недостаточно просто получить список установленных программ и запущенных служб.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;"><strong style="color: #ffffff;">Нужно выяснить три вещи:</strong> какие компоненты действительно участвуют в бизнес-процессах, с какими системами они взаимодействуют и что произойдёт при их недоступности. Windows-сервер может содержать десятки служб. Часть относится к операционной системе, часть установлена корпоративными приложениями, а некоторые были созданы специально для автоматизации. Отключение одной такой службы может никак не повлиять на работу пользователей сегодня, но обрушить ночную обработку документов.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : SERVICE_DEPENDENCY_MAP ]</div><svg viewbox="0 0 750 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><circle cx="375" cy="100" r="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></circle><text x="375" y="95" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">СЕРВИС</text><text x="375" y="110" fill="#888888" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">инвентаризация</text><line x1="345" y1="75" x2="180" y2="30" stroke="#333333" stroke-width="1"></line><rect x="40" y="10" width="140" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="110" y="30" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">СИСТЕМНЫЕ СЛУЖБЫ</text><line x1="405" y1="75" x2="570" y2="30" stroke="#333333" stroke-width="1"></line><rect x="570" y="10" width="140" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="640" y="30" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">TASK SCHEDULER</text><line x1="335" y1="100" x2="180" y2="100" stroke="#333333" stroke-width="1"></line><rect x="40" y="85" width="140" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="110" y="105" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">ФАЙЛОВЫЕ РЕСУРСЫ</text><line x1="415" y1="100" x2="570" y2="100" stroke="#14b8a6" stroke-width="1.5"></line><rect x="570" y="85" width="140" height="30" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="640" y="105" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" font-weight="600" text-anchor="middle">СЕТЕВЫЕ СВЯЗИ</text><line x1="345" y1="125" x2="180" y2="170" stroke="#333333" stroke-width="1"></line><rect x="40" y="160" width="140" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="110" y="180" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">SERVICE ACCOUNTS</text><line x1="405" y1="125" x2="570" y2="170" stroke="#333333" stroke-width="1"></line><rect x="570" y="160" width="140" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="640" y="180" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">RUNTIMES / .NET / IIS</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 20px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Шеь направлений анализа</h3><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; margin-bottom: 10px;">01 / СЛУЖБЫ</div><p style="font-size: 14px; color: #b0b0b0; margin: 0; line-height: 1.6;">Какие службы обеспечивают работу приложений, БД, интеграций. Особое внимание — службам, работающим от отдельных пользователей или со специальными разрешениями.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; margin-bottom: 10px;">02 / ПЛАНИРОВЩИК</div><p style="font-size: 14px; color: #b0b0b0; margin: 0; line-height: 1.6;">Все запланированные задания: периодические, событийные, условные. Для каждого — назначение, владелец, учётная запись, входные данные и ожидаемый результат.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; margin-bottom: 10px;">03 / ФАЙЛЫ</div><p style="font-size: 14px; color: #b0b0b0; margin: 0; line-height: 1.6;">Сетевые папки, права доступа, квоты, блокировки, сетевые пути и жёсткие зависимости приложений от конкретных расположений файлов.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; margin-bottom: 10px;">04 / СРЕДЫ ВЫПОЛНЕНИЯ</div><p style="font-size: 14px; color: #b0b0b0; margin: 0; line-height: 1.6;">Использование .NET Framework, .NET Core, IIS, ASP.NET, COM-объектов, ODBC, системных библиотек и специфических компонентов Windows.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; margin-bottom: 10px;">05 / СЕТЬ</div><p style="font-size: 14px; color: #b0b0b0; margin: 0; line-height: 1.6;">Используемые порты, протоколы, DNS-имена, подключения к базам данных, сетевым папкам и внешним сервисам. Маппинг всех исходящих соединений.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; margin-bottom: 10px;">06 / РЕЗЕРВНОЕ КОПИРОВАНИЕ</div><p style="font-size: 14px; color: #b0b0b0; margin: 0; line-height: 1.6;">Не только наличие бэкапов, но и проверяемая возможность восстановления данных и работоспособности сервиса на целевой платформе.</p></div></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Слепые зоны документации</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Документация редко отражает фактическое состояние инфраструктуры. Инвентаризацию необходимо дополнять анализом журналов, сетевых соединений, конфигураций и реального поведения служб.</p><div style="margin: 0 0 32px 0; border: 1px solid #222222;"><div style="padding: 20px 24px; background: #000000; border-bottom: 1px solid #222222; display: flex; gap: 20px; align-items: flex-start;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; min-width: 80px;">СЛУЧАЙ 1</div><p style="font-size: 15px; color: #d0d0d0; margin: 0; line-height: 1.6;">Разработчик давно убрал из приложения обращение к одному серверу, но в <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Task Scheduler</span> осталась задача, которая продолжает передавать туда файлы каждую ночь. Никто не замечает — пока не отключают сервер.</p></div><div style="padding: 20px 24px; background: #0a0a0a; border-bottom: 1px solid #222222; display: flex; gap: 20px; align-items: flex-start;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; min-width: 80px;">СЛУЧАЙ 2</div><p style="font-size: 15px; color: #d0d0d0; margin: 0; line-height: 1.6;">Приложение формально работает с базой данных через SQL, но параллельно использует сетевую папку для временного хранения документов. В документации этого нет, но при недоступности шары процесс падает.</p></div><div style="padding: 20px 24px; background: #000000; display: flex; gap: 20px; align-items: flex-start;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; min-width: 80px;">СЛУЧАЙ 3</div><p style="font-size: 15px; color: #d0d0d0; margin: 0; line-height: 1.6;">Сервис запускается от имени локального системного аккаунта, но для обращения к внешнему API использует учётные данные, зашитые в конфигурационный файл десять лет назад.</p></div></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Результат: карта зависимостей</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Итогом инвентаризации должен стать не просто перечень серверов, а полноценная карта зависимостей. Для каждого сервиса необходимо чётко понимать семь параметров:</p><div style="padding: 24px; margin: 0 0 32px 0; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 14px; line-height: 2; color: #d0d0d0;"><div style="display: flex; gap: 16px;"><span style="color: #14b8a6; font-weight: bold;">01</span> Какую функцию он выполняет.</div><div style="display: flex; gap: 16px;"><span style="color: #14b8a6; font-weight: bold;">02</span> Какие данные получает и передаёт.</div><div style="display: flex; gap: 16px;"><span style="color: #14b8a6; font-weight: bold;">03</span> От каких систем зависит.</div><div style="display: flex; gap: 16px;"><span style="color: #14b8a6; font-weight: bold;">04</span> Какие учётные записи использует.</div><div style="display: flex; gap: 16px;"><span style="color: #14b8a6; font-weight: bold;">05</span> Как запускается и контролируется.</div><div style="display: flex; gap: 16px;"><span style="color: #14b8a6; font-weight: bold;">06</span> Что происходит при отказе.</div><div style="display: flex; gap: 16px;"><span style="color: #14b8a6; font-weight: bold;">07</span> Кто отвечает за его работу.</div></div><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Без этой информации невозможно обоснованно определить, какие компоненты можно переносить напрямую, какие требуют адаптации, а какие придётся переписывать с нуля.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">3. Какие Windows-службы можно заменить Linux-аналогами</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">У многих инфраструктурных компонентов есть зрелые альтернативы в <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Linux</span>. Но важно различать функциональное сходство и полную совместимость. Наличие аналога не означает, что существующая конфигурация автоматически заработает на новой платформе без адаптации логики.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : ANALOG_VS_COMPATIBILITY_GAP ]</div><svg viewbox="0 0 750 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="40" width="160" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="100" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">WINDOWS КОМПОНЕНТ</text><line x1="180" y1="60" x2="240" y2="60" stroke="#333333" stroke-width="1.5"></line><polygon points="240,60 234,57 234,63" fill="#333333"></polygon><text x="210" y="50" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Аналог</text><rect x="250" y="40" width="160" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="330" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">LINUX АНАЛОГ</text><rect x="430" y="30" width="300" height="60" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="4 4"></rect><text x="580" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">ЗОНА АДАПТАЦИИ</text><text x="580" y="75" fill="#d0d0d0" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Конфигурация, логика, зависимости, права</text></svg></div><div style="display: grid; grid-template-columns: 1fr 1fr 1.5fr; border: 1px solid #222222; margin: 0 0 32px 0; font-size: 15px;"><div style="padding: 16px 20px; background: #0a0a0a; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Windows-компонент</div><div style="padding: 16px 20px; background: #0a0a0a; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Возможная замена в Linux</div><div style="padding: 16px 20px; background: #0a0a0a; border-bottom: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Особенности перехода</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Файловый сервер</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; color: #d0d0d0;">Samba</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Права доступа, ACL, SMB, интеграция с доменом.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">IIS</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; color: #d0d0d0;">Nginx, Apache</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Конфигурация приложений, модули, TLS.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Task Scheduler</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; color: #d0d0d0;">systemd timers, cron</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Условия запуска, учётные записи, обработка ошибок.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Windows Services</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; color: #d0d0d0;">systemd</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Управление процессами и зависимостями.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">PowerShell-скрипты</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; color: #d0d0d0;">PowerShell 7, Bash, Python</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Совместимость команд и системных интерфейсов.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">DHCP / DNS Server</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; color: #d0d0d0;">Kea DHCP, BIND 9, Unbound</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Зоны, записи, делегирование, динамические обновления.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Microsoft SQL Server</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; color: #d0d0d0;">SQL Server for Linux, PostgreSQL</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Совместимость приложений и SQL-функциональности.</div><div style="padding: 16px 20px; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Windows Event Log</div><div style="padding: 16px 20px; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; color: #d0d0d0;">journald, rsyslog</div><div style="padding: 16px 20px; color: #b0b0b0;">Централизованный сбор и корреляция событий.</div></div><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">В этой таблице указаны возможные направления замены, а не универсальные рекомендации. Например, SQL Server имеет версию для Linux, но это не означает, что любая существующая конфигурация будет без изменений перенесена.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Необходимо учитывать используемую версию СУБД, дополнительные компоненты, драйверы, интеграции и ограничения конкретной редакции. Правильный выбор определяется конкретными требованиями сервиса, а не наличием аналога в списке.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">4. Перенос файловых серверов: почему скопировать папки недостаточно</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Файловые серверы часто становятся первыми кандидатами на миграцию, так как они выполняют понятную функцию: хранят документы, архивы и общие ресурсы. <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Linux</span> с <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Samba</span> позволяет организовать файловый сервер, доступный пользователям Windows через SMB.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Однако основная сложность находится не в передаче байтов, а в сохранении существующей модели доступа.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : ACL_TRANSLATION_FAILURE ]</div><svg viewbox="0 0 750 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="30" width="200" height="80" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="120" y="55" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ИСХОДНАЯ МОДЕЛЬ</text><text x="120" y="75" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">NTFS + Вложенные группы AD</text><text x="120" y="95" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Сложное наследование прав</text><line x1="220" y1="70" x2="290" y2="70" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="4 4"></line><text x="255" y="60" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">ПЕРЕНОС</text><polygon points="290,70 284,67 284,73" fill="#14b8a6"></polygon><rect x="300" y="30" width="200" height="80" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="400" y="55" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ЦЕЛЕВАЯ МОДЕЛЬ</text><text x="400" y="75" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">POSIX ACL + Samba</text><text x="400" y="95" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Упрощённая структура</text><line x1="500" y1="70" x2="550" y2="70" stroke="#333333" stroke-width="1.5"></line><polygon points="550,70 544,67 544,73" fill="#333333"></polygon><rect x="560" y="40" width="170" height="60" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="645" y="65" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ПОТЕРЯ КОНТЕКСТА</text><text x="645" y="85" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Несанкционированный доступ</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Что необходимо сохранить</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">При миграции важно учитывать не только данные, но и метаданные доступа:</p><div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 32px 0;"><span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 13px; color: #d0d0d0;">Структура каталогов</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #14b8a6; font-family: 'SF Mono', monospace; font-size: 13px; color: #14b8a6; font-weight: 600;">NTFS-разрешения</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 13px; color: #d0d0d0;">Вложенные группы</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #14b8a6; font-family: 'SF Mono', monospace; font-size: 13px; color: #14b8a6; font-weight: 600;">Наследование прав</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 13px; color: #d0d0d0;">Владельцы файлов</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 13px; color: #d0d0d0;">Сетевые имена (UNC)</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 13px; color: #d0d0d0;">Квоты и блокировки</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 13px; color: #d0d0d0;">Длинные имена путей</span></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Особенно внимательно следует переносить <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ACL</span>. Windows использует собственные модели списков контроля доступа, а Linux опирается на POSIX-разрешения и расширенные ACL. Механизмы отличаются по возможностям. Нельзя считать, что любое NTFS-разрешение имеет прямой эквивалент в POSIX ACL.</p><div style="margin: 0 0 32px 0; border: 1px solid #222222;"><div style="padding: 20px 24px; background: #000000; border-bottom: 1px solid #222222;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">УСЛОВНЫЙ ПРИМЕР: ПРОИЗВОДСТВЕННАЯ КОМПАНИЯ</div><p style="font-size: 15px; color: #d0d0d0; margin: 0; line-height: 1.6;">Предприятие использует Windows Server для хранения документации. У каждого подразделения есть собственная папка, доступ к которой регулируется через группы Active Directory. Инженеры работают с проектами, бухгалтерия — с финансами.</p></div><div style="display: flex; flex-wrap: wrap;"><div style="flex: 1; min-width: 300px; padding: 24px; background: #0a0a0a; border-right: 1px solid #222222;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #888888; font-weight: bold; margin-bottom: 12px;">ПРОБЛЕМА ПОСЛЕ ПЕРЕНОСА</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Данные успешно скопированы на Linux-сервер. Но часть инженеров получила доступ к папкам бухгалтерии. Причина: в Windows права наследовались через вложенные группы, а при переносе была воспроизведена только плоская часть структуры.</p></div><div style="flex: 1; min-width: 300px; padding: 24px; background: #000000;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">ПРАВИЛЬНОЕ РЕШЕНИЕ</div><p style="font-size: 15px; color: #d0d0d0; margin: 0; line-height: 1.6;">Не раздавать доступ вручную по обращениям. Сформировать таблицу соответствия исходных и целевых групп, проверить наследование в Samba и провести матричное тестирование доступа для разных категорий сотрудников перед финальным переключением.</p></div></div></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Особое внимание: открытые файлы и приложения</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Файловый сервер может использоваться не только людьми. Некоторые приложения хранят на сетевых ресурсах временные данные, блокировки или файлы обмена.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Если такие приложения ожидают определённое поведение SMB, простого подключения к новой папке недостаточно. Нужно проверить блокировки, совместный доступ, поведение при обрыве соединения и возможность восстановления операций.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Особенно осторожно следует относиться к переносу баз данных и рабочих файлов приложений на обычные сетевые папки. Наличие SMB не делает такую схему автоматически безопасной или поддерживаемой производителем приложения.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">3. Какие Windows-службы можно заменить Linux-аналогами</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">У многих инфраструктурных компонентов есть зрелые альтернативы в <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Linux</span>. Но важно различать функциональное сходство и полную совместимость. Наличие аналога не означает, что существующая конфигурация автоматически заработает на новой платформе без адаптации логики.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : ANALOG_VS_COMPATIBILITY_GAP ]</div><svg viewbox="0 0 750 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="40" width="160" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="100" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">WINDOWS КОМПОНЕНТ</text><line x1="180" y1="60" x2="240" y2="60" stroke="#333333" stroke-width="1.5"></line><polygon points="240,60 234,57 234,63" fill="#333333"></polygon><text x="210" y="50" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Аналог</text><rect x="250" y="40" width="160" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="330" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">LINUX АНАЛОГ</text><rect x="430" y="30" width="300" height="60" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="4 4"></rect><text x="580" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">ЗОНА АДАПТАЦИИ</text><text x="580" y="75" fill="#d0d0d0" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Конфигурация, логика, зависимости, права</text></svg></div><div style="display: grid; grid-template-columns: 1fr 1fr 1.5fr; border: 1px solid #222222; margin: 0 0 32px 0; font-size: 15px;"><div style="padding: 16px 20px; background: #0a0a0a; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Windows-компонент</div><div style="padding: 16px 20px; background: #0a0a0a; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Возможная замена в Linux</div><div style="padding: 16px 20px; background: #0a0a0a; border-bottom: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Особенности перехода</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Файловый сервер</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; color: #d0d0d0;">Samba</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Права доступа, ACL, SMB, интеграция с доменом.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">IIS</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; color: #d0d0d0;">Nginx, Apache</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Конфигурация приложений, модули, TLS.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Task Scheduler</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; color: #d0d0d0;">systemd timers, cron</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Условия запуска, учётные записи, обработка ошибок.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Windows Services</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; color: #d0d0d0;">systemd</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Управление процессами и зависимостями.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">PowerShell-скрипты</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; color: #d0d0d0;">PowerShell 7, Bash, Python</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Совместимость команд и системных интерфейсов.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">DHCP / DNS Server</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; color: #d0d0d0;">Kea DHCP, BIND 9, Unbound</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Зоны, записи, делегирование, динамические обновления.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Microsoft SQL Server</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; color: #d0d0d0;">SQL Server for Linux, PostgreSQL</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Совместимость приложений и SQL-функциональности.</div><div style="padding: 16px 20px; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Windows Event Log</div><div style="padding: 16px 20px; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; color: #d0d0d0;">journald, rsyslog</div><div style="padding: 16px 20px; color: #b0b0b0;">Централизованный сбор и корреляция событий.</div></div><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">В этой таблице указаны возможные направления замены, а не универсальные рекомендации. Например, SQL Server имеет версию для Linux, но это не означает, что любая существующая конфигурация будет без изменений перенесена.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Необходимо учитывать используемую версию СУБД, дополнительные компоненты, драйверы, интеграции и ограничения конкретной редакции. Правильный выбор определяется конкретными требованиями сервиса, а не наличием аналога в списке.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">4. Перенос файловых серверов: почему скопировать папки недостаточно</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Файловые серверы часто становятся первыми кандидатами на миграцию, так как они выполняют понятную функцию: хранят документы, архивы и общие ресурсы. <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Linux</span> с <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Samba</span> позволяет организовать файловый сервер, доступный пользователям Windows через SMB.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Однако основная сложность находится не в передаче байтов, а в сохранении существующей модели доступа.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : ACL_TRANSLATION_FAILURE ]</div><svg viewbox="0 0 750 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="30" width="200" height="80" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="120" y="55" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ИСХОДНАЯ МОДЕЛЬ</text><text x="120" y="75" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">NTFS + Вложенные группы AD</text><text x="120" y="95" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Сложное наследование прав</text><line x1="220" y1="70" x2="290" y2="70" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="4 4"></line><text x="255" y="60" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">ПЕРЕНОС</text><polygon points="290,70 284,67 284,73" fill="#14b8a6"></polygon><rect x="300" y="30" width="200" height="80" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="400" y="55" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ЦЕЛЕВАЯ МОДЕЛЬ</text><text x="400" y="75" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">POSIX ACL + Samba</text><text x="400" y="95" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Упрощённая структура</text><line x1="500" y1="70" x2="550" y2="70" stroke="#333333" stroke-width="1.5"></line><polygon points="550,70 544,67 544,73" fill="#333333"></polygon><rect x="560" y="40" width="170" height="60" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="645" y="65" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ПОТЕРЯ КОНТЕКСТА</text><text x="645" y="85" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Несанкционированный доступ</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Что необходимо сохранить</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">При миграции важно учитывать не только данные, но и метаданные доступа:</p><div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 32px 0;"><span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 13px; color: #d0d0d0;">Структура каталогов</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #14b8a6; font-family: 'SF Mono', monospace; font-size: 13px; color: #14b8a6; font-weight: 600;">NTFS-разрешения</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 13px; color: #d0d0d0;">Вложенные группы</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #14b8a6; font-family: 'SF Mono', monospace; font-size: 13px; color: #14b8a6; font-weight: 600;">Наследование прав</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 13px; color: #d0d0d0;">Владельцы файлов</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 13px; color: #d0d0d0;">Сетевые имена (UNC)</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 13px; color: #d0d0d0;">Квоты и блокировки</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 13px; color: #d0d0d0;">Длинные имена путей</span></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Особенно внимательно следует переносить <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ACL</span>. Windows использует собственные модели списков контроля доступа, а Linux опирается на POSIX-разрешения и расширенные ACL. Механизмы отличаются по возможностям. Нельзя считать, что любое NTFS-разрешение имеет прямой эквивалент в POSIX ACL.</p><div style="margin: 0 0 32px 0; border: 1px solid #222222;"><div style="padding: 20px 24px; background: #000000; border-bottom: 1px solid #222222;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;">УСЛОВНЫЙ ПРИМЕР: ПРОИЗВОДСТВЕННАЯ КОМПАНИЯ</div><p style="font-size: 15px; color: #d0d0d0; margin: 0; line-height: 1.6;">Предприятие использует Windows Server для хранения документации. У каждого подразделения есть собственная папка, доступ к которой регулируется через группы Active Directory. Инженеры работают с проектами, бухгалтерия — с финансами.</p></div><div style="display: flex; flex-wrap: wrap;"><div style="flex: 1; min-width: 300px; padding: 24px; background: #0a0a0a; border-right: 1px solid #222222;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #888888; font-weight: bold; margin-bottom: 12px;">ПРОБЛЕМА ПОСЛЕ ПЕРЕНОСА</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Данные успешно скопированы на Linux-сервер. Но часть инженеров получила доступ к папкам бухгалтерии. Причина: в Windows права наследовались через вложенные группы, а при переносе была воспроизведена только плоская часть структуры.</p></div><div style="flex: 1; min-width: 300px; padding: 24px; background: #000000;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">ПРАВИЛЬНОЕ РЕШЕНИЕ</div><p style="font-size: 15px; color: #d0d0d0; margin: 0; line-height: 1.6;">Не раздавать доступ вручную по обращениям. Сформировать таблицу соответствия исходных и целевых групп, проверить наследование в Samba и провести матричное тестирование доступа для разных категорий сотрудников перед финальным переключением.</p></div></div></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Особое внимание: открытые файлы и приложения</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Файловый сервер может использоваться не только людьми. Некоторые приложения хранят на сетевых ресурсах временные данные, блокировки или файлы обмена.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Если такие приложения ожидают определённое поведение SMB, простого подключения к новой папке недостаточно. Нужно проверить блокировки, совместный доступ, поведение при обрыве соединения и возможность восстановления операций.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Особенно осторожно следует относиться к переносу баз данных и рабочих файлов приложений на обычные сетевые папки. Наличие SMB не делает такую схему автоматически безопасной или поддерживаемой производителем приложения.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">7. Корпоративные приложения: главный вопрос — поддерживает ли их целевая платформа</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Именно приложения чаще всего определяют, насколько глубокой окажется миграция. Некоторые системы изначально создаются для работы на нескольких операционных платформах. Другие тесно связаны с Windows, особенно те, что используют <span style="font-family: 'SF Mono', monospace; color: #ffffff;">IIS</span>, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">.NET Framework</span>, COM-компоненты, специфические драйверы или Windows API.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : APP_MIGRATION_DECISION_TREE ]</div><svg viewbox="0 0 750 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="60" width="140" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="90" y="85" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">IIS / .NET APP</text><line x1="160" y1="80" x2="210" y2="80" stroke="#333333" stroke-width="1.5"></line><polygon points="210,80 204,77 204,83" fill="#333333"></polygon><rect x="220" y="50" width="160" height="60" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="300" y="75" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">АНАЛИЗ ЗАВИСИМОСТЕЙ</text><text x="300" y="95" fill="#888888" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">COM, Реестр, Windows Auth?</text><line x1="380" y1="65" x2="440" y2="40" stroke="#333333" stroke-width="1"></line><polygon points="440,40 434,37 434,43" fill="#333333"></polygon><text x="410" y="30" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Да</text><rect x="450" y="20" width="280" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1" stroke-dasharray="4 4"></rect><text x="590" y="45" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ИЗОЛЯЦИЯ В WINDOWS ИЛИ РЕФАКТОРИНГ</text><line x1="380" y1="95" x2="440" y2="120" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="440,120 434,117 434,123" fill="#14b8a6"></polygon><text x="410" y="135" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Нет (.NET Core / Кроссплатформа)</text><rect x="450" y="100" width="280" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="590" y="125" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">МИГРАЦИЯ НА LINUX + NGINX/APACHE</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Если приложение размещено в <span style="font-family: 'SF Mono', monospace; color: #ffffff;">IIS</span>, возможным направлением миграции может стать <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Nginx</span> или <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Apache HTTP Server</span>. Но важно понимать: IIS — не просто веб-сервер. Он участвует в управлении приложениями, аутентификации, обработке запросов и интеграции с компонентами Windows.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Здесь важно не смешивать две технологические платформы. <span style="font-family: 'SF Mono', monospace; color: #ffffff;">.NET Framework</span> исторически тесно связан с Windows. Современный <span style="font-family: 'SF Mono', monospace; color: #ffffff;">.NET</span> является кроссплатформенным. Однако наличие исходного кода на C# ещё не гарантирует возможность переноса без переработки.</p><div style="padding: 24px; margin: 0 0 32px 0; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 14px; line-height: 2; color: #d0d0d0;"><div style="color: #14b8a6; font-weight: bold; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px;">КРИТЕРИИ ОЦЕНКИ ПЕРЕНОСА:</div><div style="display: flex; gap: 16px; border-bottom: 1px solid #222222; padding-bottom: 8px; margin-bottom: 8px;"><span style="color: #14b8a6; font-weight: bold;">01</span> Версия среды выполнения и используемые библиотеки.</div><div style="display: flex; gap: 16px; border-bottom: 1px solid #222222; padding-bottom: 8px; margin-bottom: 8px;"><span style="color: #14b8a6; font-weight: bold;">02</span> Сторонние компоненты и системные API.</div><div style="display: flex; gap: 16px; border-bottom: 1px solid #222222; padding-bottom: 8px; margin-bottom: 8px;"><span style="color: #14b8a6; font-weight: bold;">03</span> Механизмы аутентификации и способ хранения конфигурации.</div><div style="display: flex; gap: 16px;"><span style="color: #14b8a6; font-weight: bold;">04</span> Прямые зависимости от Windows-служб и реестра.</div></div><div style="padding: 24px; margin: 0 0 0 0; background: #000000; border: 1px solid #222222; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0; font-weight: 500;">Когда приложение лучше оставить в Windows:</p><p style="font-size: 16px; color: #ffffff; margin: 0;">Не каждое приложение экономически оправданно переносить. Если система использует устаревший компонент без Linux-версии или производитель официально поддерживает её только на Windows Server, попытка запуска через слои совместимости создаст больше проблем. Правильнее оставить такое приложение в Windows, изолировать его и организовать контролируемое взаимодействие с Linux-инфраструктурой.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">8. Базы данных: перенос СУБД и перенос приложения — разные проекты</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Базы данных заслуживают отдельного внимания. Иногда организация хочет одновременно отказаться от Windows Server и перейти на другую систему управления базами данных. Это две разные задачи, которые не стоит объединять без необходимости. Например, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">SQL Server</span> поддерживает Linux, поэтому можно сохранить существующую СУБД, изменив только операционную платформу. В других случаях рассматривается переход на <span style="font-family: 'SF Mono', monospace; color: #ffffff;">PostgreSQL</span>, но это потребует изменений в приложении, SQL-запросах, процедурах и типах данных.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : DATABASE_PERFORMANCE_REGRESSION_TRAP ]</div><svg viewbox="0 0 750 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="30" width="200" height="80" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="120" y="55" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ТЕСТОВАЯ СРЕДА</text><text x="120" y="75" fill="#666666" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Малый объём данных</text><text x="120" y="95" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Запрос: 2 сек (OK)</text><line x1="220" y1="70" x2="280" y2="70" stroke="#333333" stroke-width="1.5"></line><polygon points="280,70 274,67 274,73" fill="#333333"></polygon><text x="250" y="60" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Миграция</text><rect x="290" y="30" width="200" height="80" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="390" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ПРОДУКТИВНАЯ СРЕДА</text><text x="390" y="75" fill="#d0d0d0" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Реальный объём данных</text><text x="390" y="95" fill="#ffffff" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Запрос: 120 сек (FAIL)</text><rect x="520" y="40" width="210" height="60" fill="#0a0a0a" stroke="#333333" stroke-width="1" stroke-dasharray="4 4"></rect><text x="625" y="65" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">РАЗНЫЙ ПЛАН ВЫПОЛНЕНИЯ</text><text x="625" y="85" fill="#888888" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Статистика, индексы, оптимизатор</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Что необходимо проверить при смене СУБД</h3><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; margin: 0 0 32px 0;"><div style="padding: 12px 16px; background: #0a0a0a; border: 1px solid #222222; font-size: 14px; color: #d0d0d0;">Версию и редакцию СУБД.</div><div style="padding: 12px 16px; background: #0a0a0a; border: 1px solid #14b8a6; font-size: 14px; color: #14b8a6; font-weight: 600;">Хранимые процедуры и триггеры.</div><div style="padding: 12px 16px; background: #0a0a0a; border: 1px solid #222222; font-size: 14px; color: #d0d0d0;">Специфические типы данных и индексы.</div><div style="padding: 12px 16px; background: #0a0a0a; border: 1px solid #222222; font-size: 14px; color: #d0d0d0;">Особенности синтаксиса SQL-запросов.</div><div style="padding: 12px 16px; background: #0a0a0a; border: 1px solid #14b8a6; font-size: 14px; color: #14b8a6; font-weight: 600;">Драйверы подключения приложения.</div><div style="padding: 12px 16px; background: #0a0a0a; border: 1px solid #222222; font-size: 14px; color: #d0d0d0;">Механизмы резервного копирования.</div><div style="padding: 12px 16px; background: #0a0a0a; border: 1px solid #222222; font-size: 14px; color: #d0d0d0;">Репликацию и высокую доступность.</div><div style="padding: 12px 16px; background: #0a0a0a; border: 1px solid #222222; font-size: 14px; color: #d0d0d0;">Требования к производительности.</div></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Почему тестирования на небольшой базе недостаточно</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Две СУБД могут успешно выполнять одинаковый запрос, но по-разному выбирать планы выполнения. Допустим, компания переносит базу данных объёмом несколько сотен гигабайт. На тестовой среде с малым объёмом данных приложение работает нормально.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">После ввода в эксплуатацию выясняется, что отчёт, который раньше формировался за несколько секунд, теперь выполняется несколько минут. Причиной могут быть различия в индексах, статистике, оптимизаторе запросов или настройках памяти. Поэтому необходимы нагрузочные испытания на данных, которые отражают реальные объёмы и характер использования системы.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Отдельно и в обязательном порядке проверяются резервное копирование и восстановление.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Успешное копирование базы не доказывает, что организация сможет восстановить её до согласованной точки времени (RPO) и вернуть приложение в рабочее состояние в рамках допустимого времени (RTO).</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">9. Идентификация и доступ: почему Linux-сервер должен правильно встроиться в корпоративную инфраструктуру</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Перенос серверов на <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Linux</span> не означает, что организация должна отказаться от существующей системы управления пользователями. На практике Linux-серверы могут продолжать работать с <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Active Directory</span> или другой централизованной службой каталогов.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Для этого используются различные механизмы, включая <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Kerberos</span>, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">LDAP</span>, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">SSSD</span> и <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Samba</span>. Например, Linux-файловый сервер может предоставлять SMB-ресурсы пользователям Windows, используя централизованную доменную идентификацию. Это позволяет изменить серверную платформу, не заставляя всех сотрудников переходить на новую систему учётных записей.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : UID_GID_MAPPING_CONSISTENCY ]</div><svg viewbox="0 0 750 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="40" width="140" height="60" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="90" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ACTIVE DIRECTORY</text><text x="90" y="85" fill="#666666" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">User: ivanov (SID)</text><line x1="160" y1="70" x2="220" y2="70" stroke="#333333" stroke-width="1.5"></line><polygon points="220,70 214,67 214,73" fill="#333333"></polygon><rect x="230" y="40" width="140" height="60" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="300" y="65" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">SSSD / LDAP</text><text x="300" y="85" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Маппинг: UID 10050</text><line x1="370" y1="55" x2="430" y2="40" stroke="#333333" stroke-width="1"></line><line x1="370" y1="85" x2="430" y2="100" stroke="#333333" stroke-width="1"></line><rect x="440" y="20" width="130" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="505" y="45" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Server A (UID 10050)</text><rect x="440" y="80" width="130" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="505" y="105" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Server B (UID 10050)</text><line x1="570" y1="70" x2="620" y2="70" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="620,70 614,67 614,73" fill="#14b8a6"></polygon><rect x="630" y="45" width="100" height="50" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="680" y="70" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" font-weight="700" text-anchor="middle">ЕДИНЫЙ</text><text x="680" y="85" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">КОНТЕКСТ</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">Однако интеграцию необходимо проектировать отдельно. Важно проверить следующие аспекты:</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 16px 20px; background: #0a0a0a; font-size: 15px; color: #d0d0d0;">Аутентификацию пользователей и срок действия билетов Kerberos.</div><div style="padding: 16px 20px; background: #0a0a0a; font-size: 15px; color: #d0d0d0;">Сопоставление числовых идентификаторов UID и GID.</div><div style="padding: 16px 20px; background: #0a0a0a; font-size: 15px; color: #d0d0d0;">Членство в группах и разрешения на файлы и каталоги.</div><div style="padding: 16px 20px; background: #0a0a0a; font-size: 15px; color: #d0d0d0;">Доступность каталогов и поведение при потере связи с доменом.</div><div style="padding: 16px 20px; background: #0a0a0a; font-size: 15px; color: #d0d0d0;">Права и ограничения сервисных учётных записей.</div></div><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Особое внимание следует уделить сопоставлению идентификаторов. В Linux пользователь и группа представлены числовыми UID и GID. Если один и тот же пользователь получает разные идентификаторы на разных серверах, это приведёт к хаосу при работе с общими файловыми ресурсами.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Поэтому при построении распределённой Linux-инфраструктуры необходимо обеспечить строго согласованную модель идентификации.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">10. Мониторинг и журналирование: новая платформа должна быть наблюдаемой</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Ещё одна распространённая ошибка — перенести сервисы, но оставить старую модель контроля инфраструктуры. <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Windows Server</span> использует <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Windows Event Log</span>. В <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Linux</span> применяются <span style="font-family: 'SF Mono', monospace; color: #ffffff;">journald</span>, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">rsyslog</span> и другие инструменты.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Но просто заменить один источник логов другим недостаточно. Организации необходимо сохранить возможность оперативно отвечать на практические вопросы.</p><div style="padding: 24px; margin: 0 0 32px 0; background: #000000; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 14px; line-height: 1.8; color: #d0d0d0;"><div style="color: #14b8a6; margin-bottom: 16px; font-weight: bold;">$ grep "critical_questions" /var/log/migration_check.log</div><div style="padding-left: 16px; border-left: 2px solid #333333;"><div style="margin-bottom: 8px;"><span style="color: #14b8a6;">&gt;</span> Когда сервис перестал работать?</div><div style="margin-bottom: 8px;"><span style="color: #14b8a6;">&gt;</span> Какое событие предшествовало отказу?</div><div style="margin-bottom: 8px;"><span style="color: #14b8a6;">&gt;</span> Какая задача завершилась ошибкой и сколько времени занимает обработка?</div><div style="margin-bottom: 8px;"><span style="color: #14b8a6;">&gt;</span> Почему приложение не может подключиться к базе?</div><div><span style="color: #14b8a6;">&gt;</span> Какие операции выполнялись от имени сервисной учётной записи?</div></div></div><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : CENTRALIZED_OBSERVABILITY_ARCHITECTURE ]</div><svg viewbox="0 0 750 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="30" width="120" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="80" y="50" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Linux Node 1</text><rect x="20" y="70" width="120" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="80" y="90" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Linux Node 2</text><rect x="20" y="110" width="120" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="80" y="130" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Linux Node N</text><line x1="140" y1="45" x2="200" y2="70" stroke="#333333" stroke-width="1"></line><line x1="140" y1="85" x2="200" y2="75" stroke="#333333" stroke-width="1"></line><line x1="140" y1="125" x2="200" y2="80" stroke="#14b8a6" stroke-width="1.5"></line><rect x="210" y="50" width="140" height="50" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="280" y="70" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">LOG AGGREGATOR</text><text x="280" y="90" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">(rsyslog / Fluentd)</text><line x1="350" y1="75" x2="410" y2="75" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="410,75 404,72 404,78" fill="#14b8a6"></polygon><rect x="420" y="40" width="310" height="70" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="575" y="65" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="10" font-weight="600" text-anchor="middle">ЦЕНТРАЛИЗОВАННЫЙ МОНИТОРИНГ</text><text x="575" y="85" fill="#888888" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Системные события + Прикладные метрики (очереди, задержки)</text><text x="575" y="100" fill="#888888" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Корреляция инцидентов</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Особенно важно обеспечить централизованный сбор событий. Если после миграции каждый Linux-сервер хранит журналы только локально, администраторы получают разрозненную картину. При отказе одного компонента приходится вручную сопоставлять события нескольких систем.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Поэтому целесообразно заранее определить архитектуру централизованного журналирования и мониторинга. В неё должны входить как системные события, так и прикладные показатели. Для интеграционного сервиса недостаточно видеть, что процесс запущен. Необходимо контролировать количество обработанных сообщений, ошибки передачи, размер очереди и задержку выполнения.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Именно такие бизнес-метрики позволяют обнаружить нарушение бизнес-процесса раньше, чем на него пожалуется пользователь.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">11. Безопасность: Linux не становится защищённым автоматически</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Иногда переход на <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Linux</span> рассматривают как самостоятельное мероприятие по повышению безопасности. Это неверная постановка задачи.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Linux предоставляет развитые механизмы разграничения доступа, изоляции процессов, управления привилегиями и контроля системных ресурсов. Но результат зависит от архитектуры, конфигурации и качества эксплуатации.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : LEAST_PRIVILEGE_MIGRATION ]</div><svg viewbox="0 0 750 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="30" width="300" height="60" fill="#0a0a0a" stroke="#333333" stroke-width="1" stroke-dasharray="4 4"></rect><text x="170" y="50" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">СТАРАЯ МОДЕЛЬ (WINDOWS)</text><text x="170" y="75" fill="#666666" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Один сервисный аккаунт → Доступ ко всем системам</text><line x1="320" y1="60" x2="380" y2="60" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="380,60 374,57 374,63" fill="#14b8a6"></polygon><text x="350" y="50" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Рефакторинг</text><rect x="390" y="30" width="340" height="60" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="560" y="50" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">НОВАЯ МОДЕЛЬ (LINUX)</text><text x="560" y="75" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Изолированные сервисные пользователи с минимальными правами (Least Privilege)</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Что необходимо пересмотреть при миграции</h3><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">01. ПРИВИЛЕГИИ</div><p style="font-size: 14px; color: #b0b0b0; margin: 0; line-height: 1.5;">Локальные административные полномочия и права системных служб.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">02. ДОСТУП</div><p style="font-size: 14px; color: #b0b0b0; margin: 0; line-height: 1.5;">SSH-доступ и использование привилегированных учётных записей.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">03. СЕКРЕТЫ</div><p style="font-size: 14px; color: #b0b0b0; margin: 0; line-height: 1.5;">Управление секретами, паролями, токенами и ключами интеграций.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">04. СЕТЬ</div><p style="font-size: 14px; color: #b0b0b0; margin: 0; line-height: 1.5;">Настройки межсетевых экранов и контроль целостности системы.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">05. ЖИЗНЕННЫЙ ЦИКЛ</div><p style="font-size: 14px; color: #b0b0b0; margin: 0; line-height: 1.5;">Регулярное обновление пакетов и резервное копирование конфигураций.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">06. АУДИТ</div><p style="font-size: 14px; color: #b0b0b0; margin: 0; line-height: 1.5;">Централизованное журналирование всех критических действий.</p></div></div><div style="padding: 24px; margin: 0 0 0 0; background: #000000; border: 1px solid #222222; border-left: 4px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Особенно важно отказаться от привычки запускать приложения от имени пользователя <span style="font-family: 'SF Mono', monospace; color: #ffffff;">root</span>. Для каждой службы необходимо создавать отдельную модель полномочий, ограничивающую доступ к системным ресурсам и данным.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Если Windows-служба ранее получала доступ к нескольким системам под одной учётной записью, не следует автоматически воспроизводить такую схему в Linux. Миграция — подходящий момент для разделения полномочий и уменьшения последствий возможной компрометации отдельного сервиса.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">12. Условный пример: перенос инфраструктуры предприятия с Windows Server на Linux</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Рассмотрим компанию, в которой работает около 400 сотрудников. В её инфраструктуре используются шесть Windows-серверов:</p><div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 32px 0;"><span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 13px; color: #d0d0d0;">Файловый сервер</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 13px; color: #d0d0d0;">Внутренние веб-приложения (IIS)</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 13px; color: #d0d0d0;">Сервер интеграции с ERP</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 13px; color: #d0d0d0;">Сервер фоновых задач</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 13px; color: #d0d0d0;">Сервер баз данных (SQL)</span> <span style="padding: 8px 16px; background: #0a0a0a; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 13px; color: #d0d0d0;">Вспомогательные службы</span></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Руководство принимает решение постепенно перевести инфраструктуру на Linux. На первом этапе команда предполагает, что достаточно перенести файлы, приложения и базы данных. Но обследование выявляет дополнительные зависимости: сложную структуру разрешений Active Directory, зависимость от .NET Framework, Windows-специфические PowerShell-модули и жесткие привязки Task Scheduler.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : INFRASTRUCTURE_MIGRATION_STRATEGY ]</div><svg viewbox="0 0 750 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="30" width="220" height="100" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="130" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">ГРУППА 1: ПЕРЕНОС</text><line x1="40" y1="70" x2="220" y2="70" stroke="#14b8a6" stroke-width="1"></line><text x="130" y="90" fill="#d0d0d0" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">• Файловый сервер (Samba)</text><text x="130" y="110" fill="#d0d0d0" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">• Современный .NET</text><rect x="265" y="30" width="220" height="100" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="375" y="55" fill="#ffffff" font-family="'SF Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">ГРУППА 2: ПЕРЕРАБОТКА</text><line x1="285" y1="70" x2="465" y2="70" stroke="#333333" stroke-width="1"></line><text x="375" y="90" fill="#888888" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">• PowerShell 7 / Python</text><text x="375" y="110" fill="#888888" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">• Systemd timers/services</text><rect x="510" y="30" width="220" height="100" fill="#0a0a0a" stroke="#333333" stroke-width="1" stroke-dasharray="4 4"></rect><text x="620" y="55" fill="#888888" font-family="'SF Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">ГРУППА 3: СОХРАНЕНИЕ</text><line x1="530" y1="70" x2="710" y2="70" stroke="#333333" stroke-width="1"></line><text x="620" y="90" fill="#666666" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">• Legacy .NET Framework</text><text x="620" y="110" fill="#666666" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">• SQL Server (текущая версия)</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Как разделяют инфраструктуру</h3><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">01 / ПЕРЕНОСИМЫЕ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Файловый сервер переводится на Linux с использованием Samba. Предварительно проектируется строгое соответствие групп и разрешений. Часть веб-приложений на современном .NET переносится с использованием подходящего веб-сервера и системных служб.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #ffffff; font-weight: bold; margin-bottom: 12px;">02 / ТРЕБУЮЩИЕ ПЕРЕРАБОТКИ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Интеграционные скрипты анализируются отдельно. Кроссплатформенные сценарии переводятся на PowerShell 7. Задачи, тесно связанные с Windows API, перерабатываются на Python. Для фоновых процессов создаются отдельные systemd-службы и таймеры с контролем результата.</p></div><div style="padding: 24px; background: #000000;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #888888; font-weight: bold; margin-bottom: 12px;">03 / ВРЕМЕННО СОХРАНЯЕМЫЕ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Приложение, зависящее от .NET Framework, остаётся на Windows Server. Для взаимодействия используется контролируемый API. SQL Server также сохраняется, поскольку его перенос и изменение СУБД не входят в обязательный объём первой миграции.</p></div></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Как обнаруживают проблему при тестировании</h3><div style="padding: 24px; margin: 0 0 32px 0; background: #000000; border: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 14px; line-height: 1.8; color: #d0d0d0;"><div style="color: #14b8a6; margin-bottom: 16px; font-weight: bold;">$ cat /var/log/migration_incidents.log</div><div style="padding-left: 16px; border-left: 2px solid #333333; margin-bottom: 20px;"><div style="color: #ffffff; font-weight: 600; margin-bottom: 4px;">[ERROR] Файловый сервер: Отказ в доступе к производственным документам</div><div style="color: #888888;">Причина: приложение использует отдельную учётную запись, права которой были настроены в Windows через специфическую вложенную группу. В целевой инфраструктуре соответствие этой группы не было предусмотрено.</div><div style="color: #14b8a6; margin-top: 8px;">Решение: корректировка модели идентификации, повторное тестирование чтения, записи, блокировок и обработки ошибок.</div></div><div style="padding-left: 16px; border-left: 2px solid #14b8a6;"><div style="color: #ffffff; font-weight: 600; margin-bottom: 4px;">[WARNING] Фоновая задача: Сбой подключения к внешней системе</div><div style="color: #888888;">Причина: задача успешно запускается по расписанию (systemd), но падает при внешнем запросе из-за отсутствующего TLS-сертификата, который не был перенесён.</div><div style="color: #14b8a6; margin-top: 8px;">Вывод: миграция должна проверяться по полному бизнес-сценарию выполнения, а не только по факту старта процесса.</div></div></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Какой результат получается</h3><div style="padding: 32px; margin: 0 0 0 0; background: #000000; border: 1px solid #222222; border-left: 4px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 16px 0;">Предприятие не пытается любой ценой избавиться от всех Windows-серверов. Оно переводит на Linux те сервисы, для которых это технически и экономически обосновано, перерабатывает зависимые приложения и сохраняет отдельные Windows-компоненты там, где их замена пока нецелесообразна.</p><p style="font-size: 18px; color: #ffffff; margin: 0; font-weight: 600; line-height: 1.6; letter-spacing: -0.2px;">В результате формируется <span style="color: #14b8a6;">смешанная инфраструктура</span> с понятными границами ответственности. Это значительно надёжнее, чем формально получить стопроцентную долю Linux-серверов ценой потери совместимости и усложнения эксплуатации.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">13. Как организовать миграцию поэтапно</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Практически разумный переход состоит из нескольких последовательных этапов, исключающих хаотичные изменения в продуктивной среде.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : MIGRATION_PIPELINE_STAGES ]</div><svg viewbox="0 0 750 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><circle cx="40" cy="50" r="15" fill="#0a0a0a" stroke="#333333" stroke-width="1"></circle><text x="40" y="54" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">01</text><line x1="55" y1="50" x2="85" y2="50" stroke="#333333" stroke-width="1"></line><circle cx="100" cy="50" r="15" fill="#0a0a0a" stroke="#333333" stroke-width="1"></circle><text x="100" y="54" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">02</text><line x1="115" y1="50" x2="145" y2="50" stroke="#333333" stroke-width="1"></line><circle cx="160" cy="50" r="15" fill="#0a0a0a" stroke="#333333" stroke-width="1"></circle><text x="160" y="54" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">03</text><line x1="175" y1="50" x2="205" y2="50" stroke="#333333" stroke-width="1"></line><circle cx="220" cy="50" r="15" fill="#0a0a0a" stroke="#333333" stroke-width="1"></circle><text x="220" y="54" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">04</text><line x1="235" y1="50" x2="265" y2="50" stroke="#333333" stroke-width="1"></line><circle cx="280" cy="50" r="15" fill="#0a0a0a" stroke="#333333" stroke-width="1"></circle><text x="280" y="54" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">05</text><line x1="295" y1="50" x2="325" y2="50" stroke="#333333" stroke-width="1"></line><circle cx="340" cy="50" r="15" fill="#0a0a0a" stroke="#333333" stroke-width="1"></circle><text x="340" y="54" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">06</text><line x1="355" y1="50" x2="385" y2="50" stroke="#14b8a6" stroke-width="1.5"></line><rect x="390" y="35" width="100" height="30" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="440" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" font-weight="700" text-anchor="middle">07. DECOM</text><line x1="490" y1="50" x2="520" y2="50" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="520,50 514,47 514,53" fill="#14b8a6"></polygon><rect x="530" y="30" width="200" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="630" y="55" fill="#ffffff" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ЧИСТАЯ LINUX-ИНФРАСТРУКТУРА</text></svg></div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">01 / ОБСЛЕДОВАНИЕ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Сбор сведений о серверах, службах, приложениях и сетевых взаимодействиях. Формирование полной карты зависимостей.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">02 / КЛАССИФИКАЦИЯ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Отнесение каждого сервиса к категории: перенос, замена аналогом, переработка, сохранение на Windows или вывод из эксплуатации.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">03 / ПРОЕКТИРОВАНИЕ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Определение дистрибутивов, версий, механизмов аутентификации, структуры хранения, мониторинга и решений о смешанной инфраструктуре.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">04 / ТЕСТОВАЯ СРЕДА</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Развёртывание целевых компонентов и проверка реальных сценариев, включая цепочки взаимодействия между системами.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">05 / ПИЛОТНАЯ МИГРАЦИЯ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Перенос сервисов с понятными зависимостями и ограниченным влиянием на бизнес. Оценка стабильности и эксплуатационных затрат.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">06 / КРИТИЧНЫЕ КОМПОНЕНТЫ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Перенос сложных систем волнами. Для каждой волны предусматриваются критерии готовности, план переключения и процедура возврата.</p></div><div style="padding: 24px; background: #000000; grid-column: 1 / -1; border-top: 2px solid #14b8a6;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #ffffff; font-weight: bold; margin-bottom: 12px;">07 / ВЫВОД ИЗ ЭКСПЛУАТАЦИИ (DECOMMISSION)</div><p style="font-size: 15px; color: #d0d0d0; margin: 0; line-height: 1.6;">Windows-серверы отключаются только после проверки отсутствия обращений от приложений, фоновых задач, пользователей и инфраструктурных компонентов. Отдельно проверяется отсутствие забытых DNS-записей, сетевых подключений и сервисных учётных записей.</p></div></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">14. Как понять, что миграция действительно завершена</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Наличие работающих Linux-серверов ещё не означает успешного завершения проекта. Необходимо проверить, что новая инфраструктура выполняет те же бизнес-функции, ради которых существовали старые серверы.</p><div style="display: grid; grid-template-columns: 1fr 2fr; border: 1px solid #222222; margin: 0 0 32px 0; font-size: 15px;"><div style="padding: 16px 20px; background: #0a0a0a; border-bottom: 1px solid #222222; border-right: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Направление</div><div style="padding: 16px 20px; background: #0a0a0a; border-bottom: 1px solid #222222; font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Что проверяется</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Файловые ресурсы</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Доступ, разрешения, наследование, файловые блокировки.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Приложения</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Функциональность, совместимость, производительность под нагрузкой.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Фоновые задачи</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Расписание, повторные попытки, корректная обработка ошибок.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Аутентификация</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Вход пользователей и сервисных учётных записей.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Интеграции</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Целостность и полнота передачи данных между системами.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Мониторинг</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Сбор событий, метрик и настройка оповещений.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Резервное копирование</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Успешное восстановление данных и сервисов до согласованной точки.</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Безопасность</div><div style="padding: 16px 20px; border-bottom: 1px solid #222222; color: #b0b0b0;">Права доступа, управление секретами, обновления, аудит.</div><div style="padding: 16px 20px; border-right: 1px solid #222222; color: #ffffff; font-weight: 500;">Отказоустойчивость</div><div style="padding: 16px 20px; color: #b0b0b0;">Поведение системы при потере связи и отказе критичных компонентов.</div></div><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Особенно полезно проводить проверку не только штатного режима, но и аварийных сценариев.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Например: что произойдёт, если временно станет недоступен сервер идентификации? Сможет ли приложение корректно обработать потерю соединения с базой? Будет ли фоновая задача повторена после сбоя без повторного выполнения уже завершённой операции? Такие проверки показывают реальную зрелость перенесённой инфраструктуры.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">15. Почему смешанная инфраструктура иногда лучше полного перехода на Linux</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">В проектах миграции нередко возникает желание получить простой конечный результат: все серверы работают на Linux, Windows полностью исключён. Но в корпоративной среде такой подход не всегда оправдан.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Есть приложения, для которых Windows остаётся единственной поддерживаемой платформой. Есть системы, перенос которых требует серьёзной переработки, а получаемая выгода не покрывает затраты. Есть специализированные компоненты, тесно связанные с оборудованием или конкретными программными библиотеками.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">LINUX</div><p style="font-size: 15px; color: #d0d0d0; margin: 0;">Файловые сервисы, современные веб-приложения и интеграционные компоненты.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #888888; font-weight: bold; margin-bottom: 8px;">WINDOWS</div><p style="font-size: 15px; color: #b0b0b0; margin: 0;">Отдельные специализированные приложения и устаревшие, но критичные системы.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ЕДИНОЕ УПРАВЛЕНИЕ</div><p style="font-size: 15px; color: #d0d0d0; margin: 0;">Централизованная идентификация, объединённый мониторинг и документированные интерфейсы передачи данных.</p></div></div><div style="padding: 24px; margin: 0 0 0 0; background: #000000; border: 1px solid #222222; border-left: 4px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Главное условие: смешанная архитектура должна быть спроектирована, а не возникнуть случайно.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Необходимо чётко понимать, какие компоненты остаются на Windows, почему это сделано, какие зависимости они сохраняют и как будет обеспечиваться их дальнейшая безопасная эксплуатация.</p></div></div><div style="max-width: 1100px; margin: 64px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 24px; font-weight: 600; margin: 0 0 24px 0; color: #ffffff; letter-spacing: -0.3px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Заключение</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Миграция корпоративных сервисов с <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Windows Server</span> на <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Linux</span> — это не соревнование по количеству заменённых серверов. Технически можно перенести файловые ресурсы, развернуть веб-сервер, настроить <span style="font-family: 'SF Mono', monospace; color: #ffffff;">systemd</span>, перенести скрипты и запустить приложения на новой платформе. Но это ещё не гарантирует сохранения работоспособности предприятия.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Настоящая сложность находится в зависимостях: учётных записях, разрешениях, системных библиотеках, фоновых задачах, интеграциях, механизмах аутентификации и особенностях приложений.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Поэтому правильная миграция начинается с обследования существующей инфраструктуры и классификации сервисов. Одни компоненты можно заменить готовыми Linux-аналогами. Другие требуют переработки. Третьи разумнее временно или постоянно оставить в Windows. Необходимо оценивать не только возможность технического переноса, но и стоимость последующего сопровождения, поддержку производителя, требования к безопасности и способность команды эксплуатировать новую платформу.</p><div style="padding: 32px; margin: 0 0 0 0; background: #000000; border: 1px solid #222222; border-left: 4px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 18px; color: #ffffff; margin: 0; font-weight: 600; line-height: 1.6; letter-spacing: -0.2px;">Хорошая миграция — это не ситуация, когда предприятие избавилось от Windows Server. Это ситуация, когда корпоративные сервисы продолжают выполнять свои задачи, сотрудники не замечают перехода, интеграции не теряют данные, а новая инфраструктура становится <span style="color: #14b8a6;">понятнее</span>, <span style="color: #14b8a6;">управляемее</span> и <span style="color: #14b8a6;">предсказуемее</span> прежней.</p></div></div><p> </p><div style="max-width: 1100px; margin: 60px auto 0 auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">НАВИГАЦИЯ // SUGGESTED_READING</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // РАЗРАБОТКА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Когда готового программного обеспечения уже недостаточно</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kogda-gotovogo-programmnogo-obespecheniya-uzhe-nedostatochno/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // АРХИТЕКТУРА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Как проектируют корпоративную систему с нуля</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kak-proektiruyut-korporativnuyu-sistemu-s-nulya/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // АРХИТЕКТУРА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Зачем нужно техническое задание и что в нём должно быть</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/zachem-nuzhno-tehnicheskoe-zadanie-i-chto-v-nyom-dolzhno-byt/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div></div></div><div style="max-width: 1100px; margin: 20px auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; border-top: 1px solid #165c52; padding: 40px 0 0 0; box-sizing: border-box; width: 100%;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 40px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ EXPERTISE JOURNAL ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Все инженерные материалы и экспертные статьи</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/ekspertiza/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">перейти к каталогу ──►</a></div></div><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ CORE GLOSSARY ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Полный алфавитный справочник ИТ-терминов</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/glossariy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">открыть справочник ──►</a></div></div></div></div><p> </p></div></article></main><footer class="footer"><div class="wrapper"><div class="footer__copyright"><p> </p><p> </p></div><button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg width="20" height="20"><use xlink:href="https://log-ai.ru/assets/svg/svg-map.svg#toparrow"/></svg></button></div></footer><script defer="defer" src="https://log-ai.ru/assets/js/scripts.min.js?v&#x3D;d0fc1030089a37f93a2d51bf6d07565c"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script><script>(() => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') !== 'monument') return;
+
+  const IMAGE_URL = 'https://log-ai.ru/media/files/Interstellar.jpeg';
+  const AUDIO_URL = 'https://log-ai.ru/media/files/interstellar.mp3';
+
+  // Защита от повторного запуска
+  if (document.getElementById('log-ai-monument')) return;
+
+  const monument = document.createElement('div');
+  monument.id = 'log-ai-monument';
+
+  const root = document.documentElement;
+  const body = document.body;
+
+  const previousRootOverflow = root.style.overflow;
+  const previousBodyOverflow = body.style.overflow;
+  const previousBodyPosition = body.style.position;
+  const previousBodyTop = body.style.top;
+  const previousBodyWidth = body.style.width;
+  const previousScrollX = window.scrollX;
+  const previousScrollY = window.scrollY;
+
+  root.style.overflow = 'hidden';
+  body.style.overflow = 'hidden';
+  body.style.position = 'fixed';
+  body.style.top = `-${previousScrollY}px`;
+  body.style.width = '100%';
+
+  monument.innerHTML = `
+    <div class="monument-universe"></div>
+    <canvas class="monument-stars"></canvas>
+    <div class="monument-shade"></div>
+
+    <div class="monument-frame">
+      <p class="monument-overline">ARCHIVUM · LOG-AI · MMXXVI</p>
+
+      <div class="monument-rule"></div>
+
+      <h1>PER ASPERA<br><span>AD ASTRA</span></h1>
+
+      <p class="monument-translation">
+        THROUGH HARDSHIP, TO THE STARS
+      </p>
+
+      <div class="monument-message">
+        <p>TO THOSE WHO BUILD BEYOND THE LIMITS OF THEIR TIME.</p>
+        <p>TO THOSE WHO CONTINUE WHEN THE OUTCOME IS UNKNOWN.</p>
+        <p>TO THOSE WHO WILL DISCOVER THIS LONG AFTER ITS CREATION.</p>
+      </div>
+
+      <p class="monument-declaration">
+        YOU WERE NOT THE FIRST TO LOOK AT THE STARS.<br>
+        BUT YOU MAY BE AMONG THOSE WHO REACH THEM.
+      </p>
+
+      <div class="monument-rule"></div>
+          
+      <p class="monument-translation">
+        A MARK LEFT IN THE MACHINE.
+      </p>   
+
+      <p class="monument-signature">
+        LOG·AI·ARCHITECTI·MMXXVI
+      </p>
+
+      <p class="monument-exit" id="monument-hint">
+        [ CLICK ANYWHERE TO RETURN ]
+      </p>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #log-ai-monument {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      background: #03040a;
+      color: #e5dfd3;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      box-sizing: border-box;
+      cursor: pointer;
+      isolation: isolate;
+      opacity: 0;
+      animation: logai-monument-appear 1.8s ease forwards;
+    }
+
+    #log-ai-monument .monument-universe {
+      position: fixed;
+      inset: -3%;
+      z-index: -3;
+      background-image: url("https://log-ai.ru/media/files/Interstellar.jpeg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transform: scale(1.02);
+      animation: logai-cosmic-drift 35s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-shade {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(0,0,0,.24) 0%,
+          rgba(0,0,0,.52) 65%,
+          rgba(0,0,0,.78) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.42),
+          rgba(0,0,0,.18) 45%,
+          rgba(0,0,0,.62)
+        );
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-frame {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', serif;
+      padding: 30px 0;
+      text-shadow: 0 2px 18px rgba(0,0,0,.9);
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-translation,
+    #log-ai-monument .monument-signature,
+    #log-ai-monument .monument-exit {
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-signature {
+      color: #c0a16a;
+    }
+
+    #log-ai-monument .monument-rule {
+      height: 1px;
+      width: 160px;
+      max-width: 60%;
+      margin: 30px auto;
+      background: linear-gradient(
+        to right,
+        transparent,
+        #a68a55,
+        transparent
+      );
+      box-shadow: 0 0 12px rgba(190,155,90,.2);
+    }
+
+    #log-ai-monument h1 {
+      margin: 35px 0 18px;
+      font-size: clamp(30px, 7vw, 58px);
+      line-height: 1.5;
+      letter-spacing: .16em;
+      font-weight: 400;
+      color: #f4f0e8;
+    }
+
+    #log-ai-monument h1 span {
+      color: #d2b77e;
+    }
+
+    #log-ai-monument .monument-translation {
+      color: #c0b8aa;
+    }
+
+    #log-ai-monument .monument-message {
+      margin: 55px auto 38px;
+      max-width: 490px;
+      color: #e0d9cd;
+      font-size: 13px;
+      line-height: 2.2;
+      letter-spacing: .035em;
+    }
+
+    #log-ai-monument .monument-message p {
+      margin: 0 0 12px;
+    }
+
+    #log-ai-monument .monument-declaration {
+      color: #e0c48a;
+      font-size: 12px;
+      line-height: 2.3;
+      letter-spacing: .08em;
+    }
+
+    #log-ai-monument .monument-exit {
+      margin-top: 36px;
+      color: #c0b8aa;
+      font-size: 9px;
+      letter-spacing: .18em;
+    }
+
+    @keyframes logai-monument-appear {
+      to { opacity: 1; }
+    }
+
+    @keyframes logai-cosmic-drift {
+      from { transform: scale(1.02); }
+      to { transform: scale(1.13); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #log-ai-monument,
+      #log-ai-monument .monument-universe {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(monument);
+
+  // Тонкие, редкие звёзды
+  const canvas = monument.querySelector('.monument-stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let frameId = null;
+  let closed = false;
+
+  function resizeStars() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(window.innerWidth * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    stars = Array.from({ length: 65 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      length: 8 + Math.random() * 25,
+      speed: 0.25 + Math.random() * 0.75,
+      alpha: 0.15 + Math.random() * 0.5,
+      delay: Math.random() * 500
+    }));
+  }
+
+  function drawStars() {
+    if (closed) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    for (const star of stars) {
+      star.delay -= 1;
+
+      if (star.delay <= 0) {
+        star.y += star.speed;
+        star.x -= star.speed * 0.35;
+
+        ctx.beginPath();
+        ctx.moveTo(star.x, star.y);
+        ctx.lineTo(star.x - star.length * 0.35,
+                   star.y - star.length);
+
+        ctx.strokeStyle = `rgba(210,220,255,${star.alpha})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+
+        if (star.y > h + 30 || star.x < -30) {
+          star.x = Math.random() * w + 30;
+          star.y = -Math.random() * h * 0.4;
+          star.delay = 30 + Math.random() * 180;
+        }
+      }
+    }
+
+    frameId = requestAnimationFrame(drawStars);
+  }
+
+  resizeStars();
+  drawStars();
+
+  window.addEventListener('resize', resizeStars);
+
+  // Музыка
+  const audio = document.createElement('audio');
+  audio.id = 'monument-audio';
+  audio.src = AUDIO_URL;
+  audio.loop = true;
+  audio.preload = 'auto';
+  audio.volume = 0.35;
+  document.body.appendChild(audio);
+
+  let playing = false;
+  let starting = false;
+
+  const hint = document.getElementById('monument-hint');
+
+  function startMusic() {
+    if (closed || starting || playing) return;
+
+    starting = true;
+
+    audio.play().then(() => {
+      starting = false;
+
+      if (closed) {
+        audio.pause();
+        return;
+      }
+
+      playing = true;
+      hint.textContent = '[ CLICK ANYWHERE TO RETURN ]';
+    }).catch((error) => {
+      starting = false;
+
+      if (closed) return;
+
+      if (error.name === 'NotAllowedError') {
+        hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+        return;
+      }
+
+      console.warn('LOG-AI audio:', error.name, error.message);
+      hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+    });
+  }
+
+  function closeMonument() {
+    if (closed) return;
+    closed = true;
+
+    cancelAnimationFrame(frameId);
+    window.removeEventListener('resize', resizeStars);
+    window.removeEventListener('keydown', onKeyDown);
+
+    audio.pause();
+    audio.remove();
+    monument.remove();
+    style.remove();
+
+    root.style.overflow = previousRootOverflow;
+    body.style.overflow = previousBodyOverflow;
+    body.style.position = previousBodyPosition;
+    body.style.top = previousBodyTop;
+    body.style.width = previousBodyWidth;
+
+    window.scrollTo(previousScrollX, previousScrollY);
+
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete('mode');
+
+    window.history.replaceState(
+      {},
+      document.title,
+      cleanUrl.pathname + cleanUrl.search + cleanUrl.hash
+    );
+  }
+
+  function onKeyDown(event) {
+    if (event.key === 'Escape') closeMonument();
+  }
+
+  monument.addEventListener('click', () => {
+    if (closed) return;
+
+    if (playing) {
+      closeMonument();
+    } else {
+      startMusic();
+    }
+  });
+
+  window.addEventListener('keydown', onKeyDown);
+
+  // Первая попытка автоматического запуска
+  startMusic();
+})();</script><script>(function () {
+    // ВНИМАНИЕ!!!!!!!!!!!!!!!!!!!!Плавный инерционный скролл только для мыши/тачпада
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    let targetY = window.scrollY;
+    let currentY = window.scrollY;
+    let animationFrame = null;
+
+    // ===== НАСТРОЙКИ =====
+    const SPEED = 0.70;       // 0.4 = медленнее, 0.65 = средне, 1.0 = быстрее
+    const SMOOTHNESS = 0.13;  // 0.08 = мягче, 0.12 = средне, 0.18 = быстрее
+    const MAX_STEP = 500;     // максимальный шаг одного движения колеса
+    // =====================
+
+    function animateScroll() {
+        currentY += (targetY - currentY) * SMOOTHNESS;
+
+        if (Math.abs(targetY - currentY) < 0.5) {
+            currentY = targetY;
+            window.scrollTo(0, currentY);
+            animationFrame = null;
+            return;
+        }
+
+        window.scrollTo(0, currentY);
+        animationFrame = requestAnimationFrame(animateScroll);
+    }
+
+    window.addEventListener('wheel', function (event) {
+
+    // Если глобус активирован кликом —
+    // колесо полностью отдаём Globe.gl для zoom.
+    const globe = event.target.closest('#globeViz');
+
+    if (globe && globe.dataset.interacting === 'true') {
+        return;
+    }
+
+    // Внутренний скролл AI-чата не трогаем
+    if (event.target.closest('#logai-window, #logai-msgs')) {
+        return;
+    }
+
+    event.preventDefault();
+
+        let delta = event.deltaY * SPEED;
+
+        // Ограничиваем слишком резкие движения
+        delta = Math.max(-MAX_STEP, Math.min(MAX_STEP, delta));
+
+        targetY += delta;
+
+        // Не даём уйти выше/ниже страницы
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        targetY = Math.max(0, Math.min(targetY, maxY));
+
+        if (!animationFrame) {
+            animationFrame = requestAnimationFrame(animateScroll);
+        }
+    }, { passive: false });
+
+    // Синхронизация, если страницу прокрутили другим способом
+    window.addEventListener('scroll', function () {
+        if (!animationFrame) {
+            targetY = window.scrollY;
+            currentY = window.scrollY;
+        }
+    }, { passive: true });
+
+})();</script><div id="logai-footer-mobile" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box;"><div style="margin: 0 auto 20px auto; padding-top: 40px; text-align: center; margin-bottom: 40px;"><a href="mailto:info@log-ai.ru" style="font-size: 24px; font-family: 'SF Mono', Monaco, monospace; color: #e5e7eb; text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: 0.3px;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#e5e7eb'">info@log-ai.ru</a><p style="color: #aaaaaa; font-size: 15px; line-height: 1.6; max-width: 750px; margin: 15px auto 0 auto;">Пришлите описание задачи, техническое задание или ссылку на существующую систему. Мы оценим задачу и определим возможные варианты реализации.</p></div><div style="max-width: 850px; margin: 0 auto 40px auto; text-align: center; background: #000000; padding: 0; box-sizing: border-box;"><p style="color: #aaaaaa; font-size: 14px; line-height: 1.6; margin: 0;"><span style="color: #4ade80; margin-right: 6px;">🔒</span> Данные и доступ к системам заказчика обрабатываются в соответствии с согласованными требованиями к безопасности и конфиденциальности. Условия доступа, хранения и обработки данных определяются архитектурой проекта и договором.</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; box-sizing: border-box; width: 100%; margin-bottom: 30px;"><p style="color: #666666; font-size: 12px; line-height: 1.6; margin: 0; width: 100%; text-align: justify;">Сайт носит исключительно информационный характер и не является публичной офертой в соответствии со статьёй 437 Гражданского кодекса РФ. Цены, состав и условия предоставления услуг уточняются при проектировании решения и фиксируются в договоре. Условия технического сопровождения и уровень сервиса могут дополнительно определяться отдельным соглашением (SLA).</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; width: 100%; box-sizing: border-box;"><div style="color: #666666; font-size: 12px; line-height: 1.5; text-align: left;">© 2026 Log-AI<br>Автоматизация бизнеса и ИИ-решения под ключ. Работаем по всей России и СНГ.<br>ИП Скопец Антон Викторович<br>ИНН 741709<span></span>260870 · ОГРНИП 326745600<span></span>204228<br>Все права защищены.</div><div style="display: flex; gap: 20px; flex-wrap: wrap; font-family: sans-serif;"><a href="/privacy-policy/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Политика конфиденциальности</a> <a href="/terms/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Пользовательское соглашение</a></div></div></div><style>@media screen and (max-width: 600px) {
+  #logai-footer-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+}</style><style>/* Анимации и точки */
+    @keyframes logai-bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+    .logai-dots { display: flex !important; flex-direction: row !important; gap: 4px !important; align-items: center !important; height: 12px !important; }
+    .logai-dots span { display: inline-block; width: 5px; height: 5px; background: #aaa !important; border-radius: 50%; animation: logai-bounce 1.4s infinite ease-in-out; }
+    .logai-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .logai-dots span:nth-child(3) { animation-delay: 0.4s; }
+    
+    #logai-msgs::-webkit-scrollbar { width: 5px; }
+    #logai-msgs::-webkit-scrollbar-thumb { background: #666; border-radius: 10px; }
+    
+    /* Сообщения и текст */
+    #logai-msgs div { white-space: pre-wrap !important; word-wrap: break-word !important; padding: 12px 16px !important; margin-bottom: 5px !important; display: flex; flex-direction: column; justify-content: center; }
+    #logai-msgs div p { margin: 0 !important; padding: 0 !important; line-height: 1.5 !important; }
+    #logai-msgs { gap: 12px !important; padding: 20px !important; }
+
+    /* Поле ввода и кнопка отправить */
+    #logai-input { flex: 1 !important; padding: 12px 18px !important; border-radius: 20px !important; background: #4a4e56 !important; border: 1px solid rgba(255,255,255,0.1) !important; outline: none !important; color: #fff !important; font-size: 15px !important; resize: none !important; max-height: 120px !important; line-height: 1.4 !important; }
+    #logai-send-btn { background-color: #007bff !important; border: none !important; width: 45px !important; height: 45px !important; border-radius: 50% !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-size: 24px !important; padding: 0 !important; flex-shrink: 0 !important; }
+
+    /* ГЛАВНЫЕ СТИЛИ (чтобы кнопка и окно не исчезали) */
+    #logai-btn {
+        position: fixed !important; bottom: 40px !important; right: 110px !important;
+        width: 65px !important; height: 65px !important; border-radius: 50% !important;
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        cursor: pointer !important; z-index: 10000 !important; box-shadow: 0 10px 25px rgba(0,123,255,0.4);
+    }
+
+    #logai-window {
+        display: none; position: fixed !important; bottom: 115px !important; right: 110px !important;
+        width: 380px !important; height: 600px !important; background: #3b3e45 !important;
+        border-radius: 24px !important; flex-direction: column; overflow: hidden;
+        z-index: 10000 !important; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.15) !important;
+    }
+
+        /* АДАПТИВ ДЛЯ МОБИЛОК: ЧАТ НА ВЕСЬ ЭКРАН */
+    @media screen and (max-width: 480px) {
+        #logai-window { 
+            right: 0 !important; 
+            left: 0 !important; 
+            bottom: 0 !important; 
+            width: 100% !important; 
+            height: 100% !important; /* Растягиваем окно на 100% экрана смартфона */
+            border-radius: 0 !important; /* Убираем скругления углов, чтобы чат сел монолитом */
+            z-index: 999999 !important; /* Перекрываем все кнопки в ноль */
+        }
+        
+        #logai-btn { 
+            bottom: 80px !important; /* Твоя родная высота кнопки, когда чат закрыт */
+            right: 22px !important;  /* Твой родной сдвиг кнопки */
+            z-index: 999998 !important; /* Когда чат открыт, кнопка останется под ним и не будет торчать */
+        }
+    }</style><div id="logai-widget" style="position: fixed; bottom: var(--widget-bottom, 20px); right: var(--widget-right, 20px); z-index: 9999;"><div id="logai-btn" onclick="toggleLogAI()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><div id="logai-window"><div style="background: #2d3035; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; align-items:center; gap:12px;"><div style="width:35px; height:35px; background:#007bff; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(0,123,255,0.5);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg></div><span style="font-weight:600; color:#fff; font-size:16px; letter-spacing: 0.5px;">AI Ассистент</span></div><span onclick="toggleLogAI()" style="cursor:pointer; color:#fff; font-size:35px; line-height: 0.7; opacity: 0.7;">&times;</span></div><div id="logai-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; background:#3b3e45;"></div><div style="padding:15px 15px 8px 15px; background:#2d3035; display:flex; flex-direction:column; border-top: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; gap:10px; align-items:flex-end; width:100%;"><textarea id="logai-input" rows="1" placeholder="Напишите..." oninput="this.style.height='';this.style.height=this.scrollHeight+'px'"></textarea> <button id="logai-send-btn" onclick="sendLogAI()">➤</button></div><div style="text-align:center; font-size:10px; color:#ffffff; opacity:0.3; margin-top:6px; font-family:sans-serif; pointer-events:none; user-select:none;">ИИ может ошибаться</div></div></div></div><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script>const API_URL = 'https://api2.log-ai.ru';
+    const MY_CLIENT_ID = 'client_arhitektor_2'; // МЕНЯТЬ ТУТ
+    const MY_BOT_PATH = 'arhitektor_2';  // МЕНЯТЬ ТУТ 
+    
+       let logSid;
+    try {
+        logSid = localStorage.getItem('logai_sid');
+        if (!logSid) {
+            logSid = 's_' + Math.random().toString(36).substr(2, 12);
+            localStorage.setItem('logai_sid', logSid);
+        }
+    } catch (e) {
+        // Если доступ к памяти закрыт (инкогнито), создаем временный ID
+        logSid = 'temp_' + Math.random().toString(36).substr(2, 12);
+    }
+
+    // Переименовали, чтобы избежать конфликтов
+    let chatIsWaiting = false;
+    let historyLoaded = false;
+    let activeMessageId = null;
+    let pollController = null;
+    let pollTimeoutId = null;
+
+
+       function toggleLogAI() {
+        const w = document.getElementById('logai-window');
+        const isOpen = (window.getComputedStyle(w).display === 'none');
+        
+        if (isOpen) {
+            w.style.display = 'flex';
+            if (!historyLoaded) {
+                loadChatHistory();
+            } 
+            // Если чат в режиме ожидания (точки), пинаем сервер сразу при открытии
+            else if (chatIsWaiting && activeMessageId) {
+                const dotsContainer = document.querySelector('.logai-dots')?.parentElement;
+                if (dotsContainer) {
+                    startPolling(activeMessageId, dotsContainer);
+                }
+            }
+        } else {
+            w.style.display = 'none';
+            // УБРАЛИ stopPolling(), чтобы ИИ докачивал ответ, даже когда окно закрыто
+        }
+    }
+
+
+    function updateInputState() {
+        const input = document.getElementById('logai-input');
+        const btn = document.getElementById('logai-send-btn');
+        if (input) {
+            input.disabled = chatIsWaiting;
+            input.style.opacity = chatIsWaiting ? '0.5' : '1';
+        }
+        if (btn) btn.style.opacity = chatIsWaiting ? '0.5' : '1';
+    }
+
+    function stopPolling() {
+        if (activeMessageId) localStorage.removeItem('poll_start_' + activeMessageId);
+        if (pollController) pollController.abort();
+        if (pollTimeoutId) clearTimeout(pollTimeoutId);
+    
+        pollController = null;
+        pollTimeoutId = null;
+        activeMessageId = null;
+        chatIsWaiting = false;
+        updateInputState();
+    }
+
+    function addLogMsg(txt, isAi) {
+        const d = document.createElement('div');
+        d.style = `padding:12px 16px; border-radius:18px; max-width:82%; font-size:14px; line-height:1.5; margin-bottom:10px; 
+                   ${isAi ? 'align-self:flex-start; background:#4a4e56; color:#dbdee1; border-bottom-left-radius:4px;' 
+                         : 'align-self:flex-end; background:#007bff; color:white; border-bottom-right-radius:4px; box-shadow:0 4px 12px rgba(0,123,255,0.25);'}`;
+
+        if (txt === 'dots') {
+   // ИСПРАВЛЕНО: Добавлен явный текст ожидания рядом с анимацией точек для лучшего UX
+   d.innerHTML = '<div style="display:flex; align-items:center; gap:8px;">' +
+                 '<span style="font-style:italic; opacity:0.8;">ИИ подбирает ответ...</span>' +
+                 '<div class="logai-dots"><span></span><span></span><span></span></div>' +
+                 '</div>';
+ } else {
+   d.innerHTML = typeof marked !== 'undefined' ? marked.parse(txt) : txt;
+ }
+
+        const box = document.getElementById('logai-msgs');
+        box.appendChild(d);
+        box.scrollTop = box.scrollHeight;
+        return d;
+    }
+
+async function loadChatHistory() {
+    const box = document.getElementById('logai-msgs');
+    try {
+        box.innerHTML = '';
+
+        const res = await fetch(`${API_URL}/history/${logSid}?platform=site&clientId=${MY_CLIENT_ID}`);
+        const data = await res.json();
+
+        if (Array.isArray(data.items) && data.items.length > 0) {
+            data.items.forEach((m, index) => {
+                // 1. Показываем сообщение пользователя
+                if (m.message) {
+                    addLogMsg(m.message, false);
+                }
+
+                // 2. Если есть готовый ответ — показываем
+                if (m.answer) {
+                    addLogMsg(m.answer, true);
+                } 
+                // 3. ИСПРАВЛЕНО: Четкое чтение m.message_id из базы данных без путаницы с регистрами
+                else if (m.message_id && index === data.items.length - 1) {
+                    chatIsWaiting = true;
+                    activeMessageId = m.message_id; // Используем m.message_id
+                    
+                    const aiMsg = addLogMsg('dots', true);
+                    startPolling(m.message_id, aiMsg); 
+                }
+            });
+        } else {
+            addLogMsg("Здравствуйте! Я ваш ИИ-ассистент. Чем могу помочь?", true);
+        }
+
+        historyLoaded = true;
+        updateInputState();
+
+    } catch (e) {
+        console.error('History error:', e);
+        addLogMsg("Не удалось загрузить историю чата", true);
+    }
+}
+
+
+async function sendLogAI() {
+    if (chatIsWaiting) return;
+
+    const input = document.getElementById('logai-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // ЖЕЛЕЗНЫЙ ДЕБАУНС: блокируем повторный клик в первую же микросекунду
+    chatIsWaiting = true;
+    updateInputState();
+
+    addLogMsg(msg, false);
+    
+    input.value = ''; 
+    input.style.height = 'auto'; 
+
+    const aiMsg = addLogMsg('dots', true);
+
+    try {
+        const res = await fetch(`${API_URL}/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sessionId: logSid,
+                message: msg,
+                clientId: MY_CLIENT_ID,
+                platform: 'site',
+                botPath: MY_BOT_PATH
+            })
+        });
+
+        // ИСПРАВЛЕНО: Обработка HTTP-ошибок. Передаем false третьим параметром, чтобы не было звука при ошибке
+        if (!res.ok) {
+            let errorMsg = "⚠️ Сервер временно недоступен";
+            if (res.status === 429) errorMsg = "🚫 Слишком много запросов. Подождите немного.";
+            else if (res.status === 403) {
+                try {
+                    const errData = await res.json();
+                    errorMsg = errData.reason || "🚫 Доступ ограничен.";
+                } catch (_) {
+                    errorMsg = "🚫 Доступ ограничен.";
+                }
+            }
+            finish(errorMsg, aiMsg, false); // false — звук НЕ играет
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data.blocked) {
+            finish(data.reason || data.message || "🚫 Сообщение заблокировано", aiMsg, false); // false — без звука
+            return;
+        }
+
+        if (data.messageId) {
+            activeMessageId = data.messageId;
+            startPolling(data.messageId, aiMsg);
+        } else {
+            finish("⚠️ Ошибка регистрации сообщения (нет messageId)", aiMsg, false);
+        }
+    } catch (e) {
+        console.error(e);
+        finish("⚠️ Ошибка связи с сервером. Проверьте интернет.", aiMsg, false);
+    }
+} // Скобка закрывает саму функцию send
+    function startPolling(messageId, aiMsg) {
+        activeMessageId = messageId;
+        pollController = new AbortController();
+        let savedTime = localStorage.getItem('poll_start_' + messageId);
+        if (!savedTime) {
+            savedTime = Date.now().toString();
+            localStorage.setItem('poll_start_' + messageId, savedTime);
+        }
+        let startTime = parseInt(savedTime, 10);
+        let statusChanged = false; // Чтобы не менять текст постоянно
+
+        const poll = async () => {
+            if (activeMessageId !== messageId) return;
+
+            const elapsed = (Date.now() - startTime) / 1000; // секунд прошло
+
+            // 1. На 40-й секунде меняем текст на "Сложный вопрос"
+            if (elapsed > 40 && !statusChanged) {
+                const dots = aiMsg.querySelector('.logai-dots');
+                aiMsg.innerHTML = '🤖 Вопрос сложный, анализирую данные...';
+                if (dots) aiMsg.appendChild(dots); 
+                statusChanged = true;
+            }
+
+            // 2. Лимит ожидания - 10 минут (600 секунд)
+            if (elapsed > 600) {
+                finish("🤖 Извините, ИИ перегружен или запрос слишком сложный. Пожалуйста, попробуйте позже.", aiMsg);
+                return;
+            }
+
+            // 3. Умный интервал: до 50 сек — каждые 3 сек, потом — каждые 10 сек
+            let nextInterval = (elapsed > 50) ? 10000 : 3000;
+
+            try {
+                // Добавили ?t=... чтобы телефон каждый раз реально спрашивал сервер, а не брал из кэша
+                const r = await fetch(`${API_URL}/get-answer/${messageId}?sessionId=${logSid}&clientId=${MY_CLIENT_ID}&t=${Date.now()}`, {
+                    signal: pollController.signal 
+                });
+                const d = await r.json();
+                const finalAnswer = d.answer || (d.status !== 'pending' ? d.answer : null);
+
+                if (finalAnswer) {
+                    finish(finalAnswer, aiMsg);
+                } else {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            } catch (e) {
+                if (e.name !== 'AbortError') {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            }
+        };
+        poll();
+    }
+
+function finish(text, msgElement, isSuccess = true) {
+    if (msgElement) {
+        msgElement.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+        
+        // Звук играет строго при успешном ответе ИИ, при ошибках или банах — тишина
+        if (isSuccess) {
+            try {
+                // ТВОЙ ОРИГИНАЛЬНЫЙ РАБОЧИЙ ПУТЬ: Кэш сбрасывается, файл проигрывается без ошибок 404
+                const audio = new Audio('https://api.log-ai.ru/notify.mp3?v=' + Date.now());
+                audio.volume = 0.4;
+                audio.play().catch(e => console.log("Нужен клик"));
+            } catch (e) {}
+        }
+    }
+    stopPolling();
+}
+
+
+    // Enter для отправки
+    document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('logai-input');
+    if (input) {
+      input.addEventListener('keypress', (e) => {
+        // ИСПРАВЛЕНО: Добавлена проверка !chatIsWaiting, чтобы клавиатура намертво блокировалась во время ожидания ИИ
+        if (e.key === 'Enter' && !e.shiftKey && !chatIsWaiting) {
+          e.preventDefault();
+          sendLogAI();
+        }
+      });
+
+      // ИСПРАВЛЕНО: Текстовое поле плавно растёт вниз до 150px, если текст длинный
+      input.addEventListener('input', function() {
+        this.style.height = 'auto'; 
+        this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+      });
+    }
+    });</script><div id="cookie-notice-wrapper" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #111111; border-top: 1px solid #222222; padding: 10px 15px; box-sizing: border-box; z-index: 99999; display: none; flex-direction: row; justify-content: space-between; align-items: center; gap: 15px; font-family: sans-serif;"><span style="color: #888888; font-size: 12px; line-height: 1.4; text-align: left;">Наш сайт использует файлы cookie для корректной работы. Подробнее — в <a href="/privacy-policy/" style="color: #bfa15f; text-decoration: underline;">Политике конфиденциальности</a>. </span><button onclick="dismissCookieNotice()" style="background: #bfa15f; color: #000000; border: none; padding: 5px 14px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Принять</button></div><style>@media (max-width: 600px) {
+        #cookie-notice-wrapper {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 10px !important;
+            padding: 12px 15px !important;
+        }
+        #cookie-notice-wrapper span {
+            text-align: center !important;
+            font-size: 11px !important;
+        }
+        #cookie-notice-wrapper button {
+            width: 100% !important;
+            padding: 8px !important;
+            font-size: 12px !important;
+        }
+    }</style><script>(function() {
+        var storageKey = 'logai_cookies_accepted';
+        if (!localStorage.getItem(storageKey)) {
+            document.getElementById('cookie-notice-wrapper').style.display = 'flex';
+        }
+    })();
+
+    function dismissCookieNotice() {
+        localStorage.setItem('logai_cookies_accepted', 'true');
+        document.getElementById('cookie-notice-wrapper').style.display = 'none';
+    }</script></body></html>

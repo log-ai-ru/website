@@ -1,0 +1,855 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CI/CD в корпоративных системах: безопасный выпуск изменений | LOG-AI</title><meta name="description" content="Как организовать CI/CD, тестирование, развёртывание и откат релизов. Практики защиты данных и бизнес-процессов при обновлении систем."><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://log-ai.ru/cicd-kak-vypuskat-izmeneniya-korporativnoy-sistemy-bezopasno/"><link rel="alternate" type="application/atom+xml" href="https://log-ai.ru/feed.xml" title="LOG-AI - RSS"><link rel="alternate" type="application/json" href="https://log-ai.ru/feed.json" title="LOG-AI - JSON"><meta property="og:title" content="CI/CD в корпоративных системах: безопасный выпуск изменений | LOG-AI"><meta property="og:image" content="https://log-ai.ru/media/website/Log-ai-Logo.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:site_name" content="LOG-AI"><meta property="og:description" content="Как организовать CI/CD, тестирование, развёртывание и откат релизов. Практики защиты данных и бизнес-процессов при обновлении систем."><meta property="og:url" content="https://log-ai.ru/cicd-kak-vypuskat-izmeneniya-korporativnoy-sistemy-bezopasno/"><meta property="og:type" content="article"><link rel="stylesheet" href="https://log-ai.ru/assets/css/style.css?v&#x3D;b1f5980528b3cc19f4018c94aea81f52"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://log-ai.ru/cicd-kak-vypuskat-izmeneniya-korporativnoy-sistemy-bezopasno/"},"headline":"CI/CD: как выпускать изменения корпоративной системы безопасно","datePublished":"2026-11-12T12:39+05:00","dateModified":"2026-11-12T17:21+05:00","description":"Как организовать CI/CD, тестирование, развёртывание и откат релизов. Практики защиты данных и бизнес-процессов при обновлении систем.","author":{"@type":"Person","name":"LOG-AI","url":"https://log-ai.ru/authors/log-ai/"},"publisher":{"@type":"Organization","name":"LOG-AI"}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript><style>body, html, main, #page, .wrapper, .main { background: #000000 !important; background-color: #000000 !important; }</style><link rel="icon" type="image/png" sizes="32x32" href="/media/files/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/media/files/favicon-16.png"><link rel="apple-touch-icon" sizes="180x180" href="/media/files/favicon-180.png"><meta name="yandex-verification" content="9d14e10b64f3b76c"><meta name="google-site-verification" content="-rKktnoSCGCLZToW-jcZeKu5WvWFGuLKdLwwyCux0-M"></head><body class="page-template"><header class="top js-header"><a class="logo" href="https://log-ai.ru/">LOG-AI</a><nav class="navbar js-navbar"><button class="navbar__toggle js-toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><span class="navbar__toggle-box"><span class="navbar__toggle-inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://log-ai.ru/" target="_self">Главная</a></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Услуги</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/avtomatizaciya-obrabotki-zayavok-i-lidov/" target="_self">Автоматизация обработки заявок и лидов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-biznes-processov-integracii-dannye-i-skvoznye-scenarii/" target="_self">Автоматизация бизнес-процессов</a></li><li><a href="https://log-ai.ru/sbor-i-obrabotka-dannyh/" target="_self">Сбор и обработка данных</a></li><li><a href="https://log-ai.ru/ii-dlya-biznesa-i-nejrosetej/" target="_self">ИИ для бизнеса и нейросети</a></li><li><a href="https://log-ai.ru/specializirovannye-cifrovye-sistemy/" target="_self">Специализированные цифровые системы</a></li><li><a href="https://log-ai.ru/individualnye-korporativnye-sistemy/" target="_self">Корпоративные системы</a></li><li><a href="https://log-ai.ru/tehnicheskoe-soprovozhdenie/" target="_self">Техническое сопровождение</a></li><li><a href="https://log-ai.ru/it-audit-i-predproektnoe-obsledovanie/" title="/it-audit-i-predproektnoe-obsledovanie/" target="_self">ИТ-аудит и предпроектное обследование</a></li><li><a href="https://log-ai.ru/oblachnyy-i-infrastrukturnyy-konsalting/" title="/oblachnyy-i-infrastrukturnyy-konsalting/" target="_self">Облачный и инфраструктурный консалтинг</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Решения</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakie-sistemy-my-integriruem/" target="_self">Какие системы мы интегрируем</a></li><li><a href="https://log-ai.ru/kak-rabotaet-ii-v-biznese/" target="_self">Как работает ИИ в бизнесе</a></li><li><a href="https://log-ai.ru/resheniya-po-zadacham/" target="_self">Решения по задачам</a></li><li><a href="https://log-ai.ru/avtomatizaciya-proizvodstva/" target="_self">Для производства</a></li><li><a href="https://log-ai.ru/avtomatizaciya-logistiki-i-skladov/" target="_self">Для логистики и складов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-optovoy-torgovli/" target="_self">Для оптовой торговли</a></li><li><a href="https://log-ai.ru/avtomatizaciya-e-commerce/" target="_self">Для e-commerce</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Реализация</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kak-my-rabotaem/" target="_self">Как мы работаем</a></li><li><a href="https://log-ai.ru/dokumentaciya-sistemy/" target="_self">Документация системы</a></li><li><a href="https://log-ai.ru/infrastruktura-i-razmeshchenie/" target="_self">Инфраструктура и размещение</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Выбор</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakuyu-avtomatizaciyu-vybrat/" target="_self">Какую автоматизацию выбрать</a></li><li><a href="https://log-ai.ru/chto-avtomatizirovat-v-biznese-v-pervuyu-ochered/" target="_self">Что автоматизировать в бизнесе в первую очередь</a></li><li><a href="https://log-ai.ru/kak-podgotovit-biznes-k-avtomatizacii/" target="_self">Как подготовить бизнес к автоматизации</a></li><li><a href="https://log-ai.ru/kak-vnedrit-avtomatizaciyu/" target="_self">Как внедрить автоматизацию</a></li><li><a href="https://log-ai.ru/kak-ocenit-rezultat-avtomatizacii/" target="_self">Как оценить результат автоматизации</a></li><li><a href="https://log-ai.ru/stoimost-razrabotki/" target="_self">Стоимость разработки</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">О нас</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/inzhenernyy-sostav/" target="_self">Инженерный состав</a></li><li><a href="https://log-ai.ru/keysy/" target="_self">Кейсы</a></li><li><a href="https://log-ai.ru/glossariy/" target="_self">Глоссарий</a></li><li><a href="https://log-ai.ru/ekspertiza/" target="_self">Экспертиза</a></li><li><a href="https://log-ai.ru/bezopasnost-sistem-dannyh-i-infrastruktury/" target="_self">Безопасность</a></li></ul></li></ul></nav></header><main class="page"><article class="content"><div class="hero hero--noimage"><header class="hero__content hero__content--centered"><div class="wrapper"><h1>CI/CD: как выпускать изменения корпоративной системы безопасно</h1></div></header></div><div class="entry-wrapper content__entry"><p> </p><p> </p><p> </p><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 24px; font-weight: 600; margin: 0 0 24px 0; color: #ffffff; letter-spacing: -0.3px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Управление изменениями и CI/CD в корпоративной среде</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Корпоративная система редко бывает изолированным программным продуктом. Она связана с базами данных, внешними сервисами, оборудованием, учётными платформами, пользовательскими интерфейсами и десятками интеграций. Изменение одного компонента может затронуть процессы, которые на первый взгляд никак с ним не связаны.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Например, разработчики обновили модуль обработки заказов. Сборка прошла успешно, автоматические тесты завершились без ошибок, приложение запустилось. Но после развёртывания выяснилось, что новая версия по-другому обрабатывает один из статусов заказа. В результате интеграция с ERP перестала передавать часть операций, а сотрудники склада начали видеть некорректные данные.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : SILENT_FAILURE_RIPPLE_EFFECT ]</div><svg viewbox="0 0 750 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="50" width="140" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="90" y="75" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ОБНОВЛЕНИЕ</text><line x1="160" y1="60" x2="210" y2="60" stroke="#333333" stroke-width="1.5"></line><polygon points="210,60 204,57 204,63" fill="#333333"></polygon><text x="185" y="50" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Тесты: OK</text><line x1="160" y1="80" x2="210" y2="80" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="4 4"></line><polygon points="210,80 204,77 204,83" fill="#14b8a6"></polygon><text x="185" y="100" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Логика: Изменена</text><rect x="220" y="30" width="140" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="290" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ERP ИНТЕГРАЦИЯ</text><text x="380" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">СБОЙ ПЕРЕДАЧИ</text><rect x="220" y="90" width="140" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="290" y="115" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">СКЛАД / ОТЧЁТЫ</text><text x="380" y="115" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">НЕКОРРЕКТНЫЕ ДАННЫЕ</text><rect x="420" y="50" width="310" height="60" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="575" y="75" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="10" font-weight="600" text-anchor="middle">ТЕХНИЧЕСКИ: УСПЕХ</text><text x="575" y="95" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">БИЗНЕС-ПРОЦЕСС: СБОЙ</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">С технической точки зрения обновление состоялось. С точки зрения бизнеса — произошёл сбой. Именно такие ситуации объясняют, почему <span style="font-family: 'SF Mono', monospace; color: #ffffff;">CI/CD</span> нельзя сводить к автоматической публикации новой версии программы. Это подход к организации разработки, проверки и доставки изменений, при котором каждый этап выпуска контролируется, результаты проверок фиксируются, а развёртывание выполняется по заранее определённым правилам. Его задача — обеспечить предсказуемость изменений, ограничить последствия ошибок и сохранить возможность восстановления работососпособности системы.</p></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">1. Почему обычное обновление программы превращается в операционный риск</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">В небольшой системе выпуск новой версии может ограничиваться остановкой приложения, копированием файлов и повторным запуском. В корпоративной инфраструктуре такой подход быстро становится неприемлемым из-за количества взаимосвязей.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Одна система может одновременно обслуживать несколько подразделений, передавать данные в ERP, получать информацию из CRM, обращаться к внешним API и использовать общую базу данных. Изменение формата одного поля способно повлиять на несколько интеграций. Обновление библиотеки может изменить поведение авторизации. Изменение структуры таблицы — нарушить работу отчётов, которые разрабатывались другой командой.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Опасность скрытых изменений</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Особенно опасны изменения, которые не вызывают ошибок непосредственно в момент запуска. Например, новая версия приложения продолжает работать, но постепенно накапливает некорректные записи. Проблема обнаруживается только через несколько часов, когда данные уже попали в учётную систему или стали основанием для формирования документов.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">Поэтому безопасность релиза определяется не только тем, насколько хорошо протестирован программный код. Необходимо чётко понимать:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Какие бизнес-процессы затрагивает данное изменение.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Какие компоненты зависят от обновляемого модуля.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Какие именно данные могут быть изменены или повреждены.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Как обнаружить отклонение от нормы сразу после запуска.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Как ограничить влияние неисправности (blast radius).</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Как восстановить работу без потери уже выполненных операций.</li></ul><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Это меняет сам подход к выпуску программного обеспечения.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Вместо вопроса «Готова ли новая версия?» возникает более правильный вопрос: «Доказано ли, что изменение можно безопасно внедрить в конкретную рабочую среду и что последствия возможного отказа контролируемы?»</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">2. CI и CD: что происходит между изменением кода и его появлением в рабочей системе</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">В названии <span style="font-family: 'SF Mono', monospace; color: #ffffff;">CI/CD</span> объединены два взаимосвязанных, но не одинаковых процесса.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : CI_VS_CD_VS_CONTINUOUS_DEPLOYMENT ]</div><svg viewbox="0 0 750 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="60" width="140" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="90" y="85" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">CI (ИНТЕГРАЦИЯ)</text><line x1="160" y1="80" x2="210" y2="80" stroke="#333333" stroke-width="1.5"></line><polygon points="210,80 204,77 204,83" fill="#333333"></polygon><rect x="220" y="60" width="120" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="280" y="85" fill="#888888" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">АРТЕФАКТ</text><line x1="340" y1="80" x2="380" y2="50" stroke="#333333" stroke-width="1"></line><line x1="340" y1="80" x2="380" y2="110" stroke="#333333" stroke-width="1"></line><rect x="390" y="30" width="160" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="470" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">CONTINUOUS DELIVERY</text><rect x="390" y="90" width="160" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="470" y="115" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">CONTINUOUS DEPLOYMENT</text><line x1="550" y1="50" x2="590" y2="50" stroke="#14b8a6" stroke-width="1.5"></line><rect x="590" y="35" width="10" height="30" fill="#14b8a6"></rect><text x="640" y="55" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Ручное одобрение</text><line x1="550" y1="110" x2="635" y2="110" stroke="#333333" stroke-width="1.5"></line><polygon points="635,110 629,107 629,113" fill="#333333"></polygon><text x="670" y="115" fill="#888888" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Авто-публикация</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Определения процессов</h3><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Continuous Integration (CI):</strong> практика регулярного объединения изменений разработчиков в общий код с автоматической проверкой результата. Её смысл заключается в том, чтобы не накапливать большие объёмы несогласованных изменений, которые впоследствии сложно объединять и проверять.</li><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Continuous Delivery (Непрерывная доставка):</strong> организация процесса, при котором проверенная версия программного обеспечения всегда находится в состоянии готовности к выпуску. Решение о выпуске в продуктивную среду остаётся за ответственным сотрудником или владельцем системы.</li><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Continuous Deployment (Непрерывное развёртывание):</strong> следующий уровень автоматизации, при котором изменения, прошедшие установленные проверки, автоматически попадают в рабочую среду без ручного вмешательства.</li></ul><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Разница между Continuous Delivery и Continuous Deployment существенна. Для корпоративных систем непрерывная доставка часто оказывается более подходящей моделью. Она позволяет автоматизировать технические проверки, но сохранить управляемую точку принятия решения перед изменениями, затрагивающими критичные процессы.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">При этом CI/CD не обязательно означает, что каждая небольшая правка должна немедленно попадать к пользователям. Автоматизация должна соответствовать требованиям конкретной системы, а не становиться самостоятельной целью.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">3. Как устроен конвейер CI/CD</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Конвейер <span style="font-family: 'SF Mono', monospace; color: #ffffff;">CI/CD</span>, или <span style="font-family: 'SF Mono', monospace; color: #ffffff;">pipeline</span>, представляет собой последовательность автоматизированных этапов, через которые проходит изменение программного обеспечения. Его структура зависит от используемой архитектуры, но для корпоративного приложения обычно включает несколько основных стадий.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : CICD_PIPELINE_STAGES ]</div><svg viewbox="0 0 750 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="40" width="100" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="70" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">CODE</text><line x1="120" y1="60" x2="150" y2="60" stroke="#333333" stroke-width="1.5"></line><polygon points="150,60 144,57 144,63" fill="#333333"></polygon><rect x="160" y="40" width="100" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="210" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">BUILD</text><line x1="260" y1="60" x2="290" y2="60" stroke="#333333" stroke-width="1.5"></line><polygon points="290,60 284,57 284,63" fill="#333333"></polygon><rect x="300" y="40" width="100" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="350" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">TEST</text><line x1="400" y1="60" x2="430" y2="60" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="430,60 424,57 424,63" fill="#14b8a6"></polygon><rect x="440" y="40" width="120" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="500" y="65" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ARTIFACT</text><line x1="560" y1="60" x2="590" y2="60" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="590,60 584,57 584,63" fill="#14b8a6"></polygon><rect x="600" y="40" width="130" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="665" y="65" fill="#ffffff" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">DEPLOY + VERIFY</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Подготовка изменения</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">Разработчик вносит изменения в отдельной ветке репозитория и создаёт запрос на их объединение с основной версией кода. На этом этапе проводится первичная проверка:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Соответствует ли изменение установленным правилам разработки.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Нет ли конфликтов с другими изменениями.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Проходят ли обязательные проверки кода.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Не содержатся ли в изменениях случайно добавленные секреты.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Есть ли необходимые тесты.</li></ul><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Для контроля используются механизмы <span style="font-family: 'SF Mono', monospace; color: #ffffff;">code review</span>, статический анализ и автоматические проверки репозитория. Здесь важно не превращать проверку кода в формальность. Одобрение изменения должно означать, что его логика понятна, потенциальное влияние оценено, а необходимые проверки предусмотрены.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Сборка приложения</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">После прохождения первичных проверок запускается сборка. Исходный код преобразуется в готовый программный артефакт: исполняемые файлы, контейнерный образ, пакет приложения или другой формат, необходимый для развёртывания.</p><div style="padding: 24px; margin: 0 0 32px 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Важный момент: результат сборки должен быть воспроизводимым и идентифицируемым. В зрелом процессе фиксируют версии зависимостей, инструменты сборки, параметры окружения и идентификаторы полученных артефактов, чтобы исключить ситуацию, когда один и тот же код собирается по-разному в разных средах.</p></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Автоматическое тестирование</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">Собранное приложение проходит набор проверок. Не все проверки должны выполняться на каждом этапе с одинаковой глубиной, но набор должен соответствовать рискам конкретного изменения:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Модульные и интеграционные тесты.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Контрактные тесты API.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Проверки бизнес-сценариев и тесты миграции данных.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Тесты производительности и проверки безопасности.</li></ul><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Публикация артефакта и развёртывание</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">После успешных проверок результат сборки помещается в контролируемое хранилище артефактов. Артефакт получает идентификатор, версию и необходимые метаданные. В рабочую среду должна попадать именно та версия, которая прошла тестирование, а не повторно собранный пакет с потенциально другими зависимостями.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">На этапе развёртывания подготовленная версия устанавливается в целевую среду (тестовую, предварительную или продуктивную). Однако успешное выполнение команды развёртывания ещё не означает, что приложение готово к работе.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Проверка после выпуска</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">Система должна подтвердить, что новая версия действительно работает. Для корпоративного приложения важны не только запуск процесса, но и:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 0 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Доступность базы данных и работа ключевых API.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Успешное выполнение критичных операций и корректность обмена с внешними системами.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Отсутствие резкого роста ошибок и соблюдение установленных показателей производительности.</li></ul></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">4. Тестовые среды: почему успешная проверка на компьютере разработчика ничего не гарантирует</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Одна из распространённых причин неудачных релизов — недостаточное соответствие тестовой инфраструктуры реальной рабочей среде. Разработчик проверяет приложение на локальном компьютере, где установлены нужные версии библиотек, используются тестовые данные и отсутствуют ограничения продуктивной инфраструктуры. Приложение работает, но после установки на сервер возникают ошибки из-за различий в конфигурации, версии базы данных, сетевых ограничениях или правах доступа.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : ENVIRONMENT_FIDELITY_PROGRESSSION ]</div><svg viewbox="0 0 750 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><line x1="40" y1="130" x2="710" y2="130" stroke="#333333" stroke-width="1"></line><text x="40" y="150" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="start">НИЗКАЯ ДОСТОВЕРНОСТЬ</text><text x="710" y="150" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" font-weight="600" text-anchor="end">ПОЛНОЕ СООТВЕТСТВИЕ PROD</text><rect x="40" y="40" width="130" height="70" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="105" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="10" font-weight="600" text-anchor="middle">DEVELOPMENT</text><text x="105" y="85" fill="#666666" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Локально, тестовые данные</text><text x="105" y="100" fill="#666666" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Быстрые итерации</text><rect x="210" y="40" width="130" height="70" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="275" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="10" font-weight="600" text-anchor="middle">TEST</text><text x="275" y="85" fill="#666666" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Интеграции, API</text><text x="275" y="100" fill="#666666" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Типовые сценарии</text><rect x="380" y="40" width="150" height="70" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="455" y="65" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">STAGING</text><text x="455" y="85" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Зеркало Prod</text><text x="455" y="100" fill="#d0d0d0" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Миграции, нагрузка</text><rect x="570" y="40" width="140" height="70" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="640" y="65" fill="#ffffff" font-family="'SF Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">PRODUCTION</text><text x="640" y="85" fill="#d0d0d0" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Реальные процессы</text><text x="640" y="100" fill="#d0d0d0" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Строгий контроль</text><path d="M 455 40 L 455 20 L 640 20 L 640 40" stroke="#14b8a6" stroke-width="1" stroke-dasharray="4 4" fill="none"></path><text x="547" y="15" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">ИДЕНТИЧНАЯ КОНФИГУРАЦИЯ</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">Для снижения такого риска используют несколько сред, каждая из которых выполняет свою функцию:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 16px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-weight: bold;">01.</span> <strong style="color: #ffffff;">Development:</strong> среда разработки для ежедневной работы программистов. Здесь проверяются отдельные изменения и отрабатываются новые функции. Она может содержать временные конфигурации, поэтому не должна рассматриваться как достоверная копия продуктивной инфраструктуры.</li><li style="margin-bottom: 16px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-weight: bold;">02.</span> <strong style="color: #ffffff;">Test:</strong> среда для проверки функциональности и взаимодействия компонентов. Здесь воспроизводят типовые бизнес-сценарии, проверяют интеграции и корректность обработки данных (например, не только формирование запроса в ERP, но и обработку отказов).</li><li style="margin-bottom: 16px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-weight: bold;">03.</span> <strong style="color: #ffffff;">Staging (Pre-production):</strong> предварительная среда, которая должна максимально приближаться к продуктивной по архитектуре, версиям компонентов, настройкам и способам развёртывания. Здесь выполняют заключительные проверки миграций базы данных, производительности и процедур восстановления.</li><li style="margin-bottom: 16px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-weight: bold;">04.</span> <strong style="color: #ffffff;">Production:</strong> рабочая среда, в которой система обслуживает реальные бизнес-процессы. Любые изменения здесь выполняются по установленным правилам, с контролем результата и возможностью ограничить последствия сбоя.</li></ul><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">При этом не всегда оправдано создавать большое количество отдельных сред. Для одной системы достаточно нескольких правильно организованных окружений, если они позволяют достоверно проверить изменения.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Гораздо важнее не количество серверов, а строгое соответствие условий тестирования реальным условиям эксплуатации.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">5. Почему тестирование должно проверять бизнес-процессы, а не только программный код</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Автоматические тесты часто рассматриваются как главный инструмент предотвращения ошибок. Но количество тестов само по себе не говорит о качестве проверки. Можно иметь тысячи тестовых сценариев и при этом пропустить проблему, которая нарушит критичный бизнес-процесс.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Причина в том, что тесты могут проверять отдельные функции, но не проверять последовательность взаимодействия нескольких систем.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : ISOLATED_TESTS_VS_END_TO_END ]</div><svg viewbox="0 0 750 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><text x="20" y="20" fill="#666666" font-family="'SF Mono', monospace" font-size="9" font-weight="600">ИЗОЛИРОВАННЫЕ ТЕСТЫ (UNIT / COMPONENT)</text><rect x="20" y="30" width="100" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="70" y="50" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Создание заказа</text><text x="135" y="50" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" font-weight="600">OK</text><rect x="160" y="30" width="100" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="210" y="50" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Проверка остатков</text><text x="275" y="50" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" font-weight="600">OK</text><rect x="300" y="30" width="100" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="350" y="50" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">API ERP</text><text x="415" y="50" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" font-weight="600">OK</text><line x1="20" y1="80" x2="730" y2="80" stroke="#333333" stroke-width="1" stroke-dasharray="4 4"></line><text x="20" y="100" fill="#666666" font-family="'SF Mono', monospace" font-size="9" font-weight="600">СКВОЗНОЙ ТЕСТ (END-TO-END)</text><rect x="20" y="110" width="110" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="75" y="135" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">USER</text><line x1="130" y1="130" x2="170" y2="130" stroke="#333333" stroke-width="1"></line><polygon points="170,130 166,127 166,133" fill="#333333"></polygon><rect x="180" y="110" width="110" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="235" y="135" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">APP</text><line x1="290" y1="130" x2="330" y2="130" stroke="#333333" stroke-width="1"></line><polygon points="330,130 326,127 326,133" fill="#333333"></polygon><rect x="340" y="110" width="110" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="395" y="135" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">ERP</text><line x1="450" y1="130" x2="490" y2="130" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="4 4"></line><polygon points="490,130 486,127 486,133" fill="#14b8a6"></polygon><text x="470" y="120" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">STATUS?</text><rect x="500" y="110" width="110" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="555" y="135" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" font-weight="600" text-anchor="middle">APP (STATUS)</text><line x1="610" y1="130" x2="650" y2="130" stroke="#333333" stroke-width="1"></line><polygon points="650,130 646,127 646,133" fill="#333333"></polygon><rect x="660" y="110" width="70" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="695" y="135" fill="#ffffff" font-family="'SF Mono', monospace" font-size="8" font-weight="600" text-anchor="middle">FAIL</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Полный бизнес-сценарий</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">Рассмотрим пример. Корпоративная система обрабатывает заказ:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Пользователь создаёт заказ.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Приложение проверяет наличие товара.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Заказ передаётся в <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ERP</span>.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><span style="font-family: 'SF Mono', monospace; color: #ffffff;">ERP</span> резервирует необходимое количество.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Информация возвращается в основную систему.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Заказ получает соответствующий статус.</li></ul><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Каждый отдельный компонент может работать корректно. Но если после обновления основной системы изменился формат статуса, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ERP</span> может не распознать его. При этом тесты создания заказа, проверки остатков и работы <span style="font-family: 'SF Mono', monospace; color: #ffffff;">API</span> по отдельности успешно пройдут. Проблема проявится только в полном сценарии.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Контрактные и отрицательные тесты</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Поэтому для корпоративных систем особенно важны сквозные тесты, которые воспроизводят реальные последовательности бизнес-операций. Также необходимо проверять контрактное взаимодействие между системами: контрактные тесты позволяют убедиться, что компоненты продолжают правильно понимать структуру запросов, ответов, обязательных полей и допустимых значений.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">Отдельного внимания заслуживают отрицательные сценарии:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Внешняя система недоступна.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Ответ приходит с задержкой.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Пользователь отправляет повторный запрос.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Часть данных отсутствует.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Операция завершилась ошибкой после частичного выполнения.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Соединение прерывается во время обмена.</li></ul><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Надёжность системы определяется не только тем, как она работает при нормальных условиях, но и тем, насколько предсказуемо она ведёт себя при отклонениях.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">6. Обновление базы данных: самая недооценённая часть безопасного релиза</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Программный код можно заменить предыдущей версией. С данными всё гораздо сложнее. Если новая версия изменила структуру таблиц, преобразовала значения или удалила поля, возврат старого программного обеспечения не обязательно восстановит исходное состояние системы.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Это одна из главных причин, по которым простой механизм отката не обеспечивает полноценную безопасность релиза.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : EXPAND_AND_CONTRACT_PATTERN ]</div><svg viewbox="0 0 750 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><line x1="40" y1="150" x2="710" y2="150" stroke="#333333" stroke-width="1"></line><text x="40" y="170" fill="#666666" font-family="'SF Mono', monospace" font-size="8">ВРЕМЯ →</text><rect x="40" y="40" width="140" height="80" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="110" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">V1.0</text><text x="110" y="85" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">status (old)</text><text x="110" y="105" fill="#666666" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Старая структура</text><rect x="210" y="40" width="160" height="80" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="290" y="65" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">EXPAND</text><text x="290" y="85" fill="#ffffff" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">status + status_new</text><text x="290" y="105" fill="#d0d0d0" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Добавляем, не удаляем</text><rect x="400" y="40" width="160" height="80" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="480" y="65" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">MIGRATE</text><text x="480" y="85" fill="#ffffff" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">App → status_new</text><text x="480" y="105" fill="#d0d0d0" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Переходный период</text><rect x="590" y="40" width="120" height="80" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="650" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">CONTRACT</text><text x="650" y="85" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">status_new</text><text x="650" y="105" fill="#666666" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Удаляем старое</text><line x1="180" y1="80" x2="205" y2="80" stroke="#333333" stroke-width="1"></line><polygon points="205,80 201,77 201,83" fill="#333333"></polygon><line x1="370" y1="80" x2="395" y2="80" stroke="#333333" stroke-width="1"></line><polygon points="395,80 391,77 391,83" fill="#333333"></polygon><line x1="560" y1="80" x2="585" y2="80" stroke="#333333" stroke-width="1"></line><polygon points="585,80 581,77 581,83" fill="#333333"></polygon></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Принцип совместимости на переходном этапе</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Для снижения риска применяется подход, при котором изменения базы данных выполняются постепенно. Один из распространённых вариантов — <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Expand and Contract</span>.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Сначала структура расширяется без удаления старых элементов. Затем новая версия приложения начинает работать с новой структурой, сохраняя необходимую совместимость. После проверки и завершения перехода старые поля и механизмы удаляются отдельным изменением. Это позволяет не требовать одновременного переключения всех компонентов на новую модель данных.</p><div style="padding: 24px; margin: 0 0 32px 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Особенно важно учитывать, что во время развёртывания некоторое время могут одновременно работать несколько версий приложения. Следовательно, новая структура базы данных должна поддерживать их совместную работу в предусмотренном переходном периоде.</p></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Когда миграцию данных нельзя просто отменить</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">Некоторые операции являются необратимыми или требуют отдельного восстановления:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Объединение нескольких записей в одну.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Изменение логики расчёта финансовых показателей.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Перераспределение остатков.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Удаление устаревших значений.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Преобразование идентификаторов.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Массовое изменение связанных документов.</li></ul><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Для подобных операций необходимо заранее предусмотреть резервное копирование, проверку результатов преобразования и процедуру восстановления. В отдельных случаях правильнее не пытаться вернуть данные назад, а выпустить корректирующую миграцию, которая компенсирует последствия ошибки.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Это принципиальное различие между откатом программного кода и восстановлением состояния корпоративной системы.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">7. Стратегии развёртывания: как ограничить последствия ошибки</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Даже хорошо протестированная версия может вести себя иначе в реальной среде. Поэтому важно не только проверить приложение до выпуска, но и правильно организовать само развёртывание.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Для этого используются разные стратегии, каждая из которых по-своему ограничивает последствия возможной ошибки.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : DEPLOYMENT_STRATEGIES_COMPARISON ]</div><svg viewbox="0 0 750 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><text x="20" y="25" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600">ROLLING UPDATE</text><rect x="160" y="10" width="40" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="180" y="30" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">v1</text><rect x="210" y="10" width="40" height="30" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="230" y="30" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">v2</text><rect x="260" y="10" width="40" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="280" y="30" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">v1</text><rect x="310" y="10" width="40" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="330" y="30" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">v1</text><text x="400" y="30" fill="#666666" font-family="-apple-system, sans-serif" font-size="8">Последовательная замена экземпляров</text><text x="20" y="75" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600">BLUE-GREEN</text><rect x="160" y="60" width="80" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="200" y="80" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">BLUE (v1)</text><rect x="260" y="60" width="80" height="30" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="300" y="80" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">GREEN (v2)</text><path d="M 360 75 L 380 75" stroke="#14b8a6" stroke-width="1.5"></path><polygon points="380,75 374,72 374,78" fill="#14b8a6"></polygon><text x="400" y="80" fill="#666666" font-family="-apple-system, sans-serif" font-size="8">Переключение трафика</text><text x="20" y="125" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600">CANARY</text><rect x="160" y="110" width="120" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="220" y="130" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">v1 (95%)</text><rect x="290" y="110" width="50" height="30" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="315" y="130" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">v2 (5%)</text><text x="400" y="130" fill="#666666" font-family="-apple-system, sans-serif" font-size="8">Небольшая доля трафика</text><text x="20" y="175" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600">FEATURE FLAGS</text><rect x="160" y="160" width="180" height="30" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="250" y="180" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">v2 deployed, flag = OFF</text><text x="400" y="180" fill="#666666" font-family="-apple-system, sans-serif" font-size="8">Код есть, функция выключена</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Rolling Update</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">При последовательном обновлении новая версия устанавливается постепенно, заменяя старые экземпляры приложения. Если система работает на нескольких серверах, обновление можно выполнять по одному экземпляру, сохраняя доступность остальных. Преимущество подхода — отсутствие необходимости одномоментно останавливать всю инфраструктуру. Однако необходимо учитывать совместимость версий, общих данных и сетевых интерфейсов: если новая версия несовместима со старой, постепенное обновление может создать дополнительные проблемы.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Blue-Green Deployment</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">При таком подходе существуют две среды: текущая рабочая и подготовленная для новой версии. Пока одна обслуживает пользователей, другая обновляется и проходит проверки. После подтверждения готовности трафик переключается на новую среду. Если обнаруживается серьёзная проблема, можно вернуть трафик на предыдущую.</p><div style="padding: 24px; margin: 0 0 32px 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Важное ограничение: переключение приложения не возвращает автоматически изменённые данные базы. Если новая версия успела изменить состояние общей базы данных, старая версия должна оставаться с ним совместимой.</p></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Canary Deployment</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Канареечное развёртывание предполагает выпуск новой версии сначала для ограниченной части пользователей или запросов. Обновление получает небольшой сегмент трафика, после чего система анализирует ошибки, задержки и корректность выполнения операций. Если показатели остаются в допустимых пределах, доля новой версии постепенно увеличивается. Если обнаруживается отклонение, дальнейшее расширение прекращается.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Такой подход особенно полезен для систем с высокой нагрузкой, большим количеством пользователей и сложными сценариями взаимодействия. Однако он требует возможности корректно распределять трафик и сравнивать поведение версий.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Feature Flags</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;"><span style="font-family: 'SF Mono', monospace; color: #ffffff;">Feature Flags</span> позволяют отделить развёртывание программного кода от фактического включения новой функциональности. Например, новая логика расчёта скидки уже установлена в продуктивной среде, но пока выключена для всех пользователей. После проверки её можно включить сначала для ограниченной группы, затем расширить использование.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Это полезно, когда технически новая версия готова, но бизнес-логика требует дополнительной проверки. При этом <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Feature Flags</span> необходимо контролировать: забытые переключатели, накопление старых вариантов поведения и неправильные правила доступа сами становятся источником технического долга.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Отключение функциональности не всегда отменяет уже выполненные изменения данных или внешние операции. Поэтому переключатель функции не следует считать универсальным механизмом отката.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">8. Откат релиза: почему вернуть старую версию не всегда означает восстановить работу</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">В идеальной ситуации при обнаружении ошибки система возвращается к предыдущему состоянию. Но в корпоративной инфраструктуре необходимо учитывать, что после выпуска могли произойти реальные бизнес-операции.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Например, новая версия приложения:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Создала заказы.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Передала документы во внешнюю систему.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Изменила остатки.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Отправила уведомления.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Запустила финансовые расчёты.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Изменила статусы операций.</li></ul><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Даже если код вернуть назад, перечисленные действия уже могли повлиять на другие системы. Поэтому откат необходимо проектировать с учётом последствий.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : THREE_LEVELS_OF_ROLLBACK ]</div><svg viewbox="0 0 750 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="20" width="710" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="40" y="45" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="10" font-weight="600">01. ОТКАТ ПРИЛОЖЕНИЯ</text><text x="400" y="45" fill="#666666" font-family="-apple-system, sans-serif" font-size="9">Предыдущая версия ПО снова активна</text><rect x="20" y="80" width="710" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="40" y="105" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="10" font-weight="600">02. ВОССТАНОВЛЕНИЕ КОНФИГУРАЦИИ</text><text x="400" y="105" fill="#666666" font-family="-apple-system, sans-serif" font-size="9">Параметры, секреты, инфраструктура</text><rect x="20" y="140" width="710" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="40" y="165" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="700">03. СОГЛАСОВАННОСТЬ ДАННЫХ</text><text x="400" y="165" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="9">Компенсирующие операции, повторная обработка</text><line x1="740" y1="30" x2="740" y2="170" stroke="#333333" stroke-width="1"></line><polygon points="740,170 737,164 743,164" fill="#333333"></polygon><text x="725" y="100" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="end" transform="rotate(-90 725 100)">СЛОЖНОСТЬ →</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Три уровня восстановления</h3><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 16px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-weight: bold;">01.</span> <strong style="color: #ffffff;">Откат приложения.</strong> Предыдущая версия программного обеспечения снова становится активной. Это наиболее простой сценарий, если изменения не затронули несовместимым образом структуру данных и внешние контракты.</li><li style="margin-bottom: 16px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-weight: bold;">02.</span> <strong style="color: #ffffff;">Восстановление конфигурации и инфраструктуры.</strong> Если проблема связана с параметрами подключения, секретами, настройками окружения или инфраструктурными изменениями, необходимо восстановить совместимую конфигурацию.</li><li style="margin-bottom: 16px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-weight: bold;">03.</span> <strong style="color: #ffffff;">Восстановление согласованности данных.</strong> Если новая версия успела выполнить некорректные операции, требуется отдельная процедура исправления. Она может включать компенсирующие операции, повторную обработку событий, восстановление из резервной копии или корректирующие записи.</li></ul><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Защита от повторного выполнения</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Здесь важно не допустить повторного выполнения уже состоявшихся операций. Например, если заказ был передан в <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ERP</span> до сбоя, повторная отправка после восстановления не должна создать второй заказ.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Для этого используются устойчивые идентификаторы операций, идемпотентная обработка и контроль состояния интеграционных сообщений.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Именно на этом уровне становится заметно, насколько хорошо <span style="font-family: 'SF Mono', monospace; color: #ffffff;">CI/CD</span> связан с архитектурой самой корпоративной системы. Без идемпотентности и устойчивых идентификаторов любой откат превращается в рискованную операцию с непредсказуемыми последствиями.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">9. Автоматические проверки безопасности: почему сборка должна учитывать не только работоспособность</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">В корпоративной среде успешная сборка не должна автоматически означать, что программное обеспечение безопасно для эксплуатации. В конвейер <span style="font-family: 'SF Mono', monospace; color: #ffffff;">CI/CD</span> необходимо включать проверки безопасности на разных этапах.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Для этого используется подход <span style="font-family: 'SF Mono', monospace; color: #ffffff;">DevSecOps</span>, предполагающий включение требований безопасности непосредственно в процессы разработки и доставки.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : DEVSECOPS_PIPELINE_INTEGRATION ]</div><svg viewbox="0 0 750 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="30" width="100" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="70" y="55" fill="#888888" font-family="'SF Mono', monospace" font-size="8" font-weight="600" text-anchor="middle">CODE + SAST</text><line x1="120" y1="50" x2="150" y2="50" stroke="#333333" stroke-width="1.5"></line><polygon points="150,50 144,47 144,53" fill="#333333"></polygon><rect x="160" y="30" width="100" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="210" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" font-weight="700" text-anchor="middle">BUILD + SCA</text><line x1="260" y1="50" x2="290" y2="50" stroke="#333333" stroke-width="1.5"></line><polygon points="290,50 284,47 284,53" fill="#333333"></polygon><rect x="300" y="30" width="80" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="340" y="55" fill="#888888" font-family="'SF Mono', monospace" font-size="8" font-weight="600" text-anchor="middle">TEST</text><line x1="380" y1="50" x2="410" y2="50" stroke="#333333" stroke-width="1.5"></line><polygon points="410,50 404,47 404,53" fill="#333333"></polygon><rect x="420" y="30" width="100" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="470" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" font-weight="700" text-anchor="middle">DEPLOY + DAST</text><line x1="520" y1="50" x2="550" y2="50" stroke="#333333" stroke-width="1.5"></line><polygon points="550,50 544,47 544,53" fill="#333333"></polygon><rect x="560" y="30" width="170" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="645" y="55" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="8" font-weight="600" text-anchor="middle">SECURE ARTIFACT + SBOM</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Этапы автоматических проверок</h3><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-weight: bold;">01.</span> <strong style="color: #ffffff;">Статический анализ кода (SAST):</strong> выявление потенциально опасных конструкций (небезопасная обработка ввода, ошибки управления памятью) непосредственно в исходном коде на ранних этапах.</li><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-weight: bold;">02.</span> <strong style="color: #ffffff;">Анализ сторонних компонентов (SCA):</strong> контроль состава программных компонентов, проверка известных уязвимостей и фиксация версий зависимостей с формированием <span style="font-family: 'SF Mono', monospace; color: #ffffff;">SBOM</span>.</li><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-weight: bold;">03.</span> <strong style="color: #ffffff;">Динамическое тестирование (DAST):</strong> проверка работающего приложения на наличие проблем, проявляющихся во время взаимодействия (ошибки авторизации, небезопасное поведение интерфейсов).</li><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-weight: bold;">04.</span> <strong style="color: #ffffff;">Проверка инфраструктуры:</strong> анализ конфигураций контейнеров и облачной среды на предмет ошибок в правах доступа, открытых сервисов и небезопасного управления секретами.</li></ul><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Кто должен решать, блокировать ли релиз</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Не каждая найденная проблема должна автоматически останавливать выпуск, но и игнорировать предупреждения ради соблюдения сроков нельзя. Организации необходимо определить политику блокировки релизов: какие проблемы считаются критичными, кто может согласовать исключение, как фиксируется риск и в какие сроки требуется исправление.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Критические нарушения безопасности не должны обходиться обычным подтверждением менеджера проекта. Решение должно учитывать реальную опасность, область воздействия и требования безопасности организации.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">10. Условный пример: обновление ERP-интеграции без остановки складских операций</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Рассмотрим производственную компанию, использующую собственную систему управления заказами, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ERP</span> и складскую платформу. Разработчики получают задачу изменить обработку заказов: добавить новые статусы, изменить правила проверки доступности, ускорить передачу информации и улучшить обработку повторных запросов.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Раньше подобные обновления выпускались в выходные дни вручную, что создавало серьёзную проблему: даже небольшая ошибка могла обнаружиться только после начала реальной работы сотрудников.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : CANARY_RELEASE_AND_RECONCILIATION ]</div><svg viewbox="0 0 750 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="60" width="120" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="80" y="85" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">CANARY (5%)</text><line x1="140" y1="80" x2="190" y2="80" stroke="#333333" stroke-width="1.5"></line><polygon points="190,80 184,77 184,83" fill="#333333"></polygon><rect x="200" y="60" width="120" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="260" y="85" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">МОНИТОРИНГ</text><line x1="320" y1="80" x2="360" y2="50" stroke="#333333" stroke-width="1"></line><line x1="320" y1="80" x2="360" y2="110" stroke="#14b8a6" stroke-width="1.5"></line><rect x="370" y="30" width="120" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="430" y="55" fill="#888888" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">Метрики в норме</text><line x1="490" y1="50" x2="540" y2="50" stroke="#333333" stroke-width="1.5"></line><polygon points="540,50 534,47 534,53" fill="#333333"></polygon><rect x="550" y="30" width="180" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="640" y="55" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ПОЛНЫЙ ТРАФИК (100%)</text><rect x="370" y="90" width="120" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="430" y="115" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">Обнаружена ошибка</text><line x1="490" y1="110" x2="540" y2="110" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="540,110 534,107 534,113" fill="#14b8a6"></polygon><rect x="550" y="90" width="180" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="640" y="115" fill="#ffffff" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">СТОП + СВЕРКА ДАННЫХ</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Как организуют выпуск через CI/CD</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Сначала изменения объединяются в репозитории и проходят автоматические проверки. Система выполняет сборку, запускает модульные тесты и проверяет контракт взаимодействия с <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ERP</span>. Затем поднимается тестовая среда, где воспроизводятся сценарии создания, изменения и отмены заказов, а также проверяется идемпотентность повторной отправки сообщений.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Следующий этап — проверка миграции базы данных по принципу <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Expand and Contract</span>. Новая структура добавляется без немедленного удаления старых полей, чтобы сохранить совместимость. После этого сборка разворачивается в предварительной среде для сквозных проверок полного цикла.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Как проходит выпуск и мониторинг</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">Организация выбирает канареечное развёртывание. Новая версия сначала получает ограниченную долю трафика. В течение контрольного периода система анализирует:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Количество ошибок при создании заказов.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Долю неуспешных обращений к <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ERP</span>.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Время обработки операций и количество повторных сообщений.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Расхождения между статусами в связанных системах.</li></ul><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Что происходит при обнаружении ошибки</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Предположим, новая версия корректно создаёт заказы, но при определённом ответе <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ERP</span> неправильно интерпретирует один из статусов. В результате часть заказов зависает между подтверждением и резервированием.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Простое возвращение старой версии приложения здесь недостаточно, так как некоторые заказы уже были обработаны <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ERP</span>, другие остались в очереди. Поэтому команда сначала ограничивает распространение новой версии, возвращает предыдущую совместимую версию и проверяет состояние операций.</p><div style="padding: 24px; margin: 0 0 32px 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Далее выполняется сверка идентификаторов заказов между системами. Уже принятые <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ERP</span> операции не отправляются повторно. Для незавершённых сообщений запускается контролируемая повторная обработка.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">После исправления ошибки сценарий добавляется в автоматические тесты, чтобы аналогичная проблема не повторилась при следующем выпуске.</p></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Что здесь действительно важно</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 0 0;">В этом примере <span style="font-family: 'SF Mono', monospace; color: #ffffff;">CI/CD</span> позволил не просто автоматизировать установку новой версии. Он обеспечил контролируемый путь от изменения кода до изменения реального бизнес-процесса. Команда получила возможность обнаружить проблему на ограниченном участке, остановить дальнейшее распространение ошибки и восстановить согласованность операций между системами. Это и есть практическая ценность безопасного конвейера поставки.</p></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">11. Мониторинг после релиза: почему проверка не заканчивается после успешного развёртывания</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">После установки новой версии начинается этап наблюдения за её работой. Это не формальность и не просто контроль доступности сервера. Некоторые проблемы проявляются только при реальной нагрузке, определённом сочетании данных или длительной работе приложения.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Поэтому после релиза необходимо контролировать как технические, так и бизнес-показатели.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : POST_RELEASE_OBSERVABILITY_GAP ]</div><svg viewbox="0 0 750 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><line x1="40" y1="130" x2="710" y2="130" stroke="#333333" stroke-width="1"></line><text x="40" y="150" fill="#666666" font-family="'SF Mono', monospace" font-size="8">ВРЕМЯ →</text><line x1="300" y1="20" x2="300" y2="130" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="4 4"></line><text x="310" y="30" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="600">RELEASE v2.0</text><path d="M 40 80 Q 150 75 300 80 T 600 78" stroke="#333333" stroke-width="2" fill="none"></path><text x="610" y="82" fill="#888888" font-family="'SF Mono', monospace" font-size="9">Технические метрики (CPU, API latency)</text><path d="M 40 50 Q 150 45 300 50 L 450 100 L 600 110" stroke="#14b8a6" stroke-width="2" fill="none"></path><text x="610" y="114" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="600">Бизнес-метрики (Успешные заказы)</text><rect x="450" y="40" width="180" height="80" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1" stroke-dasharray="4 4"></rect><text x="540" y="70" fill="#ffffff" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">СКРЫТЫЙ СБОЙ</text><text x="540" y="90" fill="#888888" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Техника в норме, бизнес страдает</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Технические и бизнес-показатели</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">К техническим показателям относятся:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 24px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Количество ошибок приложения и время ответа <span style="font-family: 'SF Mono', monospace; color: #ffffff;">API</span>.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Использование процессора и памяти.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Состояние очередей сообщений и доступность внешних зависимостей.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Количество неуспешных запросов к базе данных.</li></ul><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">Для корпоративных систем бизнес-показатели не менее важны:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Доля успешно обработанных заказов.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Количество операций, зависших в промежуточных статусах.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Число ошибок синхронизации и расхождений между источниками данных.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Время прохождения документа между системами.</li></ul><div style="padding: 24px; margin: 0 0 32px 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Именно бизнес-метрики позволяют обнаружить ситуацию, когда приложение технически доступно, но фактически выполняет работу неправильно. Сервер может показывать нормальную загрузку, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">API</span> — отвечать без ошибок, а количество успешно завершённых заказов при этом постепенно снижаться.</p></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Наблюдаемость изменений</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">В зрелом процессе важно связывать технические события с конкретными выпусками. Необходимо понимать:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Какая версия сейчас работает и когда она была установлена.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Какие изменения и миграции вошли в релиз.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Какие показатели изменились после выпуска и кто согласовал развёртывание.</li></ul><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 0 0;">Для этого используют журналы событий, метрики, распределённую трассировку и информацию о версиях компонентов. Такая связь существенно сокращает время поиска причины сбоя: вместо предположений команда может сопоставить начало проблемы с конкретным изменением.</p></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">12. Как организовать CI/CD для критичных корпоративных систем</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Универсального конвейера, подходящего для любой организации, не существует. Подход для внутреннего веб-портала будет отличаться от процесса выпуска <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ERP</span>, системы финансового учёта или программного обеспечения, управляющего производственными операциями. Однако есть несколько принципов, которые особенно важны для корпоративной инфраструктуры.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : ENTERPRISE_CICD_GOVERNANCE ]</div><svg viewbox="0 0 750 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="60" width="140" height="60" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="90" y="85" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">BUILD</text><text x="90" y="105" fill="#666666" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">SAST + SCA + SBOM</text><line x1="160" y1="90" x2="200" y2="90" stroke="#333333" stroke-width="1.5"></line><polygon points="200,90 194,87 194,93" fill="#333333"></polygon><rect x="210" y="60" width="140" height="60" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="280" y="85" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ARTIFACT REGISTRY</text><text x="280" y="105" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Единый источник истины</text><line x1="350" y1="90" x2="390" y2="90" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="390,90 384,87 384,93" fill="#14b8a6"></polygon><rect x="400" y="40" width="140" height="100" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="470" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">PROMOTION</text><text x="470" y="85" fill="#666666" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">GATES:</text><text x="470" y="105" fill="#d0d0d0" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">- Security Check</text><text x="470" y="125" fill="#d0d0d0" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">- Business Approval</text><line x1="540" y1="90" x2="580" y2="90" stroke="#333333" stroke-width="1.5"></line><polygon points="580,90 574,87 574,93" fill="#333333"></polygon><rect x="590" y="60" width="140" height="60" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="660" y="85" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">PROD ENV</text><text x="660" y="105" fill="#666666" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Canary / Rollback</text><rect x="10" y="20" width="730" height="140" fill="none" stroke="#333333" stroke-width="1" stroke-dasharray="4 4"></rect><text x="375" y="15" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">ЗАЩИТА КОНВЕЙЕРА: RBAC, Secret Management, Audit Logs</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Ключевые принципы корпоративного конвейера</h3><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Разделение ответственности:</strong> разработчики отвечают за качество изменений, специалисты эксплуатации — за надёжность развёртывания, специалисты безопасности — за контроль рисков, владельцы бизнес-процессов — за допустимость влияния на операции.</li><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Единый источник артефактов:</strong> в тестовую и рабочую среды должна попадать одна и та же проверенная сборка.</li><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Воспроизводимость:</strong> необходимо фиксировать версии зависимостей, параметры сборки и конфигурации окружения.</li><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Управляемое продвижение между средами:</strong> изменения должны проходить установленные проверки, а не перемещаться в продуктивную среду по произвольному решению.</li><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Контроль изменений базы данных:</strong> миграции должны быть версионируемыми, проверяемыми и совместимыми с переходными состояниями приложения.</li><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Ограничение последствий:</strong> для критичных изменений следует предусматривать постепенное развёртывание, контроль трафика и заранее определённые условия остановки.</li><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Проверяемый откат:</strong> необходимо заранее понимать, что именно можно вернуть назад, а какие операции потребуют отдельного восстановления.</li></ul><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Безопасность самого конвейера поставки</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Отдельного внимания заслуживает разделение сред и секретов. Тестовая система не должна автоматически получать доступ к продуктивным базам и учётным данным только ради удобства разработки.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Также важно защищать сам конвейер поставки. Если злоумышленник сможет изменить <span style="font-family: 'SF Mono', monospace; color: #ffffff;">pipeline</span>, подменить артефакт или получить доступ к учётной записи развёртывания, автоматизация превратится в дополнительный путь компрометации инфраструктуры.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Поэтому необходимо строго контролировать изменения конфигурации <span style="font-family: 'SF Mono', monospace; color: #ffffff;">pipeline</span>, права на публикацию артефактов, происхождение сборок и действия сервисных учётных записей. Конвейер доставки кода должен быть защищён так же строго, как и сама продуктивная среда.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">13. Как понять, что CI/CD действительно работает</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Наличие <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Jenkins</span>, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">GitLab CI</span>, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">GitHub Actions</span>, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Azure DevOps</span> или другого инструмента ещё не означает, что организация построила зрелый процесс доставки программного обеспечения.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Инструмент обеспечивает техническую возможность автоматизации. Качество процесса определяется тем, насколько эффективно он управляет изменениями и снижает последствия ошибок. Оценивать результат следует не только по скорости сборки или количеству автоматических тестов.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : DORA_METRICS_BALANCE ]</div><svg viewbox="0 0 750 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><text x="375" y="20" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">СКОРОСТЬ (SPEED)</text><rect x="40" y="30" width="310" height="50" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="60" y="50" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="700">Deployment Frequency</text><text x="60" y="70" fill="#888888" font-family="-apple-system, sans-serif" font-size="9">Частота развёртывания изменений</text><rect x="40" y="90" width="310" height="50" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="60" y="110" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="700">Lead Time for Changes</text><text x="60" y="130" fill="#888888" font-family="-apple-system, sans-serif" font-size="9">Время от коммита до продакшена</text><text x="375" y="20" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="end" style="transform: translateX(375px);">СТАБИЛЬНОСТЬ (STABILITY)</text><rect x="400" y="30" width="310" height="50" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="420" y="50" fill="#ffffff" font-family="'SF Mono', monospace" font-size="10" font-weight="700">Change Failure Rate</text><text x="420" y="70" fill="#888888" font-family="-apple-system, sans-serif" font-size="9">Доля изменений, приводящих к сбоям</text><rect x="400" y="90" width="310" height="50" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="420" y="110" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="700">Failed Deployment Recovery Time</text><text x="420" y="130" fill="#d0d0d0" font-family="-apple-system, sans-serif" font-size="9">Время восстановления после сбоя</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">Эти показатели известны как <span style="font-family: 'SF Mono', monospace; color: #ffffff;">DORA-метрики</span>. Однако их нельзя рассматривать изолированно.</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Увеличение частоты релизов не обязательно означает повышение качества. Если команда выпускает изменения чаще, но количество инцидентов растёт, процесс нельзя считать более зрелым.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Короткое время восстановления не должно достигаться за счёт постоянного ручного вмешательства и обхода проверок.</li></ul><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Дополнительные корпоративные метрики</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">Для корпоративных систем полезно дополнительно учитывать:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Долю релизов с успешной проверкой ключевых бизнес-сценариев.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Количество ошибок, обнаруженных после выпуска.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Долю изменений с проверенной процедурой восстановления.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Количество незавершённых миграций.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Частоту расхождений между интегрированными системами после обновлений.</li></ul><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Особенно важно анализировать причины неудачных релизов.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Если одна и та же проблема повторяется, простое увеличение числа тестов не всегда помогает. Возможно, необходимо изменить архитектуру, процесс согласования, модель взаимодействия компонентов или саму стратегию развёртывания.</p></div></div><div style="max-width: 1100px; margin: 64px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 24px; font-weight: 600; margin: 0 0 24px 0; color: #ffffff; letter-spacing: -0.3px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Заключение</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;"><span style="font-family: 'SF Mono', monospace; color: #ffffff;">CI/CD</span> в корпоративной инфраструктуре — это не просто автоматическая сборка и установка новых версий программного обеспечения. Это управляемый процесс изменения работающей системы, в котором каждый этап имеет свои проверки, ограничения и критерии готовности.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : MATURE_CICD_PILLARS ]</div><svg viewbox="0 0 750 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="30" width="130" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="85" y="55" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ТЕСТЫ</text><rect x="160" y="30" width="130" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="225" y="55" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">СРЕДЫ</text><rect x="300" y="30" width="130" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="365" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ГРАНУЛЯРНОСТЬ</text><rect x="440" y="30" width="130" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="505" y="55" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">МОНИТОРИНГ</text><rect x="580" y="30" width="150" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="655" y="55" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ОТКАТ / ROLLBACK</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">Автоматические тесты помогают обнаруживать ошибки до выпуска. Разделение сред позволяет проверять изменения в контролируемых условиях. Постепенное развёртывание ограничивает область возможного сбоя. Мониторинг показывает, как новая версия ведёт себя в реальной эксплуатации. А заранее подготовленные процедуры восстановления позволяют вернуть систему в работоспособное состояние без неконтролируемых последствий для данных и бизнес-процессов.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">При этом наиболее сложные вопросы обычно возникают не при установке приложения, а на границах компонентов: при изменении структуры базы данных, обновлении API, обработке повторных операций и взаимодействии с внешними системами.</p><div style="padding: 32px; margin: 0 0 0 0; background: #000000; border: 1px solid #222222; border-left: 4px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 16px 0;">Поэтому зрелый <span style="font-family: 'SF Mono', monospace; color: #ffffff;">CI/CD</span> должен учитывать не только программный код, но и состояние данных, контракты интеграций, безопасность инфраструктуры и непрерывность бизнес-процессов.</p><p style="font-size: 18px; color: #ffffff; margin: 0; font-weight: 600; line-height: 1.6; letter-spacing: -0.2px;">Хорошо организованный выпуск — это не тот, при котором новая версия просто запустилась. Это тот, при котором организация заранее понимает, <span style="color: #14b8a6;">что именно изменилось</span>, как проверить результат, какие последствия возможны при ошибке и каким способом восстановить работу системы, <span style="color: #14b8a6;">не создавая вторую проблему при устранении первой</span>.</p></div></div><p> </p><div style="max-width: 1100px; margin: 60px auto 0 auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">НАВИГАЦИЯ // SUGGESTED_READING</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // АРХИТЕКТУРА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Как понять, что нужно компании: готовая система или разработка</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kak-ponyat-chto-nuzhno-kompanii-gotovaya-sistema-ili-razrabotka/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // РАЗРАБОТКА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Почему «просто добавить функцию» иногда означает переделать полсистемы</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/pochemu-prosto-dobavit-funkciyu-inogda-oznachaet-peredelat-polsistemy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // АРХИТЕКТУРА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Как проектируют корпоративную систему с нуля</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kak-proektiruyut-korporativnuyu-sistemu-s-nulya/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div></div></div><div style="max-width: 1100px; margin: 20px auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; border-top: 1px solid #165c52; padding: 40px 0 0 0; box-sizing: border-box; width: 100%;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 40px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ EXPERTISE JOURNAL ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Все инженерные материалы и экспертные статьи</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/ekspertiza/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">перейти к каталогу ──►</a></div></div><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ CORE GLOSSARY ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Полный алфавитный справочник ИТ-терминов</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/glossariy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">открыть справочник ──►</a></div></div></div></div><p> </p></div></article></main><footer class="footer"><div class="wrapper"><div class="footer__copyright"><p> </p><p> </p></div><button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg width="20" height="20"><use xlink:href="https://log-ai.ru/assets/svg/svg-map.svg#toparrow"/></svg></button></div></footer><script defer="defer" src="https://log-ai.ru/assets/js/scripts.min.js?v&#x3D;d0fc1030089a37f93a2d51bf6d07565c"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script><script>(() => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') !== 'monument') return;
+
+  const IMAGE_URL = 'https://log-ai.ru/media/files/Interstellar.jpeg';
+  const AUDIO_URL = 'https://log-ai.ru/media/files/interstellar.mp3';
+
+  // Защита от повторного запуска
+  if (document.getElementById('log-ai-monument')) return;
+
+  const monument = document.createElement('div');
+  monument.id = 'log-ai-monument';
+
+  const root = document.documentElement;
+  const body = document.body;
+
+  const previousRootOverflow = root.style.overflow;
+  const previousBodyOverflow = body.style.overflow;
+  const previousBodyPosition = body.style.position;
+  const previousBodyTop = body.style.top;
+  const previousBodyWidth = body.style.width;
+  const previousScrollX = window.scrollX;
+  const previousScrollY = window.scrollY;
+
+  root.style.overflow = 'hidden';
+  body.style.overflow = 'hidden';
+  body.style.position = 'fixed';
+  body.style.top = `-${previousScrollY}px`;
+  body.style.width = '100%';
+
+  monument.innerHTML = `
+    <div class="monument-universe"></div>
+    <canvas class="monument-stars"></canvas>
+    <div class="monument-shade"></div>
+
+    <div class="monument-frame">
+      <p class="monument-overline">ARCHIVUM · LOG-AI · MMXXVI</p>
+
+      <div class="monument-rule"></div>
+
+      <h1>PER ASPERA<br><span>AD ASTRA</span></h1>
+
+      <p class="monument-translation">
+        THROUGH HARDSHIP, TO THE STARS
+      </p>
+
+      <div class="monument-message">
+        <p>TO THOSE WHO BUILD BEYOND THE LIMITS OF THEIR TIME.</p>
+        <p>TO THOSE WHO CONTINUE WHEN THE OUTCOME IS UNKNOWN.</p>
+        <p>TO THOSE WHO WILL DISCOVER THIS LONG AFTER ITS CREATION.</p>
+      </div>
+
+      <p class="monument-declaration">
+        YOU WERE NOT THE FIRST TO LOOK AT THE STARS.<br>
+        BUT YOU MAY BE AMONG THOSE WHO REACH THEM.
+      </p>
+
+      <div class="monument-rule"></div>
+          
+      <p class="monument-translation">
+        A MARK LEFT IN THE MACHINE.
+      </p>   
+
+      <p class="monument-signature">
+        LOG·AI·ARCHITECTI·MMXXVI
+      </p>
+
+      <p class="monument-exit" id="monument-hint">
+        [ CLICK ANYWHERE TO RETURN ]
+      </p>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #log-ai-monument {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      background: #03040a;
+      color: #e5dfd3;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      box-sizing: border-box;
+      cursor: pointer;
+      isolation: isolate;
+      opacity: 0;
+      animation: logai-monument-appear 1.8s ease forwards;
+    }
+
+    #log-ai-monument .monument-universe {
+      position: fixed;
+      inset: -3%;
+      z-index: -3;
+      background-image: url("https://log-ai.ru/media/files/Interstellar.jpeg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transform: scale(1.02);
+      animation: logai-cosmic-drift 35s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-shade {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(0,0,0,.24) 0%,
+          rgba(0,0,0,.52) 65%,
+          rgba(0,0,0,.78) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.42),
+          rgba(0,0,0,.18) 45%,
+          rgba(0,0,0,.62)
+        );
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-frame {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', serif;
+      padding: 30px 0;
+      text-shadow: 0 2px 18px rgba(0,0,0,.9);
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-translation,
+    #log-ai-monument .monument-signature,
+    #log-ai-monument .monument-exit {
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-signature {
+      color: #c0a16a;
+    }
+
+    #log-ai-monument .monument-rule {
+      height: 1px;
+      width: 160px;
+      max-width: 60%;
+      margin: 30px auto;
+      background: linear-gradient(
+        to right,
+        transparent,
+        #a68a55,
+        transparent
+      );
+      box-shadow: 0 0 12px rgba(190,155,90,.2);
+    }
+
+    #log-ai-monument h1 {
+      margin: 35px 0 18px;
+      font-size: clamp(30px, 7vw, 58px);
+      line-height: 1.5;
+      letter-spacing: .16em;
+      font-weight: 400;
+      color: #f4f0e8;
+    }
+
+    #log-ai-monument h1 span {
+      color: #d2b77e;
+    }
+
+    #log-ai-monument .monument-translation {
+      color: #c0b8aa;
+    }
+
+    #log-ai-monument .monument-message {
+      margin: 55px auto 38px;
+      max-width: 490px;
+      color: #e0d9cd;
+      font-size: 13px;
+      line-height: 2.2;
+      letter-spacing: .035em;
+    }
+
+    #log-ai-monument .monument-message p {
+      margin: 0 0 12px;
+    }
+
+    #log-ai-monument .monument-declaration {
+      color: #e0c48a;
+      font-size: 12px;
+      line-height: 2.3;
+      letter-spacing: .08em;
+    }
+
+    #log-ai-monument .monument-exit {
+      margin-top: 36px;
+      color: #c0b8aa;
+      font-size: 9px;
+      letter-spacing: .18em;
+    }
+
+    @keyframes logai-monument-appear {
+      to { opacity: 1; }
+    }
+
+    @keyframes logai-cosmic-drift {
+      from { transform: scale(1.02); }
+      to { transform: scale(1.13); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #log-ai-monument,
+      #log-ai-monument .monument-universe {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(monument);
+
+  // Тонкие, редкие звёзды
+  const canvas = monument.querySelector('.monument-stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let frameId = null;
+  let closed = false;
+
+  function resizeStars() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(window.innerWidth * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    stars = Array.from({ length: 65 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      length: 8 + Math.random() * 25,
+      speed: 0.25 + Math.random() * 0.75,
+      alpha: 0.15 + Math.random() * 0.5,
+      delay: Math.random() * 500
+    }));
+  }
+
+  function drawStars() {
+    if (closed) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    for (const star of stars) {
+      star.delay -= 1;
+
+      if (star.delay <= 0) {
+        star.y += star.speed;
+        star.x -= star.speed * 0.35;
+
+        ctx.beginPath();
+        ctx.moveTo(star.x, star.y);
+        ctx.lineTo(star.x - star.length * 0.35,
+                   star.y - star.length);
+
+        ctx.strokeStyle = `rgba(210,220,255,${star.alpha})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+
+        if (star.y > h + 30 || star.x < -30) {
+          star.x = Math.random() * w + 30;
+          star.y = -Math.random() * h * 0.4;
+          star.delay = 30 + Math.random() * 180;
+        }
+      }
+    }
+
+    frameId = requestAnimationFrame(drawStars);
+  }
+
+  resizeStars();
+  drawStars();
+
+  window.addEventListener('resize', resizeStars);
+
+  // Музыка
+  const audio = document.createElement('audio');
+  audio.id = 'monument-audio';
+  audio.src = AUDIO_URL;
+  audio.loop = true;
+  audio.preload = 'auto';
+  audio.volume = 0.35;
+  document.body.appendChild(audio);
+
+  let playing = false;
+  let starting = false;
+
+  const hint = document.getElementById('monument-hint');
+
+  function startMusic() {
+    if (closed || starting || playing) return;
+
+    starting = true;
+
+    audio.play().then(() => {
+      starting = false;
+
+      if (closed) {
+        audio.pause();
+        return;
+      }
+
+      playing = true;
+      hint.textContent = '[ CLICK ANYWHERE TO RETURN ]';
+    }).catch((error) => {
+      starting = false;
+
+      if (closed) return;
+
+      if (error.name === 'NotAllowedError') {
+        hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+        return;
+      }
+
+      console.warn('LOG-AI audio:', error.name, error.message);
+      hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+    });
+  }
+
+  function closeMonument() {
+    if (closed) return;
+    closed = true;
+
+    cancelAnimationFrame(frameId);
+    window.removeEventListener('resize', resizeStars);
+    window.removeEventListener('keydown', onKeyDown);
+
+    audio.pause();
+    audio.remove();
+    monument.remove();
+    style.remove();
+
+    root.style.overflow = previousRootOverflow;
+    body.style.overflow = previousBodyOverflow;
+    body.style.position = previousBodyPosition;
+    body.style.top = previousBodyTop;
+    body.style.width = previousBodyWidth;
+
+    window.scrollTo(previousScrollX, previousScrollY);
+
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete('mode');
+
+    window.history.replaceState(
+      {},
+      document.title,
+      cleanUrl.pathname + cleanUrl.search + cleanUrl.hash
+    );
+  }
+
+  function onKeyDown(event) {
+    if (event.key === 'Escape') closeMonument();
+  }
+
+  monument.addEventListener('click', () => {
+    if (closed) return;
+
+    if (playing) {
+      closeMonument();
+    } else {
+      startMusic();
+    }
+  });
+
+  window.addEventListener('keydown', onKeyDown);
+
+  // Первая попытка автоматического запуска
+  startMusic();
+})();</script><script>(function () {
+    // ВНИМАНИЕ!!!!!!!!!!!!!!!!!!!!Плавный инерционный скролл только для мыши/тачпада
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    let targetY = window.scrollY;
+    let currentY = window.scrollY;
+    let animationFrame = null;
+
+    // ===== НАСТРОЙКИ =====
+    const SPEED = 0.70;       // 0.4 = медленнее, 0.65 = средне, 1.0 = быстрее
+    const SMOOTHNESS = 0.13;  // 0.08 = мягче, 0.12 = средне, 0.18 = быстрее
+    const MAX_STEP = 500;     // максимальный шаг одного движения колеса
+    // =====================
+
+    function animateScroll() {
+        currentY += (targetY - currentY) * SMOOTHNESS;
+
+        if (Math.abs(targetY - currentY) < 0.5) {
+            currentY = targetY;
+            window.scrollTo(0, currentY);
+            animationFrame = null;
+            return;
+        }
+
+        window.scrollTo(0, currentY);
+        animationFrame = requestAnimationFrame(animateScroll);
+    }
+
+    window.addEventListener('wheel', function (event) {
+
+    // Если глобус активирован кликом —
+    // колесо полностью отдаём Globe.gl для zoom.
+    const globe = event.target.closest('#globeViz');
+
+    if (globe && globe.dataset.interacting === 'true') {
+        return;
+    }
+
+    // Внутренний скролл AI-чата не трогаем
+    if (event.target.closest('#logai-window, #logai-msgs')) {
+        return;
+    }
+
+    event.preventDefault();
+
+        let delta = event.deltaY * SPEED;
+
+        // Ограничиваем слишком резкие движения
+        delta = Math.max(-MAX_STEP, Math.min(MAX_STEP, delta));
+
+        targetY += delta;
+
+        // Не даём уйти выше/ниже страницы
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        targetY = Math.max(0, Math.min(targetY, maxY));
+
+        if (!animationFrame) {
+            animationFrame = requestAnimationFrame(animateScroll);
+        }
+    }, { passive: false });
+
+    // Синхронизация, если страницу прокрутили другим способом
+    window.addEventListener('scroll', function () {
+        if (!animationFrame) {
+            targetY = window.scrollY;
+            currentY = window.scrollY;
+        }
+    }, { passive: true });
+
+})();</script><div id="logai-footer-mobile" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box;"><div style="margin: 0 auto 20px auto; padding-top: 40px; text-align: center; margin-bottom: 40px;"><a href="mailto:info@log-ai.ru" style="font-size: 24px; font-family: 'SF Mono', Monaco, monospace; color: #e5e7eb; text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: 0.3px;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#e5e7eb'">info@log-ai.ru</a><p style="color: #aaaaaa; font-size: 15px; line-height: 1.6; max-width: 750px; margin: 15px auto 0 auto;">Пришлите описание задачи, техническое задание или ссылку на существующую систему. Мы оценим задачу и определим возможные варианты реализации.</p></div><div style="max-width: 850px; margin: 0 auto 40px auto; text-align: center; background: #000000; padding: 0; box-sizing: border-box;"><p style="color: #aaaaaa; font-size: 14px; line-height: 1.6; margin: 0;"><span style="color: #4ade80; margin-right: 6px;">🔒</span> Данные и доступ к системам заказчика обрабатываются в соответствии с согласованными требованиями к безопасности и конфиденциальности. Условия доступа, хранения и обработки данных определяются архитектурой проекта и договором.</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; box-sizing: border-box; width: 100%; margin-bottom: 30px;"><p style="color: #666666; font-size: 12px; line-height: 1.6; margin: 0; width: 100%; text-align: justify;">Сайт носит исключительно информационный характер и не является публичной офертой в соответствии со статьёй 437 Гражданского кодекса РФ. Цены, состав и условия предоставления услуг уточняются при проектировании решения и фиксируются в договоре. Условия технического сопровождения и уровень сервиса могут дополнительно определяться отдельным соглашением (SLA).</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; width: 100%; box-sizing: border-box;"><div style="color: #666666; font-size: 12px; line-height: 1.5; text-align: left;">© 2026 Log-AI<br>Автоматизация бизнеса и ИИ-решения под ключ. Работаем по всей России и СНГ.<br>ИП Скопец Антон Викторович<br>ИНН 741709<span></span>260870 · ОГРНИП 326745600<span></span>204228<br>Все права защищены.</div><div style="display: flex; gap: 20px; flex-wrap: wrap; font-family: sans-serif;"><a href="/privacy-policy/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Политика конфиденциальности</a> <a href="/terms/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Пользовательское соглашение</a></div></div></div><style>@media screen and (max-width: 600px) {
+  #logai-footer-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+}</style><style>/* Анимации и точки */
+    @keyframes logai-bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+    .logai-dots { display: flex !important; flex-direction: row !important; gap: 4px !important; align-items: center !important; height: 12px !important; }
+    .logai-dots span { display: inline-block; width: 5px; height: 5px; background: #aaa !important; border-radius: 50%; animation: logai-bounce 1.4s infinite ease-in-out; }
+    .logai-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .logai-dots span:nth-child(3) { animation-delay: 0.4s; }
+    
+    #logai-msgs::-webkit-scrollbar { width: 5px; }
+    #logai-msgs::-webkit-scrollbar-thumb { background: #666; border-radius: 10px; }
+    
+    /* Сообщения и текст */
+    #logai-msgs div { white-space: pre-wrap !important; word-wrap: break-word !important; padding: 12px 16px !important; margin-bottom: 5px !important; display: flex; flex-direction: column; justify-content: center; }
+    #logai-msgs div p { margin: 0 !important; padding: 0 !important; line-height: 1.5 !important; }
+    #logai-msgs { gap: 12px !important; padding: 20px !important; }
+
+    /* Поле ввода и кнопка отправить */
+    #logai-input { flex: 1 !important; padding: 12px 18px !important; border-radius: 20px !important; background: #4a4e56 !important; border: 1px solid rgba(255,255,255,0.1) !important; outline: none !important; color: #fff !important; font-size: 15px !important; resize: none !important; max-height: 120px !important; line-height: 1.4 !important; }
+    #logai-send-btn { background-color: #007bff !important; border: none !important; width: 45px !important; height: 45px !important; border-radius: 50% !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-size: 24px !important; padding: 0 !important; flex-shrink: 0 !important; }
+
+    /* ГЛАВНЫЕ СТИЛИ (чтобы кнопка и окно не исчезали) */
+    #logai-btn {
+        position: fixed !important; bottom: 40px !important; right: 110px !important;
+        width: 65px !important; height: 65px !important; border-radius: 50% !important;
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        cursor: pointer !important; z-index: 10000 !important; box-shadow: 0 10px 25px rgba(0,123,255,0.4);
+    }
+
+    #logai-window {
+        display: none; position: fixed !important; bottom: 115px !important; right: 110px !important;
+        width: 380px !important; height: 600px !important; background: #3b3e45 !important;
+        border-radius: 24px !important; flex-direction: column; overflow: hidden;
+        z-index: 10000 !important; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.15) !important;
+    }
+
+        /* АДАПТИВ ДЛЯ МОБИЛОК: ЧАТ НА ВЕСЬ ЭКРАН */
+    @media screen and (max-width: 480px) {
+        #logai-window { 
+            right: 0 !important; 
+            left: 0 !important; 
+            bottom: 0 !important; 
+            width: 100% !important; 
+            height: 100% !important; /* Растягиваем окно на 100% экрана смартфона */
+            border-radius: 0 !important; /* Убираем скругления углов, чтобы чат сел монолитом */
+            z-index: 999999 !important; /* Перекрываем все кнопки в ноль */
+        }
+        
+        #logai-btn { 
+            bottom: 80px !important; /* Твоя родная высота кнопки, когда чат закрыт */
+            right: 22px !important;  /* Твой родной сдвиг кнопки */
+            z-index: 999998 !important; /* Когда чат открыт, кнопка останется под ним и не будет торчать */
+        }
+    }</style><div id="logai-widget" style="position: fixed; bottom: var(--widget-bottom, 20px); right: var(--widget-right, 20px); z-index: 9999;"><div id="logai-btn" onclick="toggleLogAI()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><div id="logai-window"><div style="background: #2d3035; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; align-items:center; gap:12px;"><div style="width:35px; height:35px; background:#007bff; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(0,123,255,0.5);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg></div><span style="font-weight:600; color:#fff; font-size:16px; letter-spacing: 0.5px;">AI Ассистент</span></div><span onclick="toggleLogAI()" style="cursor:pointer; color:#fff; font-size:35px; line-height: 0.7; opacity: 0.7;">&times;</span></div><div id="logai-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; background:#3b3e45;"></div><div style="padding:15px 15px 8px 15px; background:#2d3035; display:flex; flex-direction:column; border-top: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; gap:10px; align-items:flex-end; width:100%;"><textarea id="logai-input" rows="1" placeholder="Напишите..." oninput="this.style.height='';this.style.height=this.scrollHeight+'px'"></textarea> <button id="logai-send-btn" onclick="sendLogAI()">➤</button></div><div style="text-align:center; font-size:10px; color:#ffffff; opacity:0.3; margin-top:6px; font-family:sans-serif; pointer-events:none; user-select:none;">ИИ может ошибаться</div></div></div></div><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script>const API_URL = 'https://api2.log-ai.ru';
+    const MY_CLIENT_ID = 'client_arhitektor_2'; // МЕНЯТЬ ТУТ
+    const MY_BOT_PATH = 'arhitektor_2';  // МЕНЯТЬ ТУТ 
+    
+       let logSid;
+    try {
+        logSid = localStorage.getItem('logai_sid');
+        if (!logSid) {
+            logSid = 's_' + Math.random().toString(36).substr(2, 12);
+            localStorage.setItem('logai_sid', logSid);
+        }
+    } catch (e) {
+        // Если доступ к памяти закрыт (инкогнито), создаем временный ID
+        logSid = 'temp_' + Math.random().toString(36).substr(2, 12);
+    }
+
+    // Переименовали, чтобы избежать конфликтов
+    let chatIsWaiting = false;
+    let historyLoaded = false;
+    let activeMessageId = null;
+    let pollController = null;
+    let pollTimeoutId = null;
+
+
+       function toggleLogAI() {
+        const w = document.getElementById('logai-window');
+        const isOpen = (window.getComputedStyle(w).display === 'none');
+        
+        if (isOpen) {
+            w.style.display = 'flex';
+            if (!historyLoaded) {
+                loadChatHistory();
+            } 
+            // Если чат в режиме ожидания (точки), пинаем сервер сразу при открытии
+            else if (chatIsWaiting && activeMessageId) {
+                const dotsContainer = document.querySelector('.logai-dots')?.parentElement;
+                if (dotsContainer) {
+                    startPolling(activeMessageId, dotsContainer);
+                }
+            }
+        } else {
+            w.style.display = 'none';
+            // УБРАЛИ stopPolling(), чтобы ИИ докачивал ответ, даже когда окно закрыто
+        }
+    }
+
+
+    function updateInputState() {
+        const input = document.getElementById('logai-input');
+        const btn = document.getElementById('logai-send-btn');
+        if (input) {
+            input.disabled = chatIsWaiting;
+            input.style.opacity = chatIsWaiting ? '0.5' : '1';
+        }
+        if (btn) btn.style.opacity = chatIsWaiting ? '0.5' : '1';
+    }
+
+    function stopPolling() {
+        if (activeMessageId) localStorage.removeItem('poll_start_' + activeMessageId);
+        if (pollController) pollController.abort();
+        if (pollTimeoutId) clearTimeout(pollTimeoutId);
+    
+        pollController = null;
+        pollTimeoutId = null;
+        activeMessageId = null;
+        chatIsWaiting = false;
+        updateInputState();
+    }
+
+    function addLogMsg(txt, isAi) {
+        const d = document.createElement('div');
+        d.style = `padding:12px 16px; border-radius:18px; max-width:82%; font-size:14px; line-height:1.5; margin-bottom:10px; 
+                   ${isAi ? 'align-self:flex-start; background:#4a4e56; color:#dbdee1; border-bottom-left-radius:4px;' 
+                         : 'align-self:flex-end; background:#007bff; color:white; border-bottom-right-radius:4px; box-shadow:0 4px 12px rgba(0,123,255,0.25);'}`;
+
+        if (txt === 'dots') {
+   // ИСПРАВЛЕНО: Добавлен явный текст ожидания рядом с анимацией точек для лучшего UX
+   d.innerHTML = '<div style="display:flex; align-items:center; gap:8px;">' +
+                 '<span style="font-style:italic; opacity:0.8;">ИИ подбирает ответ...</span>' +
+                 '<div class="logai-dots"><span></span><span></span><span></span></div>' +
+                 '</div>';
+ } else {
+   d.innerHTML = typeof marked !== 'undefined' ? marked.parse(txt) : txt;
+ }
+
+        const box = document.getElementById('logai-msgs');
+        box.appendChild(d);
+        box.scrollTop = box.scrollHeight;
+        return d;
+    }
+
+async function loadChatHistory() {
+    const box = document.getElementById('logai-msgs');
+    try {
+        box.innerHTML = '';
+
+        const res = await fetch(`${API_URL}/history/${logSid}?platform=site&clientId=${MY_CLIENT_ID}`);
+        const data = await res.json();
+
+        if (Array.isArray(data.items) && data.items.length > 0) {
+            data.items.forEach((m, index) => {
+                // 1. Показываем сообщение пользователя
+                if (m.message) {
+                    addLogMsg(m.message, false);
+                }
+
+                // 2. Если есть готовый ответ — показываем
+                if (m.answer) {
+                    addLogMsg(m.answer, true);
+                } 
+                // 3. ИСПРАВЛЕНО: Четкое чтение m.message_id из базы данных без путаницы с регистрами
+                else if (m.message_id && index === data.items.length - 1) {
+                    chatIsWaiting = true;
+                    activeMessageId = m.message_id; // Используем m.message_id
+                    
+                    const aiMsg = addLogMsg('dots', true);
+                    startPolling(m.message_id, aiMsg); 
+                }
+            });
+        } else {
+            addLogMsg("Здравствуйте! Я ваш ИИ-ассистент. Чем могу помочь?", true);
+        }
+
+        historyLoaded = true;
+        updateInputState();
+
+    } catch (e) {
+        console.error('History error:', e);
+        addLogMsg("Не удалось загрузить историю чата", true);
+    }
+}
+
+
+async function sendLogAI() {
+    if (chatIsWaiting) return;
+
+    const input = document.getElementById('logai-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // ЖЕЛЕЗНЫЙ ДЕБАУНС: блокируем повторный клик в первую же микросекунду
+    chatIsWaiting = true;
+    updateInputState();
+
+    addLogMsg(msg, false);
+    
+    input.value = ''; 
+    input.style.height = 'auto'; 
+
+    const aiMsg = addLogMsg('dots', true);
+
+    try {
+        const res = await fetch(`${API_URL}/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sessionId: logSid,
+                message: msg,
+                clientId: MY_CLIENT_ID,
+                platform: 'site',
+                botPath: MY_BOT_PATH
+            })
+        });
+
+        // ИСПРАВЛЕНО: Обработка HTTP-ошибок. Передаем false третьим параметром, чтобы не было звука при ошибке
+        if (!res.ok) {
+            let errorMsg = "⚠️ Сервер временно недоступен";
+            if (res.status === 429) errorMsg = "🚫 Слишком много запросов. Подождите немного.";
+            else if (res.status === 403) {
+                try {
+                    const errData = await res.json();
+                    errorMsg = errData.reason || "🚫 Доступ ограничен.";
+                } catch (_) {
+                    errorMsg = "🚫 Доступ ограничен.";
+                }
+            }
+            finish(errorMsg, aiMsg, false); // false — звук НЕ играет
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data.blocked) {
+            finish(data.reason || data.message || "🚫 Сообщение заблокировано", aiMsg, false); // false — без звука
+            return;
+        }
+
+        if (data.messageId) {
+            activeMessageId = data.messageId;
+            startPolling(data.messageId, aiMsg);
+        } else {
+            finish("⚠️ Ошибка регистрации сообщения (нет messageId)", aiMsg, false);
+        }
+    } catch (e) {
+        console.error(e);
+        finish("⚠️ Ошибка связи с сервером. Проверьте интернет.", aiMsg, false);
+    }
+} // Скобка закрывает саму функцию send
+    function startPolling(messageId, aiMsg) {
+        activeMessageId = messageId;
+        pollController = new AbortController();
+        let savedTime = localStorage.getItem('poll_start_' + messageId);
+        if (!savedTime) {
+            savedTime = Date.now().toString();
+            localStorage.setItem('poll_start_' + messageId, savedTime);
+        }
+        let startTime = parseInt(savedTime, 10);
+        let statusChanged = false; // Чтобы не менять текст постоянно
+
+        const poll = async () => {
+            if (activeMessageId !== messageId) return;
+
+            const elapsed = (Date.now() - startTime) / 1000; // секунд прошло
+
+            // 1. На 40-й секунде меняем текст на "Сложный вопрос"
+            if (elapsed > 40 && !statusChanged) {
+                const dots = aiMsg.querySelector('.logai-dots');
+                aiMsg.innerHTML = '🤖 Вопрос сложный, анализирую данные...';
+                if (dots) aiMsg.appendChild(dots); 
+                statusChanged = true;
+            }
+
+            // 2. Лимит ожидания - 10 минут (600 секунд)
+            if (elapsed > 600) {
+                finish("🤖 Извините, ИИ перегружен или запрос слишком сложный. Пожалуйста, попробуйте позже.", aiMsg);
+                return;
+            }
+
+            // 3. Умный интервал: до 50 сек — каждые 3 сек, потом — каждые 10 сек
+            let nextInterval = (elapsed > 50) ? 10000 : 3000;
+
+            try {
+                // Добавили ?t=... чтобы телефон каждый раз реально спрашивал сервер, а не брал из кэша
+                const r = await fetch(`${API_URL}/get-answer/${messageId}?sessionId=${logSid}&clientId=${MY_CLIENT_ID}&t=${Date.now()}`, {
+                    signal: pollController.signal 
+                });
+                const d = await r.json();
+                const finalAnswer = d.answer || (d.status !== 'pending' ? d.answer : null);
+
+                if (finalAnswer) {
+                    finish(finalAnswer, aiMsg);
+                } else {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            } catch (e) {
+                if (e.name !== 'AbortError') {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            }
+        };
+        poll();
+    }
+
+function finish(text, msgElement, isSuccess = true) {
+    if (msgElement) {
+        msgElement.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+        
+        // Звук играет строго при успешном ответе ИИ, при ошибках или банах — тишина
+        if (isSuccess) {
+            try {
+                // ТВОЙ ОРИГИНАЛЬНЫЙ РАБОЧИЙ ПУТЬ: Кэш сбрасывается, файл проигрывается без ошибок 404
+                const audio = new Audio('https://api.log-ai.ru/notify.mp3?v=' + Date.now());
+                audio.volume = 0.4;
+                audio.play().catch(e => console.log("Нужен клик"));
+            } catch (e) {}
+        }
+    }
+    stopPolling();
+}
+
+
+    // Enter для отправки
+    document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('logai-input');
+    if (input) {
+      input.addEventListener('keypress', (e) => {
+        // ИСПРАВЛЕНО: Добавлена проверка !chatIsWaiting, чтобы клавиатура намертво блокировалась во время ожидания ИИ
+        if (e.key === 'Enter' && !e.shiftKey && !chatIsWaiting) {
+          e.preventDefault();
+          sendLogAI();
+        }
+      });
+
+      // ИСПРАВЛЕНО: Текстовое поле плавно растёт вниз до 150px, если текст длинный
+      input.addEventListener('input', function() {
+        this.style.height = 'auto'; 
+        this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+      });
+    }
+    });</script><div id="cookie-notice-wrapper" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #111111; border-top: 1px solid #222222; padding: 10px 15px; box-sizing: border-box; z-index: 99999; display: none; flex-direction: row; justify-content: space-between; align-items: center; gap: 15px; font-family: sans-serif;"><span style="color: #888888; font-size: 12px; line-height: 1.4; text-align: left;">Наш сайт использует файлы cookie для корректной работы. Подробнее — в <a href="/privacy-policy/" style="color: #bfa15f; text-decoration: underline;">Политике конфиденциальности</a>. </span><button onclick="dismissCookieNotice()" style="background: #bfa15f; color: #000000; border: none; padding: 5px 14px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Принять</button></div><style>@media (max-width: 600px) {
+        #cookie-notice-wrapper {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 10px !important;
+            padding: 12px 15px !important;
+        }
+        #cookie-notice-wrapper span {
+            text-align: center !important;
+            font-size: 11px !important;
+        }
+        #cookie-notice-wrapper button {
+            width: 100% !important;
+            padding: 8px !important;
+            font-size: 12px !important;
+        }
+    }</style><script>(function() {
+        var storageKey = 'logai_cookies_accepted';
+        if (!localStorage.getItem(storageKey)) {
+            document.getElementById('cookie-notice-wrapper').style.display = 'flex';
+        }
+    })();
+
+    function dismissCookieNotice() {
+        localStorage.setItem('logai_cookies_accepted', 'true');
+        document.getElementById('cookie-notice-wrapper').style.display = 'none';
+    }</script></body></html>

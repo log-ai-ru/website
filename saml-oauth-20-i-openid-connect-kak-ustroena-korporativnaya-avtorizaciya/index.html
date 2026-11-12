@@ -1,0 +1,855 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SAML, OAuth 2.0 и OpenID Connect: корпоративная авторизация | LOG-AI</title><meta name="description" content="Как работают SSO, федеративная аутентификация и токены доступа. Разбираем различия протоколов, управление правами и ошибки интеграции."><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://log-ai.ru/saml-oauth-20-i-openid-connect-kak-ustroena-korporativnaya-avtorizaciya/"><link rel="alternate" type="application/atom+xml" href="https://log-ai.ru/feed.xml" title="LOG-AI - RSS"><link rel="alternate" type="application/json" href="https://log-ai.ru/feed.json" title="LOG-AI - JSON"><meta property="og:title" content="SAML, OAuth 2.0 и OpenID Connect: корпоративная авторизация | LOG-AI"><meta property="og:image" content="https://log-ai.ru/media/website/Log-ai-Logo.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:site_name" content="LOG-AI"><meta property="og:description" content="Как работают SSO, федеративная аутентификация и токены доступа. Разбираем различия протоколов, управление правами и ошибки интеграции."><meta property="og:url" content="https://log-ai.ru/saml-oauth-20-i-openid-connect-kak-ustroena-korporativnaya-avtorizaciya/"><meta property="og:type" content="article"><link rel="stylesheet" href="https://log-ai.ru/assets/css/style.css?v&#x3D;b1f5980528b3cc19f4018c94aea81f52"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://log-ai.ru/saml-oauth-20-i-openid-connect-kak-ustroena-korporativnaya-avtorizaciya/"},"headline":"SAML, OAuth 2.0 и OpenID Connect: как устроена корпоративная авторизация","datePublished":"2026-11-12T09:01+05:00","dateModified":"2026-11-12T09:28+05:00","description":"Как работают SSO, федеративная аутентификация и токены доступа. Разбираем различия протоколов, управление правами и ошибки интеграции.","author":{"@type":"Person","name":"LOG-AI","url":"https://log-ai.ru/authors/log-ai/"},"publisher":{"@type":"Organization","name":"LOG-AI"}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript><style>body, html, main, #page, .wrapper, .main { background: #000000 !important; background-color: #000000 !important; }</style><link rel="icon" type="image/png" sizes="32x32" href="/media/files/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/media/files/favicon-16.png"><link rel="apple-touch-icon" sizes="180x180" href="/media/files/favicon-180.png"><meta name="yandex-verification" content="9d14e10b64f3b76c"><meta name="google-site-verification" content="-rKktnoSCGCLZToW-jcZeKu5WvWFGuLKdLwwyCux0-M"></head><body class="page-template"><header class="top js-header"><a class="logo" href="https://log-ai.ru/">LOG-AI</a><nav class="navbar js-navbar"><button class="navbar__toggle js-toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><span class="navbar__toggle-box"><span class="navbar__toggle-inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://log-ai.ru/" target="_self">Главная</a></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Услуги</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/avtomatizaciya-obrabotki-zayavok-i-lidov/" target="_self">Автоматизация обработки заявок и лидов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-biznes-processov-integracii-dannye-i-skvoznye-scenarii/" target="_self">Автоматизация бизнес-процессов</a></li><li><a href="https://log-ai.ru/sbor-i-obrabotka-dannyh/" target="_self">Сбор и обработка данных</a></li><li><a href="https://log-ai.ru/ii-dlya-biznesa-i-nejrosetej/" target="_self">ИИ для бизнеса и нейросети</a></li><li><a href="https://log-ai.ru/specializirovannye-cifrovye-sistemy/" target="_self">Специализированные цифровые системы</a></li><li><a href="https://log-ai.ru/individualnye-korporativnye-sistemy/" target="_self">Корпоративные системы</a></li><li><a href="https://log-ai.ru/tehnicheskoe-soprovozhdenie/" target="_self">Техническое сопровождение</a></li><li><a href="https://log-ai.ru/it-audit-i-predproektnoe-obsledovanie/" title="/it-audit-i-predproektnoe-obsledovanie/" target="_self">ИТ-аудит и предпроектное обследование</a></li><li><a href="https://log-ai.ru/oblachnyy-i-infrastrukturnyy-konsalting/" title="/oblachnyy-i-infrastrukturnyy-konsalting/" target="_self">Облачный и инфраструктурный консалтинг</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Решения</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakie-sistemy-my-integriruem/" target="_self">Какие системы мы интегрируем</a></li><li><a href="https://log-ai.ru/kak-rabotaet-ii-v-biznese/" target="_self">Как работает ИИ в бизнесе</a></li><li><a href="https://log-ai.ru/resheniya-po-zadacham/" target="_self">Решения по задачам</a></li><li><a href="https://log-ai.ru/avtomatizaciya-proizvodstva/" target="_self">Для производства</a></li><li><a href="https://log-ai.ru/avtomatizaciya-logistiki-i-skladov/" target="_self">Для логистики и складов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-optovoy-torgovli/" target="_self">Для оптовой торговли</a></li><li><a href="https://log-ai.ru/avtomatizaciya-e-commerce/" target="_self">Для e-commerce</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Реализация</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kak-my-rabotaem/" target="_self">Как мы работаем</a></li><li><a href="https://log-ai.ru/dokumentaciya-sistemy/" target="_self">Документация системы</a></li><li><a href="https://log-ai.ru/infrastruktura-i-razmeshchenie/" target="_self">Инфраструктура и размещение</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Выбор</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakuyu-avtomatizaciyu-vybrat/" target="_self">Какую автоматизацию выбрать</a></li><li><a href="https://log-ai.ru/chto-avtomatizirovat-v-biznese-v-pervuyu-ochered/" target="_self">Что автоматизировать в бизнесе в первую очередь</a></li><li><a href="https://log-ai.ru/kak-podgotovit-biznes-k-avtomatizacii/" target="_self">Как подготовить бизнес к автоматизации</a></li><li><a href="https://log-ai.ru/kak-vnedrit-avtomatizaciyu/" target="_self">Как внедрить автоматизацию</a></li><li><a href="https://log-ai.ru/kak-ocenit-rezultat-avtomatizacii/" target="_self">Как оценить результат автоматизации</a></li><li><a href="https://log-ai.ru/stoimost-razrabotki/" target="_self">Стоимость разработки</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">О нас</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/inzhenernyy-sostav/" target="_self">Инженерный состав</a></li><li><a href="https://log-ai.ru/keysy/" target="_self">Кейсы</a></li><li><a href="https://log-ai.ru/glossariy/" target="_self">Глоссарий</a></li><li><a href="https://log-ai.ru/ekspertiza/" target="_self">Экспертиза</a></li><li><a href="https://log-ai.ru/bezopasnost-sistem-dannyh-i-infrastruktury/" target="_self">Безопасность</a></li></ul></li></ul></nav></header><main class="page"><article class="content"><div class="hero hero--noimage"><header class="hero__content hero__content--centered"><div class="wrapper"><h1>SAML, OAuth 2.0 и OpenID Connect: как устроена корпоративная авторизация</h1></div></header></div><div class="entry-wrapper content__entry"><p> </p><p> </p><p> </p><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0 20px; box-sizing: border-box;"><h2 style="font-size: 24px; font-weight: 600; margin: 0 0 24px 0; color: #ffffff; letter-spacing: -0.3px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Централизованное управление идентификацией и доступом (IAM)</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">В современной корпоративной инфраструктуре сотрудник может ежедневно работать с десятком приложений: <span style="font-family: 'SF Mono', monospace; color: #ffffff;">CRM</span>, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ERP</span>, внутренним порталом, системой документооборота, аналитической платформой, облачными сервисами и специализированным программным обеспечением.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">У каждого приложения есть собственная логика доступа. Одно хранит пользователей в локальной базе, другое использует корпоративный каталог, третье поддерживает вход через внешнего поставщика идентификации. В результате организация постепенно получает множество учётных записей, паролей, ролей и независимых механизмов управления доступом.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : FRAGMENTED_ACCESS_RISK ]</div><svg viewbox="0 0 750 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="50" width="100" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="70" y="75" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="10" font-weight="600" text-anchor="middle">СОТРУДНИК</text><line x1="120" y1="60" x2="180" y2="40" stroke="#333333" stroke-width="1"></line><line x1="120" y1="70" x2="180" y2="70" stroke="#333333" stroke-width="1"></line><line x1="120" y1="80" x2="180" y2="100" stroke="#333333" stroke-width="1"></line><rect x="190" y="20" width="120" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="250" y="45" fill="#888888" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">CRM (Локально)</text><rect x="190" y="50" width="120" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="250" y="75" fill="#888888" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">ERP (Каталог)</text><rect x="190" y="80" width="120" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="250" y="105" fill="#888888" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">Портал (SSO)</text><rect x="400" y="40" width="160" height="60" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="480" y="65" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">КАДРОВОЕ ИЗМЕНЕНИЕ</text><text x="480" y="85" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Увольнение / Перевод</text><line x1="560" y1="70" x2="620" y2="70" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="4 4"></line><polygon points="620,70 614,66 614,74" fill="#14b8a6"></polygon><text x="590" y="60" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">ЗАДЕРЖКА</text><rect x="630" y="50" width="100" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="680" y="75" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ОРФАНЕД-ДОСТУП</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Проблема становится особенно заметной при кадровых изменениях. Сотрудник переходит в другой отдел, получает новые обязанности или увольняется. Информация об этом уже появилась в кадровой системе, но в нескольких приложениях его прежние права продолжают действовать.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Именно для решения подобных задач строятся централизованные системы управления идентификацией и доступом. Их задача не ограничивается тем, чтобы сотрудник один раз ввёл пароль. Необходимо организовать единый механизм подтверждения личности, согласованную передачу сведений о пользователе, управление разрешениями и своевременное прекращение доступа.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 0 0;">В этой архитектуре важную роль играют три технологии: <span style="font-family: 'SF Mono', monospace; color: #ffffff;">SAML 2.0</span>, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">OAuth 2.0</span> и <span style="font-family: 'SF Mono', monospace; color: #ffffff;">OpenID Connect</span>. Несмотря на то что их часто рассматривают вместе, они решают разные задачи. Непонимание этих различий — одна из основных причин ошибок при интеграции корпоративных приложений.</p></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0 20px; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">1. Аутентификация и авторизация: две разные задачи, которые нельзя смешивать</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Прежде чем разбирать протоколы, необходимо разделить два понятия.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : AUTHN_VS_AUTHZ_FLOW ]</div><svg viewbox="0 0 750 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="40" width="160" height="80" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="100" y="65" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">1. АУТЕНТИФИКАЦИЯ</text><text x="100" y="85" fill="#888888" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Кто вы? (Identity)</text><text x="100" y="105" fill="#666666" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Пароль, MFA, Сертификат</text><line x1="180" y1="80" x2="230" y2="80" stroke="#333333" stroke-width="1.5"></line><polygon points="230,80 224,76 224,84" fill="#333333"></polygon><text x="205" y="70" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">"Это Иван"</text><rect x="240" y="40" width="140" height="80" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="310" y="70" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ПРИЛОЖЕНИЕ</text><text x="310" y="90" fill="#888888" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Получает подтверждённую</text><text x="310" y="105" fill="#888888" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">личность + атрибуты</text><line x1="380" y1="80" x2="430" y2="80" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="430,80 424,76 424,84" fill="#14b8a6"></polygon><text x="405" y="70" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Запрос действия</text><rect x="440" y="40" width="160" height="80" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="520" y="65" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">2. АВТОРИЗАЦИЯ</text><text x="520" y="85" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Что вам можно? (Access)</text><text x="520" y="105" fill="#888888" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Проверка ролей и политик</text><line x1="600" y1="80" x2="650" y2="80" stroke="#333333" stroke-width="1.5"></line><polygon points="650,80 644,76 644,84" fill="#333333"></polygon><rect x="660" y="60" width="70" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="695" y="85" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">ALLOW</text></svg></div><div style="display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 32px 0;"><div style="flex: 1 1 calc(50% - 16px); min-width: 280px; padding: 20px; background: #0a0a0a; border: 1px solid #222222; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 8px;">АУТЕНТИФИКАЦИЯ (AuthN)</div><p style="font-size: 15px; color: #d0d0d0; margin: 0;">Подтверждение личности. Система устанавливает, кто именно пытается получить доступ (пароль, MFA, аппаратный ключ, сертификат).</p></div><div style="flex: 1 1 calc(50% - 16px); min-width: 280px; padding: 20px; background: #0a0a0a; border: 1px solid #222222; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #ffffff; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 8px;">АВТОРИЗАЦИЯ (AuthZ)</div><p style="font-size: 15px; color: #d0d0d0; margin: 0;">Определение разрешённых действий. После подтверждения личности система устанавливает, какие операции пользователь вправе выполнять и к каким данным имеет доступ.</p></div></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Рассмотрим обычную ситуацию. Сотрудник входит в корпоративную CRM через единую систему идентификации. Центральный сервис подтверждает его личность и сообщает приложению, что пользователь успешно прошёл аутентификацию.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Однако это ещё не означает, что сотрудник может просматривать все сделки, изменять финансовые условия договоров или управлять настройками CRM. Для этого приложение должно проверить его полномочия. Например:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Менеджер</strong> видит собственные сделки и может изменять их статус.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Руководитель отдела</strong> просматривает сделки сотрудников своего подразделения.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Финансовый специалист</strong> получает доступ к определённым финансовым операциям.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Администратор</strong> управляет настройками приложения.</li></ul><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Все эти сотрудники могут проходить аутентификацию через один центральный сервис, но иметь совершенно разные права внутри CRM.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0 0 12px 0; font-weight: 500;">Архитектурный принцип: централизованное подтверждение личности не отменяет необходимости грамотно организовать авторизацию в самих приложениях.</p><p style="font-size: 16px; color: #d0d0d0; margin: 0;">Центральная система отвечает за доверие к идентичности пользователя и может передавать сведения о его группах и атрибутах. Конкретное приложение должно применять эти сведения согласно собственной модели доступа. Если объединить обе задачи в одну, можно получить опасную ситуацию: пользователь успешно вошёл в систему, а приложение ошибочно предоставило ему полномочия, которых у него быть не должно.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0 20px; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">2. Что такое централизованное управление идентификацией</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">В корпоративной архитектуре часто используется отдельная система, которая отвечает за подтверждение личности пользователей и взаимодействие с приложениями. Её называют <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Identity Provider</span>, или <span style="font-family: 'SF Mono', monospace; color: #ffffff;">IdP</span>.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">В зависимости от платформы она может выполнять функции поставщика идентификации, сервера авторизации, управлять сеансами пользователей, применять политики безопасности и выдавать протокольные сообщения или токены. Примерами подобных платформ являются <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Microsoft Entra ID</span>, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Keycloak</span>, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Okta</span> и другие корпоративные решения.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Приложение, которое принимает сведения от такого поставщика и использует их для организации входа, выступает в роли <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Service Provider</span> (SP) или <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Relying Party</span> (RP) — в зависимости от используемого протокола.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : CENTRALIZED_SSO_FLOW ]</div><svg viewbox="0 0 750 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="80" width="100" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="70" y="105" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="10" font-weight="600" text-anchor="middle">USER</text><rect x="200" y="80" width="120" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="260" y="105" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="10" font-weight="600" text-anchor="middle">ПРИЛОЖЕНИЕ (SP)</text><rect x="400" y="80" width="140" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="470" y="105" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">IdP (ЦЕНТР)</text><line x1="120" y1="90" x2="195" y2="90" stroke="#333333" stroke-width="1"></line><polygon points="195,90 189,87 189,93" fill="#333333"></polygon><text x="157" y="80" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">1. Открыл</text><path d="M 260 120 Q 260 150 330 150 Q 400 150 400 120" stroke="#333333" stroke-width="1" fill="none"></path><polygon points="400,120 397,126 403,126" fill="#333333"></polygon><text x="330" y="170" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">2. Redirect на IdP</text><path d="M 70 120 Q 70 170 250 170 Q 430 170 470 120" stroke="#333333" stroke-width="1" fill="none"></path><polygon points="470,120 467,126 473,126" fill="#333333"></polygon><text x="270" y="190" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">3. Аутентификация (пароль, MFA)</text><line x1="400" y1="90" x2="325" y2="90" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="325,90 331,87 331,93" fill="#14b8a6"></polygon><text x="362" y="80" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">4. Assertion</text><line x1="200" y1="90" x2="125" y2="90" stroke="#333333" stroke-width="1"></line><polygon points="125,90 131,87 131,93" fill="#333333"></polygon><text x="162" y="105" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">5. Сеанс</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Важная особенность: пароль пользователя не должен передаваться каждому корпоративному приложению. Приложения доверяют результату проверки, выполненной центральной системой, при условии корректной проверки полученного сообщения.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Такой подход позволяет централизовать управление входом, применять единые требования к многофакторной аутентификации и уменьшать количество независимых механизмов хранения учётных данных.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Но единого входа недостаточно для полноценного управления доступом. Необходимо также определить, как приложения получают сведения о пользователях, как обновляются полномочия и что происходит при отзыве доступа.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0 20px; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">3. SAML 2.0: корпоративная федерация идентификации</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;"><span style="font-family: 'SF Mono', monospace; color: #ffffff;">SAML 2.0</span> (Security Assertion Markup Language) — стандарт обмена данными об аутентификации и атрибутах пользователя между доверенными системами. Он получил широкое распространение в корпоративной среде, особенно при организации единого входа в веб-приложения и SaaS-платформы.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Основная особенность SAML — использование структурированных <span style="font-family: 'SF Mono', monospace; color: #ffffff;">XML</span>-сообщений, содержащих утверждения о пользователе. Такие сообщения называются <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Assertions</span>.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Что передаётся в Assertion</h3><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Идентификатор пользователя</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Информация об успешной аутентификации и её времени</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Атрибуты учётной записи (email, имя, отдел)</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Сведения о группах и других характеристиках пользователя</li></ul><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : SAML_2.0_WEB_BROWSER_SSO ]</div><svg viewbox="0 0 750 220" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><text x="100" y="20" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">USER</text><text x="370" y="20" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">SERVICE PROVIDER</text><text x="640" y="20" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">IDENTITY PROVIDER</text><line x1="100" y1="30" x2="100" y2="210" stroke="#333333" stroke-width="1" stroke-dasharray="2 2"></line><line x1="370" y1="30" x2="370" y2="210" stroke="#333333" stroke-width="1" stroke-dasharray="2 2"></line><line x1="640" y1="30" x2="640" y2="210" stroke="#333333" stroke-width="1" stroke-dasharray="2 2"></line><line x1="100" y1="50" x2="365" y2="50" stroke="#333333" stroke-width="1"></line><polygon points="365,50 359,47 359,53" fill="#333333"></polygon><text x="230" y="42" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">1. Запрос ресурса</text><line x1="370" y1="80" x2="105" y2="80" stroke="#333333" stroke-width="1"></line><polygon points="105,80 111,77 111,83" fill="#333333"></polygon><text x="230" y="72" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">2. Redirect + AuthnRequest</text><line x1="100" y1="110" x2="635" y2="110" stroke="#333333" stroke-width="1"></line><polygon points="635,110 629,107 629,113" fill="#333333"></polygon><text x="370" y="102" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">3. Передача AuthnRequest</text><line x1="640" y1="140" x2="105" y2="140" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="105,140 111,137 111,143" fill="#14b8a6"></polygon><text x="370" y="132" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" font-weight="600" text-anchor="middle">4. SAML Response (Assertion)</text><line x1="100" y1="170" x2="365" y2="170" stroke="#333333" stroke-width="1"></line><polygon points="365,170 359,167 359,173" fill="#333333"></polygon><text x="230" y="162" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">5. HTTP POST (Response)</text><line x1="370" y1="200" x2="105" y2="200" stroke="#333333" stroke-width="1"></line><polygon points="105,200 111,197 111,203" fill="#333333"></polygon><text x="230" y="192" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">6. Доступ к ресурсу</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Предварительное установление доверия</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Для SAML характерно предварительное установление доверия между сторонами. Приложение должно знать, какому поставщику идентификации оно доверяет, где находится его точка входа и каким сертификатом проверять подпись.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Эта информация обычно передаётся через <span style="font-family: 'SF Mono', monospace; color: #ffffff;">SAML Metadata</span>. В метаданных содержатся адреса конечных точек, сведения о сертификатах и идентификаторы участников обмена.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Почему проверки подписи недостаточно</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Одна из серьёзных ошибок при реализации SAML — считать, что наличие корректной цифровой подписи автоматически делает сообщение допустимым. Приложение должно проверять весь контекст утверждения:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Кто выпустил сообщение (Issuer)</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Для какого приложения оно предназначено (Audience)</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Не истёк ли срок действия утверждения (NotOnOrAfter)</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Соответствует ли получатель ожидаемому адресу</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Связан ли ответ с исходным запросом (InResponseTo)</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Не было ли сообщение уже использовано (защита от replay)</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Корректно ли проверена подпись именно тех данных, которым приложение доверяет</li></ul><div style="padding: 24px; margin: 0 0 32px 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Последний пункт особенно важен для XML-подписей. При неправильной обработке XML-структур и подписанных элементов возможны ошибки, при которых приложение проверяет одну часть документа, а использует другую.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Поэтому проверка SAML требует специализированных библиотек и корректной реализации стандартного механизма обработки подписей. Самостоятельно разбирать XML и реализовывать проверку доверия на уровне отдельных строк — плохое инженерное решение.</p></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Когда SAML особенно уместен</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">SAML остаётся востребованным в организациях с большим количеством корпоративных веб-приложений, исторически сложившейся инфраструктурой и готовыми интеграциями с корпоративными каталогами. Особенно часто он встречается при подключении внешних систем, в которых поддержка SAML уже реализована и является стандартным способом корпоративного единого входа.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">При этом SAML не является универсальным механизмом управления всеми разрешениями внутри приложения. Он передаёт подтверждённые сведения об идентичности и атрибутах, а приложение самостоятельно применяет свою модель доступа.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0 20px; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">4. OAuth 2.0: делегирование доступа к ресурсам и API</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;"><span style="font-family: 'SF Mono', monospace; color: #ffffff;">OAuth 2.0</span> часто называют протоколом авторизации, и это принципиально важно. Его основная задача — предоставить приложению ограниченный доступ к определённому ресурсу без передачи ему пароля пользователя.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Рассмотрим пример. Сотрудник работает с корпоративным аналитическим сервисом и хочет дать ему доступ к данным из CRM. Неправильное решение — передать аналитику логин и пароль. В таком случае сервис получит избыточные полномочия, а пароль придётся где-то хранить. OAuth 2.0 предлагает другой подход: пользователь разрешает доступ, а специальный сервер авторизации выдаёт соответствующий токен.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : OAUTH_2.0_ROLES ]</div><svg viewbox="0 0 750 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="20" width="140" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="90" y="45" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">RESOURCE OWNER</text><rect x="20" y="100" width="140" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="90" y="125" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">CLIENT (App)</text><rect x="300" y="60" width="160" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="380" y="85" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">AUTHORIZATION SERVER</text><rect x="580" y="60" width="150" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="655" y="85" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">RESOURCE SERVER</text><line x1="90" y1="60" x2="90" y2="95" stroke="#333333" stroke-width="1"></line><polygon points="90,95 87,89 93,89" fill="#333333"></polygon><text x="105" y="85" fill="#666666" font-family="'SF Mono', monospace" font-size="8">1. Grant access</text><line x1="160" y1="120" x2="295" y2="90" stroke="#333333" stroke-width="1"></line><polygon points="295,90 289,87 289,93" fill="#333333"></polygon><text x="220" y="95" fill="#666666" font-family="'SF Mono', monospace" font-size="8">2. Request Token</text><line x1="300" y1="110" x2="165" y2="120" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="165,120 171,117 171,123" fill="#14b8a6"></polygon><text x="220" y="135" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" font-weight="600">3. Access Token</text><line x1="160" y1="80" x2="575" y2="80" stroke="#333333" stroke-width="1"></line><polygon points="575,80 569,77 569,83" fill="#333333"></polygon><text x="370" y="70" fill="#666666" font-family="'SF Mono', monospace" font-size="8">4. API Request + Token</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Основные участники OAuth 2.0</h3><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Resource Owner:</strong> владелец ресурса, который может разрешить доступ к своим данным (обычно пользователь).</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Client:</strong> приложение, запрашивающее доступ к ресурсу.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Authorization Server:</strong> сервер, который проверяет условия выдачи разрешения и выпускает токены.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Resource Server:</strong> система, предоставляющая защищённые данные или API.</li></ul><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Здесь важно не путать <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Access Token</span> с подтверждением личности пользователя. Access Token предназначен для предоставления доступа к ресурсу, а не для универсальной аутентификации. Токен может быть представлен в формате JWT, но OAuth 2.0 не требует этого: он может быть непрозрачным значением, которое сервер ресурсов проверяет через механизм introspection.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Что такое Scope</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Для ограничения доступа в OAuth 2.0 используются области разрешений — <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Scopes</span>. Например: <span style="font-family: 'SF Mono', monospace; color: #d0d0d0;">orders.read</span>, <span style="font-family: 'SF Mono', monospace; color: #d0d0d0;">orders.write</span>, <span style="font-family: 'SF Mono', monospace; color: #d0d0d0;">customers.read</span>.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Наличие Scope в токене ещё не означает, что пользователь автоматически имеет право на любую операцию соответствующего типа. Сервер ресурсов должен учитывать собственные правила авторизации, контекст пользователя и принадлежность данных.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Частая ошибка проектирования: воспринимать Scope как полноценную замену бизнес-правилам приложения. На практике это разные уровни контроля. Scope определяет разрешённую область взаимодействия клиента с ресурсом, а API дополнительно проверяет допустимость конкретных действий в данном контексте.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0 20px; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">5. OpenID Connect: идентификация пользователя поверх OAuth 2.0</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;"><span style="font-family: 'SF Mono', monospace; color: #ffffff;">OpenID Connect (OIDC)</span> появился как стандартный слой идентификации поверх OAuth 2.0. Если OAuth 2.0 решает задачу предоставления доступа к ресурсам, то OIDC добавляет стандартизированный механизм подтверждения личности пользователя с помощью специального токена — <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ID Token</span>.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : ID_TOKEN_VS_ACCESS_TOKEN ]</div><svg viewbox="0 0 750 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="30" width="320" height="80" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="180" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="11" font-weight="700" text-anchor="middle">ID TOKEN (JWT)</text><text x="40" y="80" fill="#888888" font-family="'SF Mono', monospace" font-size="9">Назначение: "Кто вы?" (Аутентификация)</text><text x="40" y="100" fill="#888888" font-family="'SF Mono', monospace" font-size="9">Аудитория: Клиентское приложение</text><line x1="375" y1="30" x2="375" y2="110" stroke="#333333" stroke-width="1" stroke-dasharray="4 4"></line><rect x="410" y="30" width="320" height="80" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="570" y="55" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="11" font-weight="700" text-anchor="middle">ACCESS TOKEN</text><text x="430" y="80" fill="#888888" font-family="'SF Mono', monospace" font-size="9">Назначение: "Что вам можно?" (Авторизация)</text><text x="430" y="100" fill="#888888" font-family="'SF Mono', monospace" font-size="9">Аудитория: Resource Server (API)</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Чем ID Token отличается от Access Token</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Это один из важнейших моментов. <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ID Token</span> содержит сведения о результате аутентификации и личности пользователя. <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Access Token</span> предназначен для обращения к защищённому ресурсу. У них разные назначения, аудитории и правила использования.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Использовать ID Token вместо Access Token для вызова API неправильно. Аналогично нельзя считать, что наличие Access Token автоматически доказывает личность пользователя.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Какие данные содержит ID Token</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">OIDC использует формат JWT для ID Token. Внутри находятся стандартные Claims:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 24px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-size: 14px;">&gt;</span><span style="font-family: 'SF Mono', monospace; color: #ffffff;">iss</span> — издатель токена.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-size: 14px;">&gt;</span><span style="font-family: 'SF Mono', monospace; color: #ffffff;">sub</span> — идентификатор пользователя у данного издателя.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-size: 14px;">&gt;</span><span style="font-family: 'SF Mono', monospace; color: #ffffff;">aud</span> — аудитория, для которой предназначен токен.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-size: 14px;">&gt;</span><span style="font-family: 'SF Mono', monospace; color: #ffffff;">exp</span> / <span style="font-family: 'SF Mono', monospace; color: #ffffff;">iat</span> — время окончания действия и время выпуска.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6; font-family: 'SF Mono', monospace; font-size: 14px;">&gt;</span><span style="font-family: 'SF Mono', monospace; color: #ffffff;">nonce</span> — значение, связывающее токен с исходным запросом.</li></ul><div style="padding: 24px; margin: 0 0 32px 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Особое внимание необходимо уделять полю <span style="font-family: 'SF Mono', monospace; color: #ffffff;">sub</span>. Не стоит считать адрес электронной почты универсальным идентификатором пользователя: почта может измениться или быть переиспользована.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Для устойчивой привязки учётной записи необходимо использовать стабильную идентификационную комбинацию. На практике пара <span style="font-family: 'SF Mono', monospace; color: #14b8a6;">iss + sub</span> является гораздо более надёжной основой идентификации, чем одно только имя или email.</p></div><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : OIDC_AUTHORIZATION_CODE_FLOW ]</div><svg viewbox="0 0 750 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><text x="100" y="20" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">USER / BROWSER</text><text x="370" y="20" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">CLIENT APP</text><text x="640" y="20" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">OIDC PROVIDER</text><line x1="100" y1="30" x2="100" y2="170" stroke="#333333" stroke-width="1" stroke-dasharray="2 2"></line><line x1="370" y1="30" x2="370" y2="170" stroke="#333333" stroke-width="1" stroke-dasharray="2 2"></line><line x1="640" y1="30" x2="640" y2="170" stroke="#333333" stroke-width="1" stroke-dasharray="2 2"></line><line x1="100" y1="50" x2="365" y2="50" stroke="#333333" stroke-width="1"></line><polygon points="365,50 359,47 359,53" fill="#333333"></polygon><text x="230" y="42" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">1. Запрос входа</text><line x1="370" y1="70" x2="635" y2="70" stroke="#333333" stroke-width="1"></line><polygon points="635,70 629,67 629,73" fill="#333333"></polygon><text x="500" y="62" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">2. Redirect (с state, nonce, PKCE)</text><line x1="640" y1="90" x2="105" y2="90" stroke="#333333" stroke-width="1"></line><polygon points="105,90 111,87 111,93" fill="#333333"></polygon><text x="370" y="82" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">3. Страница логина / MFA</text><line x1="100" y1="110" x2="365" y2="110" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="365,110 359,107 359,113" fill="#14b8a6"></polygon><text x="230" y="102" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" font-weight="600" text-anchor="middle">4. Authorization Code</text><line x1="370" y1="130" x2="635" y2="130" stroke="#333333" stroke-width="1"></line><polygon points="635,130 629,127 629,133" fill="#333333"></polygon><text x="500" y="122" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">5. Обмен кода на токены (Back-channel)</text><line x1="640" y1="150" x2="375" y2="150" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="375,150 381,147 381,153" fill="#14b8a6"></polygon><text x="500" y="142" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" font-weight="600" text-anchor="middle">6. ID Token + Access Token</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Как происходит вход через OIDC</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Для современных корпоративных приложений обычно используется <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Authorization Code Flow</span>. Для публичных клиентов (мобильные и браузерные приложения без возможности безопасного хранения секрета) применяется этот же поток с расширением <span style="font-family: 'SF Mono', monospace; color: #ffffff;">PKCE</span>, которое связывает исходный запрос с последующим обменом кода и снижает риск его перехвата.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">В современной реализации также необходимо корректно использовать <span style="font-family: 'SF Mono', monospace; color: #ffffff;">state</span>, проверять <span style="font-family: 'SF Mono', monospace; color: #ffffff;">nonce</span>, строго сопоставлять <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Redirect URI</span> и проверять все обязательные параметры токенов.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Почему OIDC удобен для современных корпоративных приложений</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Он хорошо подходит для веб- и мобильных приложений, облачных платформ, корпоративных порталов, микросервисной архитектуры и интеграции с API. В отличие от SAML, который использует XML-утверждения, OIDC опирается на механизмы OAuth 2.0, JSON и JWT для ID Token, что упрощает интеграцию с большим количеством современных библиотек.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Но более компактный формат токена не отменяет требований к безопасности. Ошибки проверки JWT (например, игнорирование проверки подписи или аудитории) могут привести к тому, что приложение примет недействительное или предназначенное другому сервису сообщение.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0 20px; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">6. SAML, OAuth 2.0 и OpenID Connect: в чём принципиальная разница</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Эти технологии не следует выбирать по принципу «какая современнее» или «какая проще». У каждой своя задача.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : PROTOCOL_DOMAINS ]</div><svg viewbox="0 0 750 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="30" width="220" height="80" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="130" y="55" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="11" font-weight="700" text-anchor="middle">SAML 2.0</text><text x="130" y="75" fill="#888888" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Федеративная аутентификация</text><text x="130" y="95" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">XML Assertions</text><rect x="265" y="30" width="220" height="80" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="375" y="55" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="11" font-weight="700" text-anchor="middle">OAuth 2.0</text><text x="375" y="75" fill="#888888" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Делегирование доступа</text><text x="375" y="95" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Access Tokens</text><rect x="510" y="30" width="220" height="80" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="620" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="11" font-weight="700" text-anchor="middle">OpenID Connect</text><text x="620" y="75" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Аутентификация + OAuth</text><text x="620" y="95" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">ID Tokens (JWT)</text></svg></div><div style="display: flex; flex-wrap: wrap; gap: 16px; margin: 0 0 32px 0;"><div style="flex: 1 1 calc(33.333% - 16px); min-width: 240px; padding: 20px; background: #0a0a0a; border: 1px solid #222222; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #d0d0d0; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 12px; border-bottom: 1px solid #333333; padding-bottom: 8px;">SAML 2.0</div><div style="font-size: 14px; color: #b0b0b0; margin-bottom: 8px;"><strong style="color: #ffffff;">Назначение:</strong> Корпоративный SSO</div><div style="font-size: 14px; color: #b0b0b0; margin-bottom: 8px;"><strong style="color: #ffffff;">Идентификация:</strong> Да</div><div style="font-size: 14px; color: #b0b0b0;"><strong style="color: #ffffff;">Делегирование:</strong> Не является основной задачей</div></div><div style="flex: 1 1 calc(33.333% - 16px); min-width: 240px; padding: 20px; background: #0a0a0a; border: 1px solid #222222; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #d0d0d0; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 12px; border-bottom: 1px solid #333333; padding-bottom: 8px;">OAuth 2.0</div><div style="font-size: 14px; color: #b0b0b0; margin-bottom: 8px;"><strong style="color: #ffffff;">Назначение:</strong> Доступ к API</div><div style="font-size: 14px; color: #b0b0b0; margin-bottom: 8px;"><strong style="color: #ffffff;">Идентификация:</strong> Не предусмотрена протоколом</div><div style="font-size: 14px; color: #b0b0b0;"><strong style="color: #ffffff;">Делегирование:</strong> Да</div></div><div style="flex: 1 1 calc(33.333% - 16px); min-width: 240px; padding: 20px; background: #0a0a0a; border: 1px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 12px; border-bottom: 1px solid #14b8a6; padding-bottom: 8px;">OpenID Connect</div><div style="font-size: 14px; color: #d0d0d0; margin-bottom: 8px;"><strong style="color: #ffffff;">Назначение:</strong> Единый вход в современные приложения</div><div style="font-size: 14px; color: #d0d0d0; margin-bottom: 8px;"><strong style="color: #ffffff;">Идентификация:</strong> Да</div><div style="font-size: 14px; color: #d0d0d0;"><strong style="color: #ffffff;">Делегирование:</strong> Через базовый OAuth 2.0</div></div></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Самое важное различие заключается не в формате передачи данных. <span style="font-family: 'SF Mono', monospace; color: #ffffff;">SAML</span> сообщает приложению результат аутентификации и атрибуты. <span style="font-family: 'SF Mono', monospace; color: #ffffff;">OAuth 2.0</span> позволяет предоставить клиенту ограниченный доступ к ресурсам. <span style="font-family: 'SF Mono', monospace; color: #ffffff;">OpenID Connect</span> добавляет к OAuth 2.0 стандартизированный механизм подтверждения личности.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">В одной корпоративной инфраструктуре вполне могут одновременно использоваться все три технологии. Например, старое кадровое приложение может поддерживать SAML, новый корпоративный портал — OIDC, а взаимодействие между аналитическим сервисом и CRM может осуществляться через OAuth 2.0.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Это не означает, что архитектура неправильная. Важнее, чтобы границы доверия, правила проверки и модель полномочий были определены последовательно.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0 20px; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">7. Единый вход SSO: почему одного успешного входа недостаточно</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;"><span style="font-family: 'SF Mono', monospace; color: #ffffff;">Single Sign-On (SSO)</span> позволяет пользователю проходить аутентификацию через централизованную систему и получать доступ к нескольким приложениям без повторного ввода учётных данных.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Но здесь необходимо чётко различать два понятия: <strong style="color: #ffffff;">центральная сессия</strong> у поставщика идентификации (IdP) и <strong style="color: #ffffff;">локальная сессия</strong> внутри конкретного приложения. Это не одна и та же сессия.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : SSO_SESSION_DISCONNECT ]</div><svg viewbox="0 0 750 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="40" width="140" height="60" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="90" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">IdP (ЦЕНТР)</text><text x="90" y="85" fill="#666666" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Статус: LOGGED OUT</text><line x1="160" y1="60" x2="210" y2="50" stroke="#666666" stroke-width="1" stroke-dasharray="4 4"></line><line x1="160" y1="80" x2="210" y2="90" stroke="#666666" stroke-width="1" stroke-dasharray="4 4"></line><text x="185" y="65" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">НЕТ BACK-</text><text x="185" y="75" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">CHANNEL LOGOUT</text><rect x="220" y="30" width="140" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="290" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">CRM (App)</text><text x="290" y="85" fill="#14b8a6" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Локальная сессия: ACTIVE</text><rect x="220" y="90" width="140" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="290" y="115" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">Документы (App)</text><text x="290" y="145" fill="#14b8a6" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Локальная сессия: ACTIVE</text><rect x="420" y="50" width="310" height="60" fill="#0a0a0a" stroke="#333333" stroke-width="1" stroke-dasharray="4 4"></rect><text x="575" y="75" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="10" font-weight="600" text-anchor="middle">РИСК: "ЗОМБИ" СЕССИИ</text><text x="575" y="95" fill="#888888" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Доступ сохраняется до истечения TTL токена</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Если сотрудник выходит из корпоративного портала, он не обязательно автоматически выйдет из CRM и системы документооборота. Если приложения не поддерживают согласованный механизм завершения сеансов (например, SAML Single Logout или OIDC Front-Channel Logout), локальные сессии могут продолжить действовать.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Аналогичная проблема возникает при отзыве доступа. Центральная система может заблокировать пользователя, но уже выданный JWT, который приложение проверяет локально без обращения к серверу авторизации, останется действительным до истечения срока действия (exp).</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Что необходимо определить при проектировании SSO</h3><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Время жизни (TTL) локальной сессии и токенов</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Правила обновления (Refresh Token rotation)</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Механизмы принудительного завершения сеансов</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Порядок обработки блокировки пользователя в реальном времени</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Требования к повторной аутентификации (step-up) для критичных операций</li></ul><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Короткий срок жизни токена сам по себе не гарантирует мгновенного отзыва доступа. Для снижения этого риска применяются комбинация короткоживущих токенов, контролируемое обновление сессий и механизмы проверки статуса токена (introspection) на стороне приложения.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0 20px; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">8. Самая частая проблема интеграции: пользователь вошёл, но получил неправильные права</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Интеграция успешно завершилась, ошибок аутентификации нет. Но сотрудник видит не те данные, не может выполнять необходимые операции или, наоборот, получает доступ к функциям, которые ему не положены. Причина часто заключается не в самом протоколе, а в неправильном сопоставлении атрибутов и полномочий.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : ATTRIBUTE_MAPPING_RISK ]</div><svg viewbox="0 0 750 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="40" width="160" height="60" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="100" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ИСТОЧНИК (IdP)</text><text x="100" y="85" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">Группа: Sales_Managers</text><line x1="180" y1="70" x2="240" y2="70" stroke="#333333" stroke-width="1.5"></line><polygon points="240,70 234,66 234,74" fill="#333333"></polygon><rect x="250" y="40" width="160" height="60" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="330" y="65" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ПРАВИЛА МАППИНГА</text><text x="330" y="85" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Не 1:1, а по логике</text><line x1="410" y1="70" x2="470" y2="70" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="470,70 464,66 464,74" fill="#14b8a6"></polygon><rect x="480" y="40" width="250" height="60" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="605" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ЦЕЛЕВОЕ ПРИЛОЖЕНИЕ</text><text x="605" y="85" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">Роль: Менеджер (не Админ!)</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Разные системы по-разному идентифицируют пользователей</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Корпоративный каталог использует уникальный идентификатор сотрудника, CRM — собственный внутренний ID, а кадровая система — табельный номер. Разработчики иногда пытаются связать эти записи по адресу электронной почты.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Пока адреса совпадают, интеграция работает. Но после смены фамилии, изменения домена или корректировки почтового адреса появляется риск создания второй учётной записи вместо обновления существующей. Правильнее заранее определить устойчивый идентификатор пользователя (например, комбинацию <span style="font-family: 'SF Mono', monospace; color: #ffffff;">iss</span> и <span style="font-family: 'SF Mono', monospace; color: #ffffff;">sub</span>) и правила его сопоставления во всех системах.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Группы и роли не всегда совпадают</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Допустим, в корпоративном каталоге сотрудник входит в группу <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Sales_Managers</span>. В CRM такая группа отсутствует. Там существуют роли «Менеджер», «Руководитель отдела продаж» и «Администратор».</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Простая передача названия группы не решает задачу. Необходимо определить правила преобразования групп и атрибутов в полномочия приложения, учитывая не только название подразделения, но и конкретные обязанности сотрудника. Не следует автоматически предоставлять административные права только потому, что пользователь состоит в определённой широкой корпоративной группе.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Также важно учитывать ограничения на размер токена. В крупных организациях список групп пользователя может оказаться слишком большим для включения в каждый JWT или SAML Assertion.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">В таких случаях применяют отдельные механизмы получения членства в группах (например, через SCIM или отдельные API-вызовы), фильтрацию утверждений и специальные схемы управления ролями на стороне приложения.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0 20px; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">9. Жизненный цикл учётной записи: что происходит при переводе или увольнении сотрудника</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Централизованный вход часто воспринимают как решение проблемы управления пользователями. Но это только часть задачи. В корпоративной архитектуре необходимо организовать полный жизненный цикл учётной записи: от появления сотрудника в кадровой системе до окончательного прекращения доступа ко всем ресурсам.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Типовой процесс жизненного цикла</h3><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Создание учётной записи и назначение исходных атрибутов</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Предоставление доступа к необходимым приложениям</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Изменение подразделения или должности</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Пересмотр полномочий</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Блокировка или удаление учётной записи</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Отзыв связанных разрешений и сессий</li></ul><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : IDENTITY_LIFECYCLE_WITH_SCIM ]</div><svg viewbox="0 0 750 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="60" width="120" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="80" y="85" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="10" font-weight="600" text-anchor="middle">HR / КАДРЫ</text><line x1="140" y1="80" x2="200" y2="80" stroke="#333333" stroke-width="1.5"></line><polygon points="200,80 194,77 194,83" fill="#333333"></polygon><rect x="210" y="50" width="130" height="60" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="275" y="75" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">IdP / КАТАЛОГ</text><text x="275" y="95" fill="#888888" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Источник истины</text><line x1="340" y1="80" x2="420" y2="80" stroke="#14b8a6" stroke-width="1.5" stroke-dasharray="4 4"></line><text x="380" y="70" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">SCIM</text><rect x="430" y="30" width="130" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="495" y="50" fill="#888888" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">CRM</text><rect x="430" y="65" width="130" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="495" y="85" fill="#888888" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">Документооборот</text><rect x="430" y="100" width="130" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="495" y="120" fill="#888888" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">Аналитика</text><line x1="560" y1="80" x2="600" y2="80" stroke="#333333" stroke-width="1"></line><polygon points="600,80 594,77 594,83" fill="#333333"></polygon><rect x="610" y="55" width="120" height="50" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="670" y="75" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">CONFIRM</text><text x="670" y="95" fill="#888888" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Retry on failure</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Роль SCIM</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Для автоматизации этого процесса применяется протокол <span style="font-family: 'SF Mono', monospace; color: #ffffff;">SCIM</span> (System for Cross-domain Identity Management). Важно не путать его с SAML или OIDC: SAML и OIDC используются для обмена сведениями об аутентификации и организации входа, а SCIM предназначен для стандартизированной передачи данных об учётных записях и управления ими. Это разные уровни архитектуры.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Почему блокировка в IdP не всегда решает проблему</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Представим, что сотрудник увольняется. Кадровая система фиксирует дату прекращения работы, после чего центральный каталог блокирует его учётную запись. Но к этому моменту:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>В CRM может существовать активная локальная сессия</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>В системе документооборота может оставаться собственная учётная запись</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>В приложении может действовать ранее выданный JWT</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>В отдельном сервисе может существовать персональный API-ключ</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>У пользователя могут быть назначены дополнительные права вне централизованного каталога</li></ul><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Блокировка центральной учётной записи не должна считаться завершением всего процесса. Необходимо контролировать распространение изменений на подключённые системы, предусматривать подтверждение выполнения операций, контроль ошибок синхронизации и обработку приложений, которые временно недоступны.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Если одно приложение не приняло команду об отзыве доступа, система управления идентификацией должна зарегистрировать незавершённую операцию и обеспечить её повторную обработку. Нельзя считать задачу выполненной только потому, что центральная система отправила запрос.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0 20px; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">10. Проверка токенов: где чаще всего допускаются ошибки</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Токен — это не просто строка, которую приложение получило от доверенного сервера. Он содержит данные, которые должны быть проверены в контексте конкретного приложения и конкретной операции. Особенно это касается <span style="font-family: 'SF Mono', monospace; color: #ffffff;">JWT</span>.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : JWT_VALIDATION_CHECKLIST ]</div><svg viewbox="0 0 750 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="80" width="120" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="80" y="105" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="10" font-weight="600" text-anchor="middle">JWT</text><line x1="140" y1="100" x2="180" y2="100" stroke="#333333" stroke-width="1.5"></line><polygon points="180,100 174,97 174,103" fill="#333333"></polygon><rect x="190" y="20" width="200" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="290" y="40" fill="#888888" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">1. SIGNATURE (алгоритм + ключ)</text><rect x="190" y="55" width="200" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="290" y="75" fill="#888888" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">2. ISS (доверенный издатель)</text><rect x="190" y="90" width="200" height="30" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="290" y="110" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">3. AUD (целевое приложение)</text><rect x="190" y="125" width="200" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="290" y="145" fill="#888888" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">4. EXP / NBF (срок действия)</text><rect x="190" y="160" width="200" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="290" y="180" fill="#888888" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">5. CONTEXT (state, nonce, PKCE)</text><line x1="390" y1="100" x2="440" y2="100" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="440,100 434,97 434,103" fill="#14b8a6"></polygon><rect x="450" y="70" width="280" height="60" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="590" y="95" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">ВСЕ ПРОВЕРКИ ПРОЙДЕНЫ</text><text x="590" y="115" fill="#ffffff" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Токен принят к обработке</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Проверка подписи</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Подпись позволяет убедиться, что токен выпущен доверенной стороной и не был изменён. Но приложение должно проверять её по разрешённому алгоритму и доверенным ключам. Нельзя принимать алгоритм или источник ключа только потому, что они указаны внутри полученного токена — это классическая уязвимость <span style="font-family: 'SF Mono', monospace; color: #ffffff;">alg=none</span> и подмены ключа.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Проверка издателя и аудитории</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Поле <span style="font-family: 'SF Mono', monospace; color: #ffffff;">iss</span> указывает, кто выпустил токен. Приложение должно принимать токены только от заранее определённого доверенного издателя. В мультиарендных системах это особенно важно: нельзя допускать, чтобы токен из одной организации автоматически считался допустимым в контексте другой.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Поле <span style="font-family: 'SF Mono', monospace; color: #ffffff;">aud</span> определяет получателя токена. Это один из наиболее важных механизмов ограничения области доверия. Например, Access Token, предназначенный для API управления заказами, не должен автоматически приниматься API управления персоналом. Для ID Token аудитория должна соответствовать клиентскому приложению, которому он был выдан.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Срок действия и контекст запроса</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Приложение должно контролировать <span style="font-family: 'SF Mono', monospace; color: #ffffff;">exp</span>, а при необходимости — <span style="font-family: 'SF Mono', monospace; color: #ffffff;">nbf</span> и другие временные ограничения, учитывая допустимое расхождение часов между системами (clock skew).</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">В OIDC дополнительно проверяются параметры <span style="font-family: 'SF Mono', monospace; color: #ffffff;">state</span> и <span style="font-family: 'SF Mono', monospace; color: #ffffff;">nonce</span> в соответствующих сценариях. В OAuth 2.0 необходимо использовать защищённые потоки, точное сопоставление <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Redirect URI</span> и актуальные механизмы защиты. Для публичных клиентов особое значение имеет <span style="font-family: 'SF Mono', monospace; color: #ffffff;">PKCE</span>. При этом непрозрачные Access Token требуют другого подхода — обращения к механизму introspection.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Ротация ключей и сертификатов</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Поставщик идентификации может начать подписывать новые токены новым ключом, сохранив возможность проверки ранее выданных токенов в переходный период. Если приложение не умеет обновлять набор доверенных ключей, после ротации оно может перестать принимать корректные токены. Для SAML аналогичная задача возникает при замене сертификатов, используемых для проверки подписей.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Именно поэтому нельзя проектировать универсальную функцию проверки, которая одинаково обрабатывает все виды токенов независимо от их назначения. В интеграции необходимо заранее определить процедуру обновления доверенных ключей и сертификатов, сроки перехода и поведение приложений при временной недоступности метаданных.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0 20px; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">11. Условный пример: как объединить CRM, ERP и внутренний портал через единый вход</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Рассмотрим предприятие, в котором работают 450 сотрудников. В инфраструктуре используются:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><span style="font-family: 'SF Mono', monospace; color: #ffffff;">CRM</span> для управления клиентами и сделками</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><span style="font-family: 'SF Mono', monospace; color: #ffffff;">ERP</span> для финансового и операционного учёта</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Внутренний портал для корпоративных сервисов</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Система электронного документооборота</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Централизованный каталог пользователей</li></ul><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">До интеграции каждое приложение имеет собственную модель учётных записей. Сотрудники используют разные пароли, администраторы вручную создают пользователей, а при кадровых изменениях приходится отдельно проверять несколько систем.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">В результате возникают типичные проблемы:</p><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Уволенный сотрудник сохраняет доступ к одному из приложений</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Переведённый в другой отдел менеджер продолжает видеть прежние данные</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>Новый сотрудник получает доступ к порталу, но не к необходимым рабочим системам</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>В CRM появляются дублирующие учётные записи после изменения адреса электронной почты</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span>При изменении корпоративных групп некоторые приложения не обновляют права</li></ul><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : MIXED_PROTOCOL_ARCHITECTURE ]</div><svg viewbox="0 0 750 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="60" width="160" height="60" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="100" y="85" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">ЦЕНТРАЛЬНЫЙ IdP</text><text x="100" y="105" fill="#888888" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Источник истины</text><line x1="180" y1="80" x2="260" y2="50" stroke="#333333" stroke-width="1"></line><line x1="180" y1="90" x2="260" y2="90" stroke="#14b8a6" stroke-width="1.5"></line><line x1="180" y1="100" x2="260" y2="130" stroke="#333333" stroke-width="1"></line><rect x="270" y="30" width="140" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="340" y="55" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ПОРТАЛ / CRM</text><text x="430" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">OIDC</text><rect x="270" y="70" width="140" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="340" y="95" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ДОКУМЕНТООБОРОТ</text><text x="430" y="95" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">SAML 2.0</text><rect x="270" y="110" width="140" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="340" y="135" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">API СЕРВИСЫ</text><text x="430" y="135" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">OAuth 2.0</text><rect x="500" y="60" width="120" height="60" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="560" y="85" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">HR / КАДРЫ</text><text x="560" y="105" fill="#666666" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">SCIM / Webhooks</text><line x1="620" y1="90" x2="180" y2="90" stroke="#333333" stroke-width="1" stroke-dasharray="4 4"></line></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Какую архитектуру выбирают</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Предприятие вводит централизованную систему управления идентификацией. Для новых приложений используется <span style="font-family: 'SF Mono', monospace; color: #ffffff;">OpenID Connect</span>. Для системы документооборота, которая поддерживает только корпоративный SAML-вход, настраивается федерация через <span style="font-family: 'SF Mono', monospace; color: #ffffff;">SAML 2.0</span>. Взаимодействие между отдельными сервисами и защищёнными API организуется с использованием <span style="font-family: 'SF Mono', monospace; color: #ffffff;">OAuth 2.0</span>.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Таким образом, организация не пытается заставить все приложения использовать один протокол независимо от их возможностей. Вместо этого формируется единая архитектура доверия с несколькими механизмами взаимодействия.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Как проходит обычный рабочий день</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Утром менеджер открывает корпоративный портал. Система перенаправляет его к центральному поставщику идентификации, который проверяет пользователя и применяет необходимые требования безопасности.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">После успешного входа сотрудник открывает CRM. CRM использует OIDC и получает подтверждение личности пользователя. Далее приложение сопоставляет его стабильный идентификатор с локальной учётной записью и определяет разрешённые действия.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Затем менеджер переходит в систему документооборота. Она использует SAML, поэтому центральный поставщик идентификации формирует соответствующее утверждение. Для сотрудника процесс выглядит как единый вход, хотя технически приложения используют разные протоколы.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : LIFECYCLE_EVENT_PROPAGATION ]</div><svg viewbox="0 0 750 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="50" width="120" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="80" y="75" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">HR СОБЫТИЕ</text><line x1="140" y1="70" x2="190" y2="70" stroke="#333333" stroke-width="1.5"></line><polygon points="190,70 184,67 184,73" fill="#333333"></polygon><rect x="200" y="50" width="140" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="270" y="75" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">IdP ОБНОВЛЯЕТ</text><line x1="340" y1="60" x2="400" y2="40" stroke="#14b8a6" stroke-width="1.5"></line><line x1="340" y1="70" x2="400" y2="70" stroke="#14b8a6" stroke-width="1.5"></line><line x1="340" y1="80" x2="400" y2="100" stroke="#666666" stroke-width="1" stroke-dasharray="4 4"></line><rect x="410" y="20" width="140" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="480" y="45" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">CRM (ONLINE)</text><text x="570" y="45" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">CONFIRMED</text><rect x="410" y="80" width="140" height="40" fill="#0a0a0a" stroke="#666666" stroke-width="1" stroke-dasharray="4 4"></rect><text x="480" y="105" fill="#888888" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">ПОРТАЛ (OFFLINE)</text><text x="570" y="105" fill="#666666" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">IN RETRY QUEUE</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Что происходит при переводе или увольнении сотрудника</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Кадровая система фиксирует изменение (перевод или увольнение). Информация передаётся в систему управления идентификацией, после чего пересматриваются группы и полномочия сотрудника. CRM получает обновлённые сведения и меняет доступ к данным в соответствии с правилами приложения.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">При увольнении центральная учётная запись блокируется, активные сеансы и механизмы обновления токенов обрабатываются согласно политике безопасности. Отдельные приложения получают команды на блокировку локальных учётных записей.</p><div style="padding: 24px; margin: 0 0 32px 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Изменение группы не должно автоматически считаться гарантией немедленного обновления уже выданных токенов и локальных сессий. Поэтому архитектура предусматривает повторную проверку критичных полномочий и контролируемое обновление сеансов.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Система контролирует подтверждение операций. Если CRM временно недоступна, задача не теряется: она остаётся в очереди и повторяется после восстановления связи. Нельзя считать задачу выполненной только фактом отправки запроса.</p></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Что в действительности изменилось</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Главный результат такой архитектуры заключается не в том, что сотрудники стали реже вводить пароли.</p><div style="padding: 24px; margin: 0 0 0 0; background: #000000; border: 1px solid #222222; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0 0 12px 0; font-weight: 500;">Организация получила централизованный контроль над подтверждением личности, согласованную модель идентификаторов и управляемый процесс распространения кадровых изменений.</p><p style="font-size: 16px; color: #d0d0d0; margin: 0;">При этом приложения сохранили собственную логику бизнес-правил. Именно такое разделение позволяет объединять разнородную корпоративную инфраструктуру без попытки превратить центральный каталог в единственную систему, которая должна знать все детали работы каждого приложения.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0 20px; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">12. Как проектировать интеграцию: что необходимо определить до подключения приложений</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Одна из распространённых ошибок — начинать интеграцию с настройки конечных точек и обмена тестовыми токенами. Техническое соединение можно организовать сравнительно быстро.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Гораздо сложнее определить, кому именно доверяют приложения, какие сведения они получают и как эти сведения превращаются в реальные права. Перед началом работ необходимо согласовать несколько архитектурных вопросов.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : PRE_INTEGRATION_ARCHITECTURE ]</div><svg viewbox="0 0 750 240" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="20" width="340" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="30" y="40" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="600">01. ЕДИНАЯ МОДЕЛЬ ИДЕНТИФИКАТОРОВ</text><rect x="20" y="60" width="340" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="30" y="80" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="600">02. ГРАНИЦЫ ДОВЕРИЯ (TRUST BOUNDARIES)</text><rect x="20" y="100" width="340" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="30" y="120" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="600">03. МОДЕЛЬ ПОЛНОМОЧИЙ (AUTHZ)</text><rect x="20" y="140" width="340" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="30" y="160" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="600">04. ЖИЗНЕННЫЙ ЦИКЛ ДОСТУПА</text><rect x="380" y="20" width="350" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="390" y="40" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="600">05. РАБОТА С ТОКЕНАМИ И СЕССИЯМИ</text><rect x="380" y="60" width="350" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="390" y="80" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="600">06. АУДИТ И ЛОГИРОВАНИЕ</text><rect x="380" y="100" width="350" height="30" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="390" y="120" fill="#ffffff" font-family="'SF Mono', monospace" font-size="9" font-weight="700">07. ПРОВЕРКА ОТКАЗОУСТОЙЧИВОСТИ</text><rect x="20" y="190" width="710" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1" stroke-dasharray="4 4"></rect><text x="375" y="210" fill="#888888" font-family="'SF Mono', monospace" font-size="9" text-anchor="middle">ТЕХНИЧЕСКОЕ ПОДКЛЮЧЕНИЕ НАЧИНАЕТСЯ ТОЛЬКО ПОСЛЕ СОГЛАСОВАНИЯ ЭТИХ ПУНКТОВ</text></svg></div><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Единая модель идентификаторов:</strong> устойчивый способ сопоставления учётных записей, источник истины и правила при изменении атрибутов.</li><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Границы доверия:</strong> доверенные издатели, допустимые аудитории и правила проверки подписей для каждого приложения.</li><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Модель полномочий:</strong> разделение корпоративных групп, ролей приложений и конкретных разрешений.</li><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Жизненный цикл доступа:</strong> создание, изменение, блокировка, удаление и обработка ошибок синхронизации.</li><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Работа с токенами и сессиями:</strong> сроки действия, обновление, отзыв и завершение локальных сессий.</li><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Аудит:</strong> возможность восстановить цепочку событий без сохранения секретов и полных токенов в логах.</li><li style="margin-bottom: 12px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Проверка отказоустойчивости:</strong> чёткие правила того, что приложение разрешает, а что блокирует при недоступности IdP.</li></ul><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">В вопросах доступа к защищённым ресурсам особенно важно не допускать ситуации, когда технический сбой автоматически превращается в предоставление несанкционированного доступа (fail-open).</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0 20px; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">13. Безопасность централизованной авторизации: почему единая точка доверия требует особого внимания</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Централизация упрощает управление идентификацией, но одновременно повышает требования к защите самой инфраструктуры. Если корпоративный <span style="font-family: 'SF Mono', monospace; color: #ffffff;">IdP</span> становится точкой входа в десятки приложений, его компрометация потенциально затрагивает значительно больше систем, чем компрометация отдельной локальной учётной записи.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : IDP_DEFENSE_IN_DEPTH ]</div><svg viewbox="0 0 750 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="20" width="710" height="120" fill="#0a0a0a" stroke="#333333" stroke-width="1" stroke-dasharray="4 4"></rect><text x="30" y="40" fill="#666666" font-family="'SF Mono', monospace" font-size="8" font-weight="600">ВНЕШНИЙ КОНТУР</text><rect x="40" y="50" width="140" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="110" y="70" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">MFA</text><rect x="200" y="50" width="140" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="270" y="70" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">МОНИТОРИНГ АНОМАЛИЙ</text><rect x="360" y="50" width="140" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="430" y="70" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">ЗАЩИТА ТОКЕНОВ</text><rect x="520" y="50" width="190" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="615" y="70" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">КОНТРОЛЬ ДОВЕРЕННЫХ APP</text><rect x="200" y="90" width="350" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="375" y="115" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">ЯДРО IdP: СЕКРЕТЫ, КЛЮЧИ, АДМИНИСТРИРОВАНИЕ</text></svg></div><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Ключевые направления защиты</h3><ul style="font-size: 16px; color: #d0d0d0; margin: 0 0 32px 0; padding-left: 20px; line-height: 1.8; list-style-type: none;"><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Многофакторная аутентификация (MFA):</strong> обязательна для доступа к чувствительным системам.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Защита административных учётных записей:</strong> строгое разделение администрирования и пользовательской работы, минимизация привилегий.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Безопасное хранение секретов:</strong> клиентские секреты и приватные ключи не должны храниться в открытом виде в коде или конфигах.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Ограничение полномочий приложений:</strong> принцип наименьших привилегий (Least Privilege) для каждого OAuth-клиента.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Контроль доверенных приложений:</strong> регистрация новых клиентов только через установленную процедуру согласования.</li><li style="margin-bottom: 8px; padding-left: 16px; position: relative;"><span style="position: absolute; left: 0; color: #14b8a6;">—</span><strong style="color: #ffffff;">Мониторинг аномалий:</strong> отслеживание массовых ошибок, подозрительной активности и неожиданных изменений разрешений.</li></ul><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Работа при отказе центрального сервиса</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Если IdP временно недоступен, нельзя автоматически считать всех пользователей доверенными. Но и полная остановка всех корпоративных процессов не всегда приемлема.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Для критичных систем заранее определяют допустимые сценарии: срок действия существующих сеансов, порядок повторной аутентификации, работу аварийных учётных записей и процедуры восстановления.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Аварийный доступ должен быть ограниченным, контролируемым и обязательно аудируемым.</p></div></div><div style="max-width: 1100px; margin: 64px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0 20px; box-sizing: border-box;"><div style="padding: 40px; background: #000000; border: 1px solid #222222; border-left: 4px solid #14b8a6; box-sizing: border-box;"><h2 style="font-size: 24px; font-weight: 600; margin: 0 0 24px 0; color: #ffffff; letter-spacing: -0.3px; line-height: 1.3;">Заключение</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;"><span style="font-family: 'SF Mono', monospace; color: #ffffff;">SAML 2.0</span>, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">OAuth 2.0</span> и <span style="font-family: 'SF Mono', monospace; color: #ffffff;">OpenID Connect</span> решают разные задачи, хотя в корпоративной инфраструктуре часто работают совместно. SAML обеспечивает федеративный обмен утверждениями, OAuth 2.0 позволяет делегировать доступ к ресурсам, а OIDC добавляет стандартизированный механизм подтверждения личности.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Но правильно выбранный протокол сам по себе не гарантирует безопасную интеграцию. Реальная сложность находится на стыке систем: в сопоставлении учётных записей, преобразовании групп в роли, проверке токенов, управлении локальными сессиями, обработке кадровых изменений и отзыве полномочий.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 24px 0;">Особенно важно помнить, что централизованная аутентификация не означает автоматической централизации всех бизнес-разрешений. Приложения должны сохранять контроль над собственными правилами доступа, а центральная система — обеспечивать надёжное подтверждение идентичности и управление доверенными связями.</p><p style="font-size: 18px; color: #ffffff; margin: 0; font-weight: 600; line-height: 1.6; letter-spacing: -0.2px;">Грамотно построенная корпоративная авторизация — это не просто возможность войти во все приложения под одной учётной записью. Это архитектура, в которой организация понимает, <span style="color: #14b8a6;">кто</span> получает доступ, <span style="color: #14b8a6;">на каком основании</span>, к <span style="color: #14b8a6;">каким ресурсам</span>, на <span style="color: #14b8a6;">какой срок</span> и <span style="color: #14b8a6;">каким образом</span> этот доступ будет прекращён, если обстоятельства изменятся.</p></div></div><p> </p><div style="max-width: 1100px; margin: 60px auto 0 auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">НАВИГАЦИЯ // SUGGESTED_READING</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ПРОИЗВОДСТВО ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">MES и ERP: где проходит граница</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/mes-i-erp-gde-prohodit-granica/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ПРОМЫШЛЕННОСТЬ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Как подключить производственное оборудование к корпоративной системе</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kak-podklyuchit-proizvodstvennoe-oborudovanie-k-korporativnoy-sisteme/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ПРОМЫШЛЕННОСТЬ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">OPC UA и MQTT: как оборудование общается с системами</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/opc-ua-i-mqtt-kak-oborudovanie-obshchaetsya-s-sistemami/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div></div></div><div style="max-width: 1100px; margin: 20px auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; border-top: 1px solid #165c52; padding: 40px 0 0 0; box-sizing: border-box; width: 100%;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 40px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ EXPERTISE JOURNAL ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Все инженерные материалы и экспертные статьи</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/ekspertiza/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">перейти к каталогу ──►</a></div></div><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ CORE GLOSSARY ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Полный алфавитный справочник ИТ-терминов</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/glossariy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">открыть справочник ──►</a></div></div></div></div></div></article></main><footer class="footer"><div class="wrapper"><div class="footer__copyright"><p> </p><p> </p></div><button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg width="20" height="20"><use xlink:href="https://log-ai.ru/assets/svg/svg-map.svg#toparrow"/></svg></button></div></footer><script defer="defer" src="https://log-ai.ru/assets/js/scripts.min.js?v&#x3D;d0fc1030089a37f93a2d51bf6d07565c"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script><script>(() => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') !== 'monument') return;
+
+  const IMAGE_URL = 'https://log-ai.ru/media/files/Interstellar.jpeg';
+  const AUDIO_URL = 'https://log-ai.ru/media/files/interstellar.mp3';
+
+  // Защита от повторного запуска
+  if (document.getElementById('log-ai-monument')) return;
+
+  const monument = document.createElement('div');
+  monument.id = 'log-ai-monument';
+
+  const root = document.documentElement;
+  const body = document.body;
+
+  const previousRootOverflow = root.style.overflow;
+  const previousBodyOverflow = body.style.overflow;
+  const previousBodyPosition = body.style.position;
+  const previousBodyTop = body.style.top;
+  const previousBodyWidth = body.style.width;
+  const previousScrollX = window.scrollX;
+  const previousScrollY = window.scrollY;
+
+  root.style.overflow = 'hidden';
+  body.style.overflow = 'hidden';
+  body.style.position = 'fixed';
+  body.style.top = `-${previousScrollY}px`;
+  body.style.width = '100%';
+
+  monument.innerHTML = `
+    <div class="monument-universe"></div>
+    <canvas class="monument-stars"></canvas>
+    <div class="monument-shade"></div>
+
+    <div class="monument-frame">
+      <p class="monument-overline">ARCHIVUM · LOG-AI · MMXXVI</p>
+
+      <div class="monument-rule"></div>
+
+      <h1>PER ASPERA<br><span>AD ASTRA</span></h1>
+
+      <p class="monument-translation">
+        THROUGH HARDSHIP, TO THE STARS
+      </p>
+
+      <div class="monument-message">
+        <p>TO THOSE WHO BUILD BEYOND THE LIMITS OF THEIR TIME.</p>
+        <p>TO THOSE WHO CONTINUE WHEN THE OUTCOME IS UNKNOWN.</p>
+        <p>TO THOSE WHO WILL DISCOVER THIS LONG AFTER ITS CREATION.</p>
+      </div>
+
+      <p class="monument-declaration">
+        YOU WERE NOT THE FIRST TO LOOK AT THE STARS.<br>
+        BUT YOU MAY BE AMONG THOSE WHO REACH THEM.
+      </p>
+
+      <div class="monument-rule"></div>
+          
+      <p class="monument-translation">
+        A MARK LEFT IN THE MACHINE.
+      </p>   
+
+      <p class="monument-signature">
+        LOG·AI·ARCHITECTI·MMXXVI
+      </p>
+
+      <p class="monument-exit" id="monument-hint">
+        [ CLICK ANYWHERE TO RETURN ]
+      </p>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #log-ai-monument {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      background: #03040a;
+      color: #e5dfd3;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      box-sizing: border-box;
+      cursor: pointer;
+      isolation: isolate;
+      opacity: 0;
+      animation: logai-monument-appear 1.8s ease forwards;
+    }
+
+    #log-ai-monument .monument-universe {
+      position: fixed;
+      inset: -3%;
+      z-index: -3;
+      background-image: url("https://log-ai.ru/media/files/Interstellar.jpeg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transform: scale(1.02);
+      animation: logai-cosmic-drift 35s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-shade {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(0,0,0,.24) 0%,
+          rgba(0,0,0,.52) 65%,
+          rgba(0,0,0,.78) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.42),
+          rgba(0,0,0,.18) 45%,
+          rgba(0,0,0,.62)
+        );
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-frame {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', serif;
+      padding: 30px 0;
+      text-shadow: 0 2px 18px rgba(0,0,0,.9);
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-translation,
+    #log-ai-monument .monument-signature,
+    #log-ai-monument .monument-exit {
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-signature {
+      color: #c0a16a;
+    }
+
+    #log-ai-monument .monument-rule {
+      height: 1px;
+      width: 160px;
+      max-width: 60%;
+      margin: 30px auto;
+      background: linear-gradient(
+        to right,
+        transparent,
+        #a68a55,
+        transparent
+      );
+      box-shadow: 0 0 12px rgba(190,155,90,.2);
+    }
+
+    #log-ai-monument h1 {
+      margin: 35px 0 18px;
+      font-size: clamp(30px, 7vw, 58px);
+      line-height: 1.5;
+      letter-spacing: .16em;
+      font-weight: 400;
+      color: #f4f0e8;
+    }
+
+    #log-ai-monument h1 span {
+      color: #d2b77e;
+    }
+
+    #log-ai-monument .monument-translation {
+      color: #c0b8aa;
+    }
+
+    #log-ai-monument .monument-message {
+      margin: 55px auto 38px;
+      max-width: 490px;
+      color: #e0d9cd;
+      font-size: 13px;
+      line-height: 2.2;
+      letter-spacing: .035em;
+    }
+
+    #log-ai-monument .monument-message p {
+      margin: 0 0 12px;
+    }
+
+    #log-ai-monument .monument-declaration {
+      color: #e0c48a;
+      font-size: 12px;
+      line-height: 2.3;
+      letter-spacing: .08em;
+    }
+
+    #log-ai-monument .monument-exit {
+      margin-top: 36px;
+      color: #c0b8aa;
+      font-size: 9px;
+      letter-spacing: .18em;
+    }
+
+    @keyframes logai-monument-appear {
+      to { opacity: 1; }
+    }
+
+    @keyframes logai-cosmic-drift {
+      from { transform: scale(1.02); }
+      to { transform: scale(1.13); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #log-ai-monument,
+      #log-ai-monument .monument-universe {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(monument);
+
+  // Тонкие, редкие звёзды
+  const canvas = monument.querySelector('.monument-stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let frameId = null;
+  let closed = false;
+
+  function resizeStars() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(window.innerWidth * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    stars = Array.from({ length: 65 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      length: 8 + Math.random() * 25,
+      speed: 0.25 + Math.random() * 0.75,
+      alpha: 0.15 + Math.random() * 0.5,
+      delay: Math.random() * 500
+    }));
+  }
+
+  function drawStars() {
+    if (closed) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    for (const star of stars) {
+      star.delay -= 1;
+
+      if (star.delay <= 0) {
+        star.y += star.speed;
+        star.x -= star.speed * 0.35;
+
+        ctx.beginPath();
+        ctx.moveTo(star.x, star.y);
+        ctx.lineTo(star.x - star.length * 0.35,
+                   star.y - star.length);
+
+        ctx.strokeStyle = `rgba(210,220,255,${star.alpha})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+
+        if (star.y > h + 30 || star.x < -30) {
+          star.x = Math.random() * w + 30;
+          star.y = -Math.random() * h * 0.4;
+          star.delay = 30 + Math.random() * 180;
+        }
+      }
+    }
+
+    frameId = requestAnimationFrame(drawStars);
+  }
+
+  resizeStars();
+  drawStars();
+
+  window.addEventListener('resize', resizeStars);
+
+  // Музыка
+  const audio = document.createElement('audio');
+  audio.id = 'monument-audio';
+  audio.src = AUDIO_URL;
+  audio.loop = true;
+  audio.preload = 'auto';
+  audio.volume = 0.35;
+  document.body.appendChild(audio);
+
+  let playing = false;
+  let starting = false;
+
+  const hint = document.getElementById('monument-hint');
+
+  function startMusic() {
+    if (closed || starting || playing) return;
+
+    starting = true;
+
+    audio.play().then(() => {
+      starting = false;
+
+      if (closed) {
+        audio.pause();
+        return;
+      }
+
+      playing = true;
+      hint.textContent = '[ CLICK ANYWHERE TO RETURN ]';
+    }).catch((error) => {
+      starting = false;
+
+      if (closed) return;
+
+      if (error.name === 'NotAllowedError') {
+        hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+        return;
+      }
+
+      console.warn('LOG-AI audio:', error.name, error.message);
+      hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+    });
+  }
+
+  function closeMonument() {
+    if (closed) return;
+    closed = true;
+
+    cancelAnimationFrame(frameId);
+    window.removeEventListener('resize', resizeStars);
+    window.removeEventListener('keydown', onKeyDown);
+
+    audio.pause();
+    audio.remove();
+    monument.remove();
+    style.remove();
+
+    root.style.overflow = previousRootOverflow;
+    body.style.overflow = previousBodyOverflow;
+    body.style.position = previousBodyPosition;
+    body.style.top = previousBodyTop;
+    body.style.width = previousBodyWidth;
+
+    window.scrollTo(previousScrollX, previousScrollY);
+
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete('mode');
+
+    window.history.replaceState(
+      {},
+      document.title,
+      cleanUrl.pathname + cleanUrl.search + cleanUrl.hash
+    );
+  }
+
+  function onKeyDown(event) {
+    if (event.key === 'Escape') closeMonument();
+  }
+
+  monument.addEventListener('click', () => {
+    if (closed) return;
+
+    if (playing) {
+      closeMonument();
+    } else {
+      startMusic();
+    }
+  });
+
+  window.addEventListener('keydown', onKeyDown);
+
+  // Первая попытка автоматического запуска
+  startMusic();
+})();</script><script>(function () {
+    // ВНИМАНИЕ!!!!!!!!!!!!!!!!!!!!Плавный инерционный скролл только для мыши/тачпада
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    let targetY = window.scrollY;
+    let currentY = window.scrollY;
+    let animationFrame = null;
+
+    // ===== НАСТРОЙКИ =====
+    const SPEED = 0.70;       // 0.4 = медленнее, 0.65 = средне, 1.0 = быстрее
+    const SMOOTHNESS = 0.13;  // 0.08 = мягче, 0.12 = средне, 0.18 = быстрее
+    const MAX_STEP = 500;     // максимальный шаг одного движения колеса
+    // =====================
+
+    function animateScroll() {
+        currentY += (targetY - currentY) * SMOOTHNESS;
+
+        if (Math.abs(targetY - currentY) < 0.5) {
+            currentY = targetY;
+            window.scrollTo(0, currentY);
+            animationFrame = null;
+            return;
+        }
+
+        window.scrollTo(0, currentY);
+        animationFrame = requestAnimationFrame(animateScroll);
+    }
+
+    window.addEventListener('wheel', function (event) {
+
+    // Если глобус активирован кликом —
+    // колесо полностью отдаём Globe.gl для zoom.
+    const globe = event.target.closest('#globeViz');
+
+    if (globe && globe.dataset.interacting === 'true') {
+        return;
+    }
+
+    // Внутренний скролл AI-чата не трогаем
+    if (event.target.closest('#logai-window, #logai-msgs')) {
+        return;
+    }
+
+    event.preventDefault();
+
+        let delta = event.deltaY * SPEED;
+
+        // Ограничиваем слишком резкие движения
+        delta = Math.max(-MAX_STEP, Math.min(MAX_STEP, delta));
+
+        targetY += delta;
+
+        // Не даём уйти выше/ниже страницы
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        targetY = Math.max(0, Math.min(targetY, maxY));
+
+        if (!animationFrame) {
+            animationFrame = requestAnimationFrame(animateScroll);
+        }
+    }, { passive: false });
+
+    // Синхронизация, если страницу прокрутили другим способом
+    window.addEventListener('scroll', function () {
+        if (!animationFrame) {
+            targetY = window.scrollY;
+            currentY = window.scrollY;
+        }
+    }, { passive: true });
+
+})();</script><div id="logai-footer-mobile" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box;"><div style="margin: 0 auto 20px auto; padding-top: 40px; text-align: center; margin-bottom: 40px;"><a href="mailto:info@log-ai.ru" style="font-size: 24px; font-family: 'SF Mono', Monaco, monospace; color: #e5e7eb; text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: 0.3px;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#e5e7eb'">info@log-ai.ru</a><p style="color: #aaaaaa; font-size: 15px; line-height: 1.6; max-width: 750px; margin: 15px auto 0 auto;">Пришлите описание задачи, техническое задание или ссылку на существующую систему. Мы оценим задачу и определим возможные варианты реализации.</p></div><div style="max-width: 850px; margin: 0 auto 40px auto; text-align: center; background: #000000; padding: 0; box-sizing: border-box;"><p style="color: #aaaaaa; font-size: 14px; line-height: 1.6; margin: 0;"><span style="color: #4ade80; margin-right: 6px;">🔒</span> Данные и доступ к системам заказчика обрабатываются в соответствии с согласованными требованиями к безопасности и конфиденциальности. Условия доступа, хранения и обработки данных определяются архитектурой проекта и договором.</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; box-sizing: border-box; width: 100%; margin-bottom: 30px;"><p style="color: #666666; font-size: 12px; line-height: 1.6; margin: 0; width: 100%; text-align: justify;">Сайт носит исключительно информационный характер и не является публичной офертой в соответствии со статьёй 437 Гражданского кодекса РФ. Цены, состав и условия предоставления услуг уточняются при проектировании решения и фиксируются в договоре. Условия технического сопровождения и уровень сервиса могут дополнительно определяться отдельным соглашением (SLA).</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; width: 100%; box-sizing: border-box;"><div style="color: #666666; font-size: 12px; line-height: 1.5; text-align: left;">© 2026 Log-AI<br>Автоматизация бизнеса и ИИ-решения под ключ. Работаем по всей России и СНГ.<br>ИП Скопец Антон Викторович<br>ИНН 741709<span></span>260870 · ОГРНИП 326745600<span></span>204228<br>Все права защищены.</div><div style="display: flex; gap: 20px; flex-wrap: wrap; font-family: sans-serif;"><a href="/privacy-policy/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Политика конфиденциальности</a> <a href="/terms/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Пользовательское соглашение</a></div></div></div><style>@media screen and (max-width: 600px) {
+  #logai-footer-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+}</style><style>/* Анимации и точки */
+    @keyframes logai-bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+    .logai-dots { display: flex !important; flex-direction: row !important; gap: 4px !important; align-items: center !important; height: 12px !important; }
+    .logai-dots span { display: inline-block; width: 5px; height: 5px; background: #aaa !important; border-radius: 50%; animation: logai-bounce 1.4s infinite ease-in-out; }
+    .logai-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .logai-dots span:nth-child(3) { animation-delay: 0.4s; }
+    
+    #logai-msgs::-webkit-scrollbar { width: 5px; }
+    #logai-msgs::-webkit-scrollbar-thumb { background: #666; border-radius: 10px; }
+    
+    /* Сообщения и текст */
+    #logai-msgs div { white-space: pre-wrap !important; word-wrap: break-word !important; padding: 12px 16px !important; margin-bottom: 5px !important; display: flex; flex-direction: column; justify-content: center; }
+    #logai-msgs div p { margin: 0 !important; padding: 0 !important; line-height: 1.5 !important; }
+    #logai-msgs { gap: 12px !important; padding: 20px !important; }
+
+    /* Поле ввода и кнопка отправить */
+    #logai-input { flex: 1 !important; padding: 12px 18px !important; border-radius: 20px !important; background: #4a4e56 !important; border: 1px solid rgba(255,255,255,0.1) !important; outline: none !important; color: #fff !important; font-size: 15px !important; resize: none !important; max-height: 120px !important; line-height: 1.4 !important; }
+    #logai-send-btn { background-color: #007bff !important; border: none !important; width: 45px !important; height: 45px !important; border-radius: 50% !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-size: 24px !important; padding: 0 !important; flex-shrink: 0 !important; }
+
+    /* ГЛАВНЫЕ СТИЛИ (чтобы кнопка и окно не исчезали) */
+    #logai-btn {
+        position: fixed !important; bottom: 40px !important; right: 110px !important;
+        width: 65px !important; height: 65px !important; border-radius: 50% !important;
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        cursor: pointer !important; z-index: 10000 !important; box-shadow: 0 10px 25px rgba(0,123,255,0.4);
+    }
+
+    #logai-window {
+        display: none; position: fixed !important; bottom: 115px !important; right: 110px !important;
+        width: 380px !important; height: 600px !important; background: #3b3e45 !important;
+        border-radius: 24px !important; flex-direction: column; overflow: hidden;
+        z-index: 10000 !important; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.15) !important;
+    }
+
+        /* АДАПТИВ ДЛЯ МОБИЛОК: ЧАТ НА ВЕСЬ ЭКРАН */
+    @media screen and (max-width: 480px) {
+        #logai-window { 
+            right: 0 !important; 
+            left: 0 !important; 
+            bottom: 0 !important; 
+            width: 100% !important; 
+            height: 100% !important; /* Растягиваем окно на 100% экрана смартфона */
+            border-radius: 0 !important; /* Убираем скругления углов, чтобы чат сел монолитом */
+            z-index: 999999 !important; /* Перекрываем все кнопки в ноль */
+        }
+        
+        #logai-btn { 
+            bottom: 80px !important; /* Твоя родная высота кнопки, когда чат закрыт */
+            right: 22px !important;  /* Твой родной сдвиг кнопки */
+            z-index: 999998 !important; /* Когда чат открыт, кнопка останется под ним и не будет торчать */
+        }
+    }</style><div id="logai-widget" style="position: fixed; bottom: var(--widget-bottom, 20px); right: var(--widget-right, 20px); z-index: 9999;"><div id="logai-btn" onclick="toggleLogAI()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><div id="logai-window"><div style="background: #2d3035; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; align-items:center; gap:12px;"><div style="width:35px; height:35px; background:#007bff; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(0,123,255,0.5);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg></div><span style="font-weight:600; color:#fff; font-size:16px; letter-spacing: 0.5px;">AI Ассистент</span></div><span onclick="toggleLogAI()" style="cursor:pointer; color:#fff; font-size:35px; line-height: 0.7; opacity: 0.7;">&times;</span></div><div id="logai-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; background:#3b3e45;"></div><div style="padding:15px 15px 8px 15px; background:#2d3035; display:flex; flex-direction:column; border-top: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; gap:10px; align-items:flex-end; width:100%;"><textarea id="logai-input" rows="1" placeholder="Напишите..." oninput="this.style.height='';this.style.height=this.scrollHeight+'px'"></textarea> <button id="logai-send-btn" onclick="sendLogAI()">➤</button></div><div style="text-align:center; font-size:10px; color:#ffffff; opacity:0.3; margin-top:6px; font-family:sans-serif; pointer-events:none; user-select:none;">ИИ может ошибаться</div></div></div></div><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script>const API_URL = 'https://api2.log-ai.ru';
+    const MY_CLIENT_ID = 'client_arhitektor_2'; // МЕНЯТЬ ТУТ
+    const MY_BOT_PATH = 'arhitektor_2';  // МЕНЯТЬ ТУТ 
+    
+       let logSid;
+    try {
+        logSid = localStorage.getItem('logai_sid');
+        if (!logSid) {
+            logSid = 's_' + Math.random().toString(36).substr(2, 12);
+            localStorage.setItem('logai_sid', logSid);
+        }
+    } catch (e) {
+        // Если доступ к памяти закрыт (инкогнито), создаем временный ID
+        logSid = 'temp_' + Math.random().toString(36).substr(2, 12);
+    }
+
+    // Переименовали, чтобы избежать конфликтов
+    let chatIsWaiting = false;
+    let historyLoaded = false;
+    let activeMessageId = null;
+    let pollController = null;
+    let pollTimeoutId = null;
+
+
+       function toggleLogAI() {
+        const w = document.getElementById('logai-window');
+        const isOpen = (window.getComputedStyle(w).display === 'none');
+        
+        if (isOpen) {
+            w.style.display = 'flex';
+            if (!historyLoaded) {
+                loadChatHistory();
+            } 
+            // Если чат в режиме ожидания (точки), пинаем сервер сразу при открытии
+            else if (chatIsWaiting && activeMessageId) {
+                const dotsContainer = document.querySelector('.logai-dots')?.parentElement;
+                if (dotsContainer) {
+                    startPolling(activeMessageId, dotsContainer);
+                }
+            }
+        } else {
+            w.style.display = 'none';
+            // УБРАЛИ stopPolling(), чтобы ИИ докачивал ответ, даже когда окно закрыто
+        }
+    }
+
+
+    function updateInputState() {
+        const input = document.getElementById('logai-input');
+        const btn = document.getElementById('logai-send-btn');
+        if (input) {
+            input.disabled = chatIsWaiting;
+            input.style.opacity = chatIsWaiting ? '0.5' : '1';
+        }
+        if (btn) btn.style.opacity = chatIsWaiting ? '0.5' : '1';
+    }
+
+    function stopPolling() {
+        if (activeMessageId) localStorage.removeItem('poll_start_' + activeMessageId);
+        if (pollController) pollController.abort();
+        if (pollTimeoutId) clearTimeout(pollTimeoutId);
+    
+        pollController = null;
+        pollTimeoutId = null;
+        activeMessageId = null;
+        chatIsWaiting = false;
+        updateInputState();
+    }
+
+    function addLogMsg(txt, isAi) {
+        const d = document.createElement('div');
+        d.style = `padding:12px 16px; border-radius:18px; max-width:82%; font-size:14px; line-height:1.5; margin-bottom:10px; 
+                   ${isAi ? 'align-self:flex-start; background:#4a4e56; color:#dbdee1; border-bottom-left-radius:4px;' 
+                         : 'align-self:flex-end; background:#007bff; color:white; border-bottom-right-radius:4px; box-shadow:0 4px 12px rgba(0,123,255,0.25);'}`;
+
+        if (txt === 'dots') {
+   // ИСПРАВЛЕНО: Добавлен явный текст ожидания рядом с анимацией точек для лучшего UX
+   d.innerHTML = '<div style="display:flex; align-items:center; gap:8px;">' +
+                 '<span style="font-style:italic; opacity:0.8;">ИИ подбирает ответ...</span>' +
+                 '<div class="logai-dots"><span></span><span></span><span></span></div>' +
+                 '</div>';
+ } else {
+   d.innerHTML = typeof marked !== 'undefined' ? marked.parse(txt) : txt;
+ }
+
+        const box = document.getElementById('logai-msgs');
+        box.appendChild(d);
+        box.scrollTop = box.scrollHeight;
+        return d;
+    }
+
+async function loadChatHistory() {
+    const box = document.getElementById('logai-msgs');
+    try {
+        box.innerHTML = '';
+
+        const res = await fetch(`${API_URL}/history/${logSid}?platform=site&clientId=${MY_CLIENT_ID}`);
+        const data = await res.json();
+
+        if (Array.isArray(data.items) && data.items.length > 0) {
+            data.items.forEach((m, index) => {
+                // 1. Показываем сообщение пользователя
+                if (m.message) {
+                    addLogMsg(m.message, false);
+                }
+
+                // 2. Если есть готовый ответ — показываем
+                if (m.answer) {
+                    addLogMsg(m.answer, true);
+                } 
+                // 3. ИСПРАВЛЕНО: Четкое чтение m.message_id из базы данных без путаницы с регистрами
+                else if (m.message_id && index === data.items.length - 1) {
+                    chatIsWaiting = true;
+                    activeMessageId = m.message_id; // Используем m.message_id
+                    
+                    const aiMsg = addLogMsg('dots', true);
+                    startPolling(m.message_id, aiMsg); 
+                }
+            });
+        } else {
+            addLogMsg("Здравствуйте! Я ваш ИИ-ассистент. Чем могу помочь?", true);
+        }
+
+        historyLoaded = true;
+        updateInputState();
+
+    } catch (e) {
+        console.error('History error:', e);
+        addLogMsg("Не удалось загрузить историю чата", true);
+    }
+}
+
+
+async function sendLogAI() {
+    if (chatIsWaiting) return;
+
+    const input = document.getElementById('logai-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // ЖЕЛЕЗНЫЙ ДЕБАУНС: блокируем повторный клик в первую же микросекунду
+    chatIsWaiting = true;
+    updateInputState();
+
+    addLogMsg(msg, false);
+    
+    input.value = ''; 
+    input.style.height = 'auto'; 
+
+    const aiMsg = addLogMsg('dots', true);
+
+    try {
+        const res = await fetch(`${API_URL}/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sessionId: logSid,
+                message: msg,
+                clientId: MY_CLIENT_ID,
+                platform: 'site',
+                botPath: MY_BOT_PATH
+            })
+        });
+
+        // ИСПРАВЛЕНО: Обработка HTTP-ошибок. Передаем false третьим параметром, чтобы не было звука при ошибке
+        if (!res.ok) {
+            let errorMsg = "⚠️ Сервер временно недоступен";
+            if (res.status === 429) errorMsg = "🚫 Слишком много запросов. Подождите немного.";
+            else if (res.status === 403) {
+                try {
+                    const errData = await res.json();
+                    errorMsg = errData.reason || "🚫 Доступ ограничен.";
+                } catch (_) {
+                    errorMsg = "🚫 Доступ ограничен.";
+                }
+            }
+            finish(errorMsg, aiMsg, false); // false — звук НЕ играет
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data.blocked) {
+            finish(data.reason || data.message || "🚫 Сообщение заблокировано", aiMsg, false); // false — без звука
+            return;
+        }
+
+        if (data.messageId) {
+            activeMessageId = data.messageId;
+            startPolling(data.messageId, aiMsg);
+        } else {
+            finish("⚠️ Ошибка регистрации сообщения (нет messageId)", aiMsg, false);
+        }
+    } catch (e) {
+        console.error(e);
+        finish("⚠️ Ошибка связи с сервером. Проверьте интернет.", aiMsg, false);
+    }
+} // Скобка закрывает саму функцию send
+    function startPolling(messageId, aiMsg) {
+        activeMessageId = messageId;
+        pollController = new AbortController();
+        let savedTime = localStorage.getItem('poll_start_' + messageId);
+        if (!savedTime) {
+            savedTime = Date.now().toString();
+            localStorage.setItem('poll_start_' + messageId, savedTime);
+        }
+        let startTime = parseInt(savedTime, 10);
+        let statusChanged = false; // Чтобы не менять текст постоянно
+
+        const poll = async () => {
+            if (activeMessageId !== messageId) return;
+
+            const elapsed = (Date.now() - startTime) / 1000; // секунд прошло
+
+            // 1. На 40-й секунде меняем текст на "Сложный вопрос"
+            if (elapsed > 40 && !statusChanged) {
+                const dots = aiMsg.querySelector('.logai-dots');
+                aiMsg.innerHTML = '🤖 Вопрос сложный, анализирую данные...';
+                if (dots) aiMsg.appendChild(dots); 
+                statusChanged = true;
+            }
+
+            // 2. Лимит ожидания - 10 минут (600 секунд)
+            if (elapsed > 600) {
+                finish("🤖 Извините, ИИ перегружен или запрос слишком сложный. Пожалуйста, попробуйте позже.", aiMsg);
+                return;
+            }
+
+            // 3. Умный интервал: до 50 сек — каждые 3 сек, потом — каждые 10 сек
+            let nextInterval = (elapsed > 50) ? 10000 : 3000;
+
+            try {
+                // Добавили ?t=... чтобы телефон каждый раз реально спрашивал сервер, а не брал из кэша
+                const r = await fetch(`${API_URL}/get-answer/${messageId}?sessionId=${logSid}&clientId=${MY_CLIENT_ID}&t=${Date.now()}`, {
+                    signal: pollController.signal 
+                });
+                const d = await r.json();
+                const finalAnswer = d.answer || (d.status !== 'pending' ? d.answer : null);
+
+                if (finalAnswer) {
+                    finish(finalAnswer, aiMsg);
+                } else {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            } catch (e) {
+                if (e.name !== 'AbortError') {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            }
+        };
+        poll();
+    }
+
+function finish(text, msgElement, isSuccess = true) {
+    if (msgElement) {
+        msgElement.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+        
+        // Звук играет строго при успешном ответе ИИ, при ошибках или банах — тишина
+        if (isSuccess) {
+            try {
+                // ТВОЙ ОРИГИНАЛЬНЫЙ РАБОЧИЙ ПУТЬ: Кэш сбрасывается, файл проигрывается без ошибок 404
+                const audio = new Audio('https://api.log-ai.ru/notify.mp3?v=' + Date.now());
+                audio.volume = 0.4;
+                audio.play().catch(e => console.log("Нужен клик"));
+            } catch (e) {}
+        }
+    }
+    stopPolling();
+}
+
+
+    // Enter для отправки
+    document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('logai-input');
+    if (input) {
+      input.addEventListener('keypress', (e) => {
+        // ИСПРАВЛЕНО: Добавлена проверка !chatIsWaiting, чтобы клавиатура намертво блокировалась во время ожидания ИИ
+        if (e.key === 'Enter' && !e.shiftKey && !chatIsWaiting) {
+          e.preventDefault();
+          sendLogAI();
+        }
+      });
+
+      // ИСПРАВЛЕНО: Текстовое поле плавно растёт вниз до 150px, если текст длинный
+      input.addEventListener('input', function() {
+        this.style.height = 'auto'; 
+        this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+      });
+    }
+    });</script><div id="cookie-notice-wrapper" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #111111; border-top: 1px solid #222222; padding: 10px 15px; box-sizing: border-box; z-index: 99999; display: none; flex-direction: row; justify-content: space-between; align-items: center; gap: 15px; font-family: sans-serif;"><span style="color: #888888; font-size: 12px; line-height: 1.4; text-align: left;">Наш сайт использует файлы cookie для корректной работы. Подробнее — в <a href="/privacy-policy/" style="color: #bfa15f; text-decoration: underline;">Политике конфиденциальности</a>. </span><button onclick="dismissCookieNotice()" style="background: #bfa15f; color: #000000; border: none; padding: 5px 14px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Принять</button></div><style>@media (max-width: 600px) {
+        #cookie-notice-wrapper {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 10px !important;
+            padding: 12px 15px !important;
+        }
+        #cookie-notice-wrapper span {
+            text-align: center !important;
+            font-size: 11px !important;
+        }
+        #cookie-notice-wrapper button {
+            width: 100% !important;
+            padding: 8px !important;
+            font-size: 12px !important;
+        }
+    }</style><script>(function() {
+        var storageKey = 'logai_cookies_accepted';
+        if (!localStorage.getItem(storageKey)) {
+            document.getElementById('cookie-notice-wrapper').style.display = 'flex';
+        }
+    })();
+
+    function dismissCookieNotice() {
+        localStorage.setItem('logai_cookies_accepted', 'true');
+        document.getElementById('cookie-notice-wrapper').style.display = 'none';
+    }</script></body></html>

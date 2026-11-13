@@ -1,0 +1,855 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Почему интернет-магазин медленно работает при росте каталога | LOG-AI</title><meta name="description" content="Почему тормозит интернет-магазин при увеличении каталога: SQL-запросы, фильтры, Elasticsearch, Redis, интеграции с ERP и одновременная нагрузка. "><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://log-ai.ru/pochemu-internet-magazin-medlenno-rabotaet-pri-roste-kataloga/"><link rel="alternate" type="application/atom+xml" href="https://log-ai.ru/feed.xml" title="LOG-AI - RSS"><link rel="alternate" type="application/json" href="https://log-ai.ru/feed.json" title="LOG-AI - JSON"><meta property="og:title" content="Почему интернет-магазин медленно работает при росте каталога | LOG-AI"><meta property="og:image" content="https://log-ai.ru/media/website/Log-ai-Logo.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:site_name" content="LOG-AI"><meta property="og:description" content="Почему тормозит интернет-магазин при увеличении каталога: SQL-запросы, фильтры, Elasticsearch, Redis, интеграции с ERP и одновременная нагрузка. "><meta property="og:url" content="https://log-ai.ru/pochemu-internet-magazin-medlenno-rabotaet-pri-roste-kataloga/"><meta property="og:type" content="article"><link rel="stylesheet" href="https://log-ai.ru/assets/css/style.css?v&#x3D;b1f5980528b3cc19f4018c94aea81f52"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://log-ai.ru/pochemu-internet-magazin-medlenno-rabotaet-pri-roste-kataloga/"},"headline":"Почему интернет-магазин медленно работает при росте каталога","datePublished":"2026-11-13T19:39+05:00","dateModified":"2026-11-13T20:53+05:00","description":"Почему тормозит интернет-магазин при увеличении каталога: SQL-запросы, фильтры, Elasticsearch, Redis, интеграции с ERP и одновременная нагрузка. ","author":{"@type":"Person","name":"LOG-AI","url":"https://log-ai.ru/authors/log-ai/"},"publisher":{"@type":"Organization","name":"LOG-AI"}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript><style>body, html, main, #page, .wrapper, .main { background: #000000 !important; background-color: #000000 !important; }</style><link rel="icon" type="image/png" sizes="32x32" href="/media/files/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/media/files/favicon-16.png"><link rel="apple-touch-icon" sizes="180x180" href="/media/files/favicon-180.png"><meta name="yandex-verification" content="9d14e10b64f3b76c"><meta name="google-site-verification" content="-rKktnoSCGCLZToW-jcZeKu5WvWFGuLKdLwwyCux0-M"></head><body class="page-template"><header class="top js-header"><a class="logo" href="https://log-ai.ru/">LOG-AI</a><nav class="navbar js-navbar"><button class="navbar__toggle js-toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><span class="navbar__toggle-box"><span class="navbar__toggle-inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://log-ai.ru/" target="_self">Главная</a></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Услуги</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/avtomatizaciya-obrabotki-zayavok-i-lidov/" target="_self">Автоматизация обработки заявок и лидов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-biznes-processov-integracii-dannye-i-skvoznye-scenarii/" target="_self">Автоматизация бизнес-процессов</a></li><li><a href="https://log-ai.ru/sbor-i-obrabotka-dannyh/" target="_self">Сбор и обработка данных</a></li><li><a href="https://log-ai.ru/ii-dlya-biznesa-i-nejrosetej/" target="_self">ИИ для бизнеса и нейросети</a></li><li><a href="https://log-ai.ru/specializirovannye-cifrovye-sistemy/" target="_self">Специализированные цифровые системы</a></li><li><a href="https://log-ai.ru/individualnye-korporativnye-sistemy/" target="_self">Корпоративные системы</a></li><li><a href="https://log-ai.ru/tehnicheskoe-soprovozhdenie/" target="_self">Техническое сопровождение</a></li><li><a href="https://log-ai.ru/it-audit-i-predproektnoe-obsledovanie/" title="/it-audit-i-predproektnoe-obsledovanie/" target="_self">ИТ-аудит и предпроектное обследование</a></li><li><a href="https://log-ai.ru/oblachnyy-i-infrastrukturnyy-konsalting/" title="/oblachnyy-i-infrastrukturnyy-konsalting/" target="_self">Облачный и инфраструктурный консалтинг</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Решения</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakie-sistemy-my-integriruem/" target="_self">Какие системы мы интегрируем</a></li><li><a href="https://log-ai.ru/kak-rabotaet-ii-v-biznese/" target="_self">Как работает ИИ в бизнесе</a></li><li><a href="https://log-ai.ru/resheniya-po-zadacham/" target="_self">Решения по задачам</a></li><li><a href="https://log-ai.ru/avtomatizaciya-proizvodstva/" target="_self">Для производства</a></li><li><a href="https://log-ai.ru/avtomatizaciya-logistiki-i-skladov/" target="_self">Для логистики и складов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-optovoy-torgovli/" target="_self">Для оптовой торговли</a></li><li><a href="https://log-ai.ru/avtomatizaciya-e-commerce/" target="_self">Для e-commerce</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Реализация</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kak-my-rabotaem/" target="_self">Как мы работаем</a></li><li><a href="https://log-ai.ru/dokumentaciya-sistemy/" target="_self">Документация системы</a></li><li><a href="https://log-ai.ru/infrastruktura-i-razmeshchenie/" target="_self">Инфраструктура и размещение</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Выбор</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakuyu-avtomatizaciyu-vybrat/" target="_self">Какую автоматизацию выбрать</a></li><li><a href="https://log-ai.ru/chto-avtomatizirovat-v-biznese-v-pervuyu-ochered/" target="_self">Что автоматизировать в бизнесе в первую очередь</a></li><li><a href="https://log-ai.ru/kak-podgotovit-biznes-k-avtomatizacii/" target="_self">Как подготовить бизнес к автоматизации</a></li><li><a href="https://log-ai.ru/kak-vnedrit-avtomatizaciyu/" target="_self">Как внедрить автоматизацию</a></li><li><a href="https://log-ai.ru/kak-ocenit-rezultat-avtomatizacii/" target="_self">Как оценить результат автоматизации</a></li><li><a href="https://log-ai.ru/stoimost-razrabotki/" target="_self">Стоимость разработки</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">О нас</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/inzhenernyy-sostav/" target="_self">Инженерный состав</a></li><li><a href="https://log-ai.ru/keysy/" target="_self">Кейсы</a></li><li><a href="https://log-ai.ru/glossariy/" target="_self">Глоссарий</a></li><li><a href="https://log-ai.ru/ekspertiza/" target="_self">Экспертиза</a></li><li><a href="https://log-ai.ru/bezopasnost-sistem-dannyh-i-infrastruktury/" target="_self">Безопасность</a></li></ul></li></ul></nav></header><main class="page"><article class="content"><div class="hero hero--noimage"><header class="hero__content hero__content--centered"><div class="wrapper"><h1>Почему интернет-магазин медленно работает при росте каталога</h1></div></header></div><div class="entry-wrapper content__entry"><p> </p><p> </p><p> </p><p> </p><div style="max-width: 1100px; margin: 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">У интернет-магазина есть неприятная особенность: он может годами нормально работать, пока однажды привычные операции не начинают занимать в несколько раз больше времени. Категории открываются с задержкой, фильтры реагируют не сразу, поиск периодически зависает, а отдельные карточки товаров загружаются быстрее, чем целые разделы каталога.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">При этом внешне ничего критического не произошло. Сервер работает, база данных доступна, ошибок в логах немного. Товары отображаются, заказы принимаются. Но пользователи уже замечают, что магазин стал медленнее.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Часто это происходит не после какого-то одного изменения, а постепенно. Каталог вырос с 15 до 80 тысяч позиций, появились дополнительные характеристики, несколько складов, региональные цены, новые интеграции. Функциональность расширялась, а принципы обработки данных оставались практически прежними.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : CATALOG_GROWTH_VS_PROCESSING ]</div><svg viewbox="0 0 750 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="30" width="300" height="80" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="170" y="55" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">15 000 ПОЗИЦИЙ</text><text x="40" y="78" fill="#666666" font-family="'SF Mono', monospace" font-size="8">Функциональность расширялась</text><text x="40" y="96" fill="#666666" font-family="'SF Mono', monospace" font-size="8">Принципы обработки прежние</text><line x1="340" y1="70" x2="400" y2="70" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="400,70 394,67 394,73" fill="#14b8a6"></polygon><rect x="420" y="30" width="310" height="80" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="575" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">80 000 ПОЗИЦИЙ</text><text x="440" y="78" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="8">Характеристики, склады, региональные цены</text><text x="440" y="96" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="8">Новые интеграции</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Именно здесь обнаруживается разница между интернет-магазином, который просто способен хранить большой каталог, и системой, которая умеет эффективно с ним работать.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Проблема заключается не столько в количестве товаров, сколько в количестве операций, необходимых для работы с каждым из них. Один товар может участвовать в нескольких фильтрах, поисковых индексах, ценовых правилах, складских остатках и связанных товарных подборках. Когда таких позиций десятки тысяч, даже небольшая неэффективность начинает умножаться на весь каталог.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Причём наиболее неприятные ограничения часто находятся не в очевидных местах. Можно заменить сервер, увеличить количество оперативной памяти и добавить процессорные ядра, но продолжать выполнять одну и ту же неэффективную операцию сотни тысяч раз.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Каталог увеличивается, но вместе с ним меняется сама стоимость пользовательского действия</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Представим интернет-магазин промышленного оборудования. Изначально в нём 12 тысяч товаров, несколько категорий и ограниченный набор характеристик. Поиск работает по названию и артикулу, фильтрация выполняется по производителю и цене.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Через несколько лет ассортимент достигает 140 тысяч позиций. Теперь у товаров десятки технических параметров, различные единицы измерения, модификации, региональные цены и остатки на нескольких складах. Появились альтернативные артикулы, взаимозаменяемые позиции и дополнительные правила отображения.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #888888; font-weight: bold; margin-bottom: 12px;">12 000 ТОВАРОВ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Несколько категорий и ограниченный набор характеристик. Поиск по названию и артикулу, фильтрация по производителю и цене.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">140 000 ТОВАРОВ</div><p style="font-size: 15px; color: #d0d0d0; margin: 0; line-height: 1.6;">Десятки технических параметров, единицы измерения, модификации, региональные цены, остатки на нескольких складах, альтернативные артикулы и взаимозаменяемые позиции.</p></div></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Для покупателя каталог остался каталогом. Он по-прежнему открывает категорию, выбирает производителя и указывает нужные параметры. Но для приложения это уже совершенно другая задача.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">При формировании страницы необходимо определить подходящие товары, применить ограничения по доступности, получить актуальные цены, выполнить сортировку, подготовить характеристики и сформировать значения остальных фильтров. Если приложение каждый раз собирает всё это из первичных таблиц, стоимость запроса становится всё выше. Особенно если часть операций повторяется независимо друг от друга.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Здесь важно учитывать одну особенность: нагрузка растёт не всегда линейно относительно количества товаров. Добавление характеристик, комбинаций фильтров и правил сортировки может усложнять обработку значительно быстрее, чем увеличивается сам каталог.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Поэтому оценивать производительность только по количеству записей в базе бессмысленно. Гораздо важнее понимать, какие операции выполняются при открытии конкретной страницы и сколько ресурсов они потребляют.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">База данных: когда несколько миллисекунд превращаются в серьёзную проблему</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Одна из распространённых причин замедления — избыточное количество обращений к базе данных. В небольшом магазине такая проблема может оставаться практически незаметной. Но по мере увеличения каталога и количества пользователей она начинает создавать существенную нагрузку.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Возьмём страницу категории, на которой отображается 40 товаров. Приложение получает список позиций, затем отдельно запрашивает информацию о производителях, характеристиках, ценах и остатках. Если реализация неудачная, для каждого товара выполняются дополнительные запросы. Возникает проблема <strong style="color: #14b8a6;">N+1</strong>.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : N_PLUS_ONE_VS_BATCH_FETCHING ]</div><svg viewbox="0 0 750 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><text x="185" y="20" fill="#ff4444" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ПРОБЛЕМА N+1</text><rect x="20" y="35" width="100" height="30" fill="#0a0a0a" stroke="#ff4444" stroke-width="1.5"></rect><text x="70" y="55" fill="#ff4444" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">1 запрос: Товары</text><line x1="120" y1="50" x2="150" y2="40" stroke="#ff4444" stroke-width="1"></line><line x1="120" y1="50" x2="150" y2="50" stroke="#ff4444" stroke-width="1"></line><line x1="120" y1="50" x2="150" y2="60" stroke="#ff4444" stroke-width="1"></line><text x="135" y="35" fill="#ff4444" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">N запросов</text><rect x="160" y="30" width="100" height="15" fill="#0a0a0a" stroke="#ff4444" stroke-width="1"></rect><rect x="160" y="50" width="100" height="15" fill="#0a0a0a" stroke="#ff4444" stroke-width="1"></rect><rect x="160" y="70" width="100" height="15" fill="#0a0a0a" stroke="#ff4444" stroke-width="1"></rect><text x="210" y="60" fill="#ff4444" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">Цены, остатки...</text><line x1="300" y1="20" x2="300" y2="140" stroke="#222222" stroke-width="1"></line><text x="525" y="20" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ПАКЕТНАЯ ЗАГРУЗКА / JOIN</text><rect x="340" y="35" width="120" height="30" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="400" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">1 оптимизированный запрос</text><line x1="460" y1="50" x2="500" y2="50" stroke="#14b8a6" stroke-width="2"></line><polygon points="500,50 494,47 494,53" fill="#14b8a6"></polygon><rect x="510" y="35" width="220" height="30" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="620" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Все связанные данные за один проход</text><text x="375" y="130" fill="#666666" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">При 300 пользователях N+1 создаёт десятки тысяч лишних операций</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Вместо нескольких пакетных обращений система может выполнить десятки или даже сотни SQL-запросов для формирования одной страницы. При 10 посетителях это может не вызывать заметных последствий. Но при 300 одновременных пользователях количество операций резко увеличивается.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">И проблема уже не только в процессоре базы данных. Соединения удерживаются дольше, увеличивается конкуренция за ресурсы, растёт время ожидания запросов.</p><div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">ПРАВИЛЬНЫЙ ПОДХОД</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Анализ фактических SQL-запросов. Связанные данные получаются пакетами, используются подходящие JOIN, устраняются повторные обращения и пересматривается способ работы ORM.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #ff4444; font-weight: bold; margin-bottom: 12px;">КРАЙНОСТЬ: ОДИН ОГРОМНЫЙ ЗАПРОС</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Попытка объединить всё в один запрос. Сложные JOIN по большим таблицам, многочисленные подзапросы и вычисляемые сортировки могут оказаться не менее дорогими, чем множество небольших обращений.</p></div></div><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Поэтому задача заключается не в минимизации количества SQL-запросов любой ценой, а в уменьшении общей стоимости получения данных.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Индексы: почему их наличие ещё не означает быструю работу</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Отдельного внимания заслуживает индексация. Предположим, покупатель ищет насосы определённого производителя мощностью от 5 до 15 кВт, доступные на конкретном складе. База должна обработать несколько условий, отобрать подходящие позиции и отсортировать результат.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Если структура индексов не соответствует характеру запросов, СУБД может просматривать значительно больше записей, чем необходимо. Но добавление индекса на каждое поле тоже не является правильным решением. Индексы занимают место, требуют обслуживания и увеличивают стоимость операций записи. Для магазина, где постоянно меняются цены и остатки, это особенно важно.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : INDEX_WRITE_OVERHEAD ]</div><svg viewbox="0 0 750 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="40" width="140" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="90" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">ОБНОВЛЕНИЕ ERP</text><text x="90" y="95" fill="#666666" font-family="-apple-system, sans-serif" font-size="7" text-anchor="middle">30 000 товаров</text><line x1="160" y1="60" x2="210" y2="60" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="210,60 204,57 204,63" fill="#14b8a6"></polygon><rect x="220" y="30" width="160" height="60" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="300" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">БАЗА ДАННЫХ</text><text x="300" y="75" fill="#d0d0d0" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Запись данных</text><line x1="380" y1="45" x2="430" y2="30" stroke="#ff4444" stroke-width="1"></line><line x1="380" y1="60" x2="430" y2="60" stroke="#ff4444" stroke-width="1"></line><line x1="380" y1="75" x2="430" y2="90" stroke="#ff4444" stroke-width="1"></line><rect x="440" y="15" width="100" height="30" fill="#0a0a0a" stroke="#ff4444" stroke-width="1"></rect><text x="490" y="35" fill="#ff4444" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Индекс 1</text><rect x="440" y="50" width="100" height="30" fill="#0a0a0a" stroke="#ff4444" stroke-width="1"></rect><text x="490" y="70" fill="#ff4444" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Индекс 2</text><rect x="440" y="85" width="100" height="30" fill="#0a0a0a" stroke="#ff4444" stroke-width="1"></rect><text x="490" y="105" fill="#ff4444" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Индекс N</text><text x="600" y="70" fill="#ff4444" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Рост стоимости</text></svg><br>массовых изменений</div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Представим, что ERP каждые несколько минут обновляет данные по 30 тысячам товаров. При большом количестве индексов стоимость массовых изменений может заметно увеличиться. Поэтому необходимо анализировать не только отдельные поля, но и реальные комбинации условий.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Например, индекс, хорошо работающий для поиска по производителю, может оказаться неэффективным для запроса с одновременной фильтрацией по категории, производителю и доступности.</p><div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">ПЛАН ВЫПОЛНЕНИЯ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Использование <span style="font-family: 'SF Mono', monospace; color: #ffffff;">EXPLAIN ANALYZE</span> (в PostgreSQL) для просмотра фактического выполнения, количества обработанных строк и затрат операций.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">ОЦЕНКА КАРДИНАЛЬНОСТИ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Контроль разницы между оценочным и фактическим количеством строк. Ошибки оптимизатора ведут к неудачным планам выполнения.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">НЕРАВНОМЕРНОЕ РАСПРЕДЕЛЕНИЕ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Учёт того, что один производитель может занимать половину категории, а десятки других — иметь всего несколько товаров.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">АЛЬТЕРНАТИВНЫЕ РЕШЕНИЯ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Иногда проблема решается не новым индексом, а обновлением статистики или изменением структуры самого запроса.</p></div></div><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Слепое добавление индексов на каждое поле — это путь к деградации производительности при записи. Баланс между скоростью чтения и стоимостью обновления данных является ключевым фактором при проектировании схемы базы данных для растущего каталога.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Пагинация, которая незаметно начинает тормозить каталог</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Есть ещё одна техническая деталь, которую часто упускают при развитии магазина, — способ перехода между страницами каталога. Обычная <span style="font-family: 'SF Mono', monospace; color: #ffffff;">OFFSET</span>-пагинация кажется удобной:</p><div style="padding: 24px; margin: 0 0 20px 0; background: #0a0a0a; border: 1px solid #222222; border-left: 3px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 11px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">SQL</div><code style="font-family: 'SF Mono', monospace; font-size: 14px; color: #d0d0d0; line-height: 1.6; display: block; white-space: pre-wrap;">SELECT id, name, price<br>FROM products<br>WHERE category_id = 15<br>ORDER BY id<br>LIMIT 40 OFFSET 20000;</code></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">На небольших выборках всё работает нормально. Но чем дальше пользователь переходит по страницам, тем больше записей базе приходится пропускать перед тем, как вернуть нужный результат. При больших объёмах данных это может становиться дорогостоящей операцией.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Кроме того, при активном изменении каталога <span style="font-family: 'SF Mono', monospace; color: #ffffff;">OFFSET</span>-пагинация способна приводить к пропускам или повторному отображению товаров между страницами: пока пользователь переходит дальше, часть записей может изменить своё положение в сортировке.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : OFFSET_VS_KEYSET_PAGINATION ]</div><svg viewbox="0 0 750 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><text x="185" y="20" fill="#ff4444" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">OFFSET PAGINATION</text><rect x="20" y="35" width="350" height="30" fill="#0a0a0a" stroke="#ff4444" stroke-width="1.5"></rect><text x="195" y="55" fill="#ff4444" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Пропуск 20 000 строк перед возвратом 40</text><line x1="20" y1="80" x2="370" y2="80" stroke="#ff4444" stroke-width="1" stroke-dasharray="2 2"></line><text x="195" y="95" fill="#ff4444" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Стоимость растёт линейно с глубиной страницы</text><line x1="400" y1="20" x2="400" y2="140" stroke="#222222" stroke-width="1"></line><text x="575" y="20" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">KEYSET PAGINATION</text><rect x="420" y="35" width="310" height="30" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="575" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">Выборка от последнего ID (WHERE id &gt; last_id)</text><line x1="420" y1="80" x2="730" y2="80" stroke="#14b8a6" stroke-width="1" stroke-dasharray="2 2"></line><text x="575" y="95" fill="#14b8a6" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Постоянная стоимость независимо от глубины</text><text x="375" y="140" fill="#666666" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Для бесконечной прокрутки и последовательного просмотра keyset эффективнее</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Для сценариев с большими выборками применяют <strong style="color: #14b8a6;">keyset pagination</strong>, или пагинацию по курсору. Вместо пропуска тысяч строк система продолжает выборку относительно последнего полученного значения сортировки.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Например, если товары отсортированы по идентификатору, следующий запрос может выбирать позиции с <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ID</span> больше последнего показанного. Для сортировки по цене и дате создания потребуется учитывать составной ключ, чтобы обеспечить однозначный порядок.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Это решение не универсально: оно не всегда удобно для произвольного перехода на страницу 150. Но для длинных каталогов, бесконечной прокрутки и последовательного просмотра товаров часто оказывается существенно эффективнее.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Выбор между <span style="font-family: 'SF Mono', monospace; color: #ffffff;">OFFSET</span> и <span style="font-family: 'SF Mono', monospace; color: #ffffff;">keyset</span> должен основываться на реальных сценариях использования каталога, а не на предположениях о том, как пользователи будут навигировать по страницам.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Фильтры: самая дорогая часть каталога может скрываться за простым интерфейсом</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Покупатель выбирает производителя, диапазон цены и несколько характеристик. Через секунду ожидает увидеть подходящие товары. Для системы это может быть одна из наиболее сложных операций. Особенно если каталог содержит десятки тысяч позиций и большое количество технических параметров.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Представим категорию промышленного оборудования с 80 тысячами товаров и 25 характеристиками. Пользователь выбирает производителя и диапазон мощности. После этого магазин должен не только показать подходящие позиции, но и пересчитать доступные значения остальных фильтров. Если в категории остались только насосы определённого производителя, система должна определить, какие варианты напряжения, диаметра подключения и производительности действительно присутствуют среди подходящих товаров. Для этого используются <strong style="color: #14b8a6;">фасетные агрегации</strong>.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Высокая кардинальность и взрыв комбинаций</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Особенно неприятная ситуация возникает с характеристиками, которые имеют большое количество уникальных значений. Например, в каталоге присутствуют:</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 16px 20px; background: #0a0a0a;"><span style="font-family: 'SF Mono', monospace; font-size: 13px; color: #ff4444;">[!] Артикулы производителей.</span></div><div style="padding: 16px 20px; background: #0a0a0a;"><span style="font-family: 'SF Mono', monospace; font-size: 13px; color: #ff4444;">[!] Типоразмеры.</span></div><div style="padding: 16px 20px; background: #0a0a0a;"><span style="font-family: 'SF Mono', monospace; font-size: 13px; color: #ff4444;">[!] Модели.</span></div><div style="padding: 16px 20px; background: #0a0a0a;"><span style="font-family: 'SF Mono', monospace; font-size: 13px; color: #ff4444;">[!] Диаметры.</span></div><div style="padding: 16px 20px; background: #0a0a0a;"><span style="font-family: 'SF Mono', monospace; font-size: 13px; color: #ff4444;">[!] Технические обозначения.</span></div><div style="padding: 16px 20px; background: #0a0a0a;"><span style="font-family: 'SF Mono', monospace; font-size: 13px; color: #ff4444;">[!] Индивидуальные параметры исполнения.</span></div></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Если каждое значение превращается в отдельный элемент фильтра, количество вариантов быстро растёт. Допустим, в одной категории несколько тысяч уникальных моделей. Формировать для них полноценный список фасетов при каждом запросе не всегда оправданно. Возникает проблема <strong style="color: #ff4444;">высокой кардинальности</strong>.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Поисковый движок должен обработать большое количество уникальных значений, выполнить агрегации и вернуть результат, который зачастую не имеет практической ценности для пользователя. Показывать покупателю несколько тысяч вариантов фильтра тоже бессмысленно.</p><div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">ПРАВИЛЬНАЯ СТРАТЕГИЯ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Учитывать не только техническую возможность построения фасета, но и его полезность. Часть характеристик лучше представлять диапазонами, часть — ограниченными справочниками, а некоторые параметры вообще не стоит выводить в интерфейс фильтрации.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #ff4444; font-weight: bold; margin-bottom: 12px;">ОШИБКА: ВСЁ ПОДРЯД</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Пересчитывать все фасеты с максимальной точностью при каждом изменении любого параметра. Это не всегда необходимо. В зависимости от назначения фильтра допустимы разные стратегии расчёта и кеширования.</p></div></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Для часто используемых характеристик можно применять предварительную агрегацию или специализированные структуры данных. При этом важно учитывать распределение значений: одинаковая логика фильтрации может хорошо работать для производителя и плохо — для уникального артикула.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Почему нельзя кешировать все комбинации фильтров</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Здесь возникает соблазн сохранить в <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Redis</span> результаты каждого запроса. Но количество возможных комбинаций быстро становится огромным. Если посетитель может выбирать 15 производителей, 20 диапазонов мощности и несколько десятков других параметров, пространство комбинаций растёт очень быстро.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Большинство таких сочетаний никогда не будет запрошено повторно. В итоге кэш заполняется данными, которые занимают память, но практически не приносят пользы.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Разумнее анализировать статистику запросов и сохранять наиболее востребованные варианты: популярные категории, распространённые сочетания фильтров, часто используемые диапазоны. Для остальных комбинаций должна оставаться эффективная возможность расчёта без предварительного сохранения результата.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Это уже вопрос не просто кеширования, а управления стоимостью пользовательских сценариев. Архитектура фильтрации должна балансировать между скоростью ответа и полнотой доступных опций, не пытаясь кешировать всё, что теоретически может быть запрошено.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Поиск: почему SQL перестаёт быть достаточным инструментом</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">В небольшом магазине поиск по названию или артикулу можно реализовать непосредственно средствами базы данных. Но с развитием каталога требования становятся другими.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Покупатель вводит неполное название, допускает ошибку в артикуле, использует сокращение или привычное обозначение, отличающееся от официального названия производителя. Для промышленного оборудования это особенно характерно. Одна и та же позиция может фигурировать под техническим обозначением, коммерческим названием и внутренним артикулом поставщика.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : SQL_VS_SEARCH_ENGINE_CAPABILITIES ]</div><svg viewbox="0 0 750 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="30" width="320" height="80" fill="#0a0a0a" stroke="#ff4444" stroke-width="1.5"></rect><text x="180" y="55" fill="#ff4444" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ОБЫЧНЫЙ SQL (LIKE '%...%')</text><text x="40" y="78" fill="#666666" font-family="'SF Mono', monospace" font-size="8">[!] Сканирование большого количества записей</text><text x="40" y="96" fill="#666666" font-family="'SF Mono', monospace" font-size="8">[!] Нет обработки опечаток и синонимов</text><line x1="360" y1="70" x2="410" y2="70" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="410,70 404,67 404,73" fill="#14b8a6"></polygon><rect x="420" y="30" width="310" height="80" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="575" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ELASTICSEARCH / OPENSEARCH</text><text x="440" y="78" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="8">[+] Полнотекстовый поиск и обработка синонимов</text><text x="440" y="96" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="8">[+] Исправление опечаток, фильтрация, фасеты</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Обычный поиск по точному совпадению постепенно перестаёт справляться с такими сценариями. Запросы вида <span style="font-family: 'SF Mono', monospace; color: #ffffff;">LIKE '%значение%'</span> могут приводить к сканированию большого количества записей, поскольку обычный B-tree индекс не предназначен для эффективного поиска произвольной подстроки.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Для крупных каталогов используют специализированные поисковые движки, например <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Elasticsearch</span> и <span style="font-family: 'SF Mono', monospace; color: #ffffff;">OpenSearch</span>. Они позволяют организовать полнотекстовый поиск, обработку синонимов, исправление опечаток, фильтрацию, сортировку и фасетные агрегации.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Но здесь важно не допустить архитектурной ошибки: поисковый движок не должен становиться второй независимой базой первичных товарных данных.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Основная информация остаётся в базе магазина или учётной системе. Поисковый индекс представляет собой подготовленную копию данных для быстрого поиска. Это означает, что между ними необходимо поддерживать синхронизацию.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Когда поиск показывает товар, которого уже нет</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Предположим, складская система обновила остаток товара, а поисковый индекс ещё не получил соответствующее изменение. Покупатель видит доступную позицию, открывает карточку и обнаруживает отсутствие товара.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Или наоборот: товар уже снят с продажи, но поисковый индекс продолжает его выдавать. Такие ситуации возникают из-за задержек обновления индекса и неправильной организации обмена данными.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : SEARCH_INDEX_SYNC_DELAY ]</div><svg viewbox="0 0 750 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="50" width="160" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="100" y="75" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ОСНОВНАЯ БАЗА</text><text x="100" y="105" fill="#888888" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Товар: НЕТ В НАЛИЧИИ</text><line x1="180" y1="70" x2="260" y2="70" stroke="#ff4444" stroke-width="1.5" stroke-dasharray="4 4"></line><text x="220" y="60" fill="#ff4444" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">ЗАДЕРЖКА</text><polygon points="260,70 254,67 254,73" fill="#ff4444"></polygon><rect x="270" y="50" width="160" height="40" fill="#0a0a0a" stroke="#ff4444" stroke-width="1.5"></rect><text x="350" y="75" fill="#ff4444" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ПОИСКОВЫЙ ИНДЕКС</text><text x="350" y="105" fill="#888888" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Товар: В НАЛИЧИИ (Устарело)</text><line x1="430" y1="70" x2="490" y2="70" stroke="#333333" stroke-width="1.5"></line><polygon points="490,70 484,67 484,73" fill="#333333"></polygon><rect x="500" y="50" width="230" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="615" y="75" fill="#d0d0d0" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ПОЛЬЗОВАТЕЛЬ: РАЗОЧАРОВАНИЕ</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Поэтому поисковая система должна учитывать допустимую задержку синхронизации, а критичные бизнес-операции должны проверять актуальное состояние товара в основном контуре.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Для обновления индекса используют пакетную обработку, очереди событий и контроль повторной доставки. Также важно учитывать порядок событий. Например, если сначала пришло обновление с новым остатком, а затем задержавшееся старое событие, система не должна случайно восстановить устаревшее значение.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ВЕРСИИ ЗАПИСЕЙ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Использование инкрементальных версий для отклонения устаревших событий обновления.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ВРЕМЕННЫЕ МЕТКИ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Сравнение временных меток события и текущего состояния индекса перед применением изменений.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ПРОВЕРКА В ОСНОВНОМ КОНТУРЕ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Критичные операции (оформление заказа) всегда проверяют актуальность в основной базе, а не в индексе.</p></div></div><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Для этого применяют версии записей, временные метки или другие механизмы определения актуальности изменений. Без таких механизмов поисковый движок превращается из инструмента ускорения в источник противоречивой бизнес-информации.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Redis тоже может стать узким местом</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Обычно после обнаружения проблем производительности в магазин добавляют <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Redis</span>. Это логичный шаг, но само наличие быстрого хранилища в памяти не гарантирует, что нагрузка исчезнет.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;"><span style="font-family: 'SF Mono', monospace; color: #ffffff;">Redis</span> может эффективно обслуживать популярные кешируемые данные, но при неправильной организации доступа к ним возникают собственные проблемы.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : REDIS_BOTTLENECKS ]</div><svg viewbox="0 0 750 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><text x="185" y="20" fill="#ff4444" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ГОРЯЧИЕ КЛЮЧИ</text><rect x="20" y="35" width="100" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="70" y="55" fill="#888888" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">Клиент 1</text><rect x="20" y="75" width="100" height="30" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="70" y="95" fill="#888888" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">Клиент N</text><line x1="120" y1="50" x2="160" y2="65" stroke="#ff4444" stroke-width="1.5"></line><line x1="120" y1="90" x2="160" y2="65" stroke="#ff4444" stroke-width="1.5"></line><rect x="170" y="50" width="150" height="30" fill="#0a0a0a" stroke="#ff4444" stroke-width="1.5"></rect><text x="245" y="70" fill="#ff4444" font-family="'SF Mono', monospace" font-size="8" font-weight="700" text-anchor="middle">ОДИН ШАРД REDIS</text><text x="245" y="100" fill="#ff4444" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Неравномерная загрузка узлов</text><line x1="360" y1="20" x2="360" y2="140" stroke="#222222" stroke-width="1"></line><text x="550" y="20" fill="#f59e0b" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">CACHE STAMPEDE</text><rect x="400" y="35" width="120" height="30" fill="#0a0a0a" stroke="#f59e0b" stroke-width="1.5"></rect><text x="460" y="55" fill="#f59e0b" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">TTL ИСТЁК</text><line x1="520" y1="50" x2="560" y2="35" stroke="#f59e0b" stroke-width="1"></line><line x1="520" y1="50" x2="560" y2="50" stroke="#f59e0b" stroke-width="1"></line><line x1="520" y1="50" x2="560" y2="65" stroke="#f59e0b" stroke-width="1"></line><rect x="570" y="35" width="160" height="30" fill="#0a0a0a" stroke="#ff4444" stroke-width="1.5"></rect><text x="650" y="55" fill="#ff4444" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">МАССОВЫЕ ЗАПРОСЫ К БД</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Одна из них — <strong style="color: #ff4444;">горячие ключи</strong>. Представим, что определённая категория составляет значительную часть трафика магазина. Большинство посетителей одновременно обращаются к одному и тому же кешируемому результату. Вместо распределённой нагрузки система фактически концентрирует обращения на ограниченном наборе ключей. В распределённом <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Redis</span>-кластере это может приводить к неравномерной загрузке узлов и отдельных шардов.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Особенно важно учитывать такой сценарий при кешировании популярных категорий, главной страницы и часто используемых подборок.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Ещё одна проблема — Cache Stampede</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Кэш популярной страницы истекает, и сотни запросов одновременно пытаются заново получить данные из базы. В результате система начинает выполнять множество одинаковых дорогостоящих операций.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">БЛОКИРОВКИ ФОРМИРОВАНИЯ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Только один процесс получает право на пересчёт кэша, остальные ждут результата.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ПРЕДВАРИТЕЛЬНОЕ ОБНОВЛЕНИЕ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Фоновое обновление данных до того, как истечёт их актуальный TTL.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">STALE-WHILE-REVALIDATE</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Механизм выдачи предыдущего результата на время пересчёта, если бизнес-логика допускает небольшую задержку актуальности.</p></div></div><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Также необходимо грамотно выбирать время жизни записей и не сбрасывать большие группы ключей при каждом изменении товара.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Слепая инвалидация всего кэша категории при обновлении одного товара — это гарантированный путь к лавинообразной нагрузке на базу данных в часы пик.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Импорт из ERP способен замедлить магазин, даже если посетителей немного</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">О проблемах производительности часто говорят применительно к пользовательской нагрузке. Но в крупных интернет-магазинах значительную часть ресурсов могут потреблять фоновые процессы.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Особенно это касается синхронизации с <span style="font-family: 'SF Mono', monospace; color: #ffffff;">1С</span>, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ERP</span> и складскими системами. Допустим, в каталоге 150 тысяч товаров. Учётная система регулярно передаёт номенклатуру, цены, остатки и характеристики. Если каждое обновление обрабатывается отдельной операцией, нагрузка на базу и поисковый движок может оказаться весьма существенной. Причём даже тогда, когда фактически изменились всего несколько сотен позиций.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : ERP_IMPORT_CONCURRENCY_ISSUES ]</div><svg viewbox="0 0 750 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="30" width="160" height="40" fill="#0a0a0a" stroke="#f59e0b" stroke-width="1.5"></rect><text x="100" y="55" fill="#f59e0b" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ФОНОВЫЙ ИМПОРТ</text><line x1="180" y1="50" x2="240" y2="50" stroke="#ff4444" stroke-width="2"></line><text x="210" y="40" fill="#ff4444" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">БЛОКИРОВКИ</text><polygon points="240,50 234,47 234,53" fill="#ff4444"></polygon><rect x="250" y="30" width="160" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="330" y="55" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ПОЛЬЗОВАТЕЛЬСКИЕ ЗАПРОСЫ</text><line x1="410" y1="50" x2="470" y2="50" stroke="#333333" stroke-width="1.5"></line><polygon points="470,50 464,47 464,53" fill="#333333"></polygon><rect x="480" y="30" width="250" height="40" fill="#0a0a0a" stroke="#ff4444" stroke-width="1.5"></rect><text x="605" y="55" fill="#ff4444" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ОЖИДАНИЕ И РОСТ ВРЕМЕНИ ОТВЕТА</text><text x="375" y="110" fill="#666666" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Массовые обновления конкурируют с пользовательскими операциями за одни и те же таблицы и индексы</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Полная синхронизация каждые 15 минут — не всегда оправданная архитектура. Гораздо эффективнее передавать изменения, группировать операции и разделять данные по частоте обновления.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Но пакетная обработка тоже требует внимания. Если отправить огромный массив изменений одной транзакцией, можно получить длительные блокировки, повышенный объём <span style="font-family: 'SF Mono', monospace; color: #ffffff;">WAL</span> в <span style="font-family: 'SF Mono', monospace; color: #ffffff;">PostgreSQL</span> и существенную нагрузку на дисковую подсистему. Слишком маленькие пакеты, напротив, увеличивают количество служебных операций и накладные расходы. Размер пакета и параллельность обработчиков необходимо подбирать на основании измерений.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Блокировки при массовых обновлениях</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Представим, что система одновременно обновляет цены для 40 тысяч товаров. Параллельно посетители открывают карточки, выполняют поиск и добавляют позиции в корзину. Если импорт затрагивает те же таблицы и индексы, операции могут конкурировать за блокировки и ресурсы. В результате обычные пользовательские запросы начинают ждать завершения фоновых транзакций.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Проблема может проявляться не только в длительном импорте, но и в увеличении времени ответа отдельных страниц. Поэтому массовые обновления желательно организовывать так, чтобы минимизировать время удержания блокировок. Для этого используют небольшие транзакции, пакетное применение изменений, подготовку данных до записи и раздельные контуры обработки.</p><div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">ИЗОЛЯЦИЯ ПРОЦЕССОВ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Фоновые процессы выносятся в отдельные обработчики с ограниченной параллельностью и использованием очередей сообщений.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">ОБСЛУЖИВАНИЕ ТАБЛИЦ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">В <span style="font-family: 'SF Mono', monospace; color: #ffffff;">PostgreSQL</span> необходимо учитывать работу <span style="font-family: 'SF Mono', monospace; color: #ffffff;">autovacuum</span> и рост количества мёртвых версий строк при интенсивных обновлениях.</p></div></div><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Если массово изменять цены и остатки, а обслуживание таблиц не справляется с накоплением таких версий, производительность может постепенно ухудшаться.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Это уже не та проблема, которую получится решить простым добавлением оперативной памяти. Она требует пересмотра архитектуры фоновых задач и стратегии управления транзакциями.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Внешние интеграции: почему карточка товара иногда ждёт чужой сервер</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Есть ещё одна причина, по которой интернет-магазины могут медленно работать при росте ассортимента. Это синхронные обращения к внешним системам во время формирования пользовательской страницы.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Например, карточка товара обращается к <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ERP</span> за ценой, к складской системе за остатком, к сервису доставки за условиями получения. Каждый сервис отвечает с собственной задержкой. Если запросы выполняются последовательно, их время суммируется.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : SEQUENTIAL_VS_PARALLEL_EXTERNAL_CALLS ]</div><svg viewbox="0 0 750 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><text x="185" y="20" fill="#ff4444" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ПОСЛЕДОВАТЕЛЬНЫЕ ВЫЗОВЫ (1450 мс)</text><rect x="20" y="35" width="90" height="25" fill="#0a0a0a" stroke="#ff4444" stroke-width="1"></rect><text x="65" y="52" fill="#ff4444" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">ERP: 150 мс</text><rect x="115" y="35" width="120" height="25" fill="#0a0a0a" stroke="#ff4444" stroke-width="1"></rect><text x="175" y="52" fill="#ff4444" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">Склад: 400 мс</text><rect x="240" y="35" width="140" height="25" fill="#0a0a0a" stroke="#ff4444" stroke-width="1"></rect><text x="310" y="52" fill="#ff4444" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">Доставка: 900 мс</text><line x1="400" y1="20" x2="400" y2="140" stroke="#222222" stroke-width="1"></line><text x="575" y="20" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ПАРАЛЛЕЛЬНЫЕ ВЫЗОВЫ (900 мс)</text><rect x="420" y="35" width="90" height="25" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1"></rect><text x="465" y="52" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">ERP: 150 мс</text><rect x="420" y="65" width="120" height="25" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1"></rect><text x="480" y="82" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">Склад: 400 мс</text><rect x="420" y="95" width="140" height="25" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1"></rect><text x="490" y="112" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">Доставка: 900 мс</text><text x="375" y="150" fill="#666666" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">При параллельном выполнении время определяется самым медленным сервисом</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Допустим, три внешних сервиса отвечают за 150, 400 и 900 миллисекунд. Пользователь уже ждёт больше секунды, хотя само приложение и база данных могут работать быстро. Если один сервис начинает отвечать пять секунд, карточка задерживается на всё это время.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Поэтому отображение каталога и выполнение критичных бизнес-операций необходимо разделять. Предварительно синхронизированные данные могут использоваться для отображения товаров, цен и остатков с учётом допустимой актуальности. А перед оформлением заказа система выполняет необходимые проверки по актуальным данным.</p><div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">ТАЙМ-АУТЫ И ОГРАНИЧЕНИЯ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Для внешних вызовов предусматривают тайм-ауты, ограничение параллельности, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">circuit breaker</span> и корректную обработку недоступности зависимых сервисов.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">ГРАЦИОЗНАЯ ДЕГРАДАЦИЯ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Важно, чтобы отказ второстепенного сервиса не превращался в отказ всего интернет-магазина. При этом нельзя просто скрыть проблему и показать покупателю заведомо неверную цену или доступность товара.</p></div></div><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Поведение системы должно соответствовать требованиям конкретного бизнес-процесса. Отображение цены может допускать небольшую задержку актуальности, но оформление заказа с неверной ценой — это уже критическая бизнес-ошибка.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Как диагностировать проблему, если сервер не перегружен</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Это, пожалуй, один из самых важных вопросов. Нередко магазин начинает тормозить, хотя показатели загрузки процессора и памяти выглядят вполне приемлемо.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Причина в том, что высокая загрузка ресурсов и высокая задержка — не одно и то же. Система может тратить значительную часть времени на ожидание соединений, блокировок, внешних <span style="font-family: 'SF Mono', monospace; color: #ffffff;">API</span> или освобождения ресурсов. Поэтому начинать диагностику нужно не с предположения о неисправном сервере, а с конкретного пользовательского сценария.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : REQUEST_EXECUTION_TIME_BREAKDOWN ]</div><svg viewbox="0 0 750 140" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="30" width="710" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="375" y="55" fill="#888888" font-family="'SF Mono', monospace" font-size="9" font-weight="600" text-anchor="middle">ОТКРЫТИЕ КАТЕГОРИИ: 3500 мс</text><rect x="20" y="80" width="50" height="30" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1"></rect><text x="45" y="100" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">SQL</text><text x="45" y="120" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">250 мс</text><rect x="75" y="80" width="80" height="30" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1"></rect><text x="115" y="100" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">Поиск</text><text x="115" y="120" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">400 мс</text><rect x="160" y="80" width="120" height="30" fill="#0a0a0a" stroke="#ff4444" stroke-width="1.5"></rect><text x="220" y="100" fill="#ff4444" font-family="'SF Mono', monospace" font-size="7" font-weight="700" text-anchor="middle">Ожидание соединения</text><text x="220" y="120" fill="#ff4444" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">600 мс</text><rect x="285" y="80" width="70" height="30" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1"></rect><text x="320" y="100" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">Обработка</text><text x="320" y="120" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">350 мс</text><rect x="360" y="80" width="370" height="30" fill="#0a0a0a" stroke="#f59e0b" stroke-width="1.5"></rect><text x="545" y="100" fill="#f59e0b" font-family="'SF Mono', monospace" font-size="7" font-weight="700" text-anchor="middle">Прочие операции и ожидание</text><text x="545" y="120" fill="#f59e0b" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">1900 мс</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Возьмём три операции: открытие категории с большим количеством товаров, поиск по артикулу с несколькими фильтрами, открытие карточки с ценой и информацией о наличии. Для каждой необходимо построить цепочку выполнения: <span style="font-family: 'SF Mono', monospace; color: #ffffff;">HTTP</span>-запрос, приложение, база данных, поисковый движок, кеш и внешние сервисы.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Для этого используют <strong style="color: #14b8a6;">APM-системы и распределённую трассировку</strong>. Например, запрос на открытие категории может занимать 3,5 секунды. Но после анализа выясняется: выполнение SQL-запросов занимает 250 мс, получение результатов из поискового движка — 400 мс, ожидание свободного соединения — 600 мс, обработка связанных данных — 350 мс, остальное время приходится на дополнительные операции и ожидание. Теперь понятно, что проблема не сводится к одному медленному SQL-запросу.</p><h3 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px 0; color: #ffffff; letter-spacing: -0.1px; line-height: 1.4;">Почему среднее время ответа ничего не гарантирует</h3><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Допустим, среднее время ответа магазина составляет 400 мс. На первый взгляд всё хорошо. Но 95% запросов могут выполняться за 300 мс, а оставшиеся 5% — занимать по 5–8 секунд. Для части покупателей магазин фактически работает очень медленно.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Поэтому необходимо контролировать перцентили:</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ffffff; font-weight: bold; margin-bottom: 12px;">P50</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Медианное время ответа. Базовый ориентир производительности.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 14px; color: #14b8a6; font-weight: bold; margin-bottom: 12px;">P95</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Время, быстрее которого выполняются 95% запросов. Реальный опыт значительной части пользователей.</p></div><div style="padding: 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 14px; color: #ff4444; font-weight: bold; margin-bottom: 12px;">P99</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.6;">Позволяет увидеть наиболее медленные сценарии, которые почти не видны в средних показателях.</p></div></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Особенно важно отслеживать их отдельно для поиска, категорий, карточек товаров и оформления заказа. Также нужно измерять пропускную способность системы и количество ошибок при нагрузке.</p><div style="padding: 32px; margin: 0 0 0 0; background: #000000; border: 1px solid #222222; border-left: 4px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px;">ТОЧКА НАСЫЩЕНИЯ</div><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 16px 0; line-height: 1.6;">Один из полезных показателей — точка насыщения, после которой увеличение количества запросов начинает непропорционально увеличивать задержки.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500; line-height: 1.6;">Например, магазин может нормально обрабатывать 200 запросов в секунду, но при 300 запросах время ответа резко возрастает из-за очередей и конкуренции за ресурсы. Это гораздо важнее, чем просто знать максимальную загрузку процессора.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Разберём реальную инженерную логику на условном проекте</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Представим интернет-магазин оборудования с каталогом из 120 тысяч позиций. Подключены две складские системы, <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ERP</span> передаёт цены и характеристики, поисковый движок обслуживает фильтрацию, а <span style="font-family: 'SF Mono', monospace; color: #ffffff;">Redis</span> используется для кеширования категорий.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Во время обычной работы всё выглядит нормально. Но при рекламной кампании количество одновременных пользователей увеличивается, и магазин начинает отвечать с задержками. Команда предполагает, что инфраструктура не справляется. Однако перед увеличением серверных ресурсов решают изучить трассировки наиболее медленных запросов.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : FIVE_ENGINEERING_DISCOVERIES ]</div><svg viewbox="0 0 750 180" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="20" width="130" height="40" fill="#0a0a0a" stroke="#ff4444" stroke-width="1.5"></rect><text x="85" y="45" fill="#ff4444" font-family="'SF Mono', monospace" font-size="8" font-weight="700" text-anchor="middle">01 / N+1 ЗАПРОСЫ</text><rect x="160" y="20" width="130" height="40" fill="#0a0a0a" stroke="#ff4444" stroke-width="1.5"></rect><text x="225" y="45" fill="#ff4444" font-family="'SF Mono', monospace" font-size="8" font-weight="700" text-anchor="middle">02 / ФАСЕТЫ</text><rect x="300" y="20" width="130" height="40" fill="#0a0a0a" stroke="#ff4444" stroke-width="1.5"></rect><text x="365" y="45" fill="#ff4444" font-family="'SF Mono', monospace" font-size="8" font-weight="700" text-anchor="middle">03 / ERP ИМПОРТ</text><rect x="440" y="20" width="130" height="40" fill="#0a0a0a" stroke="#ff4444" stroke-width="1.5"></rect><text x="505" y="45" fill="#ff4444" font-family="'SF Mono', monospace" font-size="8" font-weight="700" text-anchor="middle">04 / CACHE STAMPEDE</text><rect x="580" y="20" width="150" height="40" fill="#0a0a0a" stroke="#ff4444" stroke-width="1.5"></rect><text x="655" y="45" fill="#ff4444" font-family="'SF Mono', monospace" font-size="8" font-weight="700" text-anchor="middle">05 / OFFSET ПАГИНАЦИЯ</text><line x1="85" y1="60" x2="85" y2="90" stroke="#ff4444" stroke-width="1"></line><line x1="225" y1="60" x2="225" y2="90" stroke="#ff4444" stroke-width="1"></line><line x1="365" y1="60" x2="365" y2="90" stroke="#ff4444" stroke-width="1"></line><line x1="505" y1="60" x2="505" y2="90" stroke="#ff4444" stroke-width="1"></line><line x1="655" y1="60" x2="655" y2="90" stroke="#ff4444" stroke-width="1"></line><rect x="20" y="100" width="710" height="60" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="375" y="125" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">ИСПРАВЛЕНИЕ ПО ПРИЧИНЕ, А НЕ ПО СИМПТОМУ</text><text x="375" y="145" fill="#d0d0d0" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Каждое изменение связано с обнаруженной причиной деградации</text></svg></div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #ff4444; font-weight: bold; margin-bottom: 8px;">01 / ПОВТОРНЫЕ SQL-ЗАПРОСЫ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Категории выполняют слишком много повторных SQL-запросов. После исправления N+1 и пересмотра загрузки связанных данных количество обращений к базе существенно сокращается.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #ff4444; font-weight: bold; margin-bottom: 8px;">02 / СЛОЖНЫЕ ФАСЕТЫ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Сложные фасетные агрегации обрабатывают характеристики с большим количеством уникальных значений. Часть фильтров пересматривают, для некоторых используют диапазоны и предварительную агрегацию.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #ff4444; font-weight: bold; margin-bottom: 8px;">03 / ИМПОРТ ИЗ ERP</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Импорт из ERP выполняет массовые обновления и конкурирует с пользовательскими запросами. Обработку переводят на пакетную модель с ограниченной параллельностью.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #ff4444; font-weight: bold; margin-bottom: 8px;">04 / CACHE STAMPEDE</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">При истечении кеша популярной категории множество запросов одновременно инициируют пересчёт. Добавляют управляемое обновление и защиту от Cache Stampede.</p></div><div style="padding: 20px 24px; background: #0a0a0a; grid-column: 1 / -1;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #ff4444; font-weight: bold; margin-bottom: 8px;">05 / OFFSET-ПАГИНАЦИЯ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">При последовательном переходе по страницам глубокая OFFSET-пагинация создаёт лишнюю нагрузку. Для основных сценариев просмотра внедряют keyset pagination. И только после устранения этих ограничений становится понятно, какие компоненты действительно нуждаются в масштабировании.</p></div></div><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 12px 0;">Здесь важно, что команда не начинала с внедрения микросервисов, замены СУБД или увеличения количества серверов. Каждое изменение было связано с обнаруженной причиной деградации.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Это принципиальная разница между оптимизацией по измерениям и попыткой лечить симптомы архитектурными решениями наугад.</p></div></div><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Когда оптимизации уже недостаточно и требуется менять архитектуру</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Не каждый крупный каталог требует распределённой системы. Иногда хорошо оптимизированное монолитное приложение способно обслуживать весьма значительные объёмы данных и пользователей.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Но существуют ситуации, когда разделение нагрузки становится оправданным. Например, поисковая система одновременно обслуживает сложные пользовательские запросы и получает большое количество обновлений от <span style="font-family: 'SF Mono', monospace; color: #ffffff;">ERP</span>. В этом случае необходимо разделить приоритеты чтения и записи, оптимизировать очереди и, возможно, выделить отдельные ресурсы для обработки индекса.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">БАЛАНСИРОВКА НАГРУЗКИ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Распределение трафика между экземплярами приложения.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ФОНОВЫЕ ОБРАБОТЧИКИ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Отдельные обработчики фоновых задач и импорта.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ПОИСКОВЫЙ КЛАСТЕР</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Специализированный кластер Elasticsearch или OpenSearch.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">REDIS</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Распределённый кеш для популярных данных.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">РЕПЛИКИ БД</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Реплики базы данных для подходящих операций чтения.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ОЧЕРЕДИ СООБЩЕНИЙ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Асинхронный обмен между компонентами системы.</p></div><div style="padding: 20px 24px; background: #0a0a0a; grid-column: 1 / -1;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">НЕЗАВИСИМЫЕ КОНТУРЫ АНАЛИТИКИ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Вынос аналитической нагрузки в отдельный контур, чтобы тяжёлые отчёты не мешали пользовательским операциям.</p></div></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Однако каждая дополнительная система увеличивает сложность эксплуатации. Репликация, например, не гарантирует мгновенной актуальности данных. Между основной базой и репликой возможна задержка. Поэтому критичные операции, требующие чтения только что записанных данных, необходимо направлять с учётом требований согласованности.</p><div style="padding: 32px; margin: 0 0 0 0; background: #000000; border: 1px solid #222222; border-left: 4px solid #14b8a6; box-sizing: border-box;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 16px; text-transform: uppercase; letter-spacing: 1px;">МИКРОСЕРВИСЫ НЕ ЯВЛЯЮТСЯ АВТОМАТИЧЕСКИМ РЕШЕНИЕМ</div><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 16px 0; line-height: 1.6;">Микросервисная архитектура также не является автоматическим способом ускорения. Она может изолировать нагрузку и упростить масштабирование отдельных компонентов, но одновременно добавляет сетевые взаимодействия, распределённые ошибки и необходимость согласовывать данные между сервисами.</p><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500; line-height: 1.6;">Если проблема находится в неэффективном запросе или неудачной структуре каталога, переход на микросервисы способен лишь усложнить систему. Масштабировать нужно не модную архитектуру, а конкретную операцию, которая перестала укладываться в требования проекта.</p></div></div><p> </p><div style="max-width: 1100px; margin: 48px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 22px; font-weight: 600; margin: 0 0 20px 0; color: #ffffff; letter-spacing: -0.2px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Нагрузочное тестирование: почему тест на тысяче товаров не показывает реальную картину</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Есть распространённая ошибка при проверке производительности: тестировать магазин на небольшой тестовой базе, где товары имеют одинаковую структуру и почти не отличаются друг от друга.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Такие тесты могут показывать отличные результаты, но плохо отражать поведение производственного каталога. В реальной системе распределение данных неравномерное. У одной категории может быть 60 тысяч товаров, у другой — несколько десятков. У одного производителя тысячи позиций, у другого — две. Некоторые характеристики имеют всего несколько значений, другие — десятки тысяч уникальных вариантов.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : UNREALISTIC_VS_REALISTIC_LOAD_TEST ]</div><svg viewbox="0 0 750 160" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><text x="185" y="20" fill="#ff4444" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ТЕСТОВАЯ БАЗА (1000 ТОВАРОВ)</text><rect x="20" y="35" width="350" height="50" fill="#0a0a0a" stroke="#ff4444" stroke-width="1.5"></rect><text x="195" y="55" fill="#ff4444" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">ОДИНАКОВАЯ СТРУКТУРА</text><text x="195" y="72" fill="#d0d0d0" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Равномерное распределение, нет уникальных значений</text><text x="195" y="110" fill="#ff4444" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Результат: Отличный, но не отражает реальность</text><line x1="400" y1="20" x2="400" y2="140" stroke="#222222" stroke-width="1"></line><text x="575" y="20" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="9" font-weight="700" text-anchor="middle">ПРОДАКШН-БАЗА (150 000 ТОВАРОВ)</text><rect x="420" y="35" width="310" height="50" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="575" y="55" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="8" text-anchor="middle">НЕРАВНОМЕРНОЕ РАСПРЕДЕЛЕНИЕ</text><text x="575" y="72" fill="#d0d0d0" font-family="-apple-system, sans-serif" font-size="8" text-anchor="middle">Категории 10-60 000, высокая кардинальность</text><text x="575" y="110" fill="#14b8a6" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">Результат: Реальная картина производительности</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 16px 0;">Поэтому нагрузочное тестирование должно воспроизводить не только количество записей, но и структуру каталога. Особенно важно проверять:</p><div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">РАЗНЫЕ КАТЕГОРИИ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Популярные и малопосещаемые категории с разной плотностью товаров.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ГЛУБОКАЯ ПАГИНАЦИЯ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Переход на страницы 100+ с большим количеством товаров.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">СЛОЖНЫЕ ФИЛЬТРЫ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Комбинации фильтров с высокой кардинальностью значений.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ПОИСК ПО АРТИКУЛУ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Поиск по артикулу и неполному названию товара.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">МАССОВЫЕ ОБНОВЛЕНИЯ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Одновременная работа пользователей и фоновых обработчиков при обновлении цен и остатков.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">НЕДОСТУПНОСТЬ СЕРВИСОВ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Поведение системы при недоступности внешних сервисов.</p></div><div style="padding: 20px 24px; background: #0a0a0a; grid-column: 1 / -1;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ПИКОВЫЕ СЦЕНАРИИ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Во время распродажи посетители могут одновременно открывать одни и те же популярные категории. Это совершенно другая нагрузка, чем равномерное распределение запросов по всему каталогу. Именно такие сценарии позволяют обнаружить горячие ключи кеша, очереди, проблемы с соединениями и резкое увеличение времени ответа.</p></div></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Нужно тестировать не только максимальную нагрузку, но и поведение после её снижения. Некоторые проблемы проявляются именно при восстановлении системы: накопленные очереди начинают обрабатываться одновременно, кеш массово перестраивается, а поисковый индекс получает большую порцию изменений.</p><div style="padding: 24px; margin: 0 0 0 0; background: #0a0a0a; border-left: 3px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #ffffff; margin: 0; font-weight: 500;">Хорошая система должна не просто выдерживать пик, но и возвращаться к нормальному режиму без длительной деградации. Если после снижения нагрузки магазин продолжает тормозить ещё час — это признак архитектурной проблемы, а не временного сбоя.</p></div></div><div style="max-width: 1100px; margin: 64px auto 0 auto; width: 100%; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #d0d0d0; text-align: left; line-height: 1.7; padding: 0; box-sizing: border-box;"><h2 style="font-size: 24px; font-weight: 600; margin: 0 0 24px 0; color: #ffffff; letter-spacing: -0.3px; line-height: 1.3; border-left: 3px solid #14b8a6; padding-left: 16px;">Производительность каталога — это результат согласованной работы всей системы</h2><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">Когда интернет-магазин начинает тормозить при росте ассортимента, редко существует одна универсальная причина. Иногда проблема находится в базе данных, иногда в поисковом движке, иногда в механизме кеширования или фоновой синхронизации. Нередко несколько небольших недостатков одновременно создают эффект, который невозможно устранить настройкой одного компонента.</p><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 32px 0;">Поэтому производительность необходимо рассматривать сквозным образом. Товар поступает из учётной системы, обрабатывается приложением, сохраняется в основной базе, попадает в поисковый индекс, участвует в фильтрации и кешируется для последующего отображения. Затем пользователь открывает карточку, а система должна предоставить ему актуальные данные без лишних обращений и длительных ожиданий.</p><div style="margin: 0 auto 40px auto; max-width: 750px; width: 100%; text-align: left; background: #000000; border: 1px solid #222222; box-sizing: border-box; padding: 24px 20px;"><div style="font-family: 'SF Mono', monospace; font-size: 10px; color: #666666; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 24px;">[ DIAGRAM : END_TO_END_PRODUCT_JOURNEY ]</div><svg viewbox="0 0 750 120" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; display: block;"><rect x="20" y="40" width="90" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="65" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">ERP / 1С</text><line x1="110" y1="60" x2="140" y2="60" stroke="#333333" stroke-width="1.5"></line><polygon points="140,60 136,58 136,62" fill="#333333"></polygon><rect x="150" y="40" width="90" height="40" fill="#0a0a0a" stroke="#333333" stroke-width="1"></rect><text x="195" y="65" fill="#888888" font-family="'SF Mono', monospace" font-size="7" text-anchor="middle">ПРИЛОЖЕНИЕ</text><line x1="240" y1="60" x2="270" y2="60" stroke="#333333" stroke-width="1.5"></line><polygon points="270,60 266,58 266,62" fill="#333333"></polygon><rect x="280" y="40" width="90" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="325" y="65" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="7" font-weight="700" text-anchor="middle">БАЗА ДАННЫХ</text><line x1="370" y1="60" x2="400" y2="60" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="400,60 396,58 396,62" fill="#14b8a6"></polygon><rect x="410" y="40" width="90" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="455" y="65" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="7" font-weight="700" text-anchor="middle">ПОИСКОВИК</text><line x1="500" y1="60" x2="530" y2="60" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="530,60 526,58 526,62" fill="#14b8a6"></polygon><rect x="540" y="40" width="90" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="1.5"></rect><text x="585" y="65" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="7" font-weight="700" text-anchor="middle">REDIS</text><line x1="630" y1="60" x2="660" y2="60" stroke="#14b8a6" stroke-width="1.5"></line><polygon points="660,60 656,58 656,62" fill="#14b8a6"></polygon><rect x="670" y="40" width="60" height="40" fill="#0a0a0a" stroke="#14b8a6" stroke-width="2"></rect><text x="700" y="65" fill="#14b8a6" font-family="'SF Mono', monospace" font-size="7" font-weight="700" text-anchor="middle">USER</text><text x="375" y="105" fill="#666666" font-family="-apple-system, sans-serif" font-size="9" text-anchor="middle">На каждом этапе есть собственные ограничения и точки отказа</text></svg></div><p style="font-size: 16px; color: #b0b0b0; margin: 0 0 20px 0;">На каждом этапе есть собственные ограничения. Именно поэтому увеличение каталога должно сопровождаться не только расширением функциональности, но и пересмотром способов обработки данных.</p><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; margin: 0 0 32px 0; background: #222222; border: 1px solid #222222;"><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ДЛЯ ОДНОЙ СИСТЕМЫ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Оптимизация SQL-запросов и индексов.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ДЛЯ ДРУГОЙ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Изменение логики фильтрации и фасетов.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ДЛЯ ТРЕТЬЕЙ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Разделение фоновых и пользовательских операций.</p></div><div style="padding: 20px 24px; background: #0a0a0a;"><div style="font-family: 'SF Mono', monospace; font-size: 12px; color: #14b8a6; font-weight: bold; margin-bottom: 8px;">ДЛЯ ЧЕТВЁРТОЙ</div><p style="font-size: 15px; color: #b0b0b0; margin: 0; line-height: 1.5;">Переход к более сложной архитектуре хранения и обработки информации.</p></div></div><div style="padding: 32px; margin: 0 0 0 0; background: #000000; border: 1px solid #222222; border-left: 4px solid #14b8a6; box-sizing: border-box;"><p style="font-size: 16px; color: #d0d0d0; margin: 0 0 16px 0;">Главное — не путать масштабирование с простым увеличением ресурсов. Быстрый интернет-магазин — это не тот, у которого самый мощный сервер или больше всего технологий в архитектуре.</p><p style="font-size: 18px; color: #ffffff; margin: 0; font-weight: 600; line-height: 1.6; letter-spacing: -0.2px;">Это система, в которой рост количества товаров и пользователей не заставляет каждый раз выполнять всё больше ненужной работы. Именно способность сохранять предсказуемое время ответа при изменении нагрузки отличает <span style="color: #14b8a6;">архитектуру, рассчитанную на развитие</span>, от решения, которое хорошо работает только до следующего существенного увеличения каталога.</p></div></div><p> </p><div style="max-width: 1100px; margin: 60px auto 0 auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">НАВИГАЦИЯ // SUGGESTED_READING</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ИНТЕГРАЦИИ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">API, Webhook или очередь сообщений?</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/api-webhook-ili-ochered-soobshcheniy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // 1С / CRM ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">1С, CRM и сайт: как системы обмениваются данными</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/1s-crm-i-sayt-kak-sistemy-obmenivayutsya-dannymi/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // ИНТЕГРАЦИИ ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Когда API есть, а интеграция всё равно не работает</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kogda-api-est-a-integraciya-vsyo-ravno-ne-rabotaet/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div></div></div><div style="max-width: 1100px; margin: 20px auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; border-top: 1px solid #165c52; padding: 40px 0 0 0; box-sizing: border-box; width: 100%;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 40px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ EXPERTISE JOURNAL ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Все инженерные материалы и экспертные статьи</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/ekspertiza/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">перейти к каталогу ──►</a></div></div><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ CORE GLOSSARY ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Полный алфавитный справочник ИТ-терминов</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/glossariy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">открыть справочник ──►</a></div></div></div></div><p> </p></div></article></main><footer class="footer"><div class="wrapper"><div class="footer__copyright"><p> </p><p> </p></div><button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg width="20" height="20"><use xlink:href="https://log-ai.ru/assets/svg/svg-map.svg#toparrow"/></svg></button></div></footer><script defer="defer" src="https://log-ai.ru/assets/js/scripts.min.js?v&#x3D;d0fc1030089a37f93a2d51bf6d07565c"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script><script>(() => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') !== 'monument') return;
+
+  const IMAGE_URL = 'https://log-ai.ru/media/files/Interstellar.jpeg';
+  const AUDIO_URL = 'https://log-ai.ru/media/files/interstellar.mp3';
+
+  // Защита от повторного запуска
+  if (document.getElementById('log-ai-monument')) return;
+
+  const monument = document.createElement('div');
+  monument.id = 'log-ai-monument';
+
+  const root = document.documentElement;
+  const body = document.body;
+
+  const previousRootOverflow = root.style.overflow;
+  const previousBodyOverflow = body.style.overflow;
+  const previousBodyPosition = body.style.position;
+  const previousBodyTop = body.style.top;
+  const previousBodyWidth = body.style.width;
+  const previousScrollX = window.scrollX;
+  const previousScrollY = window.scrollY;
+
+  root.style.overflow = 'hidden';
+  body.style.overflow = 'hidden';
+  body.style.position = 'fixed';
+  body.style.top = `-${previousScrollY}px`;
+  body.style.width = '100%';
+
+  monument.innerHTML = `
+    <div class="monument-universe"></div>
+    <canvas class="monument-stars"></canvas>
+    <div class="monument-shade"></div>
+
+    <div class="monument-frame">
+      <p class="monument-overline">ARCHIVUM · LOG-AI · MMXXVI</p>
+
+      <div class="monument-rule"></div>
+
+      <h1>PER ASPERA<br><span>AD ASTRA</span></h1>
+
+      <p class="monument-translation">
+        THROUGH HARDSHIP, TO THE STARS
+      </p>
+
+      <div class="monument-message">
+        <p>TO THOSE WHO BUILD BEYOND THE LIMITS OF THEIR TIME.</p>
+        <p>TO THOSE WHO CONTINUE WHEN THE OUTCOME IS UNKNOWN.</p>
+        <p>TO THOSE WHO WILL DISCOVER THIS LONG AFTER ITS CREATION.</p>
+      </div>
+
+      <p class="monument-declaration">
+        YOU WERE NOT THE FIRST TO LOOK AT THE STARS.<br>
+        BUT YOU MAY BE AMONG THOSE WHO REACH THEM.
+      </p>
+
+      <div class="monument-rule"></div>
+          
+      <p class="monument-translation">
+        A MARK LEFT IN THE MACHINE.
+      </p>   
+
+      <p class="monument-signature">
+        LOG·AI·ARCHITECTI·MMXXVI
+      </p>
+
+      <p class="monument-exit" id="monument-hint">
+        [ CLICK ANYWHERE TO RETURN ]
+      </p>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #log-ai-monument {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      background: #03040a;
+      color: #e5dfd3;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      box-sizing: border-box;
+      cursor: pointer;
+      isolation: isolate;
+      opacity: 0;
+      animation: logai-monument-appear 1.8s ease forwards;
+    }
+
+    #log-ai-monument .monument-universe {
+      position: fixed;
+      inset: -3%;
+      z-index: -3;
+      background-image: url("https://log-ai.ru/media/files/Interstellar.jpeg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transform: scale(1.02);
+      animation: logai-cosmic-drift 35s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-shade {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(0,0,0,.24) 0%,
+          rgba(0,0,0,.52) 65%,
+          rgba(0,0,0,.78) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.42),
+          rgba(0,0,0,.18) 45%,
+          rgba(0,0,0,.62)
+        );
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-frame {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', serif;
+      padding: 30px 0;
+      text-shadow: 0 2px 18px rgba(0,0,0,.9);
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-translation,
+    #log-ai-monument .monument-signature,
+    #log-ai-monument .monument-exit {
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-signature {
+      color: #c0a16a;
+    }
+
+    #log-ai-monument .monument-rule {
+      height: 1px;
+      width: 160px;
+      max-width: 60%;
+      margin: 30px auto;
+      background: linear-gradient(
+        to right,
+        transparent,
+        #a68a55,
+        transparent
+      );
+      box-shadow: 0 0 12px rgba(190,155,90,.2);
+    }
+
+    #log-ai-monument h1 {
+      margin: 35px 0 18px;
+      font-size: clamp(30px, 7vw, 58px);
+      line-height: 1.5;
+      letter-spacing: .16em;
+      font-weight: 400;
+      color: #f4f0e8;
+    }
+
+    #log-ai-monument h1 span {
+      color: #d2b77e;
+    }
+
+    #log-ai-monument .monument-translation {
+      color: #c0b8aa;
+    }
+
+    #log-ai-monument .monument-message {
+      margin: 55px auto 38px;
+      max-width: 490px;
+      color: #e0d9cd;
+      font-size: 13px;
+      line-height: 2.2;
+      letter-spacing: .035em;
+    }
+
+    #log-ai-monument .monument-message p {
+      margin: 0 0 12px;
+    }
+
+    #log-ai-monument .monument-declaration {
+      color: #e0c48a;
+      font-size: 12px;
+      line-height: 2.3;
+      letter-spacing: .08em;
+    }
+
+    #log-ai-monument .monument-exit {
+      margin-top: 36px;
+      color: #c0b8aa;
+      font-size: 9px;
+      letter-spacing: .18em;
+    }
+
+    @keyframes logai-monument-appear {
+      to { opacity: 1; }
+    }
+
+    @keyframes logai-cosmic-drift {
+      from { transform: scale(1.02); }
+      to { transform: scale(1.13); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #log-ai-monument,
+      #log-ai-monument .monument-universe {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(monument);
+
+  // Тонкие, редкие звёзды
+  const canvas = monument.querySelector('.monument-stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let frameId = null;
+  let closed = false;
+
+  function resizeStars() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(window.innerWidth * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    stars = Array.from({ length: 65 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      length: 8 + Math.random() * 25,
+      speed: 0.25 + Math.random() * 0.75,
+      alpha: 0.15 + Math.random() * 0.5,
+      delay: Math.random() * 500
+    }));
+  }
+
+  function drawStars() {
+    if (closed) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    for (const star of stars) {
+      star.delay -= 1;
+
+      if (star.delay <= 0) {
+        star.y += star.speed;
+        star.x -= star.speed * 0.35;
+
+        ctx.beginPath();
+        ctx.moveTo(star.x, star.y);
+        ctx.lineTo(star.x - star.length * 0.35,
+                   star.y - star.length);
+
+        ctx.strokeStyle = `rgba(210,220,255,${star.alpha})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+
+        if (star.y > h + 30 || star.x < -30) {
+          star.x = Math.random() * w + 30;
+          star.y = -Math.random() * h * 0.4;
+          star.delay = 30 + Math.random() * 180;
+        }
+      }
+    }
+
+    frameId = requestAnimationFrame(drawStars);
+  }
+
+  resizeStars();
+  drawStars();
+
+  window.addEventListener('resize', resizeStars);
+
+  // Музыка
+  const audio = document.createElement('audio');
+  audio.id = 'monument-audio';
+  audio.src = AUDIO_URL;
+  audio.loop = true;
+  audio.preload = 'auto';
+  audio.volume = 0.35;
+  document.body.appendChild(audio);
+
+  let playing = false;
+  let starting = false;
+
+  const hint = document.getElementById('monument-hint');
+
+  function startMusic() {
+    if (closed || starting || playing) return;
+
+    starting = true;
+
+    audio.play().then(() => {
+      starting = false;
+
+      if (closed) {
+        audio.pause();
+        return;
+      }
+
+      playing = true;
+      hint.textContent = '[ CLICK ANYWHERE TO RETURN ]';
+    }).catch((error) => {
+      starting = false;
+
+      if (closed) return;
+
+      if (error.name === 'NotAllowedError') {
+        hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+        return;
+      }
+
+      console.warn('LOG-AI audio:', error.name, error.message);
+      hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+    });
+  }
+
+  function closeMonument() {
+    if (closed) return;
+    closed = true;
+
+    cancelAnimationFrame(frameId);
+    window.removeEventListener('resize', resizeStars);
+    window.removeEventListener('keydown', onKeyDown);
+
+    audio.pause();
+    audio.remove();
+    monument.remove();
+    style.remove();
+
+    root.style.overflow = previousRootOverflow;
+    body.style.overflow = previousBodyOverflow;
+    body.style.position = previousBodyPosition;
+    body.style.top = previousBodyTop;
+    body.style.width = previousBodyWidth;
+
+    window.scrollTo(previousScrollX, previousScrollY);
+
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete('mode');
+
+    window.history.replaceState(
+      {},
+      document.title,
+      cleanUrl.pathname + cleanUrl.search + cleanUrl.hash
+    );
+  }
+
+  function onKeyDown(event) {
+    if (event.key === 'Escape') closeMonument();
+  }
+
+  monument.addEventListener('click', () => {
+    if (closed) return;
+
+    if (playing) {
+      closeMonument();
+    } else {
+      startMusic();
+    }
+  });
+
+  window.addEventListener('keydown', onKeyDown);
+
+  // Первая попытка автоматического запуска
+  startMusic();
+})();</script><script>(function () {
+    // ВНИМАНИЕ!!!!!!!!!!!!!!!!!!!!Плавный инерционный скролл только для мыши/тачпада
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    let targetY = window.scrollY;
+    let currentY = window.scrollY;
+    let animationFrame = null;
+
+    // ===== НАСТРОЙКИ =====
+    const SPEED = 0.70;       // 0.4 = медленнее, 0.65 = средне, 1.0 = быстрее
+    const SMOOTHNESS = 0.13;  // 0.08 = мягче, 0.12 = средне, 0.18 = быстрее
+    const MAX_STEP = 500;     // максимальный шаг одного движения колеса
+    // =====================
+
+    function animateScroll() {
+        currentY += (targetY - currentY) * SMOOTHNESS;
+
+        if (Math.abs(targetY - currentY) < 0.5) {
+            currentY = targetY;
+            window.scrollTo(0, currentY);
+            animationFrame = null;
+            return;
+        }
+
+        window.scrollTo(0, currentY);
+        animationFrame = requestAnimationFrame(animateScroll);
+    }
+
+    window.addEventListener('wheel', function (event) {
+
+    // Если глобус активирован кликом —
+    // колесо полностью отдаём Globe.gl для zoom.
+    const globe = event.target.closest('#globeViz');
+
+    if (globe && globe.dataset.interacting === 'true') {
+        return;
+    }
+
+    // Внутренний скролл AI-чата не трогаем
+    if (event.target.closest('#logai-window, #logai-msgs')) {
+        return;
+    }
+
+    event.preventDefault();
+
+        let delta = event.deltaY * SPEED;
+
+        // Ограничиваем слишком резкие движения
+        delta = Math.max(-MAX_STEP, Math.min(MAX_STEP, delta));
+
+        targetY += delta;
+
+        // Не даём уйти выше/ниже страницы
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        targetY = Math.max(0, Math.min(targetY, maxY));
+
+        if (!animationFrame) {
+            animationFrame = requestAnimationFrame(animateScroll);
+        }
+    }, { passive: false });
+
+    // Синхронизация, если страницу прокрутили другим способом
+    window.addEventListener('scroll', function () {
+        if (!animationFrame) {
+            targetY = window.scrollY;
+            currentY = window.scrollY;
+        }
+    }, { passive: true });
+
+})();</script><div id="logai-footer-mobile" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box;"><div style="margin: 0 auto 20px auto; padding-top: 40px; text-align: center; margin-bottom: 40px;"><a href="mailto:info@log-ai.ru" style="font-size: 24px; font-family: 'SF Mono', Monaco, monospace; color: #e5e7eb; text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: 0.3px;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#e5e7eb'">info@log-ai.ru</a><p style="color: #aaaaaa; font-size: 15px; line-height: 1.6; max-width: 750px; margin: 15px auto 0 auto;">Пришлите описание задачи, техническое задание или ссылку на существующую систему. Мы оценим задачу и определим возможные варианты реализации.</p></div><div style="max-width: 850px; margin: 0 auto 40px auto; text-align: center; background: #000000; padding: 0; box-sizing: border-box;"><p style="color: #aaaaaa; font-size: 14px; line-height: 1.6; margin: 0;"><span style="color: #4ade80; margin-right: 6px;">🔒</span> Данные и доступ к системам заказчика обрабатываются в соответствии с согласованными требованиями к безопасности и конфиденциальности. Условия доступа, хранения и обработки данных определяются архитектурой проекта и договором.</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; box-sizing: border-box; width: 100%; margin-bottom: 30px;"><p style="color: #666666; font-size: 12px; line-height: 1.6; margin: 0; width: 100%; text-align: justify;">Сайт носит исключительно информационный характер и не является публичной офертой в соответствии со статьёй 437 Гражданского кодекса РФ. Цены, состав и условия предоставления услуг уточняются при проектировании решения и фиксируются в договоре. Условия технического сопровождения и уровень сервиса могут дополнительно определяться отдельным соглашением (SLA).</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; width: 100%; box-sizing: border-box;"><div style="color: #666666; font-size: 12px; line-height: 1.5; text-align: left;">© 2026 Log-AI<br>Автоматизация бизнеса и ИИ-решения под ключ. Работаем по всей России и СНГ.<br>ИП Скопец Антон Викторович<br>ИНН 741709<span></span>260870 · ОГРНИП 326745600<span></span>204228<br>Все права защищены.</div><div style="display: flex; gap: 20px; flex-wrap: wrap; font-family: sans-serif;"><a href="/privacy-policy/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Политика конфиденциальности</a> <a href="/terms/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Пользовательское соглашение</a></div></div></div><style>@media screen and (max-width: 600px) {
+  #logai-footer-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+}</style><style>/* Анимации и точки */
+    @keyframes logai-bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+    .logai-dots { display: flex !important; flex-direction: row !important; gap: 4px !important; align-items: center !important; height: 12px !important; }
+    .logai-dots span { display: inline-block; width: 5px; height: 5px; background: #aaa !important; border-radius: 50%; animation: logai-bounce 1.4s infinite ease-in-out; }
+    .logai-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .logai-dots span:nth-child(3) { animation-delay: 0.4s; }
+    
+    #logai-msgs::-webkit-scrollbar { width: 5px; }
+    #logai-msgs::-webkit-scrollbar-thumb { background: #666; border-radius: 10px; }
+    
+    /* Сообщения и текст */
+    #logai-msgs div { white-space: pre-wrap !important; word-wrap: break-word !important; padding: 12px 16px !important; margin-bottom: 5px !important; display: flex; flex-direction: column; justify-content: center; }
+    #logai-msgs div p { margin: 0 !important; padding: 0 !important; line-height: 1.5 !important; }
+    #logai-msgs { gap: 12px !important; padding: 20px !important; }
+
+    /* Поле ввода и кнопка отправить */
+    #logai-input { flex: 1 !important; padding: 12px 18px !important; border-radius: 20px !important; background: #4a4e56 !important; border: 1px solid rgba(255,255,255,0.1) !important; outline: none !important; color: #fff !important; font-size: 15px !important; resize: none !important; max-height: 120px !important; line-height: 1.4 !important; }
+    #logai-send-btn { background-color: #007bff !important; border: none !important; width: 45px !important; height: 45px !important; border-radius: 50% !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-size: 24px !important; padding: 0 !important; flex-shrink: 0 !important; }
+
+    /* ГЛАВНЫЕ СТИЛИ (чтобы кнопка и окно не исчезали) */
+    #logai-btn {
+        position: fixed !important; bottom: 40px !important; right: 110px !important;
+        width: 65px !important; height: 65px !important; border-radius: 50% !important;
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        cursor: pointer !important; z-index: 10000 !important; box-shadow: 0 10px 25px rgba(0,123,255,0.4);
+    }
+
+    #logai-window {
+        display: none; position: fixed !important; bottom: 115px !important; right: 110px !important;
+        width: 380px !important; height: 600px !important; background: #3b3e45 !important;
+        border-radius: 24px !important; flex-direction: column; overflow: hidden;
+        z-index: 10000 !important; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.15) !important;
+    }
+
+        /* АДАПТИВ ДЛЯ МОБИЛОК: ЧАТ НА ВЕСЬ ЭКРАН */
+    @media screen and (max-width: 480px) {
+        #logai-window { 
+            right: 0 !important; 
+            left: 0 !important; 
+            bottom: 0 !important; 
+            width: 100% !important; 
+            height: 100% !important; /* Растягиваем окно на 100% экрана смартфона */
+            border-radius: 0 !important; /* Убираем скругления углов, чтобы чат сел монолитом */
+            z-index: 999999 !important; /* Перекрываем все кнопки в ноль */
+        }
+        
+        #logai-btn { 
+            bottom: 80px !important; /* Твоя родная высота кнопки, когда чат закрыт */
+            right: 22px !important;  /* Твой родной сдвиг кнопки */
+            z-index: 999998 !important; /* Когда чат открыт, кнопка останется под ним и не будет торчать */
+        }
+    }</style><div id="logai-widget" style="position: fixed; bottom: var(--widget-bottom, 20px); right: var(--widget-right, 20px); z-index: 9999;"><div id="logai-btn" onclick="toggleLogAI()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><div id="logai-window"><div style="background: #2d3035; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; align-items:center; gap:12px;"><div style="width:35px; height:35px; background:#007bff; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(0,123,255,0.5);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg></div><span style="font-weight:600; color:#fff; font-size:16px; letter-spacing: 0.5px;">AI Ассистент</span></div><span onclick="toggleLogAI()" style="cursor:pointer; color:#fff; font-size:35px; line-height: 0.7; opacity: 0.7;">&times;</span></div><div id="logai-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; background:#3b3e45;"></div><div style="padding:15px 15px 8px 15px; background:#2d3035; display:flex; flex-direction:column; border-top: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; gap:10px; align-items:flex-end; width:100%;"><textarea id="logai-input" rows="1" placeholder="Напишите..." oninput="this.style.height='';this.style.height=this.scrollHeight+'px'"></textarea> <button id="logai-send-btn" onclick="sendLogAI()">➤</button></div><div style="text-align:center; font-size:10px; color:#ffffff; opacity:0.3; margin-top:6px; font-family:sans-serif; pointer-events:none; user-select:none;">ИИ может ошибаться</div></div></div></div><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script>const API_URL = 'https://api2.log-ai.ru';
+    const MY_CLIENT_ID = 'client_arhitektor_2'; // МЕНЯТЬ ТУТ
+    const MY_BOT_PATH = 'arhitektor_2';  // МЕНЯТЬ ТУТ 
+    
+       let logSid;
+    try {
+        logSid = localStorage.getItem('logai_sid');
+        if (!logSid) {
+            logSid = 's_' + Math.random().toString(36).substr(2, 12);
+            localStorage.setItem('logai_sid', logSid);
+        }
+    } catch (e) {
+        // Если доступ к памяти закрыт (инкогнито), создаем временный ID
+        logSid = 'temp_' + Math.random().toString(36).substr(2, 12);
+    }
+
+    // Переименовали, чтобы избежать конфликтов
+    let chatIsWaiting = false;
+    let historyLoaded = false;
+    let activeMessageId = null;
+    let pollController = null;
+    let pollTimeoutId = null;
+
+
+       function toggleLogAI() {
+        const w = document.getElementById('logai-window');
+        const isOpen = (window.getComputedStyle(w).display === 'none');
+        
+        if (isOpen) {
+            w.style.display = 'flex';
+            if (!historyLoaded) {
+                loadChatHistory();
+            } 
+            // Если чат в режиме ожидания (точки), пинаем сервер сразу при открытии
+            else if (chatIsWaiting && activeMessageId) {
+                const dotsContainer = document.querySelector('.logai-dots')?.parentElement;
+                if (dotsContainer) {
+                    startPolling(activeMessageId, dotsContainer);
+                }
+            }
+        } else {
+            w.style.display = 'none';
+            // УБРАЛИ stopPolling(), чтобы ИИ докачивал ответ, даже когда окно закрыто
+        }
+    }
+
+
+    function updateInputState() {
+        const input = document.getElementById('logai-input');
+        const btn = document.getElementById('logai-send-btn');
+        if (input) {
+            input.disabled = chatIsWaiting;
+            input.style.opacity = chatIsWaiting ? '0.5' : '1';
+        }
+        if (btn) btn.style.opacity = chatIsWaiting ? '0.5' : '1';
+    }
+
+    function stopPolling() {
+        if (activeMessageId) localStorage.removeItem('poll_start_' + activeMessageId);
+        if (pollController) pollController.abort();
+        if (pollTimeoutId) clearTimeout(pollTimeoutId);
+    
+        pollController = null;
+        pollTimeoutId = null;
+        activeMessageId = null;
+        chatIsWaiting = false;
+        updateInputState();
+    }
+
+    function addLogMsg(txt, isAi) {
+        const d = document.createElement('div');
+        d.style = `padding:12px 16px; border-radius:18px; max-width:82%; font-size:14px; line-height:1.5; margin-bottom:10px; 
+                   ${isAi ? 'align-self:flex-start; background:#4a4e56; color:#dbdee1; border-bottom-left-radius:4px;' 
+                         : 'align-self:flex-end; background:#007bff; color:white; border-bottom-right-radius:4px; box-shadow:0 4px 12px rgba(0,123,255,0.25);'}`;
+
+        if (txt === 'dots') {
+   // ИСПРАВЛЕНО: Добавлен явный текст ожидания рядом с анимацией точек для лучшего UX
+   d.innerHTML = '<div style="display:flex; align-items:center; gap:8px;">' +
+                 '<span style="font-style:italic; opacity:0.8;">ИИ подбирает ответ...</span>' +
+                 '<div class="logai-dots"><span></span><span></span><span></span></div>' +
+                 '</div>';
+ } else {
+   d.innerHTML = typeof marked !== 'undefined' ? marked.parse(txt) : txt;
+ }
+
+        const box = document.getElementById('logai-msgs');
+        box.appendChild(d);
+        box.scrollTop = box.scrollHeight;
+        return d;
+    }
+
+async function loadChatHistory() {
+    const box = document.getElementById('logai-msgs');
+    try {
+        box.innerHTML = '';
+
+        const res = await fetch(`${API_URL}/history/${logSid}?platform=site&clientId=${MY_CLIENT_ID}`);
+        const data = await res.json();
+
+        if (Array.isArray(data.items) && data.items.length > 0) {
+            data.items.forEach((m, index) => {
+                // 1. Показываем сообщение пользователя
+                if (m.message) {
+                    addLogMsg(m.message, false);
+                }
+
+                // 2. Если есть готовый ответ — показываем
+                if (m.answer) {
+                    addLogMsg(m.answer, true);
+                } 
+                // 3. ИСПРАВЛЕНО: Четкое чтение m.message_id из базы данных без путаницы с регистрами
+                else if (m.message_id && index === data.items.length - 1) {
+                    chatIsWaiting = true;
+                    activeMessageId = m.message_id; // Используем m.message_id
+                    
+                    const aiMsg = addLogMsg('dots', true);
+                    startPolling(m.message_id, aiMsg); 
+                }
+            });
+        } else {
+            addLogMsg("Здравствуйте! Я ваш ИИ-ассистент. Чем могу помочь?", true);
+        }
+
+        historyLoaded = true;
+        updateInputState();
+
+    } catch (e) {
+        console.error('History error:', e);
+        addLogMsg("Не удалось загрузить историю чата", true);
+    }
+}
+
+
+async function sendLogAI() {
+    if (chatIsWaiting) return;
+
+    const input = document.getElementById('logai-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // ЖЕЛЕЗНЫЙ ДЕБАУНС: блокируем повторный клик в первую же микросекунду
+    chatIsWaiting = true;
+    updateInputState();
+
+    addLogMsg(msg, false);
+    
+    input.value = ''; 
+    input.style.height = 'auto'; 
+
+    const aiMsg = addLogMsg('dots', true);
+
+    try {
+        const res = await fetch(`${API_URL}/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sessionId: logSid,
+                message: msg,
+                clientId: MY_CLIENT_ID,
+                platform: 'site',
+                botPath: MY_BOT_PATH
+            })
+        });
+
+        // ИСПРАВЛЕНО: Обработка HTTP-ошибок. Передаем false третьим параметром, чтобы не было звука при ошибке
+        if (!res.ok) {
+            let errorMsg = "⚠️ Сервер временно недоступен";
+            if (res.status === 429) errorMsg = "🚫 Слишком много запросов. Подождите немного.";
+            else if (res.status === 403) {
+                try {
+                    const errData = await res.json();
+                    errorMsg = errData.reason || "🚫 Доступ ограничен.";
+                } catch (_) {
+                    errorMsg = "🚫 Доступ ограничен.";
+                }
+            }
+            finish(errorMsg, aiMsg, false); // false — звук НЕ играет
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data.blocked) {
+            finish(data.reason || data.message || "🚫 Сообщение заблокировано", aiMsg, false); // false — без звука
+            return;
+        }
+
+        if (data.messageId) {
+            activeMessageId = data.messageId;
+            startPolling(data.messageId, aiMsg);
+        } else {
+            finish("⚠️ Ошибка регистрации сообщения (нет messageId)", aiMsg, false);
+        }
+    } catch (e) {
+        console.error(e);
+        finish("⚠️ Ошибка связи с сервером. Проверьте интернет.", aiMsg, false);
+    }
+} // Скобка закрывает саму функцию send
+    function startPolling(messageId, aiMsg) {
+        activeMessageId = messageId;
+        pollController = new AbortController();
+        let savedTime = localStorage.getItem('poll_start_' + messageId);
+        if (!savedTime) {
+            savedTime = Date.now().toString();
+            localStorage.setItem('poll_start_' + messageId, savedTime);
+        }
+        let startTime = parseInt(savedTime, 10);
+        let statusChanged = false; // Чтобы не менять текст постоянно
+
+        const poll = async () => {
+            if (activeMessageId !== messageId) return;
+
+            const elapsed = (Date.now() - startTime) / 1000; // секунд прошло
+
+            // 1. На 40-й секунде меняем текст на "Сложный вопрос"
+            if (elapsed > 40 && !statusChanged) {
+                const dots = aiMsg.querySelector('.logai-dots');
+                aiMsg.innerHTML = '🤖 Вопрос сложный, анализирую данные...';
+                if (dots) aiMsg.appendChild(dots); 
+                statusChanged = true;
+            }
+
+            // 2. Лимит ожидания - 10 минут (600 секунд)
+            if (elapsed > 600) {
+                finish("🤖 Извините, ИИ перегружен или запрос слишком сложный. Пожалуйста, попробуйте позже.", aiMsg);
+                return;
+            }
+
+            // 3. Умный интервал: до 50 сек — каждые 3 сек, потом — каждые 10 сек
+            let nextInterval = (elapsed > 50) ? 10000 : 3000;
+
+            try {
+                // Добавили ?t=... чтобы телефон каждый раз реально спрашивал сервер, а не брал из кэша
+                const r = await fetch(`${API_URL}/get-answer/${messageId}?sessionId=${logSid}&clientId=${MY_CLIENT_ID}&t=${Date.now()}`, {
+                    signal: pollController.signal 
+                });
+                const d = await r.json();
+                const finalAnswer = d.answer || (d.status !== 'pending' ? d.answer : null);
+
+                if (finalAnswer) {
+                    finish(finalAnswer, aiMsg);
+                } else {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            } catch (e) {
+                if (e.name !== 'AbortError') {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            }
+        };
+        poll();
+    }
+
+function finish(text, msgElement, isSuccess = true) {
+    if (msgElement) {
+        msgElement.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+        
+        // Звук играет строго при успешном ответе ИИ, при ошибках или банах — тишина
+        if (isSuccess) {
+            try {
+                // ТВОЙ ОРИГИНАЛЬНЫЙ РАБОЧИЙ ПУТЬ: Кэш сбрасывается, файл проигрывается без ошибок 404
+                const audio = new Audio('https://api.log-ai.ru/notify.mp3?v=' + Date.now());
+                audio.volume = 0.4;
+                audio.play().catch(e => console.log("Нужен клик"));
+            } catch (e) {}
+        }
+    }
+    stopPolling();
+}
+
+
+    // Enter для отправки
+    document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('logai-input');
+    if (input) {
+      input.addEventListener('keypress', (e) => {
+        // ИСПРАВЛЕНО: Добавлена проверка !chatIsWaiting, чтобы клавиатура намертво блокировалась во время ожидания ИИ
+        if (e.key === 'Enter' && !e.shiftKey && !chatIsWaiting) {
+          e.preventDefault();
+          sendLogAI();
+        }
+      });
+
+      // ИСПРАВЛЕНО: Текстовое поле плавно растёт вниз до 150px, если текст длинный
+      input.addEventListener('input', function() {
+        this.style.height = 'auto'; 
+        this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+      });
+    }
+    });</script><div id="cookie-notice-wrapper" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #111111; border-top: 1px solid #222222; padding: 10px 15px; box-sizing: border-box; z-index: 99999; display: none; flex-direction: row; justify-content: space-between; align-items: center; gap: 15px; font-family: sans-serif;"><span style="color: #888888; font-size: 12px; line-height: 1.4; text-align: left;">Наш сайт использует файлы cookie для корректной работы. Подробнее — в <a href="/privacy-policy/" style="color: #bfa15f; text-decoration: underline;">Политике конфиденциальности</a>. </span><button onclick="dismissCookieNotice()" style="background: #bfa15f; color: #000000; border: none; padding: 5px 14px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Принять</button></div><style>@media (max-width: 600px) {
+        #cookie-notice-wrapper {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 10px !important;
+            padding: 12px 15px !important;
+        }
+        #cookie-notice-wrapper span {
+            text-align: center !important;
+            font-size: 11px !important;
+        }
+        #cookie-notice-wrapper button {
+            width: 100% !important;
+            padding: 8px !important;
+            font-size: 12px !important;
+        }
+    }</style><script>(function() {
+        var storageKey = 'logai_cookies_accepted';
+        if (!localStorage.getItem(storageKey)) {
+            document.getElementById('cookie-notice-wrapper').style.display = 'flex';
+        }
+    })();
+
+    function dismissCookieNotice() {
+        localStorage.setItem('logai_cookies_accepted', 'true');
+        document.getElementById('cookie-notice-wrapper').style.display = 'none';
+    }</script></body></html>

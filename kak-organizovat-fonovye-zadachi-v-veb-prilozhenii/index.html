@@ -1,0 +1,984 @@
+<!DOCTYPE html><html lang="ru"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Фоновые задачи в веб-приложении: очереди, повторы и надёжность. LOG-AI</title><meta name="description" content="Как организовать фоновые задачи в веб-приложении: очереди, повторы, идемпотентность, контроль статусов, защита от дублей и восстановление после сбоев."><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="canonical" href="https://log-ai.ru/kak-organizovat-fonovye-zadachi-v-veb-prilozhenii/"><link rel="alternate" type="application/atom+xml" href="https://log-ai.ru/feed.xml" title="LOG-AI - RSS"><link rel="alternate" type="application/json" href="https://log-ai.ru/feed.json" title="LOG-AI - JSON"><meta property="og:title" content="Фоновые задачи в веб-приложении: очереди, повторы и надёжность. LOG-AI"><meta property="og:image" content="https://log-ai.ru/media/website/Log-ai-Logo.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:site_name" content="LOG-AI"><meta property="og:description" content="Как организовать фоновые задачи в веб-приложении: очереди, повторы, идемпотентность, контроль статусов, защита от дублей и восстановление после сбоев."><meta property="og:url" content="https://log-ai.ru/kak-organizovat-fonovye-zadachi-v-veb-prilozhenii/"><meta property="og:type" content="article"><link rel="stylesheet" href="https://log-ai.ru/assets/css/style.css?v&#x3D;b1f5980528b3cc19f4018c94aea81f52"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://log-ai.ru/kak-organizovat-fonovye-zadachi-v-veb-prilozhenii/"},"headline":"Как организовать фоновые задачи в веб-приложении","datePublished":"2026-11-28T12:06+05:00","dateModified":"2026-11-28T13:12+05:00","description":"Как организовать фоновые задачи в веб-приложении: очереди, повторы, идемпотентность, контроль статусов, защита от дублей и восстановление после сбоев.","author":{"@type":"Person","name":"LOG-AI","url":"https://log-ai.ru/authors/log-ai/"},"publisher":{"@type":"Organization","name":"LOG-AI"}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript><style>body, html, main, #page, .wrapper, .main { background: #000000 !important; background-color: #000000 !important; }</style><link rel="icon" type="image/png" sizes="32x32" href="/media/files/favicon-32.png"><link rel="icon" type="image/png" sizes="16x16" href="/media/files/favicon-16.png"><link rel="apple-touch-icon" sizes="180x180" href="/media/files/favicon-180.png"><meta name="yandex-verification" content="9d14e10b64f3b76c"><meta name="google-site-verification" content="-rKktnoSCGCLZToW-jcZeKu5WvWFGuLKdLwwyCux0-M"></head><body class="page-template"><header class="top js-header"><a class="logo" href="https://log-ai.ru/">LOG-AI</a><nav class="navbar js-navbar"><button class="navbar__toggle js-toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><span class="navbar__toggle-box"><span class="navbar__toggle-inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://log-ai.ru/" target="_self">Главная</a></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Услуги</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/avtomatizaciya-obrabotki-zayavok-i-lidov/" target="_self">Автоматизация обработки заявок и лидов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-biznes-processov-integracii-dannye-i-skvoznye-scenarii/" target="_self">Автоматизация бизнес-процессов</a></li><li><a href="https://log-ai.ru/sbor-i-obrabotka-dannyh/" target="_self">Сбор и обработка данных</a></li><li><a href="https://log-ai.ru/ii-dlya-biznesa-i-nejrosetej/" target="_self">ИИ для бизнеса и нейросети</a></li><li><a href="https://log-ai.ru/specializirovannye-cifrovye-sistemy/" target="_self">Специализированные цифровые системы</a></li><li><a href="https://log-ai.ru/individualnye-korporativnye-sistemy/" target="_self">Корпоративные системы</a></li><li><a href="https://log-ai.ru/tehnicheskoe-soprovozhdenie/" target="_self">Техническое сопровождение</a></li><li><a href="https://log-ai.ru/it-audit-i-predproektnoe-obsledovanie/" title="/it-audit-i-predproektnoe-obsledovanie/" target="_self">ИТ-аудит и предпроектное обследование</a></li><li><a href="https://log-ai.ru/oblachnyy-i-infrastrukturnyy-konsalting/" title="/oblachnyy-i-infrastrukturnyy-konsalting/" target="_self">Облачный и инфраструктурный консалтинг</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Решения</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakie-sistemy-my-integriruem/" target="_self">Какие системы мы интегрируем</a></li><li><a href="https://log-ai.ru/kak-rabotaet-ii-v-biznese/" target="_self">Как работает ИИ в бизнесе</a></li><li><a href="https://log-ai.ru/resheniya-po-zadacham/" target="_self">Решения по задачам</a></li><li><a href="https://log-ai.ru/avtomatizaciya-proizvodstva/" target="_self">Для производства</a></li><li><a href="https://log-ai.ru/avtomatizaciya-logistiki-i-skladov/" target="_self">Для логистики и складов</a></li><li><a href="https://log-ai.ru/avtomatizaciya-optovoy-torgovli/" target="_self">Для оптовой торговли</a></li><li><a href="https://log-ai.ru/avtomatizaciya-e-commerce/" target="_self">Для e-commerce</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Реализация</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kak-my-rabotaem/" target="_self">Как мы работаем</a></li><li><a href="https://log-ai.ru/dokumentaciya-sistemy/" target="_self">Документация системы</a></li><li><a href="https://log-ai.ru/infrastruktura-i-razmeshchenie/" target="_self">Инфраструктура и размещение</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">Выбор</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/kakuyu-avtomatizaciyu-vybrat/" target="_self">Какую автоматизацию выбрать</a></li><li><a href="https://log-ai.ru/chto-avtomatizirovat-v-biznese-v-pervuyu-ochered/" target="_self">Что автоматизировать в бизнесе в первую очередь</a></li><li><a href="https://log-ai.ru/kak-podgotovit-biznes-k-avtomatizacii/" target="_self">Как подготовить бизнес к автоматизации</a></li><li><a href="https://log-ai.ru/kak-vnedrit-avtomatizaciyu/" target="_self">Как внедрить автоматизацию</a></li><li><a href="https://log-ai.ru/kak-ocenit-rezultat-avtomatizacii/" target="_self">Как оценить результат автоматизации</a></li><li><a href="https://log-ai.ru/stoimost-razrabotki/" target="_self">Стоимость разработки</a></li></ul></li><li class="has-submenu"><a href="#" target="_self" aria-haspopup="true">О нас</a><ul class="navbar__submenu level-2" aria-hidden="true"><li><a href="https://log-ai.ru/inzhenernyy-sostav/" target="_self">Инженерный состав</a></li><li><a href="https://log-ai.ru/keysy/" target="_self">Кейсы</a></li><li><a href="https://log-ai.ru/glossariy/" target="_self">Глоссарий</a></li><li><a href="https://log-ai.ru/ekspertiza/" target="_self">Экспертиза</a></li><li><a href="https://log-ai.ru/bezopasnost-sistem-dannyh-i-infrastruktury/" target="_self">Безопасность</a></li></ul></li></ul></nav></header><main class="page"><article class="content"><div class="hero hero--noimage"><header class="hero__content hero__content--centered"><div class="wrapper"><h1>Как организовать фоновые задачи в веб-приложении</h1></div></header></div><div class="entry-wrapper content__entry"><p> </p><p> </p><p> </p><p> </p><div style="width: 100%; max-width: 1100px; margin: 0 auto; padding: 0; box-sizing: border-box; color: #e5e7eb; font-size: 16px; line-height: 1.78;"><div style="position: relative; padding: 26px 28px; margin-bottom: 34px; border-left: 3px solid #14b8a6; background: linear-gradient(110deg,rgba(20,184,166,0.10),rgba(20,184,166,0.015) 70%); box-sizing: border-box;"><div style="font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #14b8a6; font-weight: bold; margin-bottom: 14px;">BACKGROUND PROCESSING / ENGINEERING</div><p style="font-size: 18px; line-height: 1.7; color: #f3f4f6; margin: 0 0 16px;">Выгрузка акта сверки строится 74 секунды, а обратный прокси (reverse proxy — сервер перед приложением, который принимает соединения клиентов и передаёт их дальше) ждёт ответа не дольше 60. Пользователь видит ошибку 504 и нажимает кнопку снова. Приложение не знает, что клиент ушёл: первый запрос продолжает работать и успешно завершается на 74-й секунде. К третьему нажатию контрагент уже получил три одинаковых письма с актом. В коде нет ошибки, каждый запрос отработал ровно так, как написано.</p><div style="padding-top: 15px; border-top: 1px solid rgba(20,184,166,0.25); font-size: 14px; color: #a7b3bd;">Проблема не в скорости выполнения отдельного запроса. Проблема в том, что время жизни соединения и время жизни бизнес-операции оказались связаны.</div></div><p style="margin: 0 0 22px;">Вынос работы из HTTP-запроса (одного цикла «клиент спросил, сервер ответил») убирает зависимость длительной операции от времени жизни соединения, но порождает вопросы, которых в синхронном коде не было: задачу могут поставить дважды; исполнитель может упасть посреди работы; пользователю нужно как-то узнать итог; бывают операции, результат которых после сетевого сбоя неизвестен. Ниже эти вопросы идут в том порядке, в котором они возникают при проектировании.</p><div style="margin: 48px 0 22px;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.8px; margin-bottom: 9px;">01 / ГРАНИЦЫ ОТВЕТСТВЕННОСТИ</div><h3 style="font-size: 25px; line-height: 1.3; color: #f9fafb; margin: 0; font-weight: bold;">Что выносится из запроса, а что должно остаться в нём</h3><div style="width: 48px; height: 3px; background: #14b8a6; margin-top: 16px;"> </div></div><p style="margin: 0 0 18px;">Фоновая задача (background job) — единица работы, которую приложение сначала фиксирует, а выполняет позже отдельным процессом, не удерживая соединение с пользователем. Её часто смешивают с тремя соседними сущностями. Плановое задание (cron) запускается по времени, а не по действию пользователя; по сути это способ создать фоновую задачу в нужный момент. Обработчик событий в потоковой системе читает журнал событий и обрабатывает их независимо от конкретного пользовательского запроса. Оркестрация процесса (workflow) описывает многошаговый сценарий с ожиданиями, ветвлениями и компенсациями, который может длиться днями; фоновая задача в нём — один шаг, а в простом случае — вся операция целиком.</p><div style="display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,210px),1fr)); gap: 12px; margin: 25px 0 28px;"><div style="padding: 17px; border: 1px solid #303c43; border-top: 2px solid #14b8a6; background: rgba(20,184,166,0.045); box-sizing: border-box;"><div style="font-size: 11px; color: #14b8a6; letter-spacing: 1px; font-weight: bold; margin-bottom: 8px;">BACKGROUND JOB</div><div style="font-size: 16px; color: #f3f4f6; font-weight: bold; margin-bottom: 7px;">Фоновая задача</div><div style="font-size: 14px; line-height: 1.6; color: #aeb8c2;">Работа, поставленная приложением и выполняемая отдельным процессом.</div></div><div style="padding: 17px; border: 1px solid #303c43; background: #111719; box-sizing: border-box;"><div style="font-size: 11px; color: #9ca3af; letter-spacing: 1px; font-weight: bold; margin-bottom: 8px;">CRON</div><div style="font-size: 16px; color: #f3f4f6; font-weight: bold; margin-bottom: 7px;">Плановое задание</div><div style="font-size: 14px; line-height: 1.6; color: #aeb8c2;">Запускает работу по расписанию, а не по пользовательскому действию.</div></div><div style="padding: 17px; border: 1px solid #303c43; background: #111719; box-sizing: border-box;"><div style="font-size: 11px; color: #9ca3af; letter-spacing: 1px; font-weight: bold; margin-bottom: 8px;">EVENT CONSUMER</div><div style="font-size: 16px; color: #f3f4f6; font-weight: bold; margin-bottom: 7px;">Обработчик событий</div><div style="font-size: 14px; line-height: 1.6; color: #aeb8c2;">Независимо читает журнал событий и обрабатывает поступающие записи.</div></div><div style="padding: 17px; border: 1px solid #303c43; background: #111719; box-sizing: border-box;"><div style="font-size: 11px; color: #9ca3af; letter-spacing: 1px; font-weight: bold; margin-bottom: 8px;">WORKFLOW</div><div style="font-size: 16px; color: #f3f4f6; font-weight: bold; margin-bottom: 7px;">Оркестрация процесса</div><div style="font-size: 14px; line-height: 1.6; color: #aeb8c2;">Управляет длительным сценарием с несколькими шагами, ожиданиями и компенсациями.</div></div></div><p style="margin: 0 0 17px;">Выносят то, что подпадает хотя бы под один признак: операция длится дольше, чем пользователь готов ждать ответа; зависит от внешнего сервиса с непредсказуемыми задержками; требует повторных попыток; приходит всплесками, которые нельзя обработать в момент поступления без перегрузки основной системы. Ориентир в несколько секунд полезен для первичной оценки, но сам по себе не является правилом: короткая операция тоже может нуждаться в очереди, если важны ограничение нагрузки, гарантированная доставка или независимость от доступности внешнего сервиса.</p><div style="margin: 25px 0; padding: 20px 23px; background: linear-gradient(110deg,rgba(20,184,166,0.12),rgba(20,184,166,0.025)); border: 1px solid rgba(20,184,166,0.3); box-sizing: border-box;"><div style="font-size: 10px; letter-spacing: 1.7px; color: #14b8a6; font-weight: bold; margin-bottom: 9px;">КЛЮЧЕВОЙ ПРИНЦИП</div><p style="font-size: 19px; line-height: 1.55; color: #f3f4f6; font-weight: 600; margin: 0;">Фон не ускоряет операцию. Он переносит ожидание из места, где его нельзя терпеть, в место, где его можно измерять и ограничивать.</p></div><p style="margin: 0 0 18px;">В запросе остаётся всё, без чего ответ пользователю был бы неправдой. Если пользователь нажал «Оформить заказ» и получил «Принято», факт заказа обязан быть сохранён в той же транзакции, а в фон уходят последствия: резервирование, письмо, передача в учётную систему. Типовая ошибка — вынести в фон и проверку, и сохранение, вернуть 202 («принято, обработка не завершена»), после чего задача падает на валидации, а пользователь узнаёт об этом из письма через час. Всё, что пользователь может исправить на месте, проверяется синхронно.</p><div style="margin: 22px 0 26px; padding: 20px; border: 1px solid #303c43; background: #101719; box-sizing: border-box;"><div style="font-size: 11px; letter-spacing: 1.4px; color: #9ca3af; font-weight: bold; margin-bottom: 17px;">ГРАНИЦА МЕЖДУ СИНХРОННОЙ И ФОНОВОЙ РАБОТОЙ</div><div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: stretch;"><div style="flex: 1 1 220px; min-width: 0; padding: 17px; border-left: 3px solid #14b8a6; background: rgba(20,184,166,0.07); box-sizing: border-box;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1px; margin-bottom: 9px;">В HTTP-ЗАПРОСЕ</div><div style="font-size: 16px; color: #f3f4f6; font-weight: bold; margin-bottom: 10px;">Подтверждение факта</div><ul style="padding-left: 18px; margin: 0; color: #cbd5d1; font-size: 14px; line-height: 1.8;"><li>Проверка входных данных</li><li>Проверка доступных условий</li><li>Сохранение бизнес-объекта</li><li>Фиксация задачи или Outbox-записи</li></ul></div><div style="flex: 1 1 220px; min-width: 0; padding: 17px; border-left: 3px solid #6489a3; background: rgba(100,137,163,0.07); box-sizing: border-box;"><div style="font-size: 11px; color: #8eb8d4; font-weight: bold; letter-spacing: 1px; margin-bottom: 9px;">В ФОНОВОМ ПРОЦЕССЕ</div><div style="font-size: 16px; color: #f3f4f6; font-weight: bold; margin-bottom: 10px;">Последствия операции</div><ul style="padding-left: 18px; margin: 0; color: #cbd5d1; font-size: 14px; line-height: 1.8;"><li>Внешнее резервирование</li><li>Отправка уведомлений</li><li>Передача данных партнёрам</li><li>Длительная обработка</li></ul></div></div></div><p style="margin: 0 0 18px;">При этом не каждую бизнес-операцию можно полностью завершить в запросе. Например, резервирование товара во внешней системе может быть частью длительного процесса. Тогда приложение должно честно сообщить, что заказ принят, но ещё не подтверждён, а его бизнес-состояние должно отражать ожидание резервирования. Нельзя подменять «заказ оформлен» на «запрос на оформление поставлен в очередь».</p><p style="margin: 0 0 18px;">Отдельно стоит понимать, откуда берётся ошибка 504 из начала статьи. У запроса не один предел времени, а цепочка: клиент (браузер или мобильное приложение), балансировщик, прокси, сервер приложения. Срабатывает самый короткий таймаут. Но истечение таймаута или закрытие соединения не гарантирует отмену уже запущенной серверной операции. Некоторые серверы и фреймворки обнаруживают отключение клиента и передают приложению сигнал отмены, однако обработчик может его игнорировать или продолжить работу с уже запущенной операцией. Поэтому нельзя считать, что повторный запрос безопасен только потому, что предыдущий завершился для клиента ошибкой.</p><div style="margin: 27px 0 12px; padding: 19px 20px; border: 1px solid rgba(239,107,107,0.3); background: rgba(239,107,107,0.045); box-sizing: border-box;"><div style="font-size: 11px; color: #ef8585; font-weight: bold; letter-spacing: 1.5px; margin-bottom: 13px;">TIMEOUT ≠ CANCELLATION</div><div style="display: flex; align-items: center; gap: 7px; flex-wrap: wrap; margin-bottom: 13px;"><div style="flex: 1 1 115px; text-align: center; padding: 11px 5px; background: #20282c; border: 1px solid #39454b; font-size: 13px; color: #e5e7eb;">Клиент</div><div style="color: #6b8791;">→</div><div style="flex: 1 1 115px; text-align: center; padding: 11px 5px; background: #20282c; border: 1px solid #39454b; font-size: 13px; color: #e5e7eb;">Балансировщик</div><div style="color: #6b8791;">→</div><div style="flex: 1 1 115px; text-align: center; padding: 11px 5px; background: #20282c; border: 1px solid #39454b; font-size: 13px; color: #e5e7eb;">Прокси</div><div style="color: #6b8791;">→</div><div style="flex: 1 1 115px; text-align: center; padding: 11px 5px; background: #20282c; border: 1px solid #39454b; font-size: 13px; color: #e5e7eb;">Приложение</div></div><div style="padding: 12px 14px; border-left: 2px solid #ef8585; background: rgba(239,107,107,0.06); font-size: 14px; color: #e6c1c1; line-height: 1.65;">Соединение может завершиться по таймауту, пока серверная операция продолжает выполняться. Повторный запрос способен запустить второй экземпляр той же бизнес-операции.</div></div><div style="margin: 55px 0 22px;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.8px; margin-bottom: 9px;">02 / АРХИТЕКТУРА И СОСТОЯНИЕ</div><h3 style="font-size: 25px; line-height: 1.3; color: #f9fafb; margin: 0; font-weight: bold;">Из чего состоит система и где в ней живёт состояние</h3><div style="width: 48px; height: 3px; background: #14b8a6; margin-top: 16px;"> </div></div><p style="margin: 0 0 18px;">Система собирается из пяти частей. Производитель (producer) — код веб-приложения, создающий задачу. Хранилище очереди. Исполнитель (воркер, worker) — отдельный процесс, который берёт задачи и выполняет их. Хранилище статусов, из которого читает интерфейс. Внешний мир, на который задача воздействует: почтовый шлюз, API партнёра, файловое хранилище.</p><div style="margin: 26px 0 29px; padding: 21px 19px; border: 1px solid #303c43; background: #0d1417; box-sizing: border-box;"><div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 19px;"><div style="font-size: 11px; letter-spacing: 1.5px; color: #14b8a6; font-weight: bold;">АРХИТЕКТУРА ФОНОВОЙ ОБРАБОТКИ</div><div style="font-size: 10px; color: #71838c;">01 — 05 / COMPONENTS</div></div><svg viewbox="0 0 900 390" width="100%" xmlns="http://www.w3.org/2000/svg" style="display: block; max-width: 100%; height: auto;"><defs><marker id="jobArrow" markerwidth="8" markerheight="8" refx="6" refy="3" orient="auto"><path d="M0 0 L6 3 L0 6" fill="none" stroke="#14b8a6" stroke-width="1.2"></path></marker><marker id="jobArrowGrey" markerwidth="8" markerheight="8" refx="6" refy="3" orient="auto"><path d="M0 0 L6 3 L0 6" fill="none" stroke="#71838c" stroke-width="1.2"></path></marker></defs><rect x="14" y="23" width="174" height="82" rx="5" fill="#152522" stroke="#14b8a6"></rect><text x="101" y="48" text-anchor="middle" fill="#14b8a6" font-size="11" font-weight="bold">01 / PRODUCER</text><text x="101" y="70" text-anchor="middle" fill="#f3f4f6" font-size="15" font-weight="bold">Приложение</text><text x="101" y="88" text-anchor="middle" fill="#9caeb2" font-size="10">Создание задачи</text><path d="M188 64 H240" fill="none" stroke="#14b8a6" stroke-width="1.7" marker-end="url(#jobArrow)"></path><rect x="247" y="23" width="174" height="82" rx="5" fill="#172126" stroke="#4c777e"></rect><text x="334" y="48" text-anchor="middle" fill="#8bbec1" font-size="11" font-weight="bold">02 / QUEUE</text><text x="334" y="70" text-anchor="middle" fill="#f3f4f6" font-size="15" font-weight="bold">Очередь</text><text x="334" y="88" text-anchor="middle" fill="#9caeb2" font-size="10">Хранение задач</text><path d="M421 64 H474" fill="none" stroke="#14b8a6" stroke-width="1.7" marker-end="url(#jobArrow)"></path><rect x="481" y="23" width="174" height="82" rx="5" fill="#152522" stroke="#14b8a6"></rect><text x="568" y="48" text-anchor="middle" fill="#14b8a6" font-size="11" font-weight="bold">03 / WORKER</text><text x="568" y="70" text-anchor="middle" fill="#f3f4f6" font-size="15" font-weight="bold">Исполнитель</text><text x="568" y="88" text-anchor="middle" fill="#9caeb2" font-size="10">Выполнение работы</text><path d="M655 64 H708" fill="none" stroke="#71838c" stroke-width="1.7" marker-end="url(#jobArrowGrey)"></path><rect x="715" y="23" width="170" height="82" rx="5" fill="#202327" stroke="#68747a"></rect><text x="800" y="48" text-anchor="middle" fill="#aebbc0" font-size="11" font-weight="bold">05 / EXTERNAL</text><text x="800" y="70" text-anchor="middle" fill="#f3f4f6" font-size="15" font-weight="bold">Внешний мир</text><text x="800" y="88" text-anchor="middle" fill="#9caeb2" font-size="10">API · Почта · Файлы</text><path d="M568 105 V159 H334 V105" fill="none" stroke="#71838c" stroke-width="1.4" stroke-dasharray="5 5" marker-end="url(#jobArrowGrey)"></path><text x="450" y="151" text-anchor="middle" fill="#8c9da4" font-size="10">Получение и подтверждение задач</text><path d="M568 105 V230" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#jobArrow)"></path><rect x="410" y="237" width="316" height="91" rx="5" fill="#152522" stroke="#14b8a6"></rect><text x="568" y="261" text-anchor="middle" fill="#14b8a6" font-size="11" font-weight="bold">04 / STATUS STORAGE</text><text x="568" y="285" text-anchor="middle" fill="#f3f4f6" font-size="15" font-weight="bold">Хранилище статусов</text><text x="568" y="305" text-anchor="middle" fill="#a4b4b8" font-size="11">Состояние · Результат · Ошибка</text><path d="M410 282 H280 V235" fill="none" stroke="#14b8a6" stroke-width="1.5" marker-end="url(#jobArrow)"></path><rect x="84" y="237" width="188" height="91" rx="5" fill="#172126" stroke="#4c777e"></rect><text x="178" y="261" text-anchor="middle" fill="#8bbec1" font-size="11" font-weight="bold">USER INTERFACE</text><text x="178" y="285" text-anchor="middle" fill="#f3f4f6" font-size="15" font-weight="bold">Интерфейс</text><text x="178" y="305" text-anchor="middle" fill="#a4b4b8" font-size="11">Опрос или уведомление</text><path d="M800 105 V190 H726" fill="none" stroke="#71838c" stroke-width="1.3" stroke-dasharray="4 5"></path><text x="789" y="180" text-anchor="end" fill="#8c9da4" font-size="10">Внешний эффект</text><text x="450" y="370" text-anchor="middle" fill="#6f858b" font-size="10" letter-spacing="1.5">РАЗДЕЛЕНИЕ ВЫПОЛНЕНИЯ, СОСТОЯНИЯ И ВНЕШНИХ ЭФФЕКТОВ</text></svg><div style="margin-top: 13px; padding-top: 13px; border-top: 1px solid #29363b; font-size: 12px; line-height: 1.6; color: #82939a;">Схема показывает логические компоненты. Хранилище очереди и хранилище статусов могут быть реализованы одной базой данных, но выполняют разные роли.</div></div><p style="margin: 0 0 18px;">Состояние при этом лежит в трёх местах, которые нельзя обновить одной неделимой (атомарной) операцией: бизнес-данные (заказ), состояние самой задачи («выполняется») и факты во внешнем мире («письмо принято шлюзом»). Вся инженерия надёжности фоновых задач сводится к тому, что между фиксациями в этих трёх местах есть окна, и в любое из них может упасть процесс, сеть или сервер.</p><div style="display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,190px),1fr)); gap: 10px; margin: 24px 0 27px;"><div style="padding: 16px; background: #151e22; border: 1px solid #35444a; box-sizing: border-box;"><div style="font-size: 10px; color: #14b8a6; letter-spacing: 1px; font-weight: bold; margin-bottom: 8px;">STATE 01</div><div style="font-size: 15px; color: #f3f4f6; font-weight: bold; margin-bottom: 7px;">Бизнес-данные</div><div style="font-size: 13px; color: #aeb8c2; line-height: 1.6;">Например, заказ, его сумма и бизнес-статус.</div></div><div style="padding: 16px; background: #151e22; border: 1px solid #35444a; box-sizing: border-box;"><div style="font-size: 10px; color: #14b8a6; letter-spacing: 1px; font-weight: bold; margin-bottom: 8px;">STATE 02</div><div style="font-size: 15px; color: #f3f4f6; font-weight: bold; margin-bottom: 7px;">Состояние задачи</div><div style="font-size: 13px; color: #aeb8c2; line-height: 1.6;">Например, поставлена, выполняется или завершена.</div></div><div style="padding: 16px; background: #151e22; border: 1px solid #35444a; box-sizing: border-box;"><div style="font-size: 10px; color: #e3a65c; letter-spacing: 1px; font-weight: bold; margin-bottom: 8px;">STATE 03</div><div style="font-size: 15px; color: #f3f4f6; font-weight: bold; margin-bottom: 7px;">Внешний эффект</div><div style="font-size: 13px; color: #aeb8c2; line-height: 1.6;">Например, письмо принято почтовым шлюзом.</div></div></div><p style="margin: 0 0 17px;">Нормальный путь выглядит так:</p><div style="margin: 22px 0 27px; padding: 20px 21px; border: 1px solid #303c43; background: #101719; box-sizing: border-box;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.4px; margin-bottom: 17px;">ЖИЗНЕННЫЙ ЦИКЛ ЗАДАЧИ</div><div style="position: relative; padding-left: 34px;"><div style="position: absolute; left: 9px; top: 10px; bottom: 15px; width: 1px; background: linear-gradient(to bottom,#14b8a6,#36575b);"> </div><div style="position: relative; margin-bottom: 17px;"><div style="position: absolute; left: -31px; top: 3px; width: 14px; height: 14px; border-radius: 50%; background: #14b8a6; box-shadow: 0 0 0 4px rgba(20,184,166,0.12);"> </div><div style="font-size: 14px; color: #f3f4f6; font-weight: bold; margin-bottom: 4px;">01. Фиксация</div><div style="font-size: 13px; color: #aeb8c2; line-height: 1.65;">Запрос приходит, приложение в одной транзакции записывает бизнес-объект и запись о задаче либо сообщение в транзакционный исходящий ящик.</div></div><div style="position: relative; margin-bottom: 17px;"><div style="position: absolute; left: -31px; top: 3px; width: 14px; height: 14px; border-radius: 50%; background: #14b8a6;"> </div><div style="font-size: 14px; color: #f3f4f6; font-weight: bold; margin-bottom: 4px;">02. Подтверждение</div><div style="font-size: 13px; color: #aeb8c2; line-height: 1.65;">Пользователь получает ответ 202 и идентификатор ресурса задачи.</div></div><div style="position: relative; margin-bottom: 17px;"><div style="position: absolute; left: -31px; top: 3px; width: 14px; height: 14px; border-radius: 50%; background: #14b8a6;"> </div><div style="font-size: 14px; color: #f3f4f6; font-weight: bold; margin-bottom: 4px;">03. Захват</div><div style="font-size: 13px; color: #aeb8c2; line-height: 1.65;">Воркер берёт задачу, переводит её в «выполняется» и устанавливает аренду — срок, до которого он считается владельцем обработки.</div></div><div style="position: relative; margin-bottom: 17px;"><div style="position: absolute; left: -31px; top: 3px; width: 14px; height: 14px; border-radius: 50%; background: #14b8a6;"> </div><div style="font-size: 14px; color: #f3f4f6; font-weight: bold; margin-bottom: 4px;">04. Выполнение</div><div style="font-size: 13px; color: #aeb8c2; line-height: 1.65;">Воркер выполняет работу и воздействует на внешний мир.</div></div><div style="position: relative; margin-bottom: 17px;"><div style="position: absolute; left: -31px; top: 3px; width: 14px; height: 14px; border-radius: 50%; background: #14b8a6;"> </div><div style="font-size: 14px; color: #f3f4f6; font-weight: bold; margin-bottom: 4px;">05. Завершение</div><div style="font-size: 13px; color: #aeb8c2; line-height: 1.65;">Воркер фиксирует результат и освобождает аренду.</div></div><div style="position: relative;"><div style="position: absolute; left: -31px; top: 3px; width: 14px; height: 14px; border-radius: 50%; background: #14b8a6; box-shadow: 0 0 0 4px rgba(20,184,166,0.12);"> </div><div style="font-size: 14px; color: #f3f4f6; font-weight: bold; margin-bottom: 4px;">06. Получение результата</div><div style="font-size: 13px; color: #aeb8c2; line-height: 1.65;">Пользователь узнаёт итог опросом статуса или по уведомлению.</div></div></div></div><p style="margin: 0 0 17px;">Опасных окон три. Первое — между шагом 1 и появлением задачи в очереди. Второе — между шагами 4 и 5: эффект уже произошёл, а записи о нём ещё нет, это самое неприятное место. Третье — между 5 и 6: результат есть, но пользователь о нём не знает.</p><div style="margin: 25px 0 27px; border: 1px solid rgba(239,107,107,0.27); background: rgba(239,107,107,0.035); padding: 19px 20px; box-sizing: border-box;"><div style="font-size: 11px; color: #ef8585; letter-spacing: 1.5px; font-weight: bold; margin-bottom: 15px;">ТРИ ОПАСНЫХ ОКНА ОТКАЗА</div><div style="display: flex; flex-direction: column; gap: 12px;"><div style="display: flex; gap: 13px; align-items: flex-start;"><div style="flex: 0 0 29px; height: 29px; display: flex; align-items: center; justify-content: center; border: 1px solid #a85858; color: #ef8585; font-size: 12px; font-weight: bold;">01</div><div style="flex: 1; min-width: 0;"><div style="font-size: 14px; color: #f3f4f6; font-weight: bold;">Бизнес-запись сохранена, задача не опубликована</div><div style="font-size: 13px; color: #b5a5a5; line-height: 1.6;">Потеря связи между транзакцией приложения и очередью.</div></div></div><div style="display: flex; gap: 13px; align-items: flex-start;"><div style="flex: 0 0 29px; height: 29px; display: flex; align-items: center; justify-content: center; border: 1px solid #a85858; color: #ef8585; font-size: 12px; font-weight: bold;">02</div><div style="flex: 1; min-width: 0;"><div style="font-size: 14px; color: #f3f4f6; font-weight: bold;">Внешний эффект произошёл, результат не записан</div><div style="font-size: 13px; color: #b5a5a5; line-height: 1.6;">После сбоя повторная обработка может создать дублирующий эффект.</div></div></div><div style="display: flex; gap: 13px; align-items: flex-start;"><div style="flex: 0 0 29px; height: 29px; display: flex; align-items: center; justify-content: center; border: 1px solid #a85858; color: #ef8585; font-size: 12px; font-weight: bold;">03</div><div style="flex: 1; min-width: 0;"><div style="font-size: 14px; color: #f3f4f6; font-weight: bold;">Результат записан, пользователь о нём не знает</div><div style="font-size: 13px; color: #b5a5a5; line-height: 1.6;">Проблема доставки статуса или уведомления.</div></div></div></div></div><p style="margin: 0 0 18px;">Первое окно закрывает шаблон «транзакционный исходящий ящик» (transactional outbox). Есть две неверные последовательности. Если сначала сохранить заказ и закоммитить, а потом отправить задачу в брокер сообщений (отдельный сервис, хранящий и раздающий сообщения), то падение между двумя действиями оставит заказ без задачи, и никто этого не заметит. Если отправить задачу до коммита, воркер получит её раньше, чем заказ стал видимым, и либо не найдёт запись, либо прочитает старую версию.</p><div style="margin: 23px 0 25px; padding: 19px; border: 1px solid #39474c; background: #11191c; box-sizing: border-box;"><div style="font-size: 11px; color: #ef8585; font-weight: bold; letter-spacing: 1.3px; margin-bottom: 14px;">НЕПРАВИЛЬНО / ДВЕ НЕСОГЛАСОВАННЫЕ ОПЕРАЦИИ</div><div style="display: flex; flex-wrap: wrap; gap: 10px;"><div style="flex: 1 1 210px; min-width: 0; padding: 14px; background: rgba(239,107,107,0.055); border: 1px solid rgba(239,107,107,0.2); box-sizing: border-box;"><div style="font-size: 13px; color: #f1b1b1; font-weight: bold; margin-bottom: 9px;">Сначала БД → потом очередь</div><div style="font-size: 12px; color: #b9aeb0; line-height: 1.7;">Сохранение заказа → COMMIT → отправка задачи.</div><div style="font-size: 12px; color: #ef8585; margin-top: 9px;">Сбой между действиями оставляет заказ без задачи.</div></div><div style="flex: 1 1 210px; min-width: 0; padding: 14px; background: rgba(239,107,107,0.055); border: 1px solid rgba(239,107,107,0.2); box-sizing: border-box;"><div style="font-size: 13px; color: #f1b1b1; font-weight: bold; margin-bottom: 9px;">Сначала очередь → потом БД</div><div style="font-size: 12px; color: #b9aeb0; line-height: 1.7;">Отправка задачи → получение воркером → COMMIT заказа.</div><div style="font-size: 12px; color: #ef8585; margin-top: 9px;">Воркер может начать работу до появления бизнес-записи.</div></div></div></div><p style="margin: 0 0 18px;">Решение: записывать сообщение в таблицу Outbox той же базы и в той же транзакции, что и бизнес-данные. Отдельный процесс-ретранслятор (relay) читает эту таблицу, передаёт сообщения в брокер и отмечает их опубликованными. Ретранслятор может упасть между передачей и отметкой, поэтому брокер способен получить дубль, и обработчик обязан быть идемпотентным. Публикация через Outbox обеспечивает надёжную связь между бизнес-транзакцией и отправкой сообщения, но сама по себе не обеспечивает однократную доставку.</p><div style="margin: 24px 0 27px; padding: 20px; border: 1px solid rgba(20,184,166,0.32); background: linear-gradient(130deg,rgba(20,184,166,0.075),rgba(20,184,166,0.015)); box-sizing: border-box;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.5px; margin-bottom: 15px;">ПРАВИЛЬНАЯ ПОСЛЕДОВАТЕЛЬНОСТЬ / TRANSACTIONAL OUTBOX</div><div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch;"><div style="flex: 1 1 145px; padding: 13px; background: #152522; border: 1px solid #37635e; box-sizing: border-box;"><div style="font-size: 10px; color: #14b8a6; font-weight: bold; margin-bottom: 7px;">01 / ОДНА ТРАНЗАКЦИЯ</div><div style="font-size: 13px; color: #f3f4f6; font-weight: bold;">Бизнес-данные</div><div style="font-size: 12px; color: #aeb8c2; margin-top: 5px;">Запись заказа</div></div><div style="flex: 1 1 145px; padding: 13px; background: #152522; border: 1px solid #37635e; box-sizing: border-box;"><div style="font-size: 10px; color: #14b8a6; font-weight: bold; margin-bottom: 7px;">02 / ОДНА ТРАНЗАКЦИЯ</div><div style="font-size: 13px; color: #f3f4f6; font-weight: bold;">Outbox</div><div style="font-size: 12px; color: #aeb8c2; margin-top: 5px;">Запись сообщения</div></div><div style="flex: 1 1 145px; padding: 13px; background: #172126; border: 1px solid #40565b; box-sizing: border-box;"><div style="font-size: 10px; color: #8bbec1; font-weight: bold; margin-bottom: 7px;">03 / RELAY</div><div style="font-size: 13px; color: #f3f4f6; font-weight: bold;">Ретранслятор</div><div style="font-size: 12px; color: #aeb8c2; margin-top: 5px;">Чтение и публикация</div></div><div style="flex: 1 1 145px; padding: 13px; background: #172126; border: 1px solid #40565b; box-sizing: border-box;"><div style="font-size: 10px; color: #8bbec1; font-weight: bold; margin-bottom: 7px;">04 / BROKER</div><div style="font-size: 13px; color: #f3f4f6; font-weight: bold;">Брокер</div><div style="font-size: 12px; color: #aeb8c2; margin-top: 5px;">Приём сообщения</div></div></div><div style="margin-top: 13px; padding: 12px 14px; border-left: 2px solid #14b8a6; background: rgba(20,184,166,0.06); font-size: 13px; color: #c7d6d3; line-height: 1.65;">Бизнес-запись и сообщение Outbox фиксируются атомарно. Публикация может повториться, поэтому получатель должен выдерживать дубли.</div></div><p style="margin: 0 0 18px;">Если ретрансляторов несколько, им также нужен механизм конкурентного захвата записей. Например, relay выбирает неопубликованные сообщения через <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px; font-size: 13px;">FOR UPDATE SKIP LOCKED</code> в короткой транзакции, назначает им владельца и аренду, фиксирует захват и только после этого публикует сообщения. После подтверждения публикации он отмечает запись как опубликованную условным обновлением по идентификатору и токену владения. Если процесс упадёт после публикации, но до отметки, запись будет опубликована повторно. Это ожидаемое поведение: Outbox обеспечивает доставку с возможными дублями, а не exactly-once.</p><p style="margin: 0 0 18px;">При работе с брокером, поддерживающим publisher confirms, ретранслятор должен дождаться подтверждения приёма сообщения брокером, прежде чем отмечать запись опубликованной. Сам факт успешной отправки байтов по сетевому соединению не доказывает, что брокер надёжно принял сообщение. Для критичных сценариев также проверяют настройки долговечности очереди и сообщений.</p><p style="margin: 0 0 18px;">В RabbitMQ отдельно учитывают результат маршрутизации. Publisher confirm может подтвердить публикацию даже тогда, когда сообщение не попало ни в одну очередь. Если отсутствие маршрута означает потерю задачи, используют публикацию с флагом <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px; font-size: 13px;">mandatory</code> и обрабатывают событие <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px; font-size: 13px;">basic.return</code> до принятия решения об отметке Outbox-записи как опубликованной. Альтернативой может быть конфигурация маршрутизации, гарантирующая наличие нужной очереди.</p><p style="margin: 0 0 18px;">Если очередью служит сама таблица в основной базе, отдельный Outbox не нужен: постановка задачи и бизнес-запись уже находятся в одной транзакции. Однако для такого варианта всё равно нужны правила захвата задач, аренды, восстановления после сбоев и очистки таблицы.</p><div style="margin: 55px 0 22px;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.8px; margin-bottom: 9px;">03 / DELIVERY GUARANTEES</div><h3 style="font-size: 25px; line-height: 1.3; color: #f9fafb; margin: 0; font-weight: bold;">«Ровно один раз» не существует: гарантии доставки и идемпотентность</h3><div style="width: 48px; height: 3px; background: #14b8a6; margin-top: 16px;"> </div></div><p style="margin: 0 0 19px;">Гарантий доставки три. «Не более одного раза» (at-most-once): сообщение подтверждают до выполнения либо не возвращают воркеру при потере подтверждения; при падении задача может быть потеряна. «Не менее одного раза» (at-least-once): сообщение остаётся доступным для повторной выдачи, пока система не получит подтверждение; при падении после работы, но до подтверждения задачу выдадут снова. «Ровно один раз» (exactly-once) требует уточнения: доставка сообщения, выполнение обработчика и фиксация бизнес-эффекта — разные события.</p><div style="display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,210px),1fr)); gap: 11px; margin: 25px 0 27px;"><div style="padding: 18px; border: 1px solid #55434a; background: rgba(166,79,79,0.07); box-sizing: border-box;"><div style="font-size: 11px; color: #e58b8b; font-weight: bold; letter-spacing: 1px; margin-bottom: 9px;">AT-MOST-ONCE</div><div style="font-size: 16px; color: #f3f4f6; font-weight: bold; margin-bottom: 8px;">Не более одного раза</div><div style="font-size: 13px; color: #b9bfc2; line-height: 1.65;">Подтверждение до выполнения. Повтор исключается ценой риска потери задачи.</div></div><div style="padding: 18px; border: 1px solid #48645f; background: rgba(20,184,166,0.065); box-sizing: border-box;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1px; margin-bottom: 9px;">AT-LEAST-ONCE</div><div style="font-size: 16px; color: #f3f4f6; font-weight: bold; margin-bottom: 8px;">Не менее одного раза</div><div style="font-size: 13px; color: #b9bfc2; line-height: 1.65;">Подтверждение после выполнения. Задача может повториться после сбоя.</div></div><div style="padding: 18px; border: 1px solid #485b70; background: rgba(85,125,158,0.07); box-sizing: border-box;"><div style="font-size: 11px; color: #8eb8d4; font-weight: bold; letter-spacing: 1px; margin-bottom: 9px;">EXACTLY-ONCE</div><div style="font-size: 16px; color: #f3f4f6; font-weight: bold; margin-bottom: 8px;">Ровно один раз</div><div style="font-size: 13px; color: #b9bfc2; line-height: 1.65;">Требует определения границ гарантии. Доставка, выполнение и внешний эффект — не одно и то же.</div></div></div><p style="margin: 0 0 18px;">Внутри одной базы можно атомарно зафиксировать изменение бизнес-данных и отметку о выполнении задачи, если они входят в одну транзакцию. Но внешний эффект — отправка письма, платёж или вызов чужого API — не становится частью этой транзакции. Даже если брокер поддерживает транзакции и exactly-once processing для определённых операций, это не означает, что произвольный внешний API будет вызван ровно один раз.</p><div style="margin: 23px 0 26px; padding: 20px 22px; background: linear-gradient(110deg,rgba(20,184,166,0.11),rgba(20,184,166,0.02)); border: 1px solid rgba(20,184,166,0.32); box-sizing: border-box;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.5px; margin-bottom: 11px;">ПРАКТИЧЕСКАЯ ФОРМУЛА</div><div style="font-size: 20px; line-height: 1.5; color: #f3f4f6; font-weight: bold;">At-least-once + идемпотентный обработчик</div><p style="font-size: 14px; color: #b9c5c7; margin: 10px 0 0; line-height: 1.7;">Идемпотентность — свойство операции, при котором повторное выполнение с теми же входными данными не создаёт дополнительного эффекта.</p></div><p style="margin: 0 0 18px;">«Установить статус "оплачен"» идемпотентно, «прибавить 100 к балансу» — нет, если перед изменением не проверяется уникальность операции.</p><p style="margin: 0 0 18px;">Подтверждение до выполнения повышает риск потери задачи и соответствует модели at-most-once. Подтверждение после выполнения снижает риск потери, но допускает повторное выполнение и соответствует модели at-least-once, если брокер сохраняет сообщение и корректно восстанавливает неподтверждённую доставку. В реальных системах поведение зависит от настроек брокера, библиотеки, долговечности очереди, подтверждений и политики восстановления.</p><p style="margin: 0 0 18px;">В Celery 5.7 по умолчанию <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">task_acks_late</code> выключен: сообщение подтверждается до выполнения. При включённом <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">acks_late</code> подтверждение переносится на после выполнения, но это ещё не означает, что задача обязательно вернётся в очередь при любом аварийном завершении. По умолчанию <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">task_reject_on_worker_lost</code> выключен, поэтому при внезапной гибели дочернего процесса сообщение может быть подтверждено даже при позднем подтверждении. Включение <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">task_reject_on_worker_lost</code> позволяет вернуть сообщение в очередь, но способно создать бесконечный цикл, если задача каждый раз аварийно завершает процесс.</p><p style="margin: 0 0 18px;">В Celery 5.7 появились дополнительные настройки <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">task_retry_on_worker_lost</code>, <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">task_acks_on_failure</code> и <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">task_acks_on_timeout</code>. Первая позволяет использовать механизм повторов при гибели дочернего процесса, с учётом <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">max_retries</code> и <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">default_retry_delay</code>. Она имеет приоритет над <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">task_reject_on_worker_lost</code>, но относится к гибели дочернего процесса, пока основной процесс воркера продолжает работать. Если уничтожен весь воркер или контейнер, эта настройка сама по себе не обеспечит повтор. <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">task_acks_on_failure</code> и <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">task_acks_on_timeout</code> позволяют отдельно определить подтверждение сообщений при ошибке и таймауте. Эти параметры имеют значение при позднем подтверждении. В Celery 6.0 прежняя настройка <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">task_acks_on_failure_or_timeout</code> объявлена устаревшей в пользу отдельных параметров.</p><p style="margin: 0 0 18px;">Поэтому конфигурацию подтверждений нужно проверять для конкретной версии Celery и брокера. Например, в RabbitMQ 4.0 и новее для quorum queues по умолчанию установлен лимит в 20 неудачных доставок. При превышении сообщения удаляются или отправляются в dead-letter exchange, если он настроен. В RabbitMQ 4.3 изменена семантика счётчика: возврат сообщения через <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">basic.nack</code> с <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">requeue=true</code> сам по себе не увеличивает <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">delivery-count</code>, тогда как <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">basic.reject</code> учитывается как неудачная доставка. Следовательно, бесконечная повторная выдача не гарантированно ограничивается delivery limit. Нужны ограничение повторов на уровне приложения, настроенный DLX, мониторинг и идемпотентность.</p><div style="margin: 43px 0 20px;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.5px; margin-bottom: 9px;">03.1 / DUPLICATE PROTECTION</div><h4 style="font-size: 20px; line-height: 1.4; color: #f3f4f6; margin: 0;">Три уровня защиты от повтора</h4><div style="width: 38px; height: 2px; background: #14b8a6; margin-top: 13px;"> </div></div><p style="margin: 0 0 20px;">Каждый уровень закрывает свой тип дубля.</p><div style="display: flex; flex-direction: column; gap: 12px; margin: 22px 0 27px;"><div style="display: flex; gap: 15px; padding: 17px; border: 1px solid #34464a; background: #111a1d; box-sizing: border-box;"><div style="flex: 0 0 37px; height: 37px; display: flex; align-items: center; justify-content: center; background: rgba(20,184,166,0.12); color: #14b8a6; font-size: 15px; font-weight: bold;">01</div><div style="flex: 1; min-width: 0;"><div style="font-size: 16px; color: #f3f4f6; font-weight: bold; margin-bottom: 7px;">Постановка</div><p style="font-size: 14px; color: #b9c5c7; line-height: 1.7; margin: 0 0 9px;">Дубль возникает от повторного клика, повторной отправки запроса клиентом, двойного запуска планировщика. Защита — ключ дедупликации (dedup key), собранный из бизнес-смысла операции, а не из случайного числа: вид «акт сверки», контрагент 4412, период «2026-10». Уникальное ограничение на пару «вид — ключ» делает повторную постановку безвредной: приложение возвращает уже существующую задачу, и пользователь видит тот же идентификатор.</p></div></div></div><p style="margin: 0 0 18px;">Но срок действия ключа и возможность легитимного повторного запуска нужно определить заранее. Если акт за октябрь уже сформирован, а после корректировки данных требуется новая версия, прежний ключ не должен навсегда блокировать операцию. Для этого в ключ включают ревизию данных или номер запуска либо разрешают повторный запуск только после перевода предыдущей задачи в терминальное состояние и создания новой ревизии. Уникальность должна отражать бизнес-правило, а не просто техническое удобство.</p><p style="margin: 0 0 18px;">Для HTTP-запросов полезно поддерживать отдельный <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">Idempotency-Key</code>, передаваемый клиентом. Сервер сохраняет его вместе с пользователем, видом операции, отпечатком содержимого запроса и результатом. Повтор с тем же ключом и тем же содержимым возвращает прежний результат, а повторное использование ключа с другим содержимым отклоняется. Это защищает от повторной отправки запроса после таймаута, когда клиент не знает, успела ли операция выполниться.</p><p style="margin: 0 0 18px;">Сам заголовок не обеспечивает идемпотентность автоматически. Сервер должен атомарно регистрировать ключ, обрабатывать конкурентные запросы с одинаковым ключом, определять срок хранения результата и правила повторного использования. На практике запись ключа защищают уникальным ограничением, например по паре «пользователь — ключ» или «клиент — ключ». При конфликте приложение читает существующую запись и сравнивает отпечаток запроса. Если содержимое совпадает, возвращается прежний результат либо ссылка на выполняющуюся операцию. Если отличается — запрос отклоняется. Если первый запрос ещё выполняется, второй не должен запускать ту же операцию параллельно. Срок хранения ключа должен быть не меньше периода, в течение которого клиент может безопасно повторить запрос, а для финансовых операций может требоваться более длительное хранение.</p><div style="display: flex; gap: 15px; padding: 17px; margin: 23px 0; border: 1px solid #34464a; background: #111a1d; box-sizing: border-box;"><div style="flex: 0 0 37px; height: 37px; display: flex; align-items: center; justify-content: center; background: rgba(20,184,166,0.12); color: #14b8a6; font-size: 15px; font-weight: bold;">02</div><div style="flex: 1; min-width: 0;"><div style="font-size: 16px; color: #f3f4f6; font-weight: bold; margin-bottom: 7px;">Шаг</div><p style="font-size: 14px; color: #b9c5c7; line-height: 1.7; margin: 0;">Дубль возникает при повторном выполнении после падения. Защита — каждый шаг либо идемпотентен сам по себе, либо записывает факт своего выполнения в ту же транзакцию, что и результат. Для многошаговой задачи сохраняют состояние каждого шага, а не только общий статус задачи.</p></div></div><div style="display: flex; gap: 15px; padding: 17px; margin: 12px 0 25px; border: 1px solid #34464a; background: #111a1d; box-sizing: border-box;"><div style="flex: 0 0 37px; height: 37px; display: flex; align-items: center; justify-content: center; background: rgba(20,184,166,0.12); color: #14b8a6; font-size: 15px; font-weight: bold;">03</div><div style="flex: 1; min-width: 0;"><div style="font-size: 16px; color: #f3f4f6; font-weight: bold; margin-bottom: 7px;">Эффект</div><p style="font-size: 14px; color: #b9c5c7; line-height: 1.7; margin: 0;">Самый тонкий уровень: письмо, платёж, вызов чужого API. Способ защиты зависит от того, что именно делает шаг.</p></div></div><div style="margin: 25px 0 27px;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.3px; margin-bottom: 13px;">МЕХАНИЗМЫ ЗАЩИТЫ ПО ТИПУ ЭФФЕКТА</div><div style="display: flex; flex-direction: column; gap: 9px;"><div style="padding: 15px 17px; border-left: 2px solid #14b8a6; background: #131d20;"><div style="font-size: 14px; color: #f3f4f6; font-weight: bold; margin-bottom: 5px;">Запись в собственную базу</div><div style="font-size: 13px; color: #b5c1c3; line-height: 1.65;">Уникальный ключ и вставка с обработкой конфликта; вместо «прибавить» — «установить».</div><div style="font-size: 11px; color: #7eaaa5; margin-top: 7px;">Остаточный риск: отсутствует при единой транзакции и корректном ограничении уникальности.</div></div><div style="padding: 15px 17px; border-left: 2px solid #14b8a6; background: #131d20;"><div style="font-size: 14px; color: #f3f4f6; font-weight: bold; margin-bottom: 5px;">Вызов внешнего API с поддержкой ключа идемпотентности</div><div style="font-size: 13px; color: #b5c1c3; line-height: 1.65;">Передавать один и тот же ключ для всех попыток одной бизнес-операции.</div><div style="font-size: 11px; color: #c69e6e; margin-top: 7px;">Остаточный риск: срок хранения ключа и правила его применения на стороне партнёра.</div></div><div style="padding: 15px 17px; border-left: 2px solid #c69e6e; background: #1a1b1b;"><div style="font-size: 14px; color: #f3f4f6; font-weight: bold; margin-bottom: 5px;">Вызов внешнего API без такой поддержки</div><div style="font-size: 13px; color: #b5c1c3; line-height: 1.65;">Перед повтором запросить у партнёра состояние операции и сверить результат.</div><div style="font-size: 11px; color: #c69e6e; margin-top: 7px;">Остаточный риск: окно между проверкой и повтором.</div></div><div style="padding: 15px 17px; border-left: 2px solid #c69e6e; background: #1a1b1b;"><div style="font-size: 14px; color: #f3f4f6; font-weight: bold; margin-bottom: 5px;">Письмо, SMS, push</div><div style="font-size: 13px; color: #b5c1c3; line-height: 1.65;">Уникальная запись отправки, аренда обработки и сверка результата у провайдера, если она доступна.</div><div style="font-size: 11px; color: #c69e6e; margin-top: 7px;">Остаточный риск: неизвестный исход после передачи сообщения и до фиксации ответа.</div></div><div style="padding: 15px 17px; border-left: 2px solid #14b8a6; background: #131d20;"><div style="font-size: 14px; color: #f3f4f6; font-weight: bold; margin-bottom: 5px;">Создание файла</div><div style="font-size: 13px; color: #b5c1c3; line-height: 1.65;">Неизменяемый ключ объекта, контрольная сумма и отдельная публикация результата.</div><div style="font-size: 11px; color: #c69e6e; margin-top: 7px;">Остаточный риск: осиротевшие временные объекты и частично завершённая публикация.</div></div><div style="padding: 15px 17px; border-left: 2px solid #14b8a6; background: #131d20;"><div style="font-size: 14px; color: #f3f4f6; font-weight: bold; margin-bottom: 5px;">Счётчики и агрегаты</div><div style="font-size: 13px; color: #b5c1c3; line-height: 1.65;">Пересчитывать из первичных данных либо применять изменения с уникальным идентификатором события.</div><div style="font-size: 11px; color: #c69e6e; margin-top: 7px;">Остаточный риск: ошибки исходных данных и несогласованность при неполной фиксации.</div></div></div></div><p style="margin: 0 0 18px;">Принципиально важно: уникальная запись в таблице отправок не делает отправку письма или SMS атомарной. Она предотвращает параллельное выполнение одного и того же шага, но не решает неопределённость между внешним эффектом и фиксацией результата.</p><div style="margin: 40px 0 19px;"><h4 style="font-size: 20px; line-height: 1.4; color: #f3f4f6; margin: 0;">Две ошибки, которые проходят все тесты</h4><div style="width: 38px; height: 2px; background: #14b8a6; margin-top: 13px;"> </div></div><div style="margin: 20px 0; padding: 19px 20px; border: 1px solid rgba(239,107,107,0.28); background: rgba(239,107,107,0.035); box-sizing: border-box;"><div style="font-size: 11px; color: #ef8585; font-weight: bold; letter-spacing: 1.2px; margin-bottom: 9px;">ОШИБКА 01 / НОВЫЙ КЛЮЧ ПРИ КАЖДОЙ ПОПЫТКЕ</div><p style="font-size: 14px; color: #c5c4c4; line-height: 1.7; margin: 0;">Первая: ключ идемпотентности для внешнего API генерируется в начале обработчика случайным идентификатором. На каждой попытке он новый, поэтому защиты нет. Ключ привязывают к бизнес-операции или задаче, а не к попытке.</p></div><div style="margin: 20px 0 27px; padding: 19px 20px; border: 1px solid rgba(239,107,107,0.28); background: rgba(239,107,107,0.035); box-sizing: border-box;"><div style="font-size: 11px; color: #ef8585; font-weight: bold; letter-spacing: 1.2px; margin-bottom: 9px;">ОШИБКА 02 / CHECK-THEN-ACT</div><p style="font-size: 14px; color: #c5c4c4; line-height: 1.7; margin: 0 0 13px;">Вторая: схема «проверить, потом сделать». Исполнитель делает SELECT, не находит записи об отправке, отправляет и затем пишет запись. Два исполнителя, оказавшиеся в одной задаче одновременно (как это бывает после потери аренды), оба увидят пустоту. Проверку и захват права на обработку нужно объединять в атомарную операцию: например, вставлять запись с уникальным ключом или захватывать просроченную запись условным UPDATE с арендой. Конфликт означает, что другой исполнитель уже владеет шагом либо он завершён.</p></div><p style="margin: 0 0 18px;">У этого порядка своя цена: процесс может упасть после захвата записи и до отправки. Поэтому запись получает статус <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">in_progress</code>, идентификатор владельца и время истечения аренды. После истечения срока другой исполнитель может забрать запись, но только после проверки её состояния. Если неизвестно, успел ли предыдущий исполнитель передать сообщение шлюзу, запись нельзя автоматически считать ни успешно отправленной, ни безопасной для повтора: ей присваивают состояние <code style="color: #e5b46d; background: #292319; padding: 2px 5px; border-radius: 3px;">unknown</code> и запускают сверку, если провайдер предоставляет такую возможность.</p><div style="margin: 23px 0 28px; padding: 19px 21px; border-left: 3px solid #d5a45f; background: rgba(213,164,95,0.065); box-sizing: border-box;"><div style="font-size: 11px; color: #d5a45f; font-weight: bold; letter-spacing: 1.3px; margin-bottom: 10px;">НЕИЗВЕСТНЫЙ РЕЗУЛЬТАТ — НЕ ОЗНАЧАЕТ НЕУДАЧУ</div><p style="font-size: 14px; color: #d0c8ba; line-height: 1.7; margin: 0;">После сетевого сбоя нельзя делать вывод, что внешний сервис ничего не получил. Он мог выполнить операцию, а подтверждение могло потеряться. Состояние unknown требует сверки, а не слепого повторения.</p></div><p style="margin: 0 0 18px;">Для напоминания о приёме врача дубль — досада, пропуск — потерянный приём. Для одноразового кода подтверждения повтор обесценивает предыдущий код, зато пропуск лечится новым запросом пользователя. Для списания денег неприемлемо ни то ни другое, поэтому там нужен ключ идемпотентности на стороне получателя или сверка. Единого ответа нет: выбор делается для каждого вида задач отдельно и фиксируется в описании этого вида.</p><div style="margin: 36px 0 0; padding: 17px 19px; border-top: 1px solid #34454a; border-bottom: 1px solid #34454a; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;"><div style="font-size: 11px; color: #81949a; letter-spacing: 1.3px;">END OF SECTION 03</div><div style="font-size: 12px; color: #14b8a6; font-weight: bold;">NEXT / STORAGE &amp; EXECUTION</div></div><div style="margin: 55px 0 22px;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.8px; margin-bottom: 9px;">04 / STORAGE &amp; EXECUTION</div><h3 style="font-size: 25px; line-height: 1.3; color: #f9fafb; margin: 0; font-weight: bold;">Где хранить очередь и как её исполнять</h3><div style="width: 48px; height: 3px; background: #14b8a6; margin-top: 16px;"> </div></div><p style="margin: 0 0 20px;">Выбор определяется тремя вопросами: нужна ли транзакционная связь с бизнес-данными, какая нагрузка по числу задач в секунду и допустима ли потеря последних секунд очереди при сбое.</p><div style="display: flex; flex-direction: column; gap: 12px; margin: 23px 0 28px;"><div style="padding: 18px 19px; border: 1px solid #3d6962; border-left: 3px solid #14b8a6; background: rgba(20,184,166,0.055); box-sizing: border-box;"><div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;"><div style="font-size: 17px; color: #f3f4f6; font-weight: bold;">PostgreSQL / основная СУБД</div><div style="font-size: 10px; color: #14b8a6; font-weight: bold; letter-spacing: 1px;">DATABASE QUEUE</div></div><div style="font-size: 13px; color: #c1cdcc; line-height: 1.7;"><span style="color: #14b8a6; font-weight: bold;">Подходит:</span> задачи рождаются в транзакциях с бизнес-данными; поток умеренный; не хочется эксплуатировать ещё один компонент.</div><div style="font-size: 13px; color: #b9a5a5; line-height: 1.7; margin-top: 8px;"><span style="color: #e58b8b; font-weight: bold;">Не подходит:</span> поток высокий: частые обновления строк раздувают таблицу и нагружают очистку; очередь делит ресурсы с основной нагрузкой.</div></div><div style="padding: 18px 19px; border: 1px solid #34464a; background: #111a1d; box-sizing: border-box;"><div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;"><div style="font-size: 17px; color: #f3f4f6; font-weight: bold;">Redis / хранилище в памяти</div><div style="font-size: 10px; color: #8eb8d4; font-weight: bold; letter-spacing: 1px;">IN-MEMORY</div></div><div style="font-size: 13px; color: #c1cdcc; line-height: 1.7;"><span style="color: #14b8a6; font-weight: bold;">Подходит:</span> нужна малая задержка; потеря задачи допустима или компенсируется пересчётом; настроены подходящие механизмы персистентности.</div><div style="font-size: 13px; color: #b9a5a5; line-height: 1.7; margin-top: 8px;"><span style="color: #e58b8b; font-weight: bold;">Не подходит:</span> потеря недопустима, а конфигурация персистентности, репликации и резервирования не обеспечивает требуемую надёжность.</div></div><div style="padding: 18px 19px; border: 1px solid #34464a; background: #111a1d; box-sizing: border-box;"><div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;"><div style="font-size: 17px; color: #f3f4f6; font-weight: bold;">RabbitMQ / брокер сообщений</div><div style="font-size: 10px; color: #8eb8d4; font-weight: bold; letter-spacing: 1px;">MESSAGE BROKER</div></div><div style="font-size: 13px; color: #c1cdcc; line-height: 1.7;"><span style="color: #14b8a6; font-weight: bold;">Подходит:</span> много видов задач, маршрутизация по очередям, подтверждения, TTL, dead-letter-механизмы, разные языки в одной системе.</div><div style="font-size: 13px; color: #b9a5a5; line-height: 1.7; margin-top: 8px;"><span style="color: #e58b8b; font-weight: bold;">Не подходит:</span> нет ресурса на эксплуатацию кластера; нужна транзакционная связь с базой, а Outbox строить не хочется.</div></div><div style="padding: 18px 19px; border: 1px solid #34464a; background: #111a1d; box-sizing: border-box;"><div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;"><div style="font-size: 17px; color: #f3f4f6; font-weight: bold;">Kafka / журнал событий</div><div style="font-size: 10px; color: #8eb8d4; font-weight: bold; letter-spacing: 1px;">EVENT LOG</div></div><div style="font-size: 13px; color: #c1cdcc; line-height: 1.7;"><span style="color: #14b8a6; font-weight: bold;">Подходит:</span> потоки событий, много независимых потребителей, повторное чтение истории, высокая пропускная способность.</div><div style="font-size: 13px; color: #b9a5a5; line-height: 1.7; margin-top: 8px;"><span style="color: #e58b8b; font-weight: bold;">Не подходит:</span> нужна простая очередь отдельных операций с отложенными повторами и статусом каждой задачи; такую модель придётся строить дополнительно.</div></div><div style="padding: 18px 19px; border: 1px solid #34464a; background: #111a1d; box-sizing: border-box;"><div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px;"><div style="font-size: 17px; color: #f3f4f6; font-weight: bold;">Temporal / BPMN-движки</div><div style="font-size: 10px; color: #8eb8d4; font-weight: bold; letter-spacing: 1px;">WORKFLOW ENGINE</div></div><div style="font-size: 13px; color: #c1cdcc; line-height: 1.7;"><span style="color: #14b8a6; font-weight: bold;">Подходит:</span> многошаговые процессы с ожиданиями людей и внешних событий, длительной работой и компенсациями.</div><div style="font-size: 13px; color: #b9a5a5; line-height: 1.7; margin-top: 8px;"><span style="color: #e58b8b; font-weight: bold;">Не подходит:</span> задача «отправить письмо»: модель программирования и эксплуатация несоразмерны.</div></div></div><p style="margin: 0 0 18px;">Поверх хранилища обычно стоит библиотека (Celery, Sidekiq, BullMQ, Hangfire и подобные), которая определяет семантику подтверждений, повторов и расписаний. Ни одно из хранилищ не заменяет бизнес-статус задачи: вопрос «в каком состоянии задача 4812» должен иметь ответ на уровне приложения, независимо от того, что хранит брокер.</p><p style="margin: 0 0 20px;">У Kafka есть фиксация позиции потребителя (consumer offset), а транзакционный режим позволяет атомарно связать запись результатов в Kafka с фиксацией offset в определённых сценариях. Но offset и произвольный внешний эффект — например, платёж в стороннем API — автоматически одной транзакцией не становятся. Поэтому Kafka не отменяет идемпотентность и сверку внешних операций.</p><div style="margin: 45px 0 20px;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.5px; margin-bottom: 9px;">04.1 / POSTGRESQL QUEUE</div><h4 style="font-size: 21px; line-height: 1.4; color: #f3f4f6; margin: 0;">Очередь в PostgreSQL: взятие, аренда, завершение</h4><div style="width: 38px; height: 2px; background: #14b8a6; margin-top: 13px;"> </div></div><p style="margin: 0 0 18px;">Вариант с таблицей полезен тем, что механизм в нём виден целиком, а принципы переносятся на любое другое хранилище.</p><div style="margin: 22px 0; padding: 16px; border: 1px solid #35474c; background: #0d1417; box-sizing: border-box;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.3px; margin-bottom: 12px;">SQL / 01 — СТРУКТУРА ТАБЛИЦЫ</div><pre style="white-space: pre-wrap; overflow-wrap: anywhere; max-width: 100%; margin: 0; color: #cbd5d1; font-size: 12px; line-height: 1.65; overflow-x: auto;"><code>CREATE TABLE job (
+    id            bigserial   PRIMARY KEY,
+    kind          text        NOT NULL,
+    dedup_key     text        NOT NULL,
+    payload       jsonb       NOT NULL,
+    status        text        NOT NULL DEFAULT 'queued',
+    attempt       int         NOT NULL DEFAULT 0,
+    max_attempts  int         NOT NULL DEFAULT 6,
+    run_at        timestamptz NOT NULL DEFAULT now(),
+    locked_by     text,
+    lock_token    bigint      NOT NULL DEFAULT 0,
+    locked_until  timestamptz,
+    last_error    text,
+    created_at    timestamptz NOT NULL DEFAULT now(),
+    finished_at   timestamptz,
+    CHECK (status IN (
+        'queued',
+        'running',
+        'retry_wait',
+        'succeeded',
+        'failed',
+        'dead',
+        'cancel_requested',
+        'cancelled'
+    )),
+    CHECK (attempt &gt;= 0),
+    CHECK (max_attempts &gt; 0),
+    UNIQUE (kind, dedup_key)
+);
+
+CREATE INDEX job_ready_idx
+    ON job (run_at, id)
+    WHERE status IN ('queued', 'retry_wait');
+
+CREATE INDEX job_expired_lease_idx
+    ON job (locked_until)
+    WHERE status = 'running';</code></pre></div><p style="margin: 0 0 18px;">Ограничение <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">UNIQUE (kind, dedup_key)</code> задаёт уникальность постановки в рамках выбранного бизнес-ключа. Если повторный запуск допустим, новая ревизия или номер запуска должны входить в <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">dedup_key</code> либо храниться отдельным полем, участвующим в ограничении. Иначе завершённая задача навсегда заблокирует повторную постановку с тем же ключом.</p><p style="margin: 0 0 18px;">В примере показана одна из возможных моделей состояний. <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">failed</code> означает окончательную ошибку, для которой повтор не предусмотрен. <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">dead</code> означает, что задача исчерпала разрешённые попытки либо требует ручного вмешательства. <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">retry_wait</code> используется для задач, у которых наступит время следующей попытки. <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">cancel_requested</code> — отмена запрошена, но исполнитель ещё не подтвердил остановку. Эти состояния нельзя смешивать: они отражают разные причины, по которым работа не выполняется.</p><div style="margin: 25px 0; padding: 17px 19px; background: rgba(20,184,166,0.055); border-left: 3px solid #14b8a6; box-sizing: border-box;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.2px; margin-bottom: 8px;">ВАЖНО / РАЗМЕР ЗАХВАТА</div><p style="font-size: 14px; color: #c6d1cf; line-height: 1.7; margin: 0;">Параметр <code style="color: #7edbd0;">:slots</code> должен равняться числу свободных слотов исполнения, а не произвольному размеру пачки. Если воркер одновременно выполняет две задачи, он не должен захватывать десять и оставлять восемь лежать в локальной памяти с уже запущенной арендой.</p></div><p style="margin: 0 0 18px;">Взятие задач одним оператором:</p><div style="margin: 22px 0; padding: 16px; border: 1px solid #35474c; background: #0d1417; box-sizing: border-box;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.3px; margin-bottom: 12px;">SQL / 02 — АТОМАРНЫЙ ЗАХВАТ</div><pre style="white-space: pre-wrap; overflow-wrap: anywhere; max-width: 100%; margin: 0; color: #cbd5d1; font-size: 12px; line-height: 1.65; overflow-x: auto;"><code>WITH next AS (
+    SELECT id
+    FROM job
+    WHERE status IN ('queued', 'retry_wait')
+      AND run_at &lt;= clock_timestamp()
+      AND attempt &lt; max_attempts
+    ORDER BY run_at, id
+    LIMIT :slots
+    FOR UPDATE SKIP LOCKED
+)
+UPDATE job j
+SET status = 'running',
+    attempt = j.attempt + 1,
+    locked_by = :worker_id,
+    lock_token = j.lock_token + 1,
+    locked_until = clock_timestamp() + interval '5 minutes'
+FROM next
+WHERE j.id = next.id
+RETURNING
+    j.id,
+    j.kind,
+    j.payload,
+    j.attempt,
+    j.lock_token,
+    j.locked_until;</code></pre></div><p style="margin: 0 0 18px;">Конструкция <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">FOR UPDATE SKIP LOCKED</code> означает «заблокируй выбранные строки, а уже заблокированные другими транзакциями пропусти». Благодаря ей параллельные воркеры не ждут друг друга и не получают одну и ту же строку в рамках захвата. Это подходящий механизм для очереди, но не универсальный способ чтения таблиц: он намеренно пропускает заблокированные строки и поэтому не обеспечивает обычную согласованную выборку.</p><p style="margin: 0 0 18px;">Захват задач должен выполняться в короткой транзакции. После получения задач и фиксации изменений транзакцию коммитят, и только затем воркер начинает длительную обработку. Нельзя удерживать блокировки строк очереди на протяжении сетевых вызовов, генерации файлов или других продолжительных операций.</p><p style="margin: 0 0 18px;">Параметр <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">:slots</code> рассчитывается по фактической свободной конкурентности. Если пул может выполнять четыре задачи одновременно и все четыре слота заняты, новый захват не выполняется. Если освободились два слота, воркер может взять две задачи. Это предотвращает ситуацию, когда аренда истекает ещё до начала обработки из-за ожидания внутри локальной пачки.</p><p style="margin: 0 0 18px;">Счётчик попыток растёт при взятии, а не при ошибке. Это сделано намеренно: задача, которая убивает процесс (например, исчерпывает память), никогда не дойдёт до обработчика ошибок, но всё равно упрётся в лимит попыток.</p><p style="margin: 0 0 18px;">В примере используется <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">clock_timestamp()</code>, а не <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">now()</code>. В PostgreSQL <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">now()</code> возвращает время начала текущей транзакции. Для коротких транзакций захвата это обычно несущественно, но при проверке истечения аренды в длительной транзакции значение может оказаться устаревшим. <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">clock_timestamp()</code> возвращает фактическое время вызова.</p><div style="margin: 43px 0 20px;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.5px; margin-bottom: 9px;">04.2 / LEASE RECOVERY</div><h4 style="font-size: 21px; line-height: 1.4; color: #f3f4f6; margin: 0;">Возврат задач после потери исполнителя</h4><div style="width: 38px; height: 2px; background: #14b8a6; margin-top: 13px;"> </div></div><p style="margin: 0 0 18px;">Отдельный «сторож» раз в несколько секунд возвращает в очередь задачи с истёкшей арендой, если у них остались попытки:</p><div style="margin: 19px 0; padding: 16px; border: 1px solid #35474c; background: #0d1417; box-sizing: border-box;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.2px; margin-bottom: 10px;">SQL / 03 — ВОЗВРАТ В ОЧЕРЕДЬ</div><pre style="white-space: pre-wrap; overflow-wrap: anywhere; max-width: 100%; margin: 0; color: #cbd5d1; font-size: 12px; line-height: 1.65;"><code>UPDATE job
+SET status = 'retry_wait',
+    locked_by = NULL,
+    locked_until = NULL,
+    run_at = clock_timestamp()
+WHERE status = 'running'
+  AND locked_until &lt; clock_timestamp()
+  AND attempt &lt; max_attempts;</code></pre></div><p style="margin: 0 0 18px;">Задачи, исчерпавшие лимит, необходимо переводить в терминальное состояние отдельным запросом:</p><div style="margin: 19px 0; padding: 16px; border: 1px solid #55434a; background: #171416; box-sizing: border-box;"><div style="font-size: 11px; color: #e58b8b; font-weight: bold; letter-spacing: 1.2px; margin-bottom: 10px;">SQL / 04 — ИСЧЕРПАННЫЕ ПОПЫТКИ</div><pre style="white-space: pre-wrap; overflow-wrap: anywhere; max-width: 100%; margin: 0; color: #d4c7c7; font-size: 12px; line-height: 1.65;"><code>UPDATE job
+SET status = 'dead',
+    locked_by = NULL,
+    locked_until = NULL,
+    finished_at = clock_timestamp(),
+    last_error = COALESCE(
+        last_error,
+        'Lease expired after final attempt'
+    )
+WHERE status = 'running'
+  AND locked_until &lt; clock_timestamp()
+  AND attempt &gt;= max_attempts;</code></pre></div><p style="margin: 0 0 18px;">В промышленной реализации терминальный переход также должен создавать событие для DLQ и оповещения. Если задача переводится в <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">dead</code>, но событие о её попадании в DLQ теряется при сбое, мониторинг не узнает о проблеме. Поэтому запись о терминальном переходе и событие Outbox желательно фиксировать в одной транзакции.</p><p style="margin: 0 0 18px;">Истечение аренды не означает, что прежний воркер физически остановился. Он мог потерять связь с базой, перестать отправлять heartbeat или зависнуть на сетевом вызове, но продолжить работу после восстановления связи. Сторож только отзывает у него право владения задачей и разрешает повторный захват. Он не может самостоятельно отменить уже выполняющийся внешний вызов.</p><p style="margin: 0 0 18px;">Завершение работы воркер фиксирует условным обновлением:</p><div style="margin: 19px 0; padding: 16px; border: 1px solid #35474c; background: #0d1417; box-sizing: border-box;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.2px; margin-bottom: 10px;">SQL / 05 — ПОДТВЕРЖДЕНИЕ ВЛАДЕНИЯ</div><pre style="white-space: pre-wrap; overflow-wrap: anywhere; max-width: 100%; margin: 0; color: #cbd5d1; font-size: 12px; line-height: 1.65;"><code>UPDATE job
+SET status = 'succeeded',
+    finished_at = clock_timestamp(),
+    locked_by = NULL,
+    locked_until = NULL
+WHERE id = :id
+  AND status = 'running'
+  AND locked_by = :worker_id
+  AND lock_token = :token
+  AND locked_until &gt; clock_timestamp();</code></pre></div><p style="margin: 0 0 18px;">Результат «0 строк» означает, что воркер больше не владеет задачей: аренда истекла, задача была перехвачена или её состояние изменилось. Воркер не должен считать такую операцию успешным завершением.</p><p style="margin: 0 0 18px;">Но одной этой команды недостаточно, если вместе с задачей нужно записать бизнес-результат. Когда результат находится в той же базе, проверку владения, изменение бизнес-данных и перевод задачи в <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">succeeded</code> выполняют в одной короткой транзакции. Например:</p><div style="margin: 19px 0; padding: 16px; border: 1px solid #35474c; background: #0d1417; box-sizing: border-box;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.2px; margin-bottom: 10px;">SQL / 06 — АТОМАРНАЯ ФИКСАЦИЯ РЕЗУЛЬТАТА</div><pre style="white-space: pre-wrap; overflow-wrap: anywhere; max-width: 100%; margin: 0; color: #cbd5d1; font-size: 12px; line-height: 1.65;"><code>BEGIN;
+
+SELECT id
+FROM job
+WHERE id = :id
+  AND status = 'running'
+  AND locked_by = :worker_id
+  AND lock_token = :token
+  AND locked_until &gt; clock_timestamp()
+FOR UPDATE;
+
+-- Если строка не найдена, транзакцию откатывают.
+
+-- Здесь записывают бизнес-результат.
+
+UPDATE job
+SET status = 'succeeded',
+    finished_at = clock_timestamp(),
+    locked_by = NULL,
+    locked_until = NULL
+WHERE id = :id
+  AND status = 'running'
+  AND locked_by = :worker_id
+  AND lock_token = :token
+  AND locked_until &gt; clock_timestamp();
+
+-- Приложение проверяет, что обновлена ровно одна строка.
+
+COMMIT;</code></pre></div><p style="margin: 0 0 18px;">Если задача потеряла владение, транзакция откатывается, и бизнес-изменения не фиксируются. Блокировка строки задачи не позволяет сторожу или другому воркеру одновременно изменить её состояние, пока завершается эта транзакция. При этом транзакция должна оставаться короткой: сетевые вызовы и длительные вычисления в неё не включают.</p><p style="margin: 0 0 18px;">Здесь есть важное ограничение. Условный UPDATE защищает запись о задаче, но не автоматически все изменения, которые воркер уже успел выполнить. Если воздействие происходит во внешней системе, она должна поддерживать собственный ключ идемпотентности или fencing token, иначе устаревший исполнитель всё ещё способен создать внешний эффект.</p><div style="margin: 44px 0 20px;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.5px; margin-bottom: 9px;">04.3 / FENCING TOKEN</div><h4 style="font-size: 21px; line-height: 1.4; color: #f3f4f6; margin: 0;">Что происходит, когда аренда истекла раньше конца работы</h4><div style="width: 38px; height: 2px; background: #14b8a6; margin-top: 13px;"> </div></div><p style="margin: 0 0 18px;">Условная задача пересчёта остатков обычно занимает 3 минуты, но в конце квартала растягивается до 8. Аренда выставлена на 5 минут.</p><div style="margin: 22px 0; padding: 19px 20px; border: 1px solid #39474d; background: #11191c; box-sizing: border-box;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.3px; margin-bottom: 18px;">СЦЕНАРИЙ / ДВА ВОРКЕРА</div><div style="display: flex; flex-direction: column; gap: 15px;"><div style="display: flex; gap: 13px; align-items: flex-start;"><div style="flex: 0 0 57px; font-size: 12px; color: #14b8a6; font-weight: bold; padding-top: 2px;">10:00</div><div style="flex: 1; min-width: 0;"><div style="font-size: 14px; color: #f3f4f6; font-weight: bold;">Воркер A захватывает задачу</div><div style="font-size: 12px; color: #aeb8c2;">Аренда действует до 10:05.</div></div></div><div style="display: flex; gap: 13px; align-items: flex-start;"><div style="flex: 0 0 57px; font-size: 12px; color: #e58b8b; font-weight: bold; padding-top: 2px;">10:05</div><div style="flex: 1; min-width: 0;"><div style="font-size: 14px; color: #f3f4f6; font-weight: bold;">Аренда истекает</div><div style="font-size: 12px; color: #aeb8c2;">Работа ещё не закончена. Сторож возвращает задачу в очередь.</div></div></div><div style="display: flex; gap: 13px; align-items: flex-start;"><div style="flex: 0 0 57px; font-size: 12px; color: #14b8a6; font-weight: bold; padding-top: 2px;">10:06</div><div style="flex: 1; min-width: 0;"><div style="font-size: 14px; color: #f3f4f6; font-weight: bold;">Воркер B захватывает ту же задачу</div><div style="font-size: 12px; color: #aeb8c2;">attempt = 2, новый lock_token. Пересчёт начинается заново.</div></div></div><div style="display: flex; gap: 13px; align-items: flex-start;"><div style="flex: 0 0 57px; font-size: 12px; color: #e58b8b; font-weight: bold; padding-top: 2px;">10:08</div><div style="flex: 1; min-width: 0;"><div style="font-size: 14px; color: #f3f4f6; font-weight: bold;">Воркер A заканчивает</div><div style="font-size: 12px; color: #aeb8c2;">Условие со старым токеном не выполнено. Обновление затрагивает 0 строк. A не имеет права фиксировать результат.</div></div></div><div style="display: flex; gap: 13px; align-items: flex-start;"><div style="flex: 0 0 57px; font-size: 12px; color: #14b8a6; font-weight: bold; padding-top: 2px;">10:13</div><div style="flex: 1; min-width: 0;"><div style="font-size: 14px; color: #f3f4f6; font-weight: bold;">Воркер B заканчивает</div><div style="font-size: 12px; color: #aeb8c2;">Условие выполнено, задача получает статус succeeded.</div></div></div></div></div><p style="margin: 0 0 18px;">Без проверки владельца и токена обе записи могли бы пройти, а итог зависел бы от того, чья запись пришла последней. Монотонно растущий токен владения называют fencing token: каждый новый захват получает большее значение, а ресурс, который умеет проверять такие токены, отклоняет операции от устаревших владельцев.</p><p style="margin: 0 0 18px;">В приведённой SQL-схеме <code style="color: #7edbd0; background: #172b2c; padding: 2px 5px; border-radius: 3px;">lock_token</code> увеличивается в строке конкретной задачи. Поэтому он обеспечивает последовательность захватов именно этой задачи. Если разные задачи могут изменять один и тот же внешний ресурс, например общий баланс или один документ, их токены должны выдаваться в общей для этого ресурса области владения. Иначе токен 5 одной задачи не обязательно новее токена 2 другой задачи.</p><p style="margin: 0 0 18px;">Чтобы fencing token действительно защищал внешний ресурс, тот должен сохранять максимальный принятый токен и отклонять операции с меньшим значением. Если внешний API не поддерживает такую проверку, локальный токен защищает только собственную запись задачи. Он не останавливает устаревшего воркера от отправки письма, списания денег или изменения данных на стороне партнёра. В таких случаях остаются ключ идемпотентности, сверка и явная обработка неизвестного результата.</p><p style="margin: 0 0 18px;">Само ограждение лечит последствия, но не причину. Причина в том, что срок аренды короче p99 длительности задачи (p99 — значение, быстрее которого выполняются 99% задач). Срок выбирают с запасом над типичной длительностью, а длинные задачи периодически продлевают аренду сигналом активности (heartbeat), обычно раз в треть срока. Продление выполняется условным обновлением по идентификатору задачи, владельцу и токену. Если воркер завис и сигнал не приходит, аренда истекает, и задача возвращается в очередь без вмешательства человека.</p><p style="margin: 0 0 18px;">Например, продление может выглядеть так:</p><div style="margin: 19px 0; padding: 16px; border: 1px solid #35474c; background: #0d1417; box-sizing: border-box;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.2px; margin-bottom: 10px;">SQL / 07 — HEARTBEAT</div><pre style="white-space: pre-wrap; overflow-wrap: anywhere; max-width: 100%; margin: 0; color: #cbd5d1; font-size: 12px; line-height: 1.65;"><code>UPDATE job
+SET locked_until = clock_timestamp() + interval '5 minutes'
+WHERE id = :id
+  AND status = 'running'
+  AND locked_by = :worker_id
+  AND lock_token = :token
+  AND locked_until &gt; clock_timestamp();</code></pre></div><p style="margin: 0 0 18px;">Если обновлено 0 строк, воркер потерял владение и должен прекратить дальнейшую работу там, где это ещё возможно. Само продление не даёт права игнорировать потерю аренды: каждый последующий шаг и фиксация результата должны проверять актуальность владения.</p><div style="margin: 24px 0 28px; padding: 19px 21px; border: 1px solid rgba(213,164,95,0.35); background: rgba(213,164,95,0.055); box-sizing: border-box;"><div style="font-size: 11px; color: #d5a45f; font-weight: bold; letter-spacing: 1.4px; margin-bottom: 9px;">ОГРАНИЧЕНИЕ HEARTBEAT</div><p style="font-size: 14px; color: #c9c1b5; line-height: 1.7; margin: 0;">Продление не должно быть бесконечным способом удерживать задачу: у операции нужен общий бюджет времени, после которого она завершается ошибкой или переводится на ручной разбор. Иначе зависший воркер, который продолжает отправлять heartbeat, может удерживать задачу бесконечно.</p></div><div style="margin: 38px 0 0; padding: 17px 19px; border-top: 1px solid #34454a; border-bottom: 1px solid #34454a; display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;"><div style="font-size: 11px; color: #81949a; letter-spacing: 1.3px;">END OF SECTION 04</div><div style="font-size: 12px; color: #14b8a6; font-weight: bold;">NEXT / RETRIES &amp; STATUS</div></div><div style="margin: 48px 0 22px;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.8px; margin-bottom: 9px;">05 / RELIABILITY · RETRY POLICY</div><h3 style="font-size: 25px; line-height: 1.3; color: #f9fafb; margin: 0; font-weight: bold;">Повторные попытки: что повторять, когда и сколько раз</h3><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Первое решение — классификация ошибки. Временные ошибки (сетевой сбой, ответ 5xx, ограничение частоты 429, взаимная блокировка в базе) обычно повторяют. Постоянные (ошибка валидации, удалённый объект, отсутствие прав, большинство ответов 4xx) переводят в «неуспешно» сразу: повтор бесполезен и только занимает исполнителей. Граница нечёткая, например 409 бывает и временным конфликтом, и признаком бизнес-ошибки, поэтому классификацию делают явной таблицей для каждого внешнего сервиса, а не общим правилом «повторять всё».</p><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Для HTTP-ответов нельзя строить безусловную таблицу, где каждый 4xx считается окончательным, а каждый 5xx — временным. Например, 408 может быть поводом для повтора, 425 требует учитывать условия обработки запроса, 429 означает ограничение частоты, а 401 иногда исправляется обновлением токена доступа. Ответ 409 зависит от бизнес-семантики операции. Даже 5xx не всегда безопасно повторять: сервер мог выполнить операцию и упасть при формировании ответа. Поэтому для каждого API учитывают контракт, тип операции и возможность сверки результата.</p><div style="margin: 24px 0; padding: 20px; border: 1px solid #374151; border-radius: 12px; background: #111827; box-sizing: border-box;"><div style="margin-bottom: 15px; color: #9ca3af; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase;">Логика принятия решения</div><div style="display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px;"><div style="flex: 1 1 150px; min-width: 0; padding: 14px; border: 1px solid #4b5563; border-radius: 9px; background: #1f2937;"><div style="color: #f3f4f6; font-size: 14px; font-weight: 650;">Получена ошибка</div><div style="margin-top: 5px; color: #9ca3af; font-size: 12px; line-height: 1.5;">Проверить ответ и контракт внешнего API</div></div><div style="display: flex; align-items: center; color: #6b7280; font-size: 20px;">→</div><div style="flex: 1 1 150px; min-width: 0; padding: 14px; border: 1px solid #0f766e; border-radius: 9px; background: #102a2a;"><div style="color: #5eead4; font-size: 14px; font-weight: 650;">Временная?</div><div style="margin-top: 5px; color: #a7f3d0; font-size: 12px; line-height: 1.5;">Сеть, 5xx, 429, блокировка</div></div></div><div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;"><div style="flex: 1 1 220px; min-width: 0; padding: 13px 14px; border-left: 3px solid #14b8a6; background: #172f2e; border-radius: 0 8px 8px 0;"><div style="color: #5eead4; font-size: 12px; font-weight: bold; letter-spacing: .5px;">ДА · ПОВТОР</div><div style="margin-top: 5px; color: #d1d5db; font-size: 13px; line-height: 1.5;">Учесть Retry-After, backoff, jitter и состояние circuit breaker</div></div><div style="flex: 1 1 220px; min-width: 0; padding: 13px 14px; border-left: 3px solid #d97706; background: #302619; border-radius: 0 8px 8px 0;"><div style="color: #fbbf24; font-size: 12px; font-weight: bold; letter-spacing: .5px;">НЕТ · ОСТАНОВКА</div><div style="margin-top: 5px; color: #d1d5db; font-size: 13px; line-height: 1.5;">Зафиксировать окончательную ошибку или передать на разбор</div></div></div><div style="margin-top: 12px; padding: 12px 14px; border: 1px dashed #6b7280; border-radius: 8px; color: #d1d5db; font-size: 13px; line-height: 1.6;"><span style="color: #fbbf24; font-weight: 650;">Неизвестный исход:</span> сначала ключ идемпотентности или сверка у партнёра. Не повторять необратимую операцию вслепую.</div></div><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Для 429 нужно учитывать <code style="color: #5eead4; font-size: 14px;">Retry-After</code>, если партнёр его возвращает. Значение может быть задано числом секунд или HTTP-датой. Это указание на допустимое время следующей попытки, и оно важнее произвольно выбранной короткой задержки. Если дата уже прошла к моменту обработки, система применяет собственную политику повтора. Для 5xx также полезно различать временную недоступность и ошибки, которые повтором не исправить.</p><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Второе — задержка между попытками. Экспоненциальная отсрочка (exponential backoff) удваивает паузу после каждой неудачи. При базе 30 секунд и пяти повторах паузы составят 30, 60, 120, 240 и 480 секунд, всего 930 секунд, то есть 15,5 минуты. На практике обычно вводят верхний предел задержки и случайный разброс (jitter). Например, при полном jitter реальная пауза выбирается случайно от нуля до рассчитанного предела. Без разброса все задачи, упавшие в одну секунду при сбое партнёра, повторятся в одну секунду снова и снова добьют его, как только он начнёт подниматься. Это называют лавиной повторов (retry storm).</p><div style="margin: 22px 0 26px; padding: 18px; border-radius: 10px; background: #111827; border: 1px solid #374151; box-sizing: border-box;"><div style="display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 14px;"><div style="color: #f3f4f6; font-size: 14px; font-weight: 650;">Экспоненциальная отсрочка</div><div style="color: #9ca3af; font-family: monospace; font-size: 11px;">BASE = 30 SEC</div></div><div style="display: flex; flex-wrap: wrap; align-items: flex-end; gap: 7px;"><div style="flex: 1 1 55px; min-width: 0; text-align: center;"><div style="height: 25px; border-radius: 4px 4px 0 0; background: #0f766e;"> </div><div style="padding-top: 7px; color: #5eead4; font-family: monospace; font-size: 13px;">30</div><div style="color: #9ca3af; font-size: 10px;">1</div></div><div style="flex: 1 1 55px; min-width: 0; text-align: center;"><div style="height: 40px; border-radius: 4px 4px 0 0; background: #0f766e;"> </div><div style="padding-top: 7px; color: #5eead4; font-family: monospace; font-size: 13px;">60</div><div style="color: #9ca3af; font-size: 10px;">2</div></div><div style="flex: 1 1 55px; min-width: 0; text-align: center;"><div style="height: 58px; border-radius: 4px 4px 0 0; background: #0f766e;"> </div><div style="padding-top: 7px; color: #5eead4; font-family: monospace; font-size: 13px;">120</div><div style="color: #9ca3af; font-size: 10px;">3</div></div><div style="flex: 1 1 55px; min-width: 0; text-align: center;"><div style="height: 78px; border-radius: 4px 4px 0 0; background: #0f766e;"> </div><div style="padding-top: 7px; color: #5eead4; font-family: monospace; font-size: 13px;">240</div><div style="color: #9ca3af; font-size: 10px;">4</div></div><div style="flex: 1 1 55px; min-width: 0; text-align: center;"><div style="height: 98px; border-radius: 4px 4px 0 0; background: #0f766e;"> </div><div style="padding-top: 7px; color: #5eead4; font-family: monospace; font-size: 13px;">480</div><div style="color: #9ca3af; font-size: 10px;">5</div></div></div><div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 14px; padding-top: 12px; border-top: 1px solid #374151; color: #9ca3af; font-size: 12px;">Пауза между попытками, секунды<span style="color: #f3f4f6; font-weight: 650;">Всего: 930 секунд · 15,5 минуты</span></div><div style="margin-top: 12px; color: #9ca3af; font-size: 12px; line-height: 1.6;">Верхний предел ограничивает максимальную задержку, а jitter распределяет повторные запросы во времени.</div></div><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Третье — что делать при длительной недоступности. Пятнадцати с половиной минут схемы выше хватит для сетевого сбоя, но не для двухчасовой аварии у партнёра: все задачи исчерпают попытки и уйдут в «мёртвые», хотя ни одна не виновата. Здесь нужен автоматический выключатель (circuit breaker). У него обычно три состояния: <code style="color: #5eead4;">closed</code> — запросы проходят; <code style="color: #5eead4;">open</code> — новые обращения временно блокируются; <code style="color: #5eead4;">half-open</code> — система пропускает ограниченное число пробных запросов, чтобы проверить восстановление. Пока выключатель открыт, задачи не должны бесконтрольно расходовать попытки. Их откладывают до следующего разрешённого окна либо удерживают в отдельном состоянии ожидания. После восстановления очередь разбирается постепенно, с учётом лимита партнёра, а не выпускается целиком.</p><div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 24px;"><div style="flex: 1 1 145px; min-width: 0; padding: 13px; border: 1px solid #0f766e; border-radius: 8px; background: #102a2a;"><div style="color: #5eead4; font-family: monospace; font-size: 13px; font-weight: bold;">CLOSED</div><div style="margin-top: 6px; color: #d1d5db; font-size: 12px; line-height: 1.5;">Запросы проходят в обычном режиме</div></div><div style="flex: 1 1 145px; min-width: 0; padding: 13px; border: 1px solid #92400e; border-radius: 8px; background: #302619;"><div style="color: #fbbf24; font-family: monospace; font-size: 13px; font-weight: bold;">OPEN</div><div style="margin-top: 6px; color: #d1d5db; font-size: 12px; line-height: 1.5;">Новые обращения временно блокируются</div></div><div style="flex: 1 1 145px; min-width: 0; padding: 13px; border: 1px solid #4b5563; border-radius: 8px; background: #1f2937;"><div style="color: #d1d5db; font-family: monospace; font-size: 13px; font-weight: bold;">HALF-OPEN</div><div style="margin-top: 6px; color: #d1d5db; font-size: 12px; line-height: 1.5;">Ограниченные пробные запросы проверяют восстановление</div></div></div><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Четвёртое — операция с неизвестным исходом. Запрос ушёл, ответ не пришёл. Партнёр мог обработать его, а мог не получить. Из этого положения три выхода: ключ идемпотентности (повтор безопасен), сверка (спросить у партнёра, что произошло), ручная проверка. Последний вариант оставляют для необратимых операций вроде платежа, когда у партнёра нет ни ключей, ни статусов. Решение о повторе такой операции в автоматическом режиме принимать нельзя.</p><div style="margin: 20px 0 24px; padding: 17px 18px; border-left: 3px solid #d97706; border-radius: 0 9px 9px 0; background: #292319; box-sizing: border-box;"><div style="margin-bottom: 7px; color: #fbbf24; font-size: 11px; letter-spacing: 1px; text-transform: uppercase;">Неизвестный исход операции</div><p style="margin: 0; color: #e5e7eb; font-size: 14px; line-height: 1.7;">Запрос отправлен, но ответ не получен. Нельзя достоверно утверждать ни то, что операция выполнена, ни то, что она не состоялась. Автоматический повтор допустим только при наличии защиты от дубля.</p></div><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Пятое — судьба задач, исчерпавших попытки. Они попадают в очередь недоставленных сообщений (dead letter queue, DLQ) либо в терминальное состояние <code style="color: #5eead4;">dead</code> в собственной таблице задач. Это не обязательно одно и то же хранилище: в брокере DLQ может содержать исходное сообщение, а в приложении таблица — полную историю попыток и бизнес-контекст. У DLQ должен быть владелец, оповещение при ненулевом размере и инструмент повторного запуска. Этот инструмент нельзя делать простой кнопкой «перезапустить всё»: к моменту разбора код мог измениться, объект мог быть удалён, а повторный запуск платёжных задач требует решения человека.</p><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">При использовании RabbitMQ нужно учитывать политику конкретного типа очереди. Для quorum queues в RabbitMQ 4.0 и новее по умолчанию действует лимит в 20 неудачных доставок. После его превышения сообщение удаляется или отправляется в настроенный dead-letter exchange. В RabbitMQ 4.3 также изменена семантика счётчика доставок: <code style="color: #5eead4;">basic.nack</code> с <code style="color: #5eead4;">requeue=true</code> не увеличивает <code style="color: #5eead4;">delivery-count</code>, тогда как <code style="color: #5eead4;">basic.reject</code> учитывается как неудачная доставка. Поэтому нельзя считать, что любой цикл повторной выдачи будет автоматически ограничен delivery limit. Политику повторов, DLX и поведение при <code style="color: #5eead4;">reject</code>/<code style="color: #5eead4;">nack</code> проверяют по версии брокера и типу очереди.</p><div style="margin: 48px 0 22px;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.8px; margin-bottom: 9px;">06 / APPLICATION LAYER · JOB LIFECYCLE</div><h2 style="margin: 0 0 22px; color: #f3f4f6; font-size: 25px; line-height: 1.25; font-weight: 650;">Статус задачи: что видит пользователь и что хранит система</h2><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Состояния задачи образуют конечный автомат (набор разрешённых переходов). Минимальный набор: «в очереди», «выполняется», «ожидает повтора», «выполнена», «неуспешно», «отменена». Дополнительно полезно состояние <code style="color: #5eead4;">dead</code> для задач, исчерпавших попытки и ожидающих разбора. Для отмены выполняющейся задачи вводят <code style="color: #5eead4;">cancel_requested</code>, чтобы отличать запрос на остановку от фактического прекращения работы.</p><div style="margin: 24px 0; padding: 19px; border: 1px solid #374151; border-radius: 12px; background: #111827; box-sizing: border-box;"><div style="margin-bottom: 16px; color: #9ca3af; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase;">Жизненный цикл фоновой задачи</div><div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px;"><div style="flex: 1 1 110px; min-width: 0; padding: 12px 9px; text-align: center; border: 1px solid #4b5563; border-radius: 8px; background: #1f2937;"><div style="color: #e5e7eb; font-size: 13px; font-weight: 650;">В очереди</div><div style="margin-top: 4px; color: #9ca3af; font-family: monospace; font-size: 10px;">queued</div></div><div style="color: #6b7280; font-size: 18px;">→</div><div style="flex: 1 1 110px; min-width: 0; padding: 12px 9px; text-align: center; border: 1px solid #0f766e; border-radius: 8px; background: #102a2a;"><div style="color: #5eead4; font-size: 13px; font-weight: 650;">Выполняется</div><div style="margin-top: 4px; color: #99f6e4; font-family: monospace; font-size: 10px;">running</div></div><div style="color: #6b7280; font-size: 18px;">→</div><div style="flex: 1 1 110px; min-width: 0; padding: 12px 9px; text-align: center; border: 1px solid #0f766e; border-radius: 8px; background: #102a2a;"><div style="color: #5eead4; font-size: 13px; font-weight: 650;">Выполнена</div><div style="margin-top: 4px; color: #99f6e4; font-family: monospace; font-size: 10px;">succeeded</div></div></div><div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px;"><div style="flex: 1 1 145px; min-width: 0; padding: 11px; border: 1px solid #4b5563; border-radius: 8px; background: #1f2937;"><div style="color: #d1d5db; font-size: 12px; font-weight: 650;">Ожидает повтора</div><div style="margin-top: 4px; color: #9ca3af; font-family: monospace; font-size: 10px;">retry_wait</div></div><div style="flex: 1 1 145px; min-width: 0; padding: 11px; border: 1px solid #92400e; border-radius: 8px; background: #302619;"><div style="color: #fbbf24; font-size: 12px; font-weight: 650;">Неуспешно / dead</div><div style="margin-top: 4px; color: #d6a75d; font-family: monospace; font-size: 10px;">failed / dead</div></div><div style="flex: 1 1 145px; min-width: 0; padding: 11px; border: 1px solid #4b5563; border-radius: 8px; background: #1f2937;"><div style="color: #d1d5db; font-size: 12px; font-weight: 650;">Отмена запрошена</div><div style="margin-top: 4px; color: #9ca3af; font-family: monospace; font-size: 10px;">cancel_requested</div></div><div style="flex: 1 1 145px; min-width: 0; padding: 11px; border: 1px solid #4b5563; border-radius: 8px; background: #1f2937;"><div style="color: #d1d5db; font-size: 12px; font-weight: 650;">Отменена</div><div style="margin-top: 4px; color: #9ca3af; font-family: monospace; font-size: 10px;">cancelled</div></div></div><div style="margin-top: 13px; color: #9ca3af; font-size: 12px; line-height: 1.6;">Схема показывает основные состояния. Переходы между ними разрешаются только при выполнении условий, определённых моделью задачи.</div></div><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Разрешены переходы «в очереди → выполняется → выполнена», «выполняется → ожидает повтора → выполняется», «выполняется → неуспешно», «выполняется → dead», «в очереди или ожидает повтора → отменена», «выполняется → отмена запрошена → отменена». Каждый переход выполняется условным обновлением, где в WHERE указано ожидаемое текущее состояние и, для выполняющейся задачи, актуальный владелец. Тогда гонка двух исполнителей проигрывается на уровне строки таблицы, а не в логике приложения.</p><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;"><code style="color: #5eead4;">failed</code> и <code style="color: #5eead4;">dead</code> не следует использовать как синонимы. <code style="color: #5eead4;">failed</code> означает, что известна окончательная ошибка и повтор не предусмотрен. <code style="color: #5eead4;">dead</code> обычно означает, что исчерпаны автоматические попытки или задача помещена на ручной разбор. В некоторых системах оба состояния можно объединить, но тогда причина и возможность повторного запуска должны храниться отдельно.</p><p style="margin: 0 0 20px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Не следует смешивать состояние задачи и состояние бизнес-операции. Например, задача отправки письма может завершиться успешно, потому что шлюз принял сообщение, а бизнес-статус уведомления останется «ожидает доставки». Это разные автоматы, у которых могут быть разные события и сроки завершения.</p><div style="margin: 24px 0; padding: 18px 19px; border-left: 3px solid #14b8a6; border-radius: 0 9px 9px 0; background: #102a2a; box-sizing: border-box;"><div style="margin-bottom: 7px; color: #5eead4; font-size: 11px; letter-spacing: 1px; text-transform: uppercase;">Принцип интерфейса</div><p style="margin: 0; color: #e5e7eb; font-size: 15px; line-height: 1.7;">Пользователь должен видеть состояние бизнес-операции, а не внутреннюю механику очереди. «Принято» не означает «выполнено», а «задача выполнена» не всегда означает, что конечный получатель уже получил результат.</p></div><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Для клиента принято такое поведение интерфейса. Создающий запрос возвращает 202 и адрес ресурса задачи, например в заголовке <code style="color: #5eead4;">Location</code>. Код 202 означает, что запрос принят к обработке, но обработка не завершена; он не гарантирует, что задача в итоге завершится успешно. Ответ должен содержать достаточно информации о принятом запросе и способе узнать результат. Заголовок <code style="color: #5eead4;">Location</code> — удобный вариант передать адрес ресурса статуса, но не единственно допустимый протоколом способ.</p><div style="margin: 20px 0 24px; overflow: hidden; border: 1px solid #374151; border-radius: 10px; background: #0b1220; box-sizing: border-box;"><div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; padding: 11px 15px; border-bottom: 1px solid #374151; background: #172033;"><span style="color: #d1d5db; font-size: 12px; font-weight: 650;">Пример ответа API</span> <span style="color: #5eead4; font-family: monospace; font-size: 11px;">HTTP 202</span></div><pre style="margin: 0; padding: 16px; overflow-wrap: anywhere; white-space: pre-wrap; color: #d1d5db; font-family: monospace; font-size: 13px; line-height: 1.7;"><code>HTTP/1.1 202 Accepted
+Location: /api/jobs/4812
+Content-Type: application/json
+
+{
+  "job_id": "4812",
+  "status": "queued",
+  "status_url": "/api/jobs/4812"
+}</code></pre></div><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Запрос статуса отдаёт состояние, прогресс, ссылку на результат и понятное пользователю описание ошибки. Узнать итог можно опросом (polling) с растущим интервалом или через push: WebSocket, Server-Sent Events (односторонний поток событий от сервера к браузеру), webhook для внешних систем. У опроса есть цена: две тысячи одновременных пользователей с запросом раз в 3 секунды дают около 667 запросов в секунду на ровном месте, и этот ресурс закладывают заранее. Для снижения нагрузки используют увеличение интервала, случайный разброс, условные запросы с ETag и кэширование статусов.</p><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Доступ к ресурсу задачи обязательно проверяют по владельцу или арендатору. Нельзя считать, что длинный идентификатор задачи сам по себе защищает от просмотра чужих результатов. Статус может содержать персональные данные, а ссылка на готовый файл — давать доступ к финансовым документам. Проверка авторизации нужна и для самого ресурса, и для выдаваемой ссылки на результат.</p><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Статус задачи и статус бизнес-результата различают. «Задача выполнена» не равно «контрагент получил акт»: шлюз мог принять письмо, а доставить его только через час. Пользователю показывают бизнес-язык («формируется», «отправлено, ожидается доставка»), а внутренние повторы не показывают вообще: «попытка 3 из 6» для него шум и повод нажать кнопку ещё раз.</p><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Отмена в такой системе кооперативная: пользователь выставляет флаг, воркер проверяет его между шагами и останавливается. Уже совершённый внешний эффект отмена не откатывает; для этого нужна отдельная компенсирующая операция («отозвать акт»), и проектируется она как самостоятельная задача со своим ключом идемпотентности. Отмена также должна иметь определённый момент фиксации: если воркер уже перешёл к необратимому внешнему вызову, запрос отмены может быть принят, но не исполнен. Интерфейс обязан различать «отмена запрошена» и «отменена».</p><section style="margin: 56px 0 0; box-sizing: border-box;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.8px; margin-bottom: 9px;">07 / FILES · NOTIFICATIONS · INTEGRATIONS</div><h2 style="margin: 0 0 22px; color: #f3f4f6; font-size: 25px; line-height: 1.25; font-weight: 650;">Файлы, уведомления и внешние сервисы</h2><h3 style="margin: 30px 0 15px; color: #f3f4f6; font-size: 19px; line-height: 1.35; font-weight: 650;">Обработка файлов</h3><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">В задачу кладут не содержимое, а ссылку: файл загружается напрямую в объектное хранилище (S3-совместимое или файловое) по временной ссылке, а в задаче лежат ключ объекта, версия объекта при наличии и контрольная сумма. Контрольная сумма нужна, чтобы обнаружить изменение содержимого и проверить целостность при чтении, но она не восстанавливает перезаписанный файл. Чтобы обрабатывалась именно загруженная версия, объект должен иметь неизменяемый уникальный ключ либо использовать версионирование хранилища. При чтении воркер проверяет контрольную сумму и при несовпадении прекращает обработку.</p><div style="margin: 22px 0; padding: 18px; border: 1px solid #374151; border-radius: 11px; background: #111827; box-sizing: border-box;"><div style="margin-bottom: 14px; color: #9ca3af; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase;">Что хранится в задаче</div><div style="display: flex; flex-wrap: wrap; gap: 9px; align-items: stretch;"><div style="flex: 1 1 140px; min-width: 0; padding: 13px; border: 1px solid #0f766e; border-radius: 8px; background: #102a2a;"><div style="color: #5eead4; font-size: 13px; font-weight: 650;">Ключ объекта</div><div style="margin-top: 5px; color: #a7f3d0; font-size: 12px; line-height: 1.5;">Где находится файл</div></div><div style="flex: 1 1 140px; min-width: 0; padding: 13px; border: 1px solid #374151; border-radius: 8px; background: #1f2937;"><div style="color: #e5e7eb; font-size: 13px; font-weight: 650;">Версия объекта</div><div style="margin-top: 5px; color: #9ca3af; font-size: 12px; line-height: 1.5;">Какая именно версия должна обрабатываться</div></div><div style="flex: 1 1 140px; min-width: 0; padding: 13px; border: 1px solid #374151; border-radius: 8px; background: #1f2937;"><div style="color: #e5e7eb; font-size: 13px; font-weight: 650;">Контрольная сумма</div><div style="margin-top: 5px; color: #9ca3af; font-size: 12px; line-height: 1.5;">Проверка целостности при чтении</div></div></div><div style="margin-top: 12px; padding: 11px 13px; border-left: 3px solid #d97706; background: #292319; border-radius: 0 7px 7px 0; color: #e5e7eb; font-size: 13px; line-height: 1.6;">Контрольная сумма обнаруживает изменение содержимого, но не восстанавливает перезаписанный файл.</div></div><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Тип файла определяют по содержимому, а не по расширению, размер ограничивают заранее, проверку на вредоносное содержимое выносят в изолированный пул воркеров. Обработка идёт потоком: файл в 2 ГБ, прочитанный целиком в память восьми воркеров, занимает 16 ГБ ещё до начала работы.</p><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Большой файл разбивают на части, и каждая часть становится отдельной задачей со своим ключом. В ключ включают идентификатор файла, версию исходного объекта и номер части. До запуска обработки создают манифест, в котором зафиксированы идентификатор файла, версия исходного объекта, количество частей и их границы или контрольные суммы. Завершение целого определяют не счётчиком «завершённых частей, увеличенным на единицу», а запросом «сколько частей в статусе "выполнена"» относительно манифеста. Счётчик при повторе одной части увеличится дважды и объявит файл готовым досрочно, а запрос к статусам повтор переживёт. Результат каждой части записывается под детерминированным именем, а общий результат публикуется отдельным последним шагом.</p><div style="margin: 22px 0 24px; padding: 18px; border: 1px solid #374151; border-radius: 11px; background: #111827; box-sizing: border-box;"><div style="margin-bottom: 15px; color: #9ca3af; font-size: 11px; letter-spacing: 1.2px; text-transform: uppercase;">Обработка большого файла</div><div style="padding: 12px 14px; border: 1px solid #4b5563; border-radius: 8px; background: #1f2937; text-align: center;"><div style="color: #f3f4f6; font-size: 14px; font-weight: 650;">Исходный файл</div><div style="margin-top: 4px; color: #9ca3af; font-size: 12px;">Идентификатор · версия · контрольная сумма</div></div><div style="height: 20px; width: 1px; margin: 0 auto; background: #6b7280;"> </div><div style="padding: 11px 14px; border: 1px solid #0f766e; border-radius: 8px; background: #102a2a; text-align: center;"><div style="color: #5eead4; font-size: 13px; font-weight: 650;">Манифест</div><div style="margin-top: 4px; color: #a7f3d0; font-size: 12px;">Версия источника · число частей · границы или контрольные суммы</div></div><div style="height: 20px; width: 1px; margin: 0 auto; background: #6b7280;"> </div><div style="display: flex; flex-wrap: wrap; gap: 8px;"><div style="flex: 1 1 90px; min-width: 0; padding: 12px 8px; border: 1px solid #374151; border-radius: 7px; background: #1f2937; text-align: center;"><div style="color: #5eead4; font-family: monospace; font-size: 12px;">PART 01</div><div style="margin-top: 5px; color: #d1d5db; font-size: 11px;">Отдельная задача</div></div><div style="flex: 1 1 90px; min-width: 0; padding: 12px 8px; border: 1px solid #374151; border-radius: 7px; background: #1f2937; text-align: center;"><div style="color: #5eead4; font-family: monospace; font-size: 12px;">PART 02</div><div style="margin-top: 5px; color: #d1d5db; font-size: 11px;">Отдельная задача</div></div><div style="flex: 1 1 90px; min-width: 0; padding: 12px 8px; border: 1px solid #374151; border-radius: 7px; background: #1f2937; text-align: center;"><div style="color: #5eead4; font-family: monospace; font-size: 12px;">PART N</div><div style="margin-top: 5px; color: #d1d5db; font-size: 11px;">Отдельная задача</div></div></div><div style="height: 20px; width: 1px; margin: 0 auto; background: #6b7280;"> </div><div style="padding: 12px 14px; border: 1px solid #0f766e; border-radius: 8px; background: #102a2a; text-align: center;"><div style="color: #5eead4; font-size: 13px; font-weight: 650;">Проверка готовности всех частей</div><div style="margin-top: 4px; color: #a7f3d0; font-size: 12px;">Запрос по статусам относительно манифеста</div></div><div style="height: 20px; width: 1px; margin: 0 auto; background: #6b7280;"> </div><div style="padding: 12px 14px; border: 1px solid #4b5563; border-radius: 8px; background: #1f2937; text-align: center;"><div style="color: #f3f4f6; font-size: 13px; font-weight: 650;">Публикация общего результата</div><div style="margin-top: 4px; color: #9ca3af; font-size: 12px;">Отдельный последний шаг</div></div></div><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Для обычной файловой системы публикацией может быть атомарное переименование в пределах одной файловой системы, если соблюдены её гарантии. В объектных хранилищах S3 операция «переименовать» обычно реализуется копированием объекта под новым ключом и удалением старого, а не атомарной сменой имени. Поэтому безопаснее записать готовый объект под уникальным ключом, проверить его и отдельной операцией опубликовать манифест или указатель на результат. Пользователь видит файл только после появления этого признака готовности.</p><h3 style="margin: 36px 0 15px; padding-top: 22px; border-top: 1px solid #374151; color: #f3f4f6; font-size: 19px; line-height: 1.35; font-weight: 650;">Уведомления</h3><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Решение «дубль или пропуск» принято выше для каждого вида сообщений, дальше остаётся механика. Отправка и запись о ней лежат в разных системах, поэтому окно неопределённости остаётся, и его размер определяется порядком шагов в таблице отправок.</p><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Запись отправки должна содержать как минимум уникальный ключ бизнес-события, получателя, канал, статус, идентификатор провайдера, время начала и время последнего изменения. Для <code style="color: #5eead4; font-size: 14px;">in_progress</code> нужны владелец и срок аренды. Другой воркер может забрать запись только после истечения аренды и проверки, что предыдущий исполнитель больше не имеет права продолжать работу.</p><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Но истечение аренды не доказывает, что SMS не было отправлено. Если первый воркер передал сообщение шлюзу, получил успешный ответ и упал до записи этого ответа, второй воркер увидит зависшую запись, хотя внешний эффект уже произошёл. Если провайдер поддерживает ключ идемпотентности, его используют повторно. Если поддерживает поиск по внешнему идентификатору или бизнес-ключу, выполняют сверку. Если не поддерживает ни того ни другого, операция получает статус <code style="color: #fbbf24; font-size: 14px;">unknown</code>, а дальнейшее решение принимается по заранее определённой цене дубля и пропуска.</p><div style="margin: 22px 0; padding: 18px; border: 1px solid #92400e; border-radius: 10px; background: #292319; box-sizing: border-box;"><div style="margin-bottom: 12px; color: #fbbf24; font-size: 11px; letter-spacing: 1.1px; text-transform: uppercase;">Окно неопределённости при отправке</div><div style="display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px;"><div style="flex: 1 1 135px; min-width: 0; padding: 12px; border: 1px solid #6b7280; border-radius: 7px; background: #1f2937;"><div style="color: #e5e7eb; font-size: 12px; font-weight: 650;">1. Передача шлюзу</div><div style="margin-top: 5px; color: #9ca3af; font-size: 11px; line-height: 1.5;">Внешний эффект уже мог произойти</div></div><div style="display: flex; align-items: center; color: #9ca3af;">→</div><div style="flex: 1 1 135px; min-width: 0; padding: 12px; border: 1px solid #6b7280; border-radius: 7px; background: #1f2937;"><div style="color: #e5e7eb; font-size: 12px; font-weight: 650;">2. Ответ провайдера</div><div style="margin-top: 5px; color: #9ca3af; font-size: 11px; line-height: 1.5;">Воркер может получить подтверждение</div></div><div style="display: flex; align-items: center; color: #9ca3af;">→</div><div style="flex: 1 1 135px; min-width: 0; padding: 12px; border: 1px solid #92400e; border-radius: 7px; background: #302619;"><div style="color: #fbbf24; font-size: 12px; font-weight: 650;">3. Запись результата</div><div style="margin-top: 5px; color: #d6a75d; font-size: 11px; line-height: 1.5;">При сбое запись может не состояться</div></div></div><div style="margin-top: 13px; color: #e5e7eb; font-size: 13px; line-height: 1.6;">Если воркер упал между вторым и третьим шагом, повторная отправка может создать дубль. Нужна идемпотентность провайдера, сверка или статус неизвестного исхода.</div></div><p style="margin: 0 0 16px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Дополнительно стоит учитывать, что «принято шлюзом» и «доставлено» — разные события: SMS-шлюз подтверждает приём сразу, а отчёт о доставке присылает позже отдельным вызовом. Поэтому задача отправки может завершиться успешно при принятии сообщения провайдером, а доставка отслеживается отдельным процессом. Частоту ограничивают на уровне получателя (не более N сообщений в час), «тихие часы» учитывают в самой задаче через время запуска, а однотипные события за короткий период склеивают в одно сообщение.</p></section><section style="margin: 48px 0 0; padding: 0;"><h2 style="margin: 0 0 24px; padding: 0 0 14px; border-bottom: 1px solid rgba(20,184,166,0.42); color: #f3f4f6; font-size: 24px; line-height: 1.3; font-weight: 650;">Обмен с внешними сервисами</h2><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Ограничение скорости партнёра делится между всеми воркерами. Допустим, партнёр принимает 10 запросов в секунду, воркеров восемь, и каждый «аккуратно» делает до 10: суммарно получается 80, и партнёр отвечает 429. Нужен общий ограничитель — ведро с токенами (token bucket: токены пополняются с постоянной скоростью, запрос тратит один) в общей базе или хранилище в памяти либо выделенная очередь, у которой число параллельных исполнителей и скорость запуска ограничены общим лимитом.</p><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Важно ограничивать не только среднюю скорость, но и всплеск: token bucket допускает кратковременный burst в пределах размера ведра. Если партнёр не разрешает всплески, ёмкость ведра уменьшают или используют равномерное распределение запросов. Ограничитель должен быть общим для всех экземпляров приложения, иначе каждый воркер будет считать лимит независимо.</p><div style="margin: 26px 0; padding: 20px 22px; border-left: 3px solid #14b8a6; background: rgba(20,184,166,0.07); box-sizing: border-box;"><div style="margin: 0 0 10px; color: #5eead4; font-size: 12px; line-height: 1.4; font-weight: bold; letter-spacing: 0.08em; text-transform: uppercase;">Два независимых ограничения</div><div style="display: flex; flex-wrap: wrap; gap: 18px;"><div style="flex: 1 1 220px; min-width: 0;"><div style="margin: 0 0 6px; color: #f3f4f6; font-size: 16px; font-weight: 650;">Скорость запросов</div><div style="color: #cbd5e1; font-size: 14px; line-height: 1.65;">Сколько запросов система может отправить за единицу времени. Здесь работает общий token bucket.</div></div><div style="flex: 1 1 220px; min-width: 0;"><div style="margin: 0 0 6px; color: #f3f4f6; font-size: 16px; font-weight: 650;">Конкурентность</div><div style="color: #cbd5e1; font-size: 14px; line-height: 1.65;">Сколько операций могут выполняться одновременно. Здесь нужен общий семафор или ограничитель конкурентности.</div></div></div></div><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Скорость запросов и число одновременных запросов — разные ограничения. Партнёр может разрешать 10 запросов в секунду, но не более трёх одновременно выполняющихся операций. В таком случае одного token bucket недостаточно: нужен также общий семафор или ограничитель конкурентности, который выдаёт право на выполнение запроса и освобождает его после завершения либо истечения аренды.</p><p style="margin: 0; color: #d1d5db; font-size: 16px; line-height: 1.75;">Таймауты задают раздельно на установку соединения и на ожидание ответа, а поверх них — общий бюджет времени на задачу. Выключатель из раздела о повторах относится именно сюда. Для сервисов без ключей идемпотентности сверку проектируют заранее, до первого инцидента: когда он случится, времени придумывать её уже не будет.</p></section><section style="margin: 54px 0 0; padding: 0;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.8px; margin-bottom: 9px;">08 / CAPACITY PLANNING &amp; OVERLOAD</div><h2 style="margin: 0 0 24px; padding: 0 0 14px; border-bottom: 1px solid rgba(20,184,166,0.42); color: #f3f4f6; font-size: 24px; line-height: 1.3; font-weight: 650;">Расчёт ёмкости и поведение при перегрузке</h2><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Число одновременно выполняемых задач равно интенсивности поступления, умноженной на среднее время выполнения (закон Литтла). Допустим, приходит 40 файлов в минуту, обработка одного занимает 18 секунд. Интенсивность в секундах: 40 / 60 ≈ 0,667 файла в секунду; средняя конкурентность составит 0,667 × 18 = 12 задач.</p><div style="margin: 24px 0; padding: 22px; border: 1px solid rgba(20,184,166,0.3); border-radius: 12px; background: rgba(20,184,166,0.055); box-sizing: border-box;"><div style="margin: 0 0 14px; color: #5eead4; font-size: 12px; font-weight: bold; letter-spacing: 0.08em; text-transform: uppercase;">Пример оценки конкурентности</div><div style="display: flex; flex-wrap: wrap; align-items: stretch; gap: 10px;"><div style="flex: 1 1 130px; min-width: 0; padding: 13px 14px; border-radius: 8px; background: rgba(255,255,255,0.045);"><div style="color: #9ca3af; font-size: 12px;">Поступление</div><div style="margin-top: 5px; color: #f9fafb; font-size: 23px; font-weight: bold;">40</div><div style="color: #9ca3af; font-size: 12px;">файлов в минуту</div></div><div style="flex: 1 1 130px; min-width: 0; padding: 13px 14px; border-radius: 8px; background: rgba(255,255,255,0.045);"><div style="color: #9ca3af; font-size: 12px;">Время обработки</div><div style="margin-top: 5px; color: #f9fafb; font-size: 23px; font-weight: bold;">18</div><div style="color: #9ca3af; font-size: 12px;">секунд на файл</div></div><div style="flex: 1 1 130px; min-width: 0; padding: 13px 14px; border-radius: 8px; background: rgba(20,184,166,0.12);"><div style="color: #5eead4; font-size: 12px;">Средняя нагрузка</div><div style="margin-top: 5px; color: #5eead4; font-size: 23px; font-weight: 750;">12</div><div style="color: #a7f3d0; font-size: 12px;">одновременно работающих задач</div></div></div><div style="margin-top: 14px; padding-top: 13px; border-top: 1px solid rgba(20,184,166,0.2); color: #d1d5db; font-size: 14px; line-height: 1.65;">40 / 60 × 18 = 12 задач в среднем</div></div><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Если добавить условный запас на неравномерность 30%, получится 12 × 1,3 ≈ 15,6, то есть предварительная оценка — 16 одновременно работающих слотов. Это не обязательно 16 отдельных процессов: в зависимости от модели исполнения слоты могут соответствовать потокам, асинхронным задачам или отдельным процессам. Это также не гарантия соблюдения SLA: закон Литтла описывает среднее состояние системы, а не требуемый запас мощности. Фактическое число слотов проверяют нагрузочным тестированием с реальным распределением времени выполнения, пиковыми поступлениями, ограничениями внешних сервисов и резервом на отказ части исполнителей.</p><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Среднего времени недостаточно, если длительности задач сильно различаются. При высокой вариативности распределения и редких очень долгих операциях очередь может расти даже тогда, когда средняя загрузка выглядит приемлемой. Поэтому для оценки времени ожидания и соблюдения SLA дополнительно анализируют p95 и p99 длительности, пиковую интенсивность поступления и фактическое распределение задач по классам.</p><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Теперь представим, что воркеров 10, каждый обрабатывает одну задачу за 18 секунд. Теоретическая пропускная способность составляет 10 / 18 ≈ 0,556 файла в секунду, или 33,3 в минуту. При поступлении 40 в минуту очередь растёт на 6,7 задачи в минуту; за час такого пика накапливается около 400 задач.</p><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Последняя из этих 400 задач при отсутствии новых поступлений начнёт выполняться примерно через 400 / 33,3 = 12 минут. Но если в это время продолжает поступать по 20 задач в минуту, свободная мощность составляет 33,3 − 20 = 13,3 задачи в минуту. Полное опустошение накопленной очереди займёт около 400 / 13,3 ≈ 30 минут. Это разные показатели: время ожидания последней задачи из первоначального накопления и время полного восстановления очереди при продолжающемся потоке.</p><div style="margin: 26px 0; padding: 20px 22px; border-left: 3px solid #f59e0b; background: rgba(245,158,11,0.07); box-sizing: border-box;"><div style="margin: 0 0 8px; color: #fbbf24; font-size: 12px; font-weight: bold; letter-spacing: 0.08em; text-transform: uppercase;">Перегрузка и обратное давление</div><p style="margin: 0; color: #e5e7eb; font-size: 15px; line-height: 1.7;">Очередь превращает нехватку мощности не в ошибки, а во время ожидания, и для многих сценариев это правильный размен. Но он работает, только пока рост ограничен: бесконечная очередь — это скрытая авария, которую видно лишь по жалобам. Поэтому задают потолок по длине или по возрасту и при его достижении отказывают на входе с понятным сообщением (обратное давление, backpressure). Можно также ограничивать число задач на пользователя или арендатора и временно отключать необязательные виды работ.</p></div><p style="margin: 0; color: #d1d5db; font-size: 16px; line-height: 1.75;">Вторая проблема — блокировка очереди тяжёлой задачей (head-of-line blocking). Если в одной очереди лежат 500 импортов по 10 минут и коды подтверждения по секунде, код дождётся своей очереди через часы. Задачи делят на классы по допустимой задержке: интерактивные (секунды), пакетные (минуты и часы), тяжёлые. У каждого класса свои очереди и свой пул воркеров. По тому же принципу защищают клиентов друг от друга: один арендатор, поставивший 50 000 задач, не должен останавливать остальных, поэтому число его одновременных задач ограничивают либо выбирают задачи по кругу по ключу клиента.</p></section><section style="margin: 54px 0 0; padding: 0;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.8px; margin-bottom: 9px;">09 / DEPLOYMENT &amp; SCHEDULING</div><h2 style="margin: 0 0 24px; padding: 0 0 14px; border-bottom: 1px solid rgba(20,184,166,0.42); color: #f3f4f6; font-size: 24px; line-height: 1.3; font-weight: 650;">Выкладка, остановка и расписание</h2><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Обновление воркеров идёт при непустой очереди. При остановке процесс получает сигнал SIGTERM («завершись аккуратно»): воркер перестаёт брать новые задачи и дорабатывает текущие в пределах отведённого срока, после чего оркестратор убивает его принудительно. В Kubernetes значение <code style="padding: 2px 5px; border-radius: 4px; background: rgba(255,255,255,0.07); color: #5eead4; font-size: 0.9em;">terminationGracePeriodSeconds</code> по умолчанию составляет 30 секунд, но его можно изменить. Всё, что дольше срока, должно переживать убийство, то есть опираться на аренду, идемпотентность и контрольные точки. Для длинных задач контрольной точкой служит сохранённая позиция («обработано до записи 80 000»), с которой повторный запуск продолжает.</p><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Формат задачи — тоже контракт. В момент выкладки в очереди лежат задачи, сериализованные прежним кодом, а во время поэтапного обновления одновременно работают старая и новая версии. Правила те же, что у версионирования API: поля добавляют, а не переименовывают; в payload хранят поле <code style="padding: 2px 5px; border-radius: 4px; background: rgba(255,255,255,0.07); color: #5eead4; font-size: 0.9em;">schema_version</code>; новый воркер читает старый формат, а старый не падает на незнакомых полях. Если это обеспечить нельзя, перед выкладкой нужно остановить постановку несовместимых задач и дождаться обработки старых сообщений либо выполнить явную миграцию.</p><div style="margin: 24px 0; padding: 20px 22px; border-left: 3px solid #f59e0b; background: rgba(245,158,11,0.07); box-sizing: border-box;"><div style="margin: 0 0 8px; color: #fbbf24; font-size: 12px; font-weight: bold; letter-spacing: 0.08em; text-transform: uppercase;">Совместимость формата — не только JSON</div><p style="margin: 0; color: #e5e7eb; font-size: 15px; line-height: 1.7;">При этом одного <code style="padding: 2px 5px; border-radius: 4px; background: rgba(255,255,255,0.07); color: #fbbf24; font-size: 0.9em;">schema_version</code> недостаточно, если новая версия меняет смысл существующего поля. Версионировать нужно не только структуру JSON, но и семантику операции. Старый обработчик не должен получить payload, который формально разбирается, но приводит к другому бизнес-результату. Для несовместимых изменений применяют отдельные типы задач, маршрутизацию по версии либо поэтапный переход с поддержкой обоих форматов.</p></div><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Расписание при нескольких экземплярах приложения порождает дубли: каждый экземпляр запускает своё расписание и ставит задачу. Выход — либо единственный экземпляр планировщика с механизмом выбора лидера, либо постановка с ключом «вид + окно времени» (например, <code style="padding: 2px 5px; border-radius: 4px; background: rgba(255,255,255,0.07); color: #5eead4; font-size: 0.9em;">report:2026-11-26</code>), так что второй экземпляр упирается в уникальное ограничение. Одного механизма «запустить планировщик только в одном экземпляре» недостаточно без защиты от повторной постановки: лидер может потерять аренду, а новый экземпляр запустится до того, как старый окончательно остановился.</p><p style="margin: 0; color: #d1d5db; font-size: 16px; line-height: 1.75;">Отдельно решают, как догонять пропущенное после простоя: для отчёта «за вчера» достаточно последнего запуска, а для почасового начисления выполняются все пропущенные интервалы. Это правило должно быть частью бизнес-логики расписания, а не случайным поведением планировщика.</p></section><section style="margin: 54px 0 0; padding: 0;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.8px; margin-bottom: 9px;">10 / OBSERVABILITY &amp; INCIDENT DIAGNOSTICS</div><h2 style="margin: 0 0 24px; padding: 0 0 14px; border-bottom: 1px solid rgba(20,184,166,0.42); color: #f3f4f6; font-size: 24px; line-height: 1.3; font-weight: 650;">Что показывают метрики, когда всё сломалось</h2><p style="margin: 0 0 22px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Глубина очереди как главный показатель вводит в заблуждение: 10 000 задач при быстром разборе — норма, а 12 задач при зависшем воркере — авария. Главная метрика — возраст самой старой готовой к выполнению задачи. Рядом с ней стоят время ожидания в очереди и время выполнения по каждому виду (медиана и p99), доля ошибок и число повторов по видам, размер DLQ и загрузка воркеров (сколько занято из скольких запущено).</p><div style="margin: 26px 0; padding: 22px; border: 1px solid rgba(20,184,166,0.28); border-radius: 12px; background: rgba(255,255,255,0.025); box-sizing: border-box;"><div style="margin: 0 0 16px; color: #5eead4; font-size: 12px; font-weight: bold; letter-spacing: 0.08em; text-transform: uppercase;">Что контролировать в эксплуатации</div><div style="display: flex; flex-wrap: wrap; gap: 18px;"><div style="flex: 1 1 210px; min-width: 0;"><div style="margin: 0 0 7px; color: #f3f4f6; font-size: 16px; font-weight: 650;">Очередь и воркеры</div><ul style="margin: 0; padding-left: 19px; color: #cbd5e1; font-size: 14px; line-height: 1.75;"><li>Возраст самой старой готовой задачи</li><li>Время ожидания и выполнения</li><li>Медиана и p99 по видам задач</li><li>Доля ошибок и число повторов</li><li>Размер DLQ и загрузка воркеров</li></ul></div><div style="flex: 1 1 210px; min-width: 0;"><div style="margin: 0 0 7px; color: #f3f4f6; font-size: 16px; font-weight: 650;">Специальные компоненты</div><ul style="margin: 0; padding-left: 19px; color: #cbd5e1; font-size: 14px; line-height: 1.75;"><li>Просроченные аренды и повторные захваты</li><li>Зависшие задачи в <code style="color: #5eead4;">running</code></li><li>Возраст неопубликованных записей Outbox</li><li>Ошибки ретранслятора</li><li>Доля 429 и 5xx внешних сервисов</li><li>Состояние circuit breaker и скорость запросов</li></ul></div></div></div><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Для очереди на таблице дополнительно отслеживают количество просроченных аренд, повторных захватов, задач, слишком долго остающихся в <code style="padding: 2px 5px; border-radius: 4px; background: rgba(255,255,255,0.07); color: #5eead4; font-size: 0.9em;">running</code>, и задач с исчерпанными попытками. Для Outbox важны возраст самой старой неопубликованной записи, скорость публикации и число ошибок ретранслятора. Для внешних сервисов — доля 429 и 5xx, время ответа, состояние circuit breaker и текущая скорость запросов.</p><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">На основе этих метрик формулируют цели по уровню сервиса (SLO), например: 95% интерактивных задач начинают выполняться в течение 10 секунд. Оповещения привязывают к возрасту и к SLO, а не только к глубине очереди. Для длительных задач отдельно задают допустимое время выполнения и максимальный возраст незавершённой операции.</p><div style="margin: 26px 0; padding: 20px 22px; border-left: 3px solid #14b8a6; background: rgba(20,184,166,0.07); box-sizing: border-box;"><div style="margin: 0 0 8px; color: #5eead4; font-size: 12px; font-weight: bold; letter-spacing: 0.08em; text-transform: uppercase;">Пример целевого показателя</div><div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px;"><div style="color: #5eead4; font-size: 34px; line-height: 1.1; font-weight: 750;">95%</div><div style="color: #e5e7eb; font-size: 15px; line-height: 1.6;">интерактивных задач начинают выполняться в течение 10 секунд</div></div></div><p style="margin: 0; color: #d1d5db; font-size: 16px; line-height: 1.75;">Идентификатор корреляции из исходного HTTP-запроса передают в задачу и пишут в каждую строку лога. Для фоновой операции также нужен собственный идентификатор задачи и, при необходимости, идентификатор бизнес-операции. Без них путь одной операции через запрос, Outbox, очередь, воркер и внешний вызов восстанавливается вручную по временным меткам. В логи не следует записывать секреты, токены доступа и полные персональные данные.</p></section><section style="margin: 54px 0 0; padding: 0;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.8px; margin-bottom: 9px;">11 / DATA PRIVACY &amp; SECURITY</div><h2 style="margin: 0 0 24px; padding: 0 0 14px; border-bottom: 1px solid rgba(20,184,166,0.42); color: #f3f4f6; font-size: 24px; line-height: 1.3; font-weight: 650;">Персональные данные и закрытый контур</h2><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Всё, что лежит в очереди, считается хранением. Если в сообщении есть персональные данные, брокер, очередь недоставленных сообщений, резервные копии и журналы ошибок становятся компонентами инфраструктуры обработки этих данных. Для них определяют права доступа, сроки хранения, резервирование, удаление и меры защиты.</p><div style="margin: 24px 0; padding: 20px 22px; border-left: 3px solid #f59e0b; background: rgba(245,158,11,0.07); box-sizing: border-box;"><div style="margin: 0 0 8px; color: #fbbf24; font-size: 12px; font-weight: bold; letter-spacing: 0.08em; text-transform: uppercase;">Правовой контекст</div><p style="margin: 0; color: #e5e7eb; font-size: 15px; line-height: 1.75;">Требования 152-ФЗ нужно применять с учётом конкретной операции и роли системы. В частности, часть 5 статьи 18 регулирует использование баз данных, находящихся за пределами территории РФ, при сборе персональных данных граждан РФ и предусматривает установленные законом исключения. Это не означает, что любой компонент любой системы автоматически подпадает под одно и то же требование о локализации: необходимо определить, какие именно операции выполняются, где происходит сбор и обработка, кто выступает оператором и обработчиком, есть ли трансграничная передача и применимы ли исключения. Правовую модель проверяют по действующей редакции закона до выбора инфраструктуры.</p></div><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Практическое правило: в сообщение кладут идентификатор и ссылку, а данные читают из основной базы в момент выполнения, если бизнес-сценарий допускает использование актуального состояния. Это уменьшает количество персональных данных в очереди и снижает риск обработки устаревшей копии.</p><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Но актуальная запись не всегда является правильным источником. Акт сверки, расчёт начисления или финансовый отчёт может требовать состояния данных на момент постановки задачи. В таком случае фиксируют версию записи, дату среза или неизменяемый снимок данных. Иначе задача, поставленная утром, через три часа обработает уже изменившиеся сведения и сформирует результат, не соответствующий исходному запросу.</p><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Срок хранения завершённых задач ограничивают, тексты ошибок очищают от персональных данных до записи в лог. При этом срок хранения должен учитывать возможность аудита и повторного разбора инцидентов. Передачу данных внешним сервисам, особенно зарубежным, и различие между сервисными и рекламными сообщениями регулируют отдельные нормы, поэтому их применимость проверяют отдельно.</p><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Закрытый контур означает, что брокер, база, объектное хранилище и воркеры разворачиваются внутри периметра, а управляемые облачные очереди недоступны. Для всех классов из таблицы выше есть реализации с открытым кодом, которые можно поставить локально. Условия лицензирования отдельных продуктов и их редакций проверяют до выбора. У отечественных сборок на основе PostgreSQL нужные возможности, как правило, унаследованы, но наличие <code style="padding: 2px 5px; border-radius: 4px; background: rgba(255,255,255,0.07); color: #5eead4; font-size: 0.9em;">SKIP LOCKED</code>, особенности блокировок и совместимость с используемой версией проверяются в конкретной сборке, а не принимаются на веру.</p></section><section style="margin: 58px 0 0; padding: 0 0 12px;"><div style="font-size: 11px; color: #14b8a6; font-weight: bold; letter-spacing: 1.8px; margin-bottom: 9px;">12 / COST ANALYSIS &amp; TOTAL OWNERSHIP</div><h2 style="margin: 0 0 24px; padding: 0 0 14px; border-bottom: 1px solid rgba(20,184,166,0.42); color: #f3f4f6; font-size: 24px; line-height: 1.3; font-weight: 650;">Сколько это стоит: цена сбоев и цена владения</h2><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Условная оценка. Допустим, в месяц возникает 300 случаев, когда операция продублирована, потеряна или зависла: повторные письма контрагентам, «потерянные» выгрузки, ручные перезапуски. Разбор одного случая отнимает у поддержки и разработчика в сумме 40 минут: 300 × 40 = 12 000 минут = 200 часов. При стоимости часа 1 500 ₽ с учётом налогов это 300 000 ₽ в месяц. К ним не добавлены ни репутационные потери от дубля акта, ни рабочее время пользователей, которые перезапускают операции.</p><div style="margin: 26px 0; padding: 24px; border: 1px solid rgba(20,184,166,0.32); border-radius: 12px; background: rgba(20,184,166,0.055); box-sizing: border-box;"><div style="margin: 0 0 18px; color: #5eead4; font-size: 12px; font-weight: bold; letter-spacing: 0.08em; text-transform: uppercase;">Условная стоимость сбоев за месяц</div><div style="display: flex; flex-wrap: wrap; align-items: flex-end; gap: 18px;"><div style="flex: 1 1 180px; min-width: 0;"><div style="color: #9ca3af; font-size: 13px;">Количество инцидентов</div><div style="margin-top: 5px; color: #f9fafb; font-size: 30px; line-height: 1.2; font-weight: 750;">300</div></div><div style="flex: 1 1 180px; min-width: 0;"><div style="color: #9ca3af; font-size: 13px;">Затраты времени</div><div style="margin-top: 5px; color: #f9fafb; font-size: 30px; line-height: 1.2; font-weight: 750;">200 ч</div></div><div style="flex: 1 1 180px; min-width: 0;"><div style="color: #9ca3af; font-size: 13px;">Стоимость</div><div style="margin-top: 5px; color: #5eead4; font-size: 30px; line-height: 1.2; font-weight: 750;">300 000 ₽</div></div></div><div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid rgba(20,184,166,0.2); color: #cbd5e1; font-size: 13px; line-height: 1.6;">300 случаев × 40 минут = 200 часов × 1 500 ₽</div></div><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">Расходы на владение складываются из нескольких частей. Реализация очереди на таблице для 3–4 видов задач — условно три рабочие недели одного разработчика: 3 × 5 × 8 = 120 часов, то есть 180 000 ₽. Дальше идут эксплуатация (мониторинг, оповещения, разбор DLQ: при 3 часах в неделю это около 12 часов за условные четыре недели, 18 000 ₽), тестовое окружение, в котором можно убивать воркеры, и накладные расходы на версионирование формата задач при каждой выкладке. Если очередь вынесена в брокер, добавляется кластер и его сопровождение.</p><div style="margin: 26px 0; padding: 24px; border: 1px solid rgba(20,184,166,0.38); border-radius: 12px; background: linear-gradient(135deg, rgba(20,184,166,0.11), rgba(20,184,166,0.025)); box-sizing: border-box;"><div style="margin: 0 0 8px; color: #9ca3af; font-size: 12px; font-weight: bold; letter-spacing: 0.08em; text-transform: uppercase;">Условный срок окупаемости</div><div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px;"><div style="color: #5eead4; font-size: 42px; line-height: 1.1; font-weight: 750;">0,64</div><div style="color: #e5e7eb; font-size: 16px;">месяца</div></div><div style="margin-top: 15px; padding-top: 14px; border-top: 1px solid rgba(20,184,166,0.22); color: #cbd5e1; font-size: 14px; line-height: 1.7;">180 000 / (300 000 − 18 000) ≈ 0,64 месяца</div></div><p style="margin: 0 0 18px; color: #d1d5db; font-size: 16px; line-height: 1.75;">При этих исходных данных вложения окупаются меньше чем за месяц: 180 000 / (300 000 − 18 000) ≈ 0,64 месяца. Но расчёт верен лишь при реальных 300 инцидентах, полностью устраняемых внедрением, и при условии, что стоимость часа уже включает все соответствующие расходы. Если часть инцидентов останется или эксплуатация потребует больше времени, срок окупаемости увеличится. Приложению с тремя фоновыми операциями и двадцатью пользователями полноценный брокер обойдётся дороже, чем сэкономит, и там хватает таблицы и одного воркера. Ускорение отклика в деньги без связи с конкретным бизнес-показателем (конверсией, отказами) не переводят: такой расчёт всегда оказывается подгонкой.</p></section><p> </p><div style="max-width: 1100px; margin: 60px auto 0 auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; padding: 0; box-sizing: border-box; width: 100%;"><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #14b8a6; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 25px;">НАВИГАЦИЯ // SUGGESTED_READING</div><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 20px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // АРХИТЕКТУРА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Рабочее место сотрудника: когда его стоит создавать отдельно</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/rabochee-mesto-sotrudnika-kogda-ego-stoit-sozdavat-otdelno/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // СКЛАД ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">ТСД, WMS и штрихкод: как устроена автоматизация склада</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/tsd-wms-i-shtrihkod-kak-ustroena-avtomatizaciya-sklada/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div><div style="background: #000000; padding: 25px 25px 25px 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 140px; position: relative;"><div style="position: relative; margin-bottom: 20px; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 11px; color: #aaaaaa; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;">[ Модуль // АРХИТЕКТУРА ]</div><h4 style="margin: 0; color: #ffffff; font-size: 15px; font-weight: bold; line-height: 1.4;">Как проектируют корпоративную систему с нуля</h4></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/kak-proektiruyut-korporativnuyu-sistemu-s-nulya/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">читать материал ──►</a></div></div></div></div><div style="max-width: 1100px; margin: 20px auto 40px auto; font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: none; color: #ffffff; text-align: left; line-height: 1.6; border-top: 1px solid #165c52; padding: 40px 0 0 0; box-sizing: border-box; width: 100%;"><div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 40px; width: 100%; box-sizing: border-box;"><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ EXPERTISE JOURNAL ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Все инженерные материалы и экспертные статьи</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/ekspertiza/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">перейти к каталогу ──►</a></div></div><div style="background: #000000; padding: 0 25px 0 0; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; min-height: 110px; position: relative;"><div style="position: relative; padding-left: 20px; box-sizing: border-box; width: 100%;"><div style="position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: #165c52;"> </div><div style="color: #14b8a6; font-family: 'SF Mono', Monaco, monospace; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;">[ CORE GLOSSARY ]</div><p style="font-size: 14px; color: #aaaaaa; margin: 0 0 15px 0; line-height: 1.5;">Полный алфавитный справочник ИТ-терминов</p></div><div style="font-family: 'SF Mono', Monaco, monospace; font-size: 13px; padding-left: 20px;"><a href="/glossariy/" style="color: #14b8a6; text-decoration: none; border: none; padding: 0; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.opacity='0.7';" onmouseout="this.style.opacity='1';">открыть справочник ──►</a></div></div></div></div></div></div></div><p> </p></div></article></main><footer class="footer"><div class="wrapper"><div class="footer__copyright"><p> </p><p> </p></div><button id="backToTop" class="footer__bttop" aria-label="Back to top" title="Back to top"><svg width="20" height="20"><use xlink:href="https://log-ai.ru/assets/svg/svg-map.svg#toparrow"/></svg></button></div></footer><script defer="defer" src="https://log-ai.ru/assets/js/scripts.min.js?v&#x3D;d0fc1030089a37f93a2d51bf6d07565c"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.top'};</script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script><script>(() => {
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('mode') !== 'monument') return;
+
+  const IMAGE_URL = 'https://log-ai.ru/media/files/Interstellar.jpeg';
+  const AUDIO_URL = 'https://log-ai.ru/media/files/interstellar.mp3';
+
+  // Защита от повторного запуска
+  if (document.getElementById('log-ai-monument')) return;
+
+  const monument = document.createElement('div');
+  monument.id = 'log-ai-monument';
+
+  const root = document.documentElement;
+  const body = document.body;
+
+  const previousRootOverflow = root.style.overflow;
+  const previousBodyOverflow = body.style.overflow;
+  const previousBodyPosition = body.style.position;
+  const previousBodyTop = body.style.top;
+  const previousBodyWidth = body.style.width;
+  const previousScrollX = window.scrollX;
+  const previousScrollY = window.scrollY;
+
+  root.style.overflow = 'hidden';
+  body.style.overflow = 'hidden';
+  body.style.position = 'fixed';
+  body.style.top = `-${previousScrollY}px`;
+  body.style.width = '100%';
+
+  monument.innerHTML = `
+    <div class="monument-universe"></div>
+    <canvas class="monument-stars"></canvas>
+    <div class="monument-shade"></div>
+
+    <div class="monument-frame">
+      <p class="monument-overline">ARCHIVUM · LOG-AI · MMXXVI</p>
+
+      <div class="monument-rule"></div>
+
+      <h1>PER ASPERA<br><span>AD ASTRA</span></h1>
+
+      <p class="monument-translation">
+        THROUGH HARDSHIP, TO THE STARS
+      </p>
+
+      <div class="monument-message">
+        <p>TO THOSE WHO BUILD BEYOND THE LIMITS OF THEIR TIME.</p>
+        <p>TO THOSE WHO CONTINUE WHEN THE OUTCOME IS UNKNOWN.</p>
+        <p>TO THOSE WHO WILL DISCOVER THIS LONG AFTER ITS CREATION.</p>
+      </div>
+
+      <p class="monument-declaration">
+        YOU WERE NOT THE FIRST TO LOOK AT THE STARS.<br>
+        BUT YOU MAY BE AMONG THOSE WHO REACH THEM.
+      </p>
+
+      <div class="monument-rule"></div>
+          
+      <p class="monument-translation">
+        A MARK LEFT IN THE MACHINE.
+      </p>   
+
+      <p class="monument-signature">
+        LOG·AI·ARCHITECTI·MMXXVI
+      </p>
+
+      <p class="monument-exit" id="monument-hint">
+        [ CLICK ANYWHERE TO RETURN ]
+      </p>
+    </div>
+  `;
+
+  const style = document.createElement('style');
+  style.textContent = `
+    #log-ai-monument {
+      position: fixed;
+      inset: 0;
+      z-index: 2147483647;
+      width: 100%;
+      height: 100%;
+      height: 100dvh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
+      background: #03040a;
+      color: #e5dfd3;
+      display: grid;
+      place-items: center;
+      padding: 28px 18px;
+      box-sizing: border-box;
+      cursor: pointer;
+      isolation: isolate;
+      opacity: 0;
+      animation: logai-monument-appear 1.8s ease forwards;
+    }
+
+    #log-ai-monument .monument-universe {
+      position: fixed;
+      inset: -3%;
+      z-index: -3;
+      background-image: url("https://log-ai.ru/media/files/Interstellar.jpeg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      transform: scale(1.02);
+      animation: logai-cosmic-drift 35s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-shade {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(ellipse at center,
+          rgba(0,0,0,.24) 0%,
+          rgba(0,0,0,.52) 65%,
+          rgba(0,0,0,.78) 100%),
+        linear-gradient(
+          to bottom,
+          rgba(0,0,0,.42),
+          rgba(0,0,0,.18) 45%,
+          rgba(0,0,0,.62)
+        );
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-stars {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    #log-ai-monument .monument-frame {
+      position: relative;
+      width: 100%;
+      max-width: 680px;
+      text-align: center;
+      font-family: Georgia, 'Times New Roman', serif;
+      padding: 30px 0;
+      text-shadow: 0 2px 18px rgba(0,0,0,.9);
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-translation,
+    #log-ai-monument .monument-signature,
+    #log-ai-monument .monument-exit {
+      font-family: Arial, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .24em;
+      font-size: 10px;
+      line-height: 2;
+    }
+
+    #log-ai-monument .monument-overline,
+    #log-ai-monument .monument-signature {
+      color: #c0a16a;
+    }
+
+    #log-ai-monument .monument-rule {
+      height: 1px;
+      width: 160px;
+      max-width: 60%;
+      margin: 30px auto;
+      background: linear-gradient(
+        to right,
+        transparent,
+        #a68a55,
+        transparent
+      );
+      box-shadow: 0 0 12px rgba(190,155,90,.2);
+    }
+
+    #log-ai-monument h1 {
+      margin: 35px 0 18px;
+      font-size: clamp(30px, 7vw, 58px);
+      line-height: 1.5;
+      letter-spacing: .16em;
+      font-weight: 400;
+      color: #f4f0e8;
+    }
+
+    #log-ai-monument h1 span {
+      color: #d2b77e;
+    }
+
+    #log-ai-monument .monument-translation {
+      color: #c0b8aa;
+    }
+
+    #log-ai-monument .monument-message {
+      margin: 55px auto 38px;
+      max-width: 490px;
+      color: #e0d9cd;
+      font-size: 13px;
+      line-height: 2.2;
+      letter-spacing: .035em;
+    }
+
+    #log-ai-monument .monument-message p {
+      margin: 0 0 12px;
+    }
+
+    #log-ai-monument .monument-declaration {
+      color: #e0c48a;
+      font-size: 12px;
+      line-height: 2.3;
+      letter-spacing: .08em;
+    }
+
+    #log-ai-monument .monument-exit {
+      margin-top: 36px;
+      color: #c0b8aa;
+      font-size: 9px;
+      letter-spacing: .18em;
+    }
+
+    @keyframes logai-monument-appear {
+      to { opacity: 1; }
+    }
+
+    @keyframes logai-cosmic-drift {
+      from { transform: scale(1.02); }
+      to { transform: scale(1.13); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #log-ai-monument,
+      #log-ai-monument .monument-universe {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+  `;
+
+  document.head.appendChild(style);
+  document.body.appendChild(monument);
+
+  // Тонкие, редкие звёзды
+  const canvas = monument.querySelector('.monument-stars');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let frameId = null;
+  let closed = false;
+
+  function resizeStars() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.round(window.innerWidth * dpr);
+    canvas.height = Math.round(window.innerHeight * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    stars = Array.from({ length: 65 }, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      length: 8 + Math.random() * 25,
+      speed: 0.25 + Math.random() * 0.75,
+      alpha: 0.15 + Math.random() * 0.5,
+      delay: Math.random() * 500
+    }));
+  }
+
+  function drawStars() {
+    if (closed) return;
+
+    const w = window.innerWidth;
+    const h = window.innerHeight;
+    ctx.clearRect(0, 0, w, h);
+
+    for (const star of stars) {
+      star.delay -= 1;
+
+      if (star.delay <= 0) {
+        star.y += star.speed;
+        star.x -= star.speed * 0.35;
+
+        ctx.beginPath();
+        ctx.moveTo(star.x, star.y);
+        ctx.lineTo(star.x - star.length * 0.35,
+                   star.y - star.length);
+
+        ctx.strokeStyle = `rgba(210,220,255,${star.alpha})`;
+        ctx.lineWidth = 0.7;
+        ctx.stroke();
+
+        if (star.y > h + 30 || star.x < -30) {
+          star.x = Math.random() * w + 30;
+          star.y = -Math.random() * h * 0.4;
+          star.delay = 30 + Math.random() * 180;
+        }
+      }
+    }
+
+    frameId = requestAnimationFrame(drawStars);
+  }
+
+  resizeStars();
+  drawStars();
+
+  window.addEventListener('resize', resizeStars);
+
+  // Музыка
+  const audio = document.createElement('audio');
+  audio.id = 'monument-audio';
+  audio.src = AUDIO_URL;
+  audio.loop = true;
+  audio.preload = 'auto';
+  audio.volume = 0.35;
+  document.body.appendChild(audio);
+
+  let playing = false;
+  let starting = false;
+
+  const hint = document.getElementById('monument-hint');
+
+  function startMusic() {
+    if (closed || starting || playing) return;
+
+    starting = true;
+
+    audio.play().then(() => {
+      starting = false;
+
+      if (closed) {
+        audio.pause();
+        return;
+      }
+
+      playing = true;
+      hint.textContent = '[ CLICK ANYWHERE TO RETURN ]';
+    }).catch((error) => {
+      starting = false;
+
+      if (closed) return;
+
+      if (error.name === 'NotAllowedError') {
+        hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+        return;
+      }
+
+      console.warn('LOG-AI audio:', error.name, error.message);
+      hint.textContent = '[ TAP TO AWAKEN THE SOUND ]';
+    });
+  }
+
+  function closeMonument() {
+    if (closed) return;
+    closed = true;
+
+    cancelAnimationFrame(frameId);
+    window.removeEventListener('resize', resizeStars);
+    window.removeEventListener('keydown', onKeyDown);
+
+    audio.pause();
+    audio.remove();
+    monument.remove();
+    style.remove();
+
+    root.style.overflow = previousRootOverflow;
+    body.style.overflow = previousBodyOverflow;
+    body.style.position = previousBodyPosition;
+    body.style.top = previousBodyTop;
+    body.style.width = previousBodyWidth;
+
+    window.scrollTo(previousScrollX, previousScrollY);
+
+    const cleanUrl = new URL(window.location.href);
+    cleanUrl.searchParams.delete('mode');
+
+    window.history.replaceState(
+      {},
+      document.title,
+      cleanUrl.pathname + cleanUrl.search + cleanUrl.hash
+    );
+  }
+
+  function onKeyDown(event) {
+    if (event.key === 'Escape') closeMonument();
+  }
+
+  monument.addEventListener('click', () => {
+    if (closed) return;
+
+    if (playing) {
+      closeMonument();
+    } else {
+      startMusic();
+    }
+  });
+
+  window.addEventListener('keydown', onKeyDown);
+
+  // Первая попытка автоматического запуска
+  startMusic();
+})();</script><script>(function () {
+    // ВНИМАНИЕ!!!!!!!!!!!!!!!!!!!!Плавный инерционный скролл только для мыши/тачпада
+    if (!window.matchMedia('(pointer: fine)').matches) return;
+
+    let targetY = window.scrollY;
+    let currentY = window.scrollY;
+    let animationFrame = null;
+
+    // ===== НАСТРОЙКИ =====
+    const SPEED = 0.70;       // 0.4 = медленнее, 0.65 = средне, 1.0 = быстрее
+    const SMOOTHNESS = 0.13;  // 0.08 = мягче, 0.12 = средне, 0.18 = быстрее
+    const MAX_STEP = 500;     // максимальный шаг одного движения колеса
+    // =====================
+
+    function animateScroll() {
+        currentY += (targetY - currentY) * SMOOTHNESS;
+
+        if (Math.abs(targetY - currentY) < 0.5) {
+            currentY = targetY;
+            window.scrollTo(0, currentY);
+            animationFrame = null;
+            return;
+        }
+
+        window.scrollTo(0, currentY);
+        animationFrame = requestAnimationFrame(animateScroll);
+    }
+
+    window.addEventListener('wheel', function (event) {
+
+    // Если глобус активирован кликом —
+    // колесо полностью отдаём Globe.gl для zoom.
+    const globe = event.target.closest('#globeViz');
+
+    if (globe && globe.dataset.interacting === 'true') {
+        return;
+    }
+
+    // Внутренний скролл AI-чата не трогаем
+    if (event.target.closest('#logai-window, #logai-msgs')) {
+        return;
+    }
+
+    event.preventDefault();
+
+        let delta = event.deltaY * SPEED;
+
+        // Ограничиваем слишком резкие движения
+        delta = Math.max(-MAX_STEP, Math.min(MAX_STEP, delta));
+
+        targetY += delta;
+
+        // Не даём уйти выше/ниже страницы
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        targetY = Math.max(0, Math.min(targetY, maxY));
+
+        if (!animationFrame) {
+            animationFrame = requestAnimationFrame(animateScroll);
+        }
+    }, { passive: false });
+
+    // Синхронизация, если страницу прокрутили другим способом
+    window.addEventListener('scroll', function () {
+        if (!animationFrame) {
+            targetY = window.scrollY;
+            currentY = window.scrollY;
+        }
+    }, { passive: true });
+
+})();</script><div id="logai-footer-mobile" style="max-width: 1100px; width: 100%; margin: 0 auto; padding: 0; font-family: -apple-system, BlinkMacSystemFont, sans-serif; box-sizing: border-box;"><div style="margin: 0 auto 20px auto; padding-top: 40px; text-align: center; margin-bottom: 40px;"><a href="mailto:info@log-ai.ru" style="font-size: 24px; font-family: 'SF Mono', Monaco, monospace; color: #e5e7eb; text-decoration: none; font-weight: 500; transition: color 0.3s; letter-spacing: 0.3px;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#e5e7eb'">info@log-ai.ru</a><p style="color: #aaaaaa; font-size: 15px; line-height: 1.6; max-width: 750px; margin: 15px auto 0 auto;">Пришлите описание задачи, техническое задание или ссылку на существующую систему. Мы оценим задачу и определим возможные варианты реализации.</p></div><div style="max-width: 850px; margin: 0 auto 40px auto; text-align: center; background: #000000; padding: 0; box-sizing: border-box;"><p style="color: #aaaaaa; font-size: 14px; line-height: 1.6; margin: 0;"><span style="color: #4ade80; margin-right: 6px;">🔒</span> Данные и доступ к системам заказчика обрабатываются в соответствии с согласованными требованиями к безопасности и конфиденциальности. Условия доступа, хранения и обработки данных определяются архитектурой проекта и договором.</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; box-sizing: border-box; width: 100%; margin-bottom: 30px;"><p style="color: #666666; font-size: 12px; line-height: 1.6; margin: 0; width: 100%; text-align: justify;">Сайт носит исключительно информационный характер и не является публичной офертой в соответствии со статьёй 437 Гражданского кодекса РФ. Цены, состав и условия предоставления услуг уточняются при проектировании решения и фиксируются в договоре. Условия технического сопровождения и уровень сервиса могут дополнительно определяться отдельным соглашением (SLA).</p></div><div style="border-top: 1px solid #111111; padding-top: 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; width: 100%; box-sizing: border-box;"><div style="color: #666666; font-size: 12px; line-height: 1.5; text-align: left;">© 2026 Log-AI<br>Автоматизация бизнеса и ИИ-решения под ключ. Работаем по всей России и СНГ.<br>ИП Скопец Антон Викторович<br>ИНН 741709<span></span>260870 · ОГРНИП 326745600<span></span>204228<br>Все права защищены.</div><div style="display: flex; gap: 20px; flex-wrap: wrap; font-family: sans-serif;"><a href="/privacy-policy/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Политика конфиденциальности</a> <a href="/terms/" style="color: #666666; font-size: 12px; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='#aaaaaa'" onmouseout="this.style.color='#666666'">Пользовательское соглашение</a></div></div></div><style>@media screen and (max-width: 600px) {
+  #logai-footer-mobile {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    box-sizing: border-box !important;
+  }
+}</style><style>/* Анимации и точки */
+    @keyframes logai-bounce { 0%, 80%, 100% { transform: translateY(0); } 40% { transform: translateY(-5px); } }
+    .logai-dots { display: flex !important; flex-direction: row !important; gap: 4px !important; align-items: center !important; height: 12px !important; }
+    .logai-dots span { display: inline-block; width: 5px; height: 5px; background: #aaa !important; border-radius: 50%; animation: logai-bounce 1.4s infinite ease-in-out; }
+    .logai-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .logai-dots span:nth-child(3) { animation-delay: 0.4s; }
+    
+    #logai-msgs::-webkit-scrollbar { width: 5px; }
+    #logai-msgs::-webkit-scrollbar-thumb { background: #666; border-radius: 10px; }
+    
+    /* Сообщения и текст */
+    #logai-msgs div { white-space: pre-wrap !important; word-wrap: break-word !important; padding: 12px 16px !important; margin-bottom: 5px !important; display: flex; flex-direction: column; justify-content: center; }
+    #logai-msgs div p { margin: 0 !important; padding: 0 !important; line-height: 1.5 !important; }
+    #logai-msgs { gap: 12px !important; padding: 20px !important; }
+
+    /* Поле ввода и кнопка отправить */
+    #logai-input { flex: 1 !important; padding: 12px 18px !important; border-radius: 20px !important; background: #4a4e56 !important; border: 1px solid rgba(255,255,255,0.1) !important; outline: none !important; color: #fff !important; font-size: 15px !important; resize: none !important; max-height: 120px !important; line-height: 1.4 !important; }
+    #logai-send-btn { background-color: #007bff !important; border: none !important; width: 45px !important; height: 45px !important; border-radius: 50% !important; cursor: pointer !important; display: flex !important; align-items: center !important; justify-content: center !important; color: white !important; font-size: 24px !important; padding: 0 !important; flex-shrink: 0 !important; }
+
+    /* ГЛАВНЫЕ СТИЛИ (чтобы кнопка и окно не исчезали) */
+    #logai-btn {
+        position: fixed !important; bottom: 40px !important; right: 110px !important;
+        width: 65px !important; height: 65px !important; border-radius: 50% !important;
+        background: linear-gradient(135deg, #007bff 0%, #0056b3 100%) !important;
+        display: flex !important; align-items: center !important; justify-content: center !important;
+        cursor: pointer !important; z-index: 10000 !important; box-shadow: 0 10px 25px rgba(0,123,255,0.4);
+    }
+
+    #logai-window {
+        display: none; position: fixed !important; bottom: 115px !important; right: 110px !important;
+        width: 380px !important; height: 600px !important; background: #3b3e45 !important;
+        border-radius: 24px !important; flex-direction: column; overflow: hidden;
+        z-index: 10000 !important; box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+        border: 1px solid rgba(255,255,255,0.15) !important;
+    }
+
+        /* АДАПТИВ ДЛЯ МОБИЛОК: ЧАТ НА ВЕСЬ ЭКРАН */
+    @media screen and (max-width: 480px) {
+        #logai-window { 
+            right: 0 !important; 
+            left: 0 !important; 
+            bottom: 0 !important; 
+            width: 100% !important; 
+            height: 100% !important; /* Растягиваем окно на 100% экрана смартфона */
+            border-radius: 0 !important; /* Убираем скругления углов, чтобы чат сел монолитом */
+            z-index: 999999 !important; /* Перекрываем все кнопки в ноль */
+        }
+        
+        #logai-btn { 
+            bottom: 80px !important; /* Твоя родная высота кнопки, когда чат закрыт */
+            right: 22px !important;  /* Твой родной сдвиг кнопки */
+            z-index: 999998 !important; /* Когда чат открыт, кнопка останется под ним и не будет торчать */
+        }
+    }</style><div id="logai-widget" style="position: fixed; bottom: var(--widget-bottom, 20px); right: var(--widget-right, 20px); z-index: 9999;"><div id="logai-btn" onclick="toggleLogAI()"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div><div id="logai-window"><div style="background: #2d3035; padding:15px 20px; display:flex; justify-content:space-between; align-items:center; border-bottom: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; align-items:center; gap:12px;"><div style="width:35px; height:35px; background:#007bff; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:0 0 10px rgba(0,123,255,0.5);"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8V4H8"></path><rect width="16" height="12" x="4" y="8" rx="2"></rect><path d="M2 14h2"></path><path d="M20 14h2"></path><path d="M15 13v2"></path><path d="M9 13v2"></path></svg></div><span style="font-weight:600; color:#fff; font-size:16px; letter-spacing: 0.5px;">AI Ассистент</span></div><span onclick="toggleLogAI()" style="cursor:pointer; color:#fff; font-size:35px; line-height: 0.7; opacity: 0.7;">&times;</span></div><div id="logai-msgs" style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; background:#3b3e45;"></div><div style="padding:15px 15px 8px 15px; background:#2d3035; display:flex; flex-direction:column; border-top: 1px solid rgba(255,255,255,0.1);"><div style="display:flex; gap:10px; align-items:flex-end; width:100%;"><textarea id="logai-input" rows="1" placeholder="Напишите..." oninput="this.style.height='';this.style.height=this.scrollHeight+'px'"></textarea> <button id="logai-send-btn" onclick="sendLogAI()">➤</button></div><div style="text-align:center; font-size:10px; color:#ffffff; opacity:0.3; margin-top:6px; font-family:sans-serif; pointer-events:none; user-select:none;">ИИ может ошибаться</div></div></div></div><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script>const API_URL = 'https://api2.log-ai.ru';
+    const MY_CLIENT_ID = 'client_arhitektor_2'; // МЕНЯТЬ ТУТ
+    const MY_BOT_PATH = 'arhitektor_2';  // МЕНЯТЬ ТУТ 
+    
+       let logSid;
+    try {
+        logSid = localStorage.getItem('logai_sid');
+        if (!logSid) {
+            logSid = 's_' + Math.random().toString(36).substr(2, 12);
+            localStorage.setItem('logai_sid', logSid);
+        }
+    } catch (e) {
+        // Если доступ к памяти закрыт (инкогнито), создаем временный ID
+        logSid = 'temp_' + Math.random().toString(36).substr(2, 12);
+    }
+
+    // Переименовали, чтобы избежать конфликтов
+    let chatIsWaiting = false;
+    let historyLoaded = false;
+    let activeMessageId = null;
+    let pollController = null;
+    let pollTimeoutId = null;
+
+
+       function toggleLogAI() {
+        const w = document.getElementById('logai-window');
+        const isOpen = (window.getComputedStyle(w).display === 'none');
+        
+        if (isOpen) {
+            w.style.display = 'flex';
+            if (!historyLoaded) {
+                loadChatHistory();
+            } 
+            // Если чат в режиме ожидания (точки), пинаем сервер сразу при открытии
+            else if (chatIsWaiting && activeMessageId) {
+                const dotsContainer = document.querySelector('.logai-dots')?.parentElement;
+                if (dotsContainer) {
+                    startPolling(activeMessageId, dotsContainer);
+                }
+            }
+        } else {
+            w.style.display = 'none';
+            // УБРАЛИ stopPolling(), чтобы ИИ докачивал ответ, даже когда окно закрыто
+        }
+    }
+
+
+    function updateInputState() {
+        const input = document.getElementById('logai-input');
+        const btn = document.getElementById('logai-send-btn');
+        if (input) {
+            input.disabled = chatIsWaiting;
+            input.style.opacity = chatIsWaiting ? '0.5' : '1';
+        }
+        if (btn) btn.style.opacity = chatIsWaiting ? '0.5' : '1';
+    }
+
+    function stopPolling() {
+        if (activeMessageId) localStorage.removeItem('poll_start_' + activeMessageId);
+        if (pollController) pollController.abort();
+        if (pollTimeoutId) clearTimeout(pollTimeoutId);
+    
+        pollController = null;
+        pollTimeoutId = null;
+        activeMessageId = null;
+        chatIsWaiting = false;
+        updateInputState();
+    }
+
+    function addLogMsg(txt, isAi) {
+        const d = document.createElement('div');
+        d.style = `padding:12px 16px; border-radius:18px; max-width:82%; font-size:14px; line-height:1.5; margin-bottom:10px; 
+                   ${isAi ? 'align-self:flex-start; background:#4a4e56; color:#dbdee1; border-bottom-left-radius:4px;' 
+                         : 'align-self:flex-end; background:#007bff; color:white; border-bottom-right-radius:4px; box-shadow:0 4px 12px rgba(0,123,255,0.25);'}`;
+
+        if (txt === 'dots') {
+   // ИСПРАВЛЕНО: Добавлен явный текст ожидания рядом с анимацией точек для лучшего UX
+   d.innerHTML = '<div style="display:flex; align-items:center; gap:8px;">' +
+                 '<span style="font-style:italic; opacity:0.8;">ИИ подбирает ответ...</span>' +
+                 '<div class="logai-dots"><span></span><span></span><span></span></div>' +
+                 '</div>';
+ } else {
+   d.innerHTML = typeof marked !== 'undefined' ? marked.parse(txt) : txt;
+ }
+
+        const box = document.getElementById('logai-msgs');
+        box.appendChild(d);
+        box.scrollTop = box.scrollHeight;
+        return d;
+    }
+
+async function loadChatHistory() {
+    const box = document.getElementById('logai-msgs');
+    try {
+        box.innerHTML = '';
+
+        const res = await fetch(`${API_URL}/history/${logSid}?platform=site&clientId=${MY_CLIENT_ID}`);
+        const data = await res.json();
+
+        if (Array.isArray(data.items) && data.items.length > 0) {
+            data.items.forEach((m, index) => {
+                // 1. Показываем сообщение пользователя
+                if (m.message) {
+                    addLogMsg(m.message, false);
+                }
+
+                // 2. Если есть готовый ответ — показываем
+                if (m.answer) {
+                    addLogMsg(m.answer, true);
+                } 
+                // 3. ИСПРАВЛЕНО: Четкое чтение m.message_id из базы данных без путаницы с регистрами
+                else if (m.message_id && index === data.items.length - 1) {
+                    chatIsWaiting = true;
+                    activeMessageId = m.message_id; // Используем m.message_id
+                    
+                    const aiMsg = addLogMsg('dots', true);
+                    startPolling(m.message_id, aiMsg); 
+                }
+            });
+        } else {
+            addLogMsg("Здравствуйте! Я ваш ИИ-ассистент. Чем могу помочь?", true);
+        }
+
+        historyLoaded = true;
+        updateInputState();
+
+    } catch (e) {
+        console.error('History error:', e);
+        addLogMsg("Не удалось загрузить историю чата", true);
+    }
+}
+
+
+async function sendLogAI() {
+    if (chatIsWaiting) return;
+
+    const input = document.getElementById('logai-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+
+    // ЖЕЛЕЗНЫЙ ДЕБАУНС: блокируем повторный клик в первую же микросекунду
+    chatIsWaiting = true;
+    updateInputState();
+
+    addLogMsg(msg, false);
+    
+    input.value = ''; 
+    input.style.height = 'auto'; 
+
+    const aiMsg = addLogMsg('dots', true);
+
+    try {
+        const res = await fetch(`${API_URL}/send`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                sessionId: logSid,
+                message: msg,
+                clientId: MY_CLIENT_ID,
+                platform: 'site',
+                botPath: MY_BOT_PATH
+            })
+        });
+
+        // ИСПРАВЛЕНО: Обработка HTTP-ошибок. Передаем false третьим параметром, чтобы не было звука при ошибке
+        if (!res.ok) {
+            let errorMsg = "⚠️ Сервер временно недоступен";
+            if (res.status === 429) errorMsg = "🚫 Слишком много запросов. Подождите немного.";
+            else if (res.status === 403) {
+                try {
+                    const errData = await res.json();
+                    errorMsg = errData.reason || "🚫 Доступ ограничен.";
+                } catch (_) {
+                    errorMsg = "🚫 Доступ ограничен.";
+                }
+            }
+            finish(errorMsg, aiMsg, false); // false — звук НЕ играет
+            return;
+        }
+
+        const data = await res.json();
+
+        if (data.blocked) {
+            finish(data.reason || data.message || "🚫 Сообщение заблокировано", aiMsg, false); // false — без звука
+            return;
+        }
+
+        if (data.messageId) {
+            activeMessageId = data.messageId;
+            startPolling(data.messageId, aiMsg);
+        } else {
+            finish("⚠️ Ошибка регистрации сообщения (нет messageId)", aiMsg, false);
+        }
+    } catch (e) {
+        console.error(e);
+        finish("⚠️ Ошибка связи с сервером. Проверьте интернет.", aiMsg, false);
+    }
+} // Скобка закрывает саму функцию send
+    function startPolling(messageId, aiMsg) {
+        activeMessageId = messageId;
+        pollController = new AbortController();
+        let savedTime = localStorage.getItem('poll_start_' + messageId);
+        if (!savedTime) {
+            savedTime = Date.now().toString();
+            localStorage.setItem('poll_start_' + messageId, savedTime);
+        }
+        let startTime = parseInt(savedTime, 10);
+        let statusChanged = false; // Чтобы не менять текст постоянно
+
+        const poll = async () => {
+            if (activeMessageId !== messageId) return;
+
+            const elapsed = (Date.now() - startTime) / 1000; // секунд прошло
+
+            // 1. На 40-й секунде меняем текст на "Сложный вопрос"
+            if (elapsed > 40 && !statusChanged) {
+                const dots = aiMsg.querySelector('.logai-dots');
+                aiMsg.innerHTML = '🤖 Вопрос сложный, анализирую данные...';
+                if (dots) aiMsg.appendChild(dots); 
+                statusChanged = true;
+            }
+
+            // 2. Лимит ожидания - 10 минут (600 секунд)
+            if (elapsed > 600) {
+                finish("🤖 Извините, ИИ перегружен или запрос слишком сложный. Пожалуйста, попробуйте позже.", aiMsg);
+                return;
+            }
+
+            // 3. Умный интервал: до 50 сек — каждые 3 сек, потом — каждые 10 сек
+            let nextInterval = (elapsed > 50) ? 10000 : 3000;
+
+            try {
+                // Добавили ?t=... чтобы телефон каждый раз реально спрашивал сервер, а не брал из кэша
+                const r = await fetch(`${API_URL}/get-answer/${messageId}?sessionId=${logSid}&clientId=${MY_CLIENT_ID}&t=${Date.now()}`, {
+                    signal: pollController.signal 
+                });
+                const d = await r.json();
+                const finalAnswer = d.answer || (d.status !== 'pending' ? d.answer : null);
+
+                if (finalAnswer) {
+                    finish(finalAnswer, aiMsg);
+                } else {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            } catch (e) {
+                if (e.name !== 'AbortError') {
+                    pollTimeoutId = setTimeout(poll, nextInterval);
+                }
+            }
+        };
+        poll();
+    }
+
+function finish(text, msgElement, isSuccess = true) {
+    if (msgElement) {
+        msgElement.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+        
+        // Звук играет строго при успешном ответе ИИ, при ошибках или банах — тишина
+        if (isSuccess) {
+            try {
+                // ТВОЙ ОРИГИНАЛЬНЫЙ РАБОЧИЙ ПУТЬ: Кэш сбрасывается, файл проигрывается без ошибок 404
+                const audio = new Audio('https://api.log-ai.ru/notify.mp3?v=' + Date.now());
+                audio.volume = 0.4;
+                audio.play().catch(e => console.log("Нужен клик"));
+            } catch (e) {}
+        }
+    }
+    stopPolling();
+}
+
+
+    // Enter для отправки
+    document.addEventListener('DOMContentLoaded', () => {
+    const input = document.getElementById('logai-input');
+    if (input) {
+      input.addEventListener('keypress', (e) => {
+        // ИСПРАВЛЕНО: Добавлена проверка !chatIsWaiting, чтобы клавиатура намертво блокировалась во время ожидания ИИ
+        if (e.key === 'Enter' && !e.shiftKey && !chatIsWaiting) {
+          e.preventDefault();
+          sendLogAI();
+        }
+      });
+
+      // ИСПРАВЛЕНО: Текстовое поле плавно растёт вниз до 150px, если текст длинный
+      input.addEventListener('input', function() {
+        this.style.height = 'auto'; 
+        this.style.height = Math.min(this.scrollHeight, 150) + 'px';
+      });
+    }
+    });</script><div id="cookie-notice-wrapper" style="position: fixed; bottom: 0; left: 0; width: 100%; background: #111111; border-top: 1px solid #222222; padding: 10px 15px; box-sizing: border-box; z-index: 99999; display: none; flex-direction: row; justify-content: space-between; align-items: center; gap: 15px; font-family: sans-serif;"><span style="color: #888888; font-size: 12px; line-height: 1.4; text-align: left;">Наш сайт использует файлы cookie для корректной работы. Подробнее — в <a href="/privacy-policy/" style="color: #bfa15f; text-decoration: underline;">Политике конфиденциальности</a>. </span><button onclick="dismissCookieNotice()" style="background: #bfa15f; color: #000000; border: none; padding: 5px 14px; font-size: 12px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: opacity 0.2s; white-space: nowrap;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Принять</button></div><style>@media (max-width: 600px) {
+        #cookie-notice-wrapper {
+            flex-direction: column !important;
+            text-align: center !important;
+            gap: 10px !important;
+            padding: 12px 15px !important;
+        }
+        #cookie-notice-wrapper span {
+            text-align: center !important;
+            font-size: 11px !important;
+        }
+        #cookie-notice-wrapper button {
+            width: 100% !important;
+            padding: 8px !important;
+            font-size: 12px !important;
+        }
+    }</style><script>(function() {
+        var storageKey = 'logai_cookies_accepted';
+        if (!localStorage.getItem(storageKey)) {
+            document.getElementById('cookie-notice-wrapper').style.display = 'flex';
+        }
+    })();
+
+    function dismissCookieNotice() {
+        localStorage.setItem('logai_cookies_accepted', 'true');
+        document.getElementById('cookie-notice-wrapper').style.display = 'none';
+    }</script></body></html>

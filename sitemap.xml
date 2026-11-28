@@ -150,7 +150,7 @@
 </url>
 <url>
 <loc>https://log-ai.ru/ekspertiza/</loc>
-<lastmod>2026-11-28T13:36:19+05:00</lastmod>
+<lastmod>2026-11-28T16:23:08+05:00</lastmod>
 </url>
 <url>
 <loc>https://log-ai.ru/energomonitoring-integraciya-schyotchikov-i-korporativnyh-sistem/</loc>
@@ -238,7 +238,11 @@
 </url>
 <url>
 <loc>https://log-ai.ru/kak-avtomatizirovat-rabotu-s-obrashcheniyami-v-sluzhbu-podderzhki/</loc>
-<lastmod>2026-11-12T20:10:06+05:00</lastmod>
+<lastmod>2026-11-28T16:23:39+05:00</lastmod>
+</url>
+<url>
+<loc>https://log-ai.ru/kak-avtomatizirovat-vystavlenie-schetov-i-kontrol-oplaty/</loc>
+<lastmod>2026-11-28T16:34:30+05:00</lastmod>
 </url>
 <url>
 <loc>https://log-ai.ru/kak-dannye-so-stanka-popadayut-v-sistemu/</loc>
@@ -269,12 +273,16 @@
 <lastmod>2026-11-13T11:19:18+05:00</lastmod>
 </url>
 <url>
+<loc>https://log-ai.ru/kak-ocenit-kachestvo-ii-otvetov-pered-zapuskom/</loc>
+<lastmod>2026-11-28T16:03:36+05:00</lastmod>
+</url>
+<url>
 <loc>https://log-ai.ru/kak-ocenit-rezultat-avtomatizacii/</loc>
 <lastmod>2026-11-08T08:12:22+05:00</lastmod>
 </url>
 <url>
 <loc>https://log-ai.ru/kak-organizovat-avtorizaciyu-v-mobilnom-prilozhenii/</loc>
-<lastmod>2026-11-27T20:45:03+05:00</lastmod>
+<lastmod>2026-11-28T16:53:06+05:00</lastmod>
 </url>
 <url>
 <loc>https://log-ai.ru/kak-organizovat-fonovye-zadachi-v-veb-prilozhenii/</loc>
@@ -290,7 +298,7 @@
 </url>
 <url>
 <loc>https://log-ai.ru/kak-organizovat-versionirovanie-api-dlya-neskolkih-klientskih-prilozheniy/</loc>
-<lastmod>2026-11-28T12:04:01+05:00</lastmod>
+<lastmod>2026-11-28T15:56:47+05:00</lastmod>
 </url>
 <url>
 <loc>https://log-ai.ru/kak-perelit-terabayty-dannyh-iz-staroy-it-sistemy-v-novuyu-i-nichego-ne-poteryat-po-doroge/</loc>
@@ -314,7 +322,7 @@
 </url>
 <url>
 <loc>https://log-ai.ru/kak-pereyti-s-ustarevshego-freymvorka-na-sovremennyy-bez-perepisyvaniya-vsey-sistemy/</loc>
-<lastmod>2026-11-28T09:17:23+05:00</lastmod>
+<lastmod>2026-11-28T15:57:29+05:00</lastmod>
 </url>
 <url>
 <loc>https://log-ai.ru/kak-pereyti-so-staroy-sistemy-na-novuyu-bez-ostanovki-raboty/</loc>
@@ -334,7 +342,7 @@
 </url>
 <url>
 <loc>https://log-ai.ru/kak-podklyuchit-korporativnye-dokumenty-k-ii-assistentu/</loc>
-<lastmod>2026-11-28T13:45:09+05:00</lastmod>
+<lastmod>2026-11-28T15:55:34+05:00</lastmod>
 </url>
 <url>
 <loc>https://log-ai.ru/kak-podklyuchit-onlayn-oplatu-k-saytu-i-obrabotat-oshibki-platezhey/</loc>
@@ -419,6 +427,10 @@
 <url>
 <loc>https://log-ai.ru/kak-vnedrit-avtomatizaciyu/</loc>
 <lastmod>2026-11-01T19:28:14+05:00</lastmod>
+</url>
+<url>
+<loc>https://log-ai.ru/kak-vstroit-ii-v-sushchestvuyushchee-veb-prilozhenie/</loc>
+<lastmod>2026-11-28T15:54:38+05:00</lastmod>
 </url>
 <url>
 <loc>https://log-ai.ru/kak-vybrat-arhitekturu-internet-magazina-pri-slozhnom-kataloge/</loc>
